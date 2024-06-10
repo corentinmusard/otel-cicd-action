@@ -193,6 +193,7 @@ jobs:
 | github.pull_requests.{X}.base.repo.id   | string  | Github Pull Request base Repository id                |
 | github.pull_requests.{X}.base.repo.url  | string  | Github Pull Request base Repository url               |
 | github.pull_requests.{X}.base.repo.name | string  | Github Pull Request base Repository name              |
+| github.pull_requests.{X}.labels         | string  | comma separated string of Pull Request labels         |
 | github.job.id                           | float   | Github Job Run ID                                     |
 | github.job.name                         | string  | Github Job Run Name                                   |
 | github.job.started_at                   | string  | Github Job Run started_at                             |
