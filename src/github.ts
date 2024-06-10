@@ -1,6 +1,7 @@
 import { Context } from "@actions/github/lib/context";
 import { GitHub } from "@actions/github/lib/utils";
 import * as core from "@actions/core";
+import { getOctokit } from "@actions/github";
 import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 import * as JSZip from "jszip";
 import * as fs from "fs";
@@ -225,4 +226,18 @@ export async function getWorkflowRunJobs(
     workflowRunArtifacts,
   };
   return workflowRunJobs;
+}
+
+export async function GetPRLabels(
+  owner: string,
+  repo: string,
+  prNumber: number,
+): Promise<string> {
+  const octokit = getOctokit(core.getInput("githubToken"));
+  const labelRequest = await octokit.rest.issues.listLabelsOnIssue({
+    owner,
+    repo,
+    issue_number: prNumber,
+  });
+  return labelRequest.data.map((l) => l.name).join(", ");
 }

@@ -23,8 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWorkflowRunJobs = exports.listWorkflowRunArtifacts = void 0;
+exports.GetPRLabels = exports.getWorkflowRunJobs = exports.listWorkflowRunArtifacts = void 0;
 const core = __importStar(require("@actions/core"));
+const github_1 = require("@actions/github");
 const JSZip = __importStar(require("jszip"));
 const fs = __importStar(require("fs"));
 const artifact = __importStar(require("@actions/artifact"));
@@ -161,4 +162,14 @@ async function getWorkflowRunJobs(context, octokit, runId) {
     return workflowRunJobs;
 }
 exports.getWorkflowRunJobs = getWorkflowRunJobs;
+async function GetPRLabels(owner, repo, prNumber) {
+    const octokit = (0, github_1.getOctokit)(core.getInput("githubToken"));
+    const labelRequest = await octokit.rest.issues.listLabelsOnIssue({
+        owner,
+        repo,
+        issue_number: prNumber,
+    });
+    return labelRequest.data.map((l) => l.name).join(", ");
+}
+exports.GetPRLabels = GetPRLabels;
 //# sourceMappingURL=github.js.map
