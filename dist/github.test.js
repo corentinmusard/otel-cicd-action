@@ -31,9 +31,12 @@ const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const jest_mock_extended_1 = require("jest-mock-extended");
 const jest_fetch_mock_1 = __importDefault(require("jest-fetch-mock"));
+const github_2 = require("./github");
+jest.mock("@actions/github");
+jest.mock("@actions/core");
 describe("listWorkflowRunArtifacts", () => {
     let mockContext;
-    let mockOctokit;
+    let mockOctokit = (0, jest_mock_extended_1.mockDeep)();
     let subject;
     beforeAll(async () => {
         mockContext = (0, jest_mock_extended_1.mockDeep)();
@@ -82,6 +85,28 @@ describe("listWorkflowRunArtifacts", () => {
         // expect(data.length).toBeGreaterThan(0);
         const lines = data.split("\n");
         expect(lines.length).toBeGreaterThan(1);
+    });
+});
+const core = __importStar(require("@actions/core"));
+jest.mock("@actions/core");
+jest.mock("@actions/github/lib/utils");
+describe("GetPRLabels", () => {
+    let mockOctokit;
+    let mockGetInput;
+    beforeAll(() => {
+        mockOctokit = (0, jest_mock_extended_1.mockDeep)();
+        mockGetInput = jest.spyOn(core, "getInput");
+        mockGetInput.mockReturnValue("fake-token");
+        mockOctokit.rest.issues.listLabelsOnIssue = jest.fn().mockResolvedValue({
+            data: [{ name: "bug" }, { name: "enhancement" }],
+        });
+    });
+    it("should return a comma-separated string of label names", async () => {
+        const labels = await (0, github_2.GetPRLabels)(mockOctokit, "owner", "repo", 1);
+        expect(labels).toEqual("bug, enhancement");
+    });
+    afterAll(() => {
+        jest.resetAllMocks();
     });
 });
 //# sourceMappingURL=github.test.js.map

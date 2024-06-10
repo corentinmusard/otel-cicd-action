@@ -44,7 +44,7 @@ async function traceWorkflowRunJobs({ provider, workflowRunJobs, }) {
         baseSha = workflowRunJobs.workflowRun.pull_requests[0].base?.sha;
         const labels = [];
         for (const pr of workflowRunJobs.workflowRun.pull_requests) {
-            const label = await (0, github_1.GetPRLabels)(github_2.context.repo.owner, github_2.context.repo.repo, pr.number);
+            const label = await (0, github_1.GetPRLabels)((0, github_2.getOctokit)(core.getInput("githubToken")), github_2.context.repo.owner, github_2.context.repo.repo, pr.number);
             labels.push(label);
         }
         pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce((result, pr, idx) => {

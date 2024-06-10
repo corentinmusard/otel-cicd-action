@@ -19,7 +19,7 @@ import {
 
 import { traceWorkflowRunStep } from "./step";
 
-import { context } from "@actions/github";
+import { context, getOctokit } from "@actions/github";
 
 export type TraceWorkflowRunJobsParams = {
   provider: BasicTracerProvider;
@@ -51,6 +51,7 @@ export async function traceWorkflowRunJobs({
     const labels: string[] = [];
     for (const pr of workflowRunJobs.workflowRun.pull_requests) {
       const label = await GetPRLabels(
+        getOctokit(core.getInput("githubToken")),
         context.repo.owner,
         context.repo.repo,
         pr.number,
