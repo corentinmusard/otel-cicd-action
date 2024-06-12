@@ -167,7 +167,7 @@ async function GetPRLabels(octokit, owner, repo, prNumber) {
         repo,
         issue_number: prNumber,
     });
-    return labelRequest.data.map((l) => l.name).join(", ");
+    return labelRequest.data.map((l) => l.name);
 }
 exports.GetPRLabels = GetPRLabels;
 //# sourceMappingURL=github.js.map

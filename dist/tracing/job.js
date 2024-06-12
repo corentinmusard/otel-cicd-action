@@ -42,10 +42,10 @@ async function traceWorkflowRunJobs({ provider, workflowRunJobs, }) {
         headRef = workflowRunJobs.workflowRun.pull_requests[0].head?.ref;
         baseRef = workflowRunJobs.workflowRun.pull_requests[0].base?.ref;
         baseSha = workflowRunJobs.workflowRun.pull_requests[0].base?.sha;
-        const labels = [];
+        const pr_labels = [];
         for (const pr of workflowRunJobs.workflowRun.pull_requests) {
-            const label = await (0, github_1.GetPRLabels)((0, github_2.getOctokit)(core.getInput("githubToken")), github_2.context.repo.owner, github_2.context.repo.repo, pr.number);
-            labels.push(label);
+            const labels = await (0, github_1.GetPRLabels)((0, github_2.getOctokit)(core.getInput("githubToken")), github_2.context.repo.owner, github_2.context.repo.repo, pr.number);
+            pr_labels.push(labels);
         }
         pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce((result, pr, idx) => {
             const prefix = `github.pull_requests.${idx}`;
@@ -54,7 +54,7 @@ async function traceWorkflowRunJobs({ provider, workflowRunJobs, }) {
                 [`${prefix}.id`]: pr.id,
                 [`${prefix}.url`]: pr.url,
                 [`${prefix}.number`]: pr.number,
-                [`${prefix}.labels`]: labels[idx],
+                [`${prefix}.labels`]: pr_labels[idx],
                 [`${prefix}.head.sha`]: pr.head.sha,
                 [`${prefix}.head.ref`]: pr.head.ref,
                 [`${prefix}.head.repo.id`]: pr.head.repo.id,

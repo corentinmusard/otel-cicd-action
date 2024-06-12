@@ -48,15 +48,15 @@ export async function traceWorkflowRunJobs({
     baseRef = workflowRunJobs.workflowRun.pull_requests[0].base?.ref;
     baseSha = workflowRunJobs.workflowRun.pull_requests[0].base?.sha;
 
-    const labels: string[] = [];
+    const pr_labels: string[][] = [];
     for (const pr of workflowRunJobs.workflowRun.pull_requests) {
-      const label = await GetPRLabels(
+      const labels = await GetPRLabels(
         getOctokit(core.getInput("githubToken")),
         context.repo.owner,
         context.repo.repo,
         pr.number,
       );
-      labels.push(label);
+      pr_labels.push(labels);
     }
 
     pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce(
@@ -68,7 +68,7 @@ export async function traceWorkflowRunJobs({
           [`${prefix}.id`]: pr.id,
           [`${prefix}.url`]: pr.url,
           [`${prefix}.number`]: pr.number,
-          [`${prefix}.labels`]: labels[idx],
+          [`${prefix}.labels`]: pr_labels[idx],
           [`${prefix}.head.sha`]: pr.head.sha,
           [`${prefix}.head.ref`]: pr.head.ref,
           [`${prefix}.head.repo.id`]: pr.head.repo.id,

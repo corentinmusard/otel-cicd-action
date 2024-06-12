@@ -118,9 +118,9 @@ describe("GetPRLabels", () => {
     >;
   });
 
-  it("should return a comma-separated string of label names", async () => {
+  it("should return a string array of label names", async () => {
     const labels = await GetPRLabels(mockOctokit, "owner", "repo", 1);
-    expect(labels).toEqual("bug, enhancement");
+    expect(labels).toEqual(["bug", "enhancement"]);
   });
 
   afterAll(() => {

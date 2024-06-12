@@ -232,11 +232,11 @@ export async function GetPRLabels(
   owner: string,
   repo: string,
   prNumber: number,
-): Promise<string> {
+) {
   const labelRequest = await octokit.rest.issues.listLabelsOnIssue({
     owner,
     repo,
     issue_number: prNumber,
   });
-  return labelRequest.data.map((l) => l.name).join(", ");
+  return labelRequest.data.map((l) => l.name);
 }
