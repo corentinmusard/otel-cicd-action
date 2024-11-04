@@ -1,0 +1,28 @@
+name: Export workflow to Dash0
+
+on:
+  workflow_run:
+    workflows:
+      # The name of the workflow(s) that triggers the export
+      - "Build"
+    types: [completed]
+
+jobs:
+  otel-export-dash0:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export workflow to Dash0
+        uses: corentinmusard/otel-cicd-action@v1
+        with:
+          otlpEndpoint: grpc://ingress.eu-west-1.aws.dash0-dev.com
+          # See https://www.dash0.com/documentation/dash0/get-started/sending-data-to-dash0
+          #
+          # Example value for DASH0_OTLP_HEADERS:
+          # Authorization=Bearer DASH0_AUTH_TOKEN
+          #
+          # Example value for DASH0_OTLP_HEADERS with separate dataset:
+          # Authorization=Bearer DASH0_AUTH_TOKEN, Dash0-Dataset=github-analytics
+          otlpHeaders: ${{ secrets.DASH0_OTLP_HEADERS }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          runId: ${{ github.event.workflow_run.id }}

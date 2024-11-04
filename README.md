@@ -19,6 +19,7 @@ We provide sample code for popular platforms. If you feel one is missing, please
 | Axiom                       | [axiom.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/axiom.yml)         |
 | New Relic                   | [newrelic.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/newrelic.yml)   |
 | Honeycomb                   | [honeycomb.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/honeycomb.yml) |
+| Dash0                       | [dash0.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/dash0.yml)         |
 | Jaeger                      | WIP                                                                                                           |
 | Grafana                     | WIP                                                                                                           |
 
