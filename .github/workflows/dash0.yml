@@ -15,7 +15,7 @@ jobs:
       - name: Export workflow to Dash0
         uses: corentinmusard/otel-cicd-action@v1
         with:
-          otlpEndpoint: grpc://ingress.eu-west-1.aws.dash0-dev.com
+          otlpEndpoint: grpc://ingress.eu-west-1.aws.dash0.com:4317
           # See https://www.dash0.com/documentation/dash0/get-started/sending-data-to-dash0
           #
           # Example value for DASH0_OTLP_HEADERS:
