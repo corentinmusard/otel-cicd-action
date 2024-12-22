@@ -22,8 +22,6 @@ jobs:
         run: npm run format:ci
       - name: build
         run: npm run build
-      - name: package
-        run: npm run package
       - name: validate dist
         run: |
           git diff
