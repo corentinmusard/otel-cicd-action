@@ -30,7 +30,6 @@ export function stringToHeader(value: string): StringDict {
         [key.trim()]: value.trim(),
       };
     }
-    // istanbul ignore next
     return result;
   }, {});
 }

@@ -82,6 +82,11 @@ describe("createTracerProvider", () => {
 });
 
 describe("stringToHeader", () => {
+  it("should parse no header", () => {
+    const headers = stringToHeader("");
+    expect(headers).toEqual({});
+  });
+
   it("should parse one header", () => {
     const headers = stringToHeader("aaa=bbb");
     expect(headers).toEqual({ aaa: "bbb" });
