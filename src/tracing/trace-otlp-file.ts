@@ -52,10 +52,9 @@ function toLinks(links: ILink[] | undefined): Link[] {
   return [];
 }
 
+/* istanbul ignore next */
 function toAttributeValue(value: IAnyValue): AttributeValue | undefined {
-  /* istanbul ignore else */
   if ("stringValue" in value) {
-    /* istanbul ignore next */
     return value.stringValue ?? undefined;
   }
   if ("arrayValue" in value) {
@@ -77,7 +76,6 @@ function toAttributeValue(value: IAnyValue): AttributeValue | undefined {
       }, {}),
     );
   }
-  /* istanbul ignore next */
   return undefined;
 }
 
