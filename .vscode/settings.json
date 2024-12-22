@@ -1,6 +1,9 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.rulers": [120],
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }

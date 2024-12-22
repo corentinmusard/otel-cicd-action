@@ -15,14 +15,12 @@ jobs:
           node-version-file: package.json
           cache: npm
       - name: Install Dependencies
-        run: npm ci --ignore-scripts
-      - name: lint
-        run: npm run lint:ci
-      - name: format check
-        run: npm run format:ci
-      - name: build
+        run: npm ci
+      - name: Run Biome (format + lint + import sorting)
+        run: npm run biome:ci
+      - name: Build
         run: npm run build
-      - name: validate dist
+      - name: Validate dist
         run: |
           git diff
           exit $(git status --porcelain | wc -l)
@@ -38,7 +36,7 @@ jobs:
           node-version-file: package.json
           cache: npm
       - name: Install Dependencies
-        run: npm ci --ignore-scripts
+        run: npm ci
       - name: run tests
         run: npm run test:ci
       - uses: inception-health/otel-upload-test-artifact-action@v1
