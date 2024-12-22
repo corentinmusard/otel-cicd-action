@@ -9,13 +9,11 @@
     "lint:ci": "eslint .",
     "format": "prettier --write .",
     "format:ci": "prettier --check .",
-    "prebuild": "rimraf lib",
-    "build": "tsc",
-    "package": "npm run build && ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "build": "tsc && ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "test": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test jest",
     "test:watch": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test jest --watch",
     "test:ci": "cross-env NODE_ENV=test jest --collect-coverage -ci",
-    "all": "npm run format && npm run lint:fix && npm run test && npm run package"
+    "all": "npm run format && npm run lint:fix && npm run build && npm run test"
   },
   "exports": {
     ".": "./dist/index.js"
@@ -54,7 +52,6 @@
     "jest-junit": "^16.0.0",
     "jest-mock-extended": "^3.0.7",
     "prettier": "^3.4.2",
-    "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"

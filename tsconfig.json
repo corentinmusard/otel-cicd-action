@@ -7,7 +7,7 @@
     "rootDir": "./src",
     "baseUrl": "./",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "skipLibCheck": true,
     // Strict Checks
     "strict": true,
