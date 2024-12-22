@@ -5,8 +5,7 @@ import type { GitHub } from "@actions/github/lib/utils";
 import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 import fetchMock from "jest-fetch-mock";
 import { mock, mockDeep } from "jest-mock-extended";
-import { type WorkflowArtifact, type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
-import { GetPRLabels } from "./github";
+import { GetPRLabels, type WorkflowArtifact, type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
 
 jest.mock("@actions/github");
 jest.mock("@actions/core");

@@ -8,7 +8,7 @@ const config: Config = {
   },
   setupFiles: ["dotenv/config"],
   reporters: ["default", "jest-junit"],
-  collectCoverageFrom: ["src/**/*.ts", "!src/config.ts", "!**/index.ts"],
+  collectCoverageFrom: ["src/**/*.ts", "!src/config.ts", "!src/index.ts"],
   coverageThreshold: {
     global: {
       statements: 100,

@@ -113,13 +113,13 @@ function addSpanToTracer(otlpSpan: ISpan, tracer: Tracer) {
   span.end(new Date((otlpSpan.endTimeUnixNano as number) / 1000000));
 }
 
-export type TraceOTLPFileParams = {
+type TraceOTLPFileParams = {
   tracer: Tracer;
   parentSpan: Span;
   path: string;
   startTime: Date;
 };
-export async function traceOTLPFile({ tracer, parentSpan, path }: TraceOTLPFileParams) {
+async function traceOTLPFile({ tracer, parentSpan, path }: TraceOTLPFileParams) {
   const fileStream = fs.createReadStream(path);
   const rl = readline.createInterface({
     input: fileStream,
@@ -149,3 +149,5 @@ export async function traceOTLPFile({ tracer, parentSpan, path }: TraceOTLPFileP
     }
   }
 }
+
+export { type TraceOTLPFileParams, traceOTLPFile };

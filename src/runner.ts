@@ -1,10 +1,10 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-
 import { getWorkflowRunJobs } from "./github";
-import { createTracerProvider, traceWorkflowRunJobs } from "./tracing";
+import { traceWorkflowRunJobs } from "./tracing/job";
+import { createTracerProvider } from "./tracing/trace";
 
-export async function run() {
+async function run() {
   const ghContext = github.context;
   const otlpEndpoint = core.getInput("otlpEndpoint");
   const otlpHeaders = core.getInput("otlpHeaders");
@@ -41,3 +41,5 @@ export async function run() {
     }, 2000);
   }
 }
+
+export { run };

@@ -7,11 +7,11 @@ import type { GitHub } from "@actions/github/lib/utils";
 import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 import * as JSZip from "jszip";
 
-export type OctoKit = InstanceType<typeof GitHub>;
-export type GetWorkflowRunType = RestEndpointMethodTypes["actions"]["getWorkflowRun"]["response"];
-export type ListJobsForWorkflowRunType = RestEndpointMethodTypes["actions"]["listJobsForWorkflowRun"]["response"];
-export type WorkflowRunJob = ListJobsForWorkflowRunType["data"]["jobs"][0];
-export type WorkflowRunJobStep = {
+type OctoKit = InstanceType<typeof GitHub>;
+type GetWorkflowRunType = RestEndpointMethodTypes["actions"]["getWorkflowRun"]["response"];
+type ListJobsForWorkflowRunType = RestEndpointMethodTypes["actions"]["listJobsForWorkflowRun"]["response"];
+type WorkflowRunJob = ListJobsForWorkflowRunType["data"]["jobs"][0];
+type WorkflowRunJobStep = {
   status: "queued" | "in_progress" | "completed";
   conclusion?: string | null;
   id?: string;
@@ -20,33 +20,32 @@ export type WorkflowRunJobStep = {
   started_at?: string | null;
   completed_at?: string | null;
 };
-export type WorkflowRun = GetWorkflowRunType["data"];
-export type ListWorkflowRunArtifactsResponse =
-  RestEndpointMethodTypes["actions"]["listWorkflowRunArtifacts"]["response"];
+type WorkflowRun = GetWorkflowRunType["data"];
+type ListWorkflowRunArtifactsResponse = RestEndpointMethodTypes["actions"]["listWorkflowRunArtifacts"]["response"];
 
-export type WorkflowArtifact = ListWorkflowRunArtifactsResponse["data"]["artifacts"][0];
+type WorkflowArtifact = ListWorkflowRunArtifactsResponse["data"]["artifacts"][0];
 
-export type WorkflowArtifactMap = {
+type WorkflowArtifactMap = {
   [job: string]: {
     [step: string]: WorkflowArtifactDownload;
   };
 };
 
-export type WorkflowArtifactDownload = {
+type WorkflowArtifactDownload = {
   jobName: string;
   stepName: string;
   path: string;
 };
 
-export type WorkflowArtifactLookup = (jobName: string, stepName: string) => WorkflowArtifactDownload | undefined;
+type WorkflowArtifactLookup = (jobName: string, stepName: string) => WorkflowArtifactDownload | undefined;
 
-export type WorkflowRunJobs = {
+type WorkflowRunJobs = {
   workflowRun: WorkflowRun;
   jobs: WorkflowRunJob[];
   workflowRunArtifacts: WorkflowArtifactLookup;
 };
 
-export async function listWorkflowRunArtifacts(
+async function listWorkflowRunArtifacts(
   context: Context,
   octokit: InstanceType<typeof GitHub>,
   runId: number,
@@ -181,7 +180,7 @@ async function listJobsForWorkflowRun(
 
 // TODO add test coverage
 /* istanbul ignore next */
-export async function getWorkflowRunJobs(
+async function getWorkflowRunJobs(
   context: Context,
   octokit: InstanceType<typeof GitHub>,
   runId: number,
@@ -202,7 +201,7 @@ export async function getWorkflowRunJobs(
   return workflowRunJobs;
 }
 
-export async function GetPRLabels(octokit: OctoKit, owner: string, repo: string, prNumber: number) {
+async function GetPRLabels(octokit: OctoKit, owner: string, repo: string, prNumber: number) {
   const labelRequest = await octokit.rest.issues.listLabelsOnIssue({
     owner,
     repo,
@@ -210,3 +209,15 @@ export async function GetPRLabels(octokit: OctoKit, owner: string, repo: string,
   });
   return labelRequest.data.map((l) => l.name);
 }
+
+export {
+  GetPRLabels,
+  getWorkflowRunJobs,
+  listWorkflowRunArtifacts,
+  type WorkflowArtifact,
+  type WorkflowArtifactDownload,
+  type WorkflowRunJobs,
+  type WorkflowArtifactLookup,
+  type WorkflowRunJob,
+  type WorkflowRunJobStep,
+};

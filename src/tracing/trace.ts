@@ -20,7 +20,7 @@ const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 
 type StringDict = { [key: string]: string };
 
-export function stringToHeader(value: string): StringDict {
+function stringToHeader(value: string): StringDict {
   const pairs = value.split(",");
   return pairs.reduce((result, item) => {
     const [key, value] = item.split(/=(.*)/s);
@@ -38,7 +38,7 @@ function isHttpEndpoint(endpoint: string) {
   return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
 
-export function createTracerProvider(
+function createTracerProvider(
   otlpEndpoint: string,
   otlpHeaders: string,
   workflowRunJobs: WorkflowRunJobs,
@@ -86,3 +86,5 @@ export function createTracerProvider(
 
   return provider;
 }
+
+export { stringToHeader, createTracerProvider };

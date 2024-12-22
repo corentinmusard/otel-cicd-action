@@ -4,7 +4,7 @@ import type { Tracer } from "@opentelemetry/sdk-trace-base";
 import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobStep } from "../github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
-export type TraceWorkflowRunStepParams = {
+type TraceWorkflowRunStepParams = {
   job: WorkflowRunJob;
   trace: TraceAPI;
   parentSpan: Span;
@@ -13,7 +13,7 @@ export type TraceWorkflowRunStepParams = {
   workflowArtifacts: WorkflowArtifactLookup;
   step?: WorkflowRunJobStep;
 };
-export async function traceWorkflowRunStep({
+async function traceWorkflowRunStep({
   job,
   parentContext,
   parentSpan,
@@ -98,3 +98,5 @@ async function traceArtifact({ tracer, parentSpan, job, step, startTime, workflo
     core.debug(`No Artifact to trace for Job<${job.name}> Step<${step.name}>`);
   }
 }
+
+export { type TraceWorkflowRunStepParams, traceWorkflowRunStep };

@@ -11,12 +11,12 @@ import {
 } from "../github";
 import { traceWorkflowRunStep } from "./step";
 
-export type TraceWorkflowRunJobsParams = {
+type TraceWorkflowRunJobsParams = {
   provider: BasicTracerProvider;
   workflowRunJobs: WorkflowRunJobs;
 };
 
-export async function traceWorkflowRunJobs({ provider, workflowRunJobs }: TraceWorkflowRunJobsParams) {
+async function traceWorkflowRunJobs({ provider, workflowRunJobs }: TraceWorkflowRunJobsParams) {
   const tracer = provider.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRunJobs.workflowRun.run_started_at || workflowRunJobs.workflowRun.created_at);
@@ -235,3 +235,5 @@ async function traceWorkflowRunJob({
     span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
   }
 }
+
+export { type TraceWorkflowRunJobsParams, traceWorkflowRunJobs };
