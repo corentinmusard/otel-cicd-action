@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import { getWorkflowRunJobs } from "./github";
+import { getWorkflowRunJobs } from "./github/github";
 import { traceWorkflowRunJobs } from "./tracing/job";
 import { createTracerProvider } from "./tracing/trace";
 

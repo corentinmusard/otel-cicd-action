@@ -5,7 +5,7 @@ import {
   SEMRESATTRS_SERVICE_NAMESPACE,
 } from "@opentelemetry/semantic-conventions";
 import { mock } from "jest-mock-extended";
-import type { WorkflowRunJobs } from "../github";
+import type { WorkflowRunJobs } from "../github/github";
 import { createTracerProvider, stringToHeader } from "./trace";
 
 describe("createTracerProvider", () => {

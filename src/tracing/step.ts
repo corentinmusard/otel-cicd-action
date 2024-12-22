@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import { type Context, type Span, SpanStatusCode, type TraceAPI } from "@opentelemetry/api";
 import type { Tracer } from "@opentelemetry/sdk-trace-base";
-import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobStep } from "../github";
+import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobStep } from "../github/github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
 type TraceWorkflowRunStepParams = {

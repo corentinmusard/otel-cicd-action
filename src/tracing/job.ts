@@ -8,7 +8,7 @@ import {
   type WorkflowRunJob,
   type WorkflowRunJobStep,
   type WorkflowRunJobs,
-} from "../github";
+} from "../github/github";
 import { traceWorkflowRunStep } from "./step";
 
 type TraceWorkflowRunJobsParams = {

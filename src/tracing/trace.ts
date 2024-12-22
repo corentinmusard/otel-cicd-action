@@ -14,7 +14,7 @@ import {
   SEMRESATTRS_SERVICE_NAMESPACE,
   SEMRESATTRS_SERVICE_VERSION,
 } from "@opentelemetry/semantic-conventions";
-import type { WorkflowRunJobs } from "../github";
+import type { WorkflowRunJobs } from "../github/github";
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 
