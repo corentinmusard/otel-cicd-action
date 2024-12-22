@@ -1,15 +1,14 @@
-import * as path from "path";
+import * as path from "node:path";
 import * as api from "@opentelemetry/api";
+import { Resource } from "@opentelemetry/resources";
 import {
-  Tracer,
   BasicTracerProvider,
   InMemorySpanExporter,
   SimpleSpanProcessor,
-  Span,
+  type Span,
+  type Tracer,
 } from "@opentelemetry/sdk-trace-base";
-import { Resource } from "@opentelemetry/resources";
 import { SEMRESATTRS_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
-
 import { traceOTLPFile } from "./trace-otlp-file";
 
 describe("traceJunitArtifact", () => {
@@ -35,7 +34,9 @@ describe("traceJunitArtifact", () => {
 
   afterEach(() => {
     // clear require cache
-    Object.keys(require.cache).forEach((key) => delete require.cache[key]);
+    for (const key of Object.keys(require.cache)) {
+      delete require.cache[key];
+    }
   });
 
   afterAll(() => {
@@ -43,12 +44,7 @@ describe("traceJunitArtifact", () => {
   });
 
   it("testsuites otlp trace", async () => {
-    const junitFilePath = path.join(
-      "src",
-      "tracing",
-      "__assets__",
-      "testsuites-trace.otlp",
-    );
+    const junitFilePath = path.join("src", "tracing", "__assets__", "testsuites-trace.otlp");
     const startTime = new Date("2022-01-22T04:45:30");
 
     const span = tracer.startSpan(
@@ -67,7 +63,7 @@ describe("traceJunitArtifact", () => {
     const spans = memoryExporter.getFinishedSpans();
     expect(spans.length).toEqual(9);
 
-    spans.forEach((s) => {
+    for (const s of spans) {
       expect(s.attributes).toBeDefined();
       expect(Object.keys(s.attributes).length).toBeGreaterThan(0);
       expect(s.endTime).toBeDefined();
@@ -80,16 +76,11 @@ describe("traceJunitArtifact", () => {
       } else {
         expect(s.attributes["error"]).toBeFalsy();
       }
-    });
+    }
   });
 
   it("testsuite otlp trace", async () => {
-    const junitFilePath = path.join(
-      "src",
-      "tracing",
-      "__assets__",
-      "testsuite-trace.otlp",
-    );
+    const junitFilePath = path.join("src", "tracing", "__assets__", "testsuite-trace.otlp");
     const startTime = new Date("2022-01-22T04:45:30");
 
     const span = tracer.startSpan(
@@ -108,7 +99,7 @@ describe("traceJunitArtifact", () => {
     const spans = memoryExporter.getFinishedSpans();
     expect(spans.length).toEqual(7);
 
-    spans.forEach((s) => {
+    for (const s of spans) {
       expect(s.attributes).toBeDefined();
       expect(Object.keys(s.attributes).length).toBeGreaterThan(0);
       expect(s.endTime).toBeDefined();
@@ -121,16 +112,11 @@ describe("traceJunitArtifact", () => {
       } else {
         expect(s.attributes["error"]).toBeFalsy();
       }
-    });
+    }
   });
 
   it("test failed otlp trace", async () => {
-    const junitFilePath = path.join(
-      "src",
-      "tracing",
-      "__assets__",
-      "fail-test-trace.otlp",
-    );
+    const junitFilePath = path.join("src", "tracing", "__assets__", "fail-test-trace.otlp");
     const startTime = new Date("2022-02-01T18:37:11");
 
     const span = tracer.startSpan(
@@ -149,7 +135,7 @@ describe("traceJunitArtifact", () => {
     const spans = memoryExporter.getFinishedSpans();
     expect(spans.length).toEqual(14);
 
-    spans.forEach((s) => {
+    for (const s of spans) {
       expect(s.attributes).toBeDefined();
       expect(Object.keys(s.attributes).length).toBeGreaterThan(0);
       expect(s.endTime).toBeDefined();
@@ -162,6 +148,6 @@ describe("traceJunitArtifact", () => {
       } else {
         expect(s.attributes["error"]).toBeFalsy();
       }
-    });
+    }
   });
 });

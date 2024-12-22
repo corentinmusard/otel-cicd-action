@@ -1,49 +1,30 @@
-import {
-  Span,
-  TraceAPI,
-  SpanStatusCode,
-  ROOT_CONTEXT,
-  Context,
-  trace,
-  SpanContext,
-} from "@opentelemetry/api";
-import { BasicTracerProvider, Tracer } from "@opentelemetry/sdk-trace-base";
 import * as core from "@actions/core";
-import {
-  WorkflowRunJobs,
-  WorkflowRunJob,
-  WorkflowRunJobStep,
-  WorkflowArtifactLookup,
-  GetPRLabels,
-} from "../github";
-
-import { traceWorkflowRunStep } from "./step";
-
 import { context, getOctokit } from "@actions/github";
+import { type Context, ROOT_CONTEXT, type Span, SpanStatusCode, type TraceAPI, trace } from "@opentelemetry/api";
+import type { BasicTracerProvider, Tracer } from "@opentelemetry/sdk-trace-base";
+import {
+  GetPRLabels,
+  type WorkflowArtifactLookup,
+  type WorkflowRunJob,
+  type WorkflowRunJobStep,
+  type WorkflowRunJobs,
+} from "../github";
+import { traceWorkflowRunStep } from "./step";
 
 export type TraceWorkflowRunJobsParams = {
   provider: BasicTracerProvider;
   workflowRunJobs: WorkflowRunJobs;
 };
 
-export async function traceWorkflowRunJobs({
-  provider,
-  workflowRunJobs,
-}: TraceWorkflowRunJobsParams): Promise<SpanContext> {
+export async function traceWorkflowRunJobs({ provider, workflowRunJobs }: TraceWorkflowRunJobsParams) {
   const tracer = provider.getTracer("otel-cicd-action");
 
-  const startTime = new Date(
-    workflowRunJobs.workflowRun.run_started_at ||
-      workflowRunJobs.workflowRun.created_at,
-  );
+  const startTime = new Date(workflowRunJobs.workflowRun.run_started_at || workflowRunJobs.workflowRun.created_at);
   let headRef = undefined;
   let baseRef = undefined;
   let baseSha = undefined;
   let pull_requests = {};
-  if (
-    workflowRunJobs.workflowRun.pull_requests &&
-    workflowRunJobs.workflowRun.pull_requests.length > 0
-  ) {
+  if (workflowRunJobs.workflowRun.pull_requests && workflowRunJobs.workflowRun.pull_requests.length > 0) {
     headRef = workflowRunJobs.workflowRun.pull_requests[0].head?.ref;
     baseRef = workflowRunJobs.workflowRun.pull_requests[0].base?.ref;
     baseSha = workflowRunJobs.workflowRun.pull_requests[0].base?.sha;
@@ -59,35 +40,31 @@ export async function traceWorkflowRunJobs({
       pr_labels.push(labels);
     }
 
-    pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce(
-      (result, pr, idx) => {
-        const prefix = `github.pull_requests.${idx}`;
+    pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce((result, pr, idx) => {
+      const prefix = `github.pull_requests.${idx}`;
 
-        return {
-          ...result,
-          [`${prefix}.id`]: pr.id,
-          [`${prefix}.url`]: pr.url,
-          [`${prefix}.number`]: pr.number,
-          [`${prefix}.labels`]: pr_labels[idx],
-          [`${prefix}.head.sha`]: pr.head.sha,
-          [`${prefix}.head.ref`]: pr.head.ref,
-          [`${prefix}.head.repo.id`]: pr.head.repo.id,
-          [`${prefix}.head.repo.url`]: pr.head.repo.url,
-          [`${prefix}.head.repo.name`]: pr.head.repo.name,
-          [`${prefix}.base.ref`]: pr.base.ref,
-          [`${prefix}.base.sha`]: pr.base.sha,
-          [`${prefix}.base.repo.id`]: pr.base.repo.id,
-          [`${prefix}.base.repo.url`]: pr.base.repo.url,
-          [`${prefix}.base.repo.name`]: pr.base.repo.name,
-        };
-      },
-      {},
-    );
+      return {
+        ...result,
+        [`${prefix}.id`]: pr.id,
+        [`${prefix}.url`]: pr.url,
+        [`${prefix}.number`]: pr.number,
+        [`${prefix}.labels`]: pr_labels[idx],
+        [`${prefix}.head.sha`]: pr.head.sha,
+        [`${prefix}.head.ref`]: pr.head.ref,
+        [`${prefix}.head.repo.id`]: pr.head.repo.id,
+        [`${prefix}.head.repo.url`]: pr.head.repo.url,
+        [`${prefix}.head.repo.name`]: pr.head.repo.name,
+        [`${prefix}.base.ref`]: pr.base.ref,
+        [`${prefix}.base.sha`]: pr.base.sha,
+        [`${prefix}.base.repo.id`]: pr.base.repo.id,
+        [`${prefix}.base.repo.url`]: pr.base.repo.url,
+        [`${prefix}.base.repo.name`]: pr.base.repo.name,
+      };
+    }, {});
   }
 
   const rootSpan = tracer.startSpan(
-    workflowRunJobs.workflowRun.name ||
-      `${workflowRunJobs.workflowRun.workflow_id}`,
+    workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`,
     {
       attributes: {
         // OpenTelemetry semantic convention CICD Pipeline Attributes
@@ -102,33 +79,20 @@ export async function traceWorkflowRunJobs({
         "github.workflow_url": workflowRunJobs.workflowRun.workflow_url,
         "github.event": workflowRunJobs.workflowRun.event,
         "github.workflow": workflowRunJobs.workflowRun.name || undefined,
-        "github.conclusion":
-          workflowRunJobs.workflowRun.conclusion || undefined,
+        "github.conclusion": workflowRunJobs.workflowRun.conclusion || undefined,
         "github.created_at": workflowRunJobs.workflowRun.created_at,
         "github.updated_at": workflowRunJobs.workflowRun.updated_at,
         "github.run_started_at": workflowRunJobs.workflowRun.run_started_at,
-        "github.author_name":
-          workflowRunJobs.workflowRun.head_commit?.author?.name || undefined,
-        "github.author_email":
-          workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-        "github.head_commit.id":
-          workflowRunJobs.workflowRun.head_commit?.id || undefined,
-        "github.head_commit.tree_id":
-          workflowRunJobs.workflowRun.head_commit?.tree_id || undefined,
-        "github.head_commit.author.name":
-          workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-        "github.head_commit.author.email":
-          workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-        "github.head_commit.committer.name":
-          workflowRunJobs.workflowRun.head_commit?.committer?.email ||
-          undefined,
-        "github.head_commit.committer.email":
-          workflowRunJobs.workflowRun.head_commit?.committer?.email ||
-          undefined,
-        "github.head_commit.message":
-          workflowRunJobs.workflowRun.head_commit?.message || undefined,
-        "github.head_commit.timestamp":
-          workflowRunJobs.workflowRun.head_commit?.timestamp || undefined,
+        "github.author_name": workflowRunJobs.workflowRun.head_commit?.author?.name || undefined,
+        "github.author_email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
+        "github.head_commit.id": workflowRunJobs.workflowRun.head_commit?.id || undefined,
+        "github.head_commit.tree_id": workflowRunJobs.workflowRun.head_commit?.tree_id || undefined,
+        "github.head_commit.author.name": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
+        "github.head_commit.author.email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
+        "github.head_commit.committer.name": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
+        "github.head_commit.committer.email": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
+        "github.head_commit.message": workflowRunJobs.workflowRun.head_commit?.message || undefined,
+        "github.head_commit.timestamp": workflowRunJobs.workflowRun.head_commit?.timestamp || undefined,
         "github.head_sha": workflowRunJobs.workflowRun.head_sha,
         "github.head_ref": headRef,
         "github.base_ref": baseRef,
@@ -147,11 +111,7 @@ export async function traceWorkflowRunJobs({
     code = SpanStatusCode.ERROR;
   }
   rootSpan.setStatus({ code });
-  core.debug(
-    `Root Span: ${rootSpan.spanContext().traceId}: ${
-      workflowRunJobs.workflowRun.created_at
-    }`,
-  );
+  core.debug(`Root Span: ${rootSpan.spanContext().traceId}: ${workflowRunJobs.workflowRun.created_at}`);
 
   try {
     if (workflowRunJobs.jobs.length > 0) {

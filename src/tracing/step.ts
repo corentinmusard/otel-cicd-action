@@ -1,11 +1,7 @@
 import * as core from "@actions/core";
-import { TraceAPI, Context, SpanStatusCode, Span } from "@opentelemetry/api";
-import { Tracer } from "@opentelemetry/sdk-trace-base";
-import {
-  WorkflowRunJobStep,
-  WorkflowRunJob,
-  WorkflowArtifactLookup,
-} from "../github";
+import { type Context, type Span, SpanStatusCode, type TraceAPI } from "@opentelemetry/api";
+import type { Tracer } from "@opentelemetry/sdk-trace-base";
+import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobStep } from "../github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
 export type TraceWorkflowRunStepParams = {
@@ -31,7 +27,7 @@ export async function traceWorkflowRunStep({
     console.warn(`Step ${stepName} is not completed yet.`);
     return;
   }
-  if (step.conclusion == "cancelled" || step.conclusion == "skipped") {
+  if (step.conclusion === "cancelled" || step.conclusion === "skipped") {
     console.info(`Step ${step.name} did not run.`);
     return;
   }
@@ -88,14 +84,7 @@ type TraceArtifactParams = {
   workflowArtifacts: WorkflowArtifactLookup;
 };
 
-async function traceArtifact({
-  tracer,
-  parentSpan,
-  job,
-  step,
-  startTime,
-  workflowArtifacts,
-}: TraceArtifactParams) {
+async function traceArtifact({ tracer, parentSpan, job, step, startTime, workflowArtifacts }: TraceArtifactParams) {
   const artifact = workflowArtifacts(job.name, step.name);
   if (artifact) {
     core.debug(`Found Artifact ${artifact?.path}`);

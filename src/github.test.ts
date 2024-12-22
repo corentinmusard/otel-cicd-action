@@ -1,42 +1,31 @@
-import {
-  listWorkflowRunArtifacts,
-  WorkflowArtifact,
-  WorkflowArtifactDownload,
-} from "./github";
-import { Context } from "@actions/github/lib/context";
-import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
-import * as fs from "fs";
-import * as path from "path";
-import { mock, mockDeep } from "jest-mock-extended";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import type { Context } from "@actions/github/lib/context";
+import type { GitHub } from "@actions/github/lib/utils";
+import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 import fetchMock from "jest-fetch-mock";
-import { GitHub } from "@actions/github/lib/utils";
-
+import { mock, mockDeep } from "jest-mock-extended";
+import { type WorkflowArtifact, type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
 import { GetPRLabels } from "./github";
 
 jest.mock("@actions/github");
 jest.mock("@actions/core");
 
-type ListWorkflowRunArtifactsResponse =
-  RestEndpointMethodTypes["actions"]["listWorkflowRunArtifacts"]["response"];
-type DownloadArtifactResponse =
-  RestEndpointMethodTypes["actions"]["downloadArtifact"]["response"];
+type ListWorkflowRunArtifactsResponse = RestEndpointMethodTypes["actions"]["listWorkflowRunArtifacts"]["response"];
+type DownloadArtifactResponse = RestEndpointMethodTypes["actions"]["downloadArtifact"]["response"];
 
 describe("listWorkflowRunArtifacts", () => {
   let mockContext: Context;
-  let mockOctokit: InstanceType<typeof GitHub> = mockDeep<
-    InstanceType<typeof GitHub>
-  >() as InstanceType<typeof GitHub>;
+  let mockOctokit: InstanceType<typeof GitHub> = mockDeep<InstanceType<typeof GitHub>>() as InstanceType<typeof GitHub>;
   let subject: WorkflowArtifactDownload;
 
   beforeAll(async () => {
     mockContext = mockDeep<Context>();
     mockOctokit = mockDeep<InstanceType<typeof GitHub>>();
-    const mockListWorkflowRunArtifacts = mockOctokit.rest.actions
-      .listWorkflowRunArtifacts as jest.MockedFunction<
+    const mockListWorkflowRunArtifacts = mockOctokit.rest.actions.listWorkflowRunArtifacts as jest.MockedFunction<
       typeof mockOctokit.rest.actions.listWorkflowRunArtifacts
     >;
-    const mockDownloadArtifact = mockOctokit.rest.actions
-      .downloadArtifact as jest.MockedFunction<
+    const mockDownloadArtifact = mockOctokit.rest.actions.downloadArtifact as jest.MockedFunction<
       typeof mockOctokit.rest.actions.downloadArtifact
     >;
 
@@ -53,19 +42,11 @@ describe("listWorkflowRunArtifacts", () => {
         },
       }),
     );
-    mockDownloadArtifact.mockResolvedValue(
-      mock<DownloadArtifactResponse>({ url: "localhost" }),
-    );
-    const filePath = path.join(
-      __dirname,
-      "__assets__",
-      "{lint-and-test}{run tests}.zip",
-    );
+    mockDownloadArtifact.mockResolvedValue(mock<DownloadArtifactResponse>({ url: "localhost" }));
+    const filePath = path.join(__dirname, "__assets__", "{lint-and-test}{run tests}.zip");
     const zipFile = fs.readFileSync(filePath);
     fetchMock.enableMocks();
-    fetchMock.mockResponseOnce(() =>
-      Promise.resolve({ body: zipFile as unknown as string }),
-    );
+    fetchMock.mockResponseOnce(() => Promise.resolve({ body: zipFile as unknown as string }));
 
     const lookup = await listWorkflowRunArtifacts(mockContext, mockOctokit, 1);
     const response = lookup("lint-and-test", "run tests");
@@ -113,9 +94,7 @@ describe("GetPRLabels", () => {
 
     mockOctokit.rest.issues.listLabelsOnIssue = jest.fn().mockResolvedValue({
       data: [{ name: "bug" }, { name: "enhancement" }],
-    }) as unknown as jest.MockedFunction<
-      typeof mockOctokit.rest.issues.listLabelsOnIssue
-    >;
+    }) as unknown as jest.MockedFunction<typeof mockOctokit.rest.issues.listLabelsOnIssue>;
   });
 
   it("should return a string array of label names", async () => {

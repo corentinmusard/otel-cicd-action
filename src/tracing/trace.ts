@@ -1,20 +1,20 @@
 import * as grpc from "@grpc/grpc-js";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
+import { OTLPTraceExporter as ProtoOTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
+import { Resource } from "@opentelemetry/resources";
 import {
   BasicTracerProvider,
   BatchSpanProcessor,
   ConsoleSpanExporter,
-  SpanExporter,
+  type SpanExporter,
 } from "@opentelemetry/sdk-trace-base";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
-import { OTLPTraceExporter as ProtoOTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import {
   SEMRESATTRS_SERVICE_INSTANCE_ID,
   SEMRESATTRS_SERVICE_NAME,
   SEMRESATTRS_SERVICE_NAMESPACE,
   SEMRESATTRS_SERVICE_VERSION,
 } from "@opentelemetry/semantic-conventions";
-import { WorkflowRunJobs } from "../github";
-import { Resource } from "@opentelemetry/resources";
+import type { WorkflowRunJobs } from "../github";
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 
@@ -35,7 +35,7 @@ export function stringToHeader(value: string): StringDict {
   }, {});
 }
 
-function isHttpEndpoint(endpoint: string): boolean {
+function isHttpEndpoint(endpoint: string) {
   return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
 
@@ -46,9 +46,7 @@ export function createTracerProvider(
   otelServiceName?: string | null | undefined,
 ) {
   const serviceName =
-    otelServiceName ||
-    workflowRunJobs.workflowRun.name ||
-    `${workflowRunJobs.workflowRun.workflow_id}`;
+    otelServiceName || workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`;
   const serviceInstanceId = [
     workflowRunJobs.workflowRun.repository.full_name,
     workflowRunJobs.workflowRun.workflow_id,

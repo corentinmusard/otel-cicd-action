@@ -1,17 +1,15 @@
-import { Context } from "@actions/github/lib/context";
-import { GitHub } from "@actions/github/lib/utils";
-import * as core from "@actions/core";
-import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
-import * as JSZip from "jszip";
-import * as fs from "fs";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import * as artifact from "@actions/artifact";
-import * as path from "path";
+import * as core from "@actions/core";
+import type { Context } from "@actions/github/lib/context";
+import type { GitHub } from "@actions/github/lib/utils";
+import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
+import * as JSZip from "jszip";
 
 export type OctoKit = InstanceType<typeof GitHub>;
-export type GetWorkflowRunType =
-  RestEndpointMethodTypes["actions"]["getWorkflowRun"]["response"];
-export type ListJobsForWorkflowRunType =
-  RestEndpointMethodTypes["actions"]["listJobsForWorkflowRun"]["response"];
+export type GetWorkflowRunType = RestEndpointMethodTypes["actions"]["getWorkflowRun"]["response"];
+export type ListJobsForWorkflowRunType = RestEndpointMethodTypes["actions"]["listJobsForWorkflowRun"]["response"];
 export type WorkflowRunJob = ListJobsForWorkflowRunType["data"]["jobs"][0];
 export type WorkflowRunJobStep = {
   status: "queued" | "in_progress" | "completed";
@@ -26,8 +24,7 @@ export type WorkflowRun = GetWorkflowRunType["data"];
 export type ListWorkflowRunArtifactsResponse =
   RestEndpointMethodTypes["actions"]["listWorkflowRunArtifacts"]["response"];
 
-export type WorkflowArtifact =
-  ListWorkflowRunArtifactsResponse["data"]["artifacts"][0];
+export type WorkflowArtifact = ListWorkflowRunArtifactsResponse["data"]["artifacts"][0];
 
 export type WorkflowArtifactMap = {
   [job: string]: {
@@ -41,10 +38,7 @@ export type WorkflowArtifactDownload = {
   path: string;
 };
 
-export type WorkflowArtifactLookup = (
-  jobName: string,
-  stepName: string,
-) => WorkflowArtifactDownload | undefined;
+export type WorkflowArtifactLookup = (jobName: string, stepName: string) => WorkflowArtifactDownload | undefined;
 
 export type WorkflowRunJobs = {
   workflowRun: WorkflowRun;
@@ -75,99 +69,85 @@ export async function listWorkflowRunArtifacts(
   };
 }
 
-async function getWorkflowRunArtifactMap(
-  context: Context,
-  octokit: InstanceType<typeof GitHub>,
-  runId: number,
-): Promise<WorkflowArtifactMap> {
+async function getWorkflowRunArtifactMap(context: Context, octokit: InstanceType<typeof GitHub>, runId: number) {
   const artifactsList: WorkflowArtifact[] = [];
   const pageSize = 100;
 
   for (let page = 1, hasNext = true; hasNext; page++) {
-    const listArtifactsResponse =
-      await octokit.rest.actions.listWorkflowRunArtifacts({
-        ...context.repo,
-        run_id: runId,
-        page,
-        per_page: pageSize,
-      });
+    const listArtifactsResponse = await octokit.rest.actions.listWorkflowRunArtifacts({
+      ...context.repo,
+      run_id: runId,
+      page,
+      per_page: pageSize,
+    });
     artifactsList.push(...listArtifactsResponse.data.artifacts);
     hasNext = artifactsList.length < listArtifactsResponse.data.total_count;
   }
 
-  const artifactsLookup: WorkflowArtifactMap = await artifactsList.reduce(
-    async (resultP, artifact) => {
-      const result = await resultP;
-      const match = artifact.name.match(
-        /\{(?<jobName>.*)\}\{(?<stepName>.*)\}/,
-      );
-      const next: WorkflowArtifactMap = { ...result };
-      /* istanbul ignore next */
-      if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
-        const { jobName, stepName } = match.groups;
-        core.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
-        if (!(jobName in next)) {
-          next[jobName] = {};
-        }
-        const downloadResponse = await octokit.rest.actions.downloadArtifact({
-          ...context.repo,
-          artifact_id: artifact.id,
-          archive_format: "zip",
-        });
-
-        const response = await fetch(downloadResponse.url);
-        const buf = await response.arrayBuffer();
-        const zip = await JSZip.loadAsync(buf);
-        const writeStream = fs.createWriteStream(`${artifact.name}.log`);
-        try {
-          zip.files[Object.keys(zip.files)[0]].nodeStream().pipe(writeStream);
-          await new Promise((fulfill) => writeStream.on("finish", fulfill));
-          core.debug(`Downloaded Artifact ${writeStream.path.toString()}`);
-          next[jobName][stepName] = {
-            jobName,
-            stepName,
-            path: writeStream.path.toString(),
-          };
-        } finally {
-          writeStream.close();
-        }
+  const artifactsLookup: WorkflowArtifactMap = await artifactsList.reduce(async (resultP, artifact) => {
+    const result = await resultP;
+    const match = artifact.name.match(/\{(?<jobName>.*)\}\{(?<stepName>.*)\}/);
+    const next: WorkflowArtifactMap = { ...result };
+    /* istanbul ignore next */
+    if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
+      const { jobName, stepName } = match.groups;
+      core.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
+      if (!(jobName in next)) {
+        next[jobName] = {};
       }
+      const downloadResponse = await octokit.rest.actions.downloadArtifact({
+        ...context.repo,
+        artifact_id: artifact.id,
+        archive_format: "zip",
+      });
 
-      return next;
-    },
-    Promise.resolve({}),
-  );
+      const response = await fetch(downloadResponse.url);
+      const buf = await response.arrayBuffer();
+      const zip = await JSZip.loadAsync(buf);
+      const writeStream = fs.createWriteStream(`${artifact.name}.log`);
+      try {
+        zip.files[Object.keys(zip.files)[0]].nodeStream().pipe(writeStream);
+        await new Promise((fulfill) => writeStream.on("finish", fulfill));
+        core.debug(`Downloaded Artifact ${writeStream.path.toString()}`);
+        next[jobName][stepName] = {
+          jobName,
+          stepName,
+          path: writeStream.path.toString(),
+        };
+      } finally {
+        writeStream.close();
+      }
+    }
+
+    return next;
+  }, Promise.resolve({}));
   return artifactsLookup;
 }
 
 /* istanbul ignore next */
-async function getSelfArtifactMap(): Promise<WorkflowArtifactMap> {
+async function getSelfArtifactMap() {
   const client = artifact.create();
-  const responses: artifact.DownloadResponse[] =
-    await client.downloadAllArtifacts();
-  const artifactsMap: WorkflowArtifactMap = responses.reduce(
-    (result, { artifactName, downloadPath }) => {
-      const next: WorkflowArtifactMap = { ...result };
-      const match = artifactName.match(/\{(?<jobName>.*)\}\{(?<stepName>.*)\}/);
-      if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
-        const { jobName, stepName } = match.groups;
-        core.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
-        if (!(jobName in next)) {
-          next[jobName] = {};
-        }
-        const artifactDirFiles = fs.readdirSync(downloadPath);
-        if (artifactDirFiles && artifactDirFiles.length > 0) {
-          next[jobName][stepName] = {
-            jobName,
-            stepName,
-            path: path.join(downloadPath, artifactDirFiles[0]),
-          };
-        }
+  const responses: artifact.DownloadResponse[] = await client.downloadAllArtifacts();
+  const artifactsMap: WorkflowArtifactMap = responses.reduce((result, { artifactName, downloadPath }) => {
+    const next: WorkflowArtifactMap = { ...result };
+    const match = artifactName.match(/\{(?<jobName>.*)\}\{(?<stepName>.*)\}/);
+    if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
+      const { jobName, stepName } = match.groups;
+      core.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
+      if (!(jobName in next)) {
+        next[jobName] = {};
       }
-      return next;
-    },
-    {},
-  );
+      const artifactDirFiles = fs.readdirSync(downloadPath);
+      if (artifactDirFiles && artifactDirFiles.length > 0) {
+        next[jobName][stepName] = {
+          jobName,
+          stepName,
+          path: path.join(downloadPath, artifactDirFiles[0]),
+        };
+      }
+    }
+    return next;
+  }, {});
 
   return artifactsMap;
 }
@@ -206,17 +186,12 @@ export async function getWorkflowRunJobs(
   octokit: InstanceType<typeof GitHub>,
   runId: number,
 ): Promise<WorkflowRunJobs> {
-  const getWorkflowRunResponse: GetWorkflowRunType =
-    await octokit.rest.actions.getWorkflowRun({
-      ...context.repo,
-      run_id: runId,
-    });
+  const getWorkflowRunResponse: GetWorkflowRunType = await octokit.rest.actions.getWorkflowRun({
+    ...context.repo,
+    run_id: runId,
+  });
 
-  const workflowRunArtifacts = await listWorkflowRunArtifacts(
-    context,
-    octokit,
-    runId,
-  );
+  const workflowRunArtifacts = await listWorkflowRunArtifacts(context, octokit, runId);
   const jobs = await listJobsForWorkflowRun(context, octokit, runId);
 
   const workflowRunJobs = {
@@ -227,12 +202,7 @@ export async function getWorkflowRunJobs(
   return workflowRunJobs;
 }
 
-export async function GetPRLabels(
-  octokit: OctoKit,
-  owner: string,
-  repo: string,
-  prNumber: number,
-) {
+export async function GetPRLabels(octokit: OctoKit, owner: string, repo: string, prNumber: number) {
   const labelRequest = await octokit.rest.issues.listLabelsOnIssue({
     owner,
     repo,

@@ -2,29 +2,16 @@
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": { "ignore": ["dist/**"] },
   "formatter": {
-    "enabled": true,
     "indentStyle": "space",
-    "lineWidth": 80
+    "lineWidth": 120
   },
-  "organizeImports": { "enabled": false },
   "linter": {
-    "enabled": true,
     "rules": {
       "complexity": {
-        "useLiteralKeys": "off",
-        "noForEach": "off"
-      },
-      "style": {
-        "useNodejsImportProtocol": "off",
-        "useNumberNamespace": "off",
-        "noUselessElse": "off",
-        "useImportType": "off"
+        "useLiteralKeys": "off"
       },
       "performance": {
         "noAccumulatingSpread": "off"
-      },
-      "suspicious": {
-        "noDoubleEquals": "off"
       }
     }
   },

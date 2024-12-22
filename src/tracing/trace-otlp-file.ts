@@ -1,27 +1,27 @@
-import { Tracer } from "@opentelemetry/sdk-trace-base";
+import * as fs from "node:fs";
+import * as readline from "node:readline";
 import * as core from "@actions/core";
-import * as fs from "fs";
-import * as readline from "readline";
 import {
-  Attributes,
-  AttributeValue,
-  context,
-  Link,
-  Span,
+  type AttributeValue,
+  type Attributes,
+  type Link,
+  type Span,
   SpanKind,
-  SpanStatusCode,
+  type SpanStatusCode,
+  context,
 } from "@opentelemetry/api";
 import {
-  IKeyValue,
   ESpanKind,
-  IAnyValue,
-  ISpan,
-  ILink,
-  IExportTraceServiceRequest,
+  type IAnyValue,
+  type IExportTraceServiceRequest,
+  type IKeyValue,
+  type ILink,
+  type ISpan,
 } from "@opentelemetry/otlp-transformer";
+import type { Tracer } from "@opentelemetry/sdk-trace-base";
 
 /* istanbul ignore next */
-function toSpanKind(spanKind: ESpanKind | undefined): SpanKind {
+function toSpanKind(spanKind: ESpanKind | undefined) {
   switch (spanKind) {
     /* istanbul ignore next */
     case ESpanKind.SPAN_KIND_CLIENT:
@@ -57,15 +57,20 @@ function toAttributeValue(value: IAnyValue): AttributeValue | undefined {
   if ("stringValue" in value) {
     /* istanbul ignore next */
     return value.stringValue ?? undefined;
-  } else if ("arrayValue" in value) {
+  }
+  if ("arrayValue" in value) {
     return JSON.stringify(value.arrayValue?.values);
-  } else if ("boolValue" in value) {
+  }
+  if ("boolValue" in value) {
     return value.boolValue ?? undefined;
-  } else if ("doubleValue" in value) {
+  }
+  if ("doubleValue" in value) {
     return value.doubleValue ?? undefined;
-  } else if ("intValue" in value) {
+  }
+  if ("intValue" in value) {
     return value.intValue ?? undefined;
-  } else if ("kvlistValue" in value) {
+  }
+  if ("kvlistValue" in value) {
     return JSON.stringify(
       value.kvlistValue?.values.reduce((result, { key, value }) => {
         return { ...result, [key]: toAttributeValue(value) };
@@ -116,15 +121,11 @@ export type TraceOTLPFileParams = {
   path: string;
   startTime: Date;
 };
-export async function traceOTLPFile({
-  tracer,
-  parentSpan,
-  path,
-}: TraceOTLPFileParams): Promise<void> {
+export async function traceOTLPFile({ tracer, parentSpan, path }: TraceOTLPFileParams) {
   const fileStream = fs.createReadStream(path);
   const rl = readline.createInterface({
     input: fileStream,
-    crlfDelay: Infinity,
+    crlfDelay: Number.POSITIVE_INFINITY,
   });
 
   for await (const line of rl) {
@@ -139,8 +140,7 @@ export async function traceOTLPFile({
             for (const otlpSpan of scopeSpans.spans ?? []) {
               core.debug(
                 `Trace Test ParentSpan<${
-                  otlpSpan.parentSpanId?.toString() ||
-                  parentSpan.spanContext().spanId
+                  otlpSpan.parentSpanId?.toString() || parentSpan.spanContext().spanId
                 }> -> Span<${otlpSpan.spanId.toString()}> `,
               );
               addSpanToTracer(otlpSpan, tracer);
