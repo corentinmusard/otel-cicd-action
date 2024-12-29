@@ -1,44 +1,26 @@
 import * as core from "@actions/core";
-import { context, getOctokit } from "@actions/github";
 import { type Context, ROOT_CONTEXT, type Span, SpanStatusCode, type TraceAPI, trace } from "@opentelemetry/api";
 import type { BasicTracerProvider, Tracer } from "@opentelemetry/sdk-trace-base";
-import {
-  GetPRLabels,
-  type WorkflowArtifactLookup,
-  type WorkflowRunJob,
-  type WorkflowRunJobStep,
-  type WorkflowRunJobs,
-} from "../github/github";
+import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobs } from "../github/github";
 import { traceWorkflowRunStep } from "./step";
 
-type TraceWorkflowRunJobsParams = {
-  provider: BasicTracerProvider;
-  workflowRunJobs: WorkflowRunJobs;
-};
-
-async function traceWorkflowRunJobs({ provider, workflowRunJobs }: TraceWorkflowRunJobsParams) {
+async function traceWorkflowRunJobs(
+  provider: BasicTracerProvider,
+  workflowRunJobs: WorkflowRunJobs,
+  prLabels: Record<number, string[]>,
+) {
   const tracer = provider.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRunJobs.workflowRun.run_started_at || workflowRunJobs.workflowRun.created_at);
-  let headRef = undefined;
-  let baseRef = undefined;
-  let baseSha = undefined;
+
+  let headRef: string | undefined;
+  let baseRef: string | undefined;
+  let baseSha: string | undefined;
   let pull_requests = {};
   if (workflowRunJobs.workflowRun.pull_requests && workflowRunJobs.workflowRun.pull_requests.length > 0) {
     headRef = workflowRunJobs.workflowRun.pull_requests[0].head?.ref;
     baseRef = workflowRunJobs.workflowRun.pull_requests[0].base?.ref;
     baseSha = workflowRunJobs.workflowRun.pull_requests[0].base?.sha;
-
-    const pr_labels: string[][] = [];
-    for (const pr of workflowRunJobs.workflowRun.pull_requests) {
-      const labels = await GetPRLabels(
-        getOctokit(core.getInput("githubToken")),
-        context.repo.owner,
-        context.repo.repo,
-        pr.number,
-      );
-      pr_labels.push(labels);
-    }
 
     pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce((result, pr, idx) => {
       const prefix = `github.pull_requests.${idx}`;
@@ -48,7 +30,7 @@ async function traceWorkflowRunJobs({ provider, workflowRunJobs }: TraceWorkflow
         [`${prefix}.id`]: pr.id,
         [`${prefix}.url`]: pr.url,
         [`${prefix}.number`]: pr.number,
-        [`${prefix}.labels`]: pr_labels[idx],
+        [`${prefix}.labels`]: prLabels[pr.number],
         [`${prefix}.head.sha`]: pr.head.sha,
         [`${prefix}.head.ref`]: pr.head.ref,
         [`${prefix}.head.repo.id`]: pr.head.repo.id,
@@ -105,24 +87,24 @@ async function traceWorkflowRunJobs({ provider, workflowRunJobs }: TraceWorkflow
     },
     ROOT_CONTEXT,
   );
-  core.debug(`TraceID: ${rootSpan.spanContext().traceId}`);
-  let code = SpanStatusCode.OK;
-  if (workflowRunJobs.workflowRun.conclusion === "failure") {
-    code = SpanStatusCode.ERROR;
-  }
+
+  const code = workflowRunJobs.workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
   rootSpan.setStatus({ code });
+
+  core.debug(`TraceID: ${rootSpan.spanContext().traceId}`);
   core.debug(`Root Span: ${rootSpan.spanContext().traceId}: ${workflowRunJobs.workflowRun.created_at}`);
 
   try {
     if (workflowRunJobs.jobs.length > 0) {
+      // "Queued" span represent the time between the workflow has been started_at and
+      // the first job has been picked up by a runner
       const firstJob = workflowRunJobs.jobs[0];
-      const queueCtx = trace.setSpan(ROOT_CONTEXT, rootSpan);
-      const queueSpan = tracer.startSpan("Queued", { startTime }, queueCtx);
-      queueSpan.end(new Date(firstJob.started_at));
+      const queuedCtx = trace.setSpan(ROOT_CONTEXT, rootSpan);
+      const queuedSpan = tracer.startSpan("Queued", { startTime }, queuedCtx);
+      queuedSpan.end(new Date(firstJob.started_at));
     }
 
-    for (let i = 0; i < workflowRunJobs.jobs.length; i++) {
-      const job = workflowRunJobs.jobs[i];
+    for (const job of workflowRunJobs.jobs) {
       await traceWorkflowRunJob({
         parentSpan: rootSpan,
         parentContext: ROOT_CONTEXT,
@@ -135,12 +117,12 @@ async function traceWorkflowRunJobs({ provider, workflowRunJobs }: TraceWorkflow
   } finally {
     rootSpan.end(new Date(workflowRunJobs.workflowRun.updated_at));
   }
-  return rootSpan.spanContext();
+  return rootSpan.spanContext().traceId;
 }
 
 type TraceWorkflowRunJobParams = {
-  parentContext: Context;
   parentSpan: Span;
+  parentContext: Context;
   trace: TraceAPI;
   tracer: Tracer;
   job: WorkflowRunJob;
@@ -148,19 +130,19 @@ type TraceWorkflowRunJobParams = {
 };
 
 async function traceWorkflowRunJob({
+  parentSpan,
   parentContext,
   trace,
-  parentSpan,
   tracer,
   job,
   workflowArtifacts,
 }: TraceWorkflowRunJobParams) {
   core.debug(`Trace Job ${job.id}`);
   if (!job.completed_at) {
-    console.warn(`Job ${job.id} is not completed yet`);
+    core.warning(`Job ${job.id} is not completed yet`);
     return;
   }
-  job.name;
+
   const ctx = trace.setSpan(parentContext, parentSpan);
   const startTime = new Date(job.started_at);
   const completedTime = new Date(job.completed_at);
@@ -208,26 +190,22 @@ async function traceWorkflowRunJob({
   core.debug(`Job Span<${spanId}>: Started<${job.started_at}>`);
 
   try {
-    let code = SpanStatusCode.OK;
-    if (job.conclusion === "failure") {
-      code = SpanStatusCode.ERROR;
-    }
+    const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
     span.setStatus({ code });
-    const numSteps = job.steps?.length || 0;
+
+    const numSteps = job.steps?.length ?? 0;
     core.debug(`Trace ${numSteps} Steps`);
-    if (job.steps !== undefined) {
-      for (let i = 0; i < job.steps.length; i++) {
-        const step: WorkflowRunJobStep = job.steps[i];
-        await traceWorkflowRunStep({
-          job,
-          parentContext: ctx,
-          trace,
-          parentSpan: span,
-          tracer,
-          workflowArtifacts,
-          step,
-        });
-      }
+
+    for (const step of job.steps ?? []) {
+      await traceWorkflowRunStep({
+        parentSpan: span,
+        parentContext: ctx,
+        trace,
+        tracer,
+        jobName: job.name,
+        step,
+        workflowArtifacts,
+      });
     }
   } finally {
     core.debug(`Job Span<${spanId}>: Ended<${job.completed_at}>`);
@@ -236,4 +214,4 @@ async function traceWorkflowRunJob({
   }
 }
 
-export { type TraceWorkflowRunJobsParams, traceWorkflowRunJobs };
+export { traceWorkflowRunJobs };

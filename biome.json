@@ -8,7 +8,8 @@
   "linter": {
     "rules": {
       "complexity": {
-        "useLiteralKeys": "off"
+        "useLiteralKeys": "off",
+        "noExcessiveCognitiveComplexity": "info"
       },
       "performance": {
         "noAccumulatingSpread": "off"
@@ -20,5 +21,10 @@
     "clientKind": "git",
     "useIgnoreFile": true,
     "defaultBranch": "main"
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    }
   }
 }

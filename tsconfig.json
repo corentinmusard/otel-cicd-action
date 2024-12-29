@@ -2,12 +2,9 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "rootDir": "./src",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "baseUrl": "./",
-    "sourceMap": true,
-    "outDir": "./lib",
     "skipLibCheck": true,
     // Strict Checks
     "strict": true,
@@ -22,7 +19,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "allowUnreachableCode": false,
-    "allowUnusedLabels": false
+    "allowUnusedLabels": false,
+    "noEmit": true,
+    "esModuleInterop": true
   },
   "exclude": ["./dist", "./node_modules", "./__tests__", "./coverage", "jest.config.ts"]
 }

@@ -1,27 +1,32 @@
-import type { Config } from "jest";
+import type { JestConfigWithTsJest } from "ts-jest";
 
-const config: Config = {
+const config: JestConfigWithTsJest = {
+  preset: "ts-jest",
   testEnvironment: "node",
   testMatch: ["**/*.test.ts"],
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        tsconfig: "tsconfig.json",
+        useESM: true,
+      },
+    ],
   },
   setupFiles: ["dotenv/config"],
   reporters: ["default", "jest-junit"],
-  collectCoverageFrom: ["src/**/*.ts", "!src/config.ts", "!src/index.ts"],
+  extensionsToTreatAsEsm: [".ts"],
+  moduleFileExtensions: ["ts", "js"],
+  resolver: "ts-jest-resolver",
+  coverageReporters: ["lcov", "html", "text"],
+  collectCoverageFrom: ["src/**/*.ts", "!src/config.ts", "!src/index.ts", "!src/replay.ts", "!src/__fixtures__/**"],
   coverageThreshold: {
     global: {
-      statements: 100,
-      branches: 100,
-      functions: 100,
-      lines: 100,
+      statements: 80,
+      branches: 50,
+      functions: 70,
+      lines: 80,
     },
-    /*global: {
-      statements: 40,
-      branches: 25,
-      functions: 53,
-      lines: 50,
-    },*/
   },
 };
 

@@ -1,37 +1,53 @@
 import * as core from "@actions/core";
 import { type Context, type Span, SpanStatusCode, type TraceAPI } from "@opentelemetry/api";
 import type { Tracer } from "@opentelemetry/sdk-trace-base";
-import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobStep } from "../github/github";
+import type { WorkflowArtifactLookup } from "../github/github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
+//type Steps = components["schemas"]["job"]["steps"];
+//type S = WorkflowRunJob["steps"];
+
+type Step = {
+  status: "queued" | "in_progress" | "completed";
+  conclusion?: string | null;
+  id?: string;
+  name: string;
+  number: number;
+  started_at?: string | null;
+  completed_at?: string | null;
+};
+
 type TraceWorkflowRunStepParams = {
-  job: WorkflowRunJob;
-  trace: TraceAPI;
   parentSpan: Span;
   parentContext: Context;
+  jobName: string;
+  trace: TraceAPI;
   tracer: Tracer;
+  step: Step;
   workflowArtifacts: WorkflowArtifactLookup;
-  step?: WorkflowRunJobStep;
 };
+
 async function traceWorkflowRunStep({
-  job,
-  parentContext,
   parentSpan,
+  parentContext,
+  jobName,
   trace,
   tracer,
-  workflowArtifacts,
   step,
+  workflowArtifacts,
 }: TraceWorkflowRunStepParams) {
   if (!step || !step.completed_at || !step.started_at) {
     const stepName = step?.name || "UNDEFINED";
-    console.warn(`Step ${stepName} is not completed yet.`);
+    core.warning(`Step ${stepName} is not completed yet.`);
     return;
   }
   if (step.conclusion === "cancelled" || step.conclusion === "skipped") {
-    console.info(`Step ${step.name} did not run.`);
+    core.info(`Step ${step.name} did not run.`);
     return;
   }
+
   core.debug(`Trace Step ${step.name}`);
+
   const ctx = trace.setSpan(parentContext, parentSpan);
   const startTime = new Date(step.started_at);
   const completedTime = new Date(step.completed_at);
@@ -51,21 +67,19 @@ async function traceWorkflowRunStep({
     ctx,
   );
   const spanId = span.spanContext().spanId;
+
   try {
-    span.setStatus({ code: SpanStatusCode.ERROR });
-    if (step.conclusion !== "failure") {
-      span.setStatus({ code: SpanStatusCode.OK });
-    }
+    const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+    span.setStatus({ code });
+
     core.debug(`Step Span<${spanId}>: Started<${step.started_at}>`);
     if (step.conclusion) {
       span.setAttribute("github.job.step.conclusion", step.conclusion);
     }
     await traceArtifact({
       tracer,
-      parentSpan: span,
-      job,
-      step,
-      startTime,
+      jobName,
+      stepName: step.name,
       workflowArtifacts,
     });
   } finally {
@@ -77,25 +91,18 @@ async function traceWorkflowRunStep({
 
 type TraceArtifactParams = {
   tracer: Tracer;
-  parentSpan: Span;
-  job: WorkflowRunJob;
-  step: WorkflowRunJobStep;
-  startTime: Date;
+  jobName: string;
+  stepName: string;
   workflowArtifacts: WorkflowArtifactLookup;
 };
 
-async function traceArtifact({ tracer, parentSpan, job, step, startTime, workflowArtifacts }: TraceArtifactParams) {
-  const artifact = workflowArtifacts(job.name, step.name);
+async function traceArtifact({ tracer, jobName, stepName, workflowArtifacts }: TraceArtifactParams) {
+  const artifact = workflowArtifacts(jobName, stepName);
   if (artifact) {
     core.debug(`Found Artifact ${artifact?.path}`);
-    await traceOTLPFile({
-      tracer,
-      parentSpan,
-      startTime,
-      path: artifact.path,
-    });
+    await traceOTLPFile(tracer, artifact.path);
   } else {
-    core.debug(`No Artifact to trace for Job<${job.name}> Step<${step.name}>`);
+    core.debug(`No Artifact to trace for Job<${jobName}> Step<${stepName}>`);
   }
 }
 

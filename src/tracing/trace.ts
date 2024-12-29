@@ -8,30 +8,22 @@ import {
   ConsoleSpanExporter,
   type SpanExporter,
 } from "@opentelemetry/sdk-trace-base";
-import {
-  SEMRESATTRS_SERVICE_INSTANCE_ID,
-  SEMRESATTRS_SERVICE_NAME,
-  SEMRESATTRS_SERVICE_NAMESPACE,
-  SEMRESATTRS_SERVICE_VERSION,
-} from "@opentelemetry/semantic-conventions";
+import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
+import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 import type { WorkflowRunJobs } from "../github/github";
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 
-type StringDict = { [key: string]: string };
+function stringToHeaders(s: string) {
+  const headers: Record<string, string> = {};
 
-function stringToHeader(value: string): StringDict {
-  const pairs = value.split(",");
-  return pairs.reduce((result, item) => {
-    const [key, value] = item.split(/=(.*)/s);
+  for (const pair of s.split(",")) {
+    const [key, value] = pair.split(/=(.*)/s);
     if (key && value) {
-      return {
-        ...result,
-        [key.trim()]: value.trim(),
-      };
+      headers[key.trim()] = value.trim();
     }
-    return result;
-  }, {});
+  }
+  return headers;
 }
 
 function isHttpEndpoint(endpoint: string) {
@@ -55,36 +47,35 @@ function createTracerProvider(
   const serviceNamespace = workflowRunJobs.workflowRun.repository.full_name;
   const serviceVersion = workflowRunJobs.workflowRun.head_sha;
 
-  const provider = new BasicTracerProvider({
-    resource: new Resource({
-      [SEMRESATTRS_SERVICE_NAME]: serviceName,
-      [SEMRESATTRS_SERVICE_INSTANCE_ID]: serviceInstanceId,
-      [SEMRESATTRS_SERVICE_NAMESPACE]: serviceNamespace,
-      [SEMRESATTRS_SERVICE_VERSION]: serviceVersion,
-    }),
-  });
-
   let exporter: SpanExporter = new ConsoleSpanExporter();
 
   if (!OTEL_CONSOLE_ONLY) {
     if (isHttpEndpoint(otlpEndpoint)) {
       exporter = new ProtoOTLPTraceExporter({
         url: otlpEndpoint,
-        headers: stringToHeader(otlpHeaders),
+        headers: stringToHeaders(otlpHeaders),
       });
     } else {
       exporter = new OTLPTraceExporter({
         url: otlpEndpoint,
         credentials: grpc.credentials.createSsl(),
-        metadata: grpc.Metadata.fromHttp2Headers(stringToHeader(otlpHeaders)),
+        metadata: grpc.Metadata.fromHttp2Headers(stringToHeaders(otlpHeaders)),
       });
     }
   }
 
-  provider.addSpanProcessor(new BatchSpanProcessor(exporter));
-  provider.register();
+  const provider = new BasicTracerProvider({
+    resource: new Resource({
+      [ATTR_SERVICE_NAME]: serviceName,
+      [ATTR_SERVICE_INSTANCE_ID]: serviceInstanceId,
+      [ATTR_SERVICE_NAMESPACE]: serviceNamespace,
+      [ATTR_SERVICE_VERSION]: serviceVersion,
+    }),
+    spanProcessors: [new BatchSpanProcessor(exporter)],
+  });
 
+  provider.register();
   return provider;
 }
 
-export { stringToHeader, createTracerProvider };
+export { stringToHeaders, createTracerProvider };

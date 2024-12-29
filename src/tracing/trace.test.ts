@@ -1,12 +1,10 @@
+import { jest } from "@jest/globals";
 import type { BasicTracerProvider } from "@opentelemetry/sdk-trace-base";
-import {
-  SEMRESATTRS_SERVICE_INSTANCE_ID,
-  SEMRESATTRS_SERVICE_NAME,
-  SEMRESATTRS_SERVICE_NAMESPACE,
-} from "@opentelemetry/semantic-conventions";
+import { ATTR_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
+import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 import { mock } from "jest-mock-extended";
 import type { WorkflowRunJobs } from "../github/github";
-import { createTracerProvider, stringToHeader } from "./trace";
+import { createTracerProvider, stringToHeaders } from "./trace";
 
 describe("createTracerProvider", () => {
   let subject: BasicTracerProvider;
@@ -34,23 +32,23 @@ describe("createTracerProvider", () => {
   describe("resource attributes", () => {
     it("has service.name resource as workflow name", () => {
       subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[SEMRESATTRS_SERVICE_NAME]).toEqual(mockWorkflowRunJobs.workflowRun.name);
+      expect(subject.resource.attributes[ATTR_SERVICE_NAME]).toEqual(mockWorkflowRunJobs.workflowRun.name);
     });
 
     it("has service.name resource as workflow id", () => {
       mockWorkflowRunJobs.workflowRun.name = null;
       subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[SEMRESATTRS_SERVICE_NAME]).toEqual(`${mockWorkflowRunJobs.workflowRun.id}`);
+      expect(subject.resource.attributes[ATTR_SERVICE_NAME]).toEqual(`${mockWorkflowRunJobs.workflowRun.id}`);
     });
 
     it("has service.name resource as a custom parameter", () => {
       subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs, "custom-service-name");
-      expect(subject.resource.attributes[SEMRESATTRS_SERVICE_NAME]).toEqual("custom-service-name");
+      expect(subject.resource.attributes[ATTR_SERVICE_NAME]).toEqual("custom-service-name");
     });
 
     it("has service.instance.id resource", () => {
       subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[SEMRESATTRS_SERVICE_INSTANCE_ID]).toEqual(
+      expect(subject.resource.attributes[ATTR_SERVICE_INSTANCE_ID]).toEqual(
         [
           mockWorkflowRunJobs.workflowRun.repository.full_name,
           mockWorkflowRunJobs.workflowRun.workflow_id,
@@ -62,7 +60,7 @@ describe("createTracerProvider", () => {
 
     it("has service.namespace resource", () => {
       subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[SEMRESATTRS_SERVICE_NAMESPACE]).toEqual(
+      expect(subject.resource.attributes[ATTR_SERVICE_NAMESPACE]).toEqual(
         mockWorkflowRunJobs.workflowRun.repository.full_name,
       );
     });
@@ -79,26 +77,32 @@ describe("createTracerProvider", () => {
     const spanProcessor = subject.getActiveSpanProcessor();
     expect(spanProcessor).toBeDefined();
   });
+
+  it("supports http", () => {
+    subject = createTracerProvider("http://localhost", "test=foo", mockWorkflowRunJobs);
+    const spanProcessor = subject.getActiveSpanProcessor();
+    expect(spanProcessor).toBeDefined();
+  });
 });
 
-describe("stringToHeader", () => {
+describe("stringToHeaders", () => {
   it("should parse no header", () => {
-    const headers = stringToHeader("");
+    const headers = stringToHeaders("");
     expect(headers).toEqual({});
   });
 
   it("should parse one header", () => {
-    const headers = stringToHeader("aaa=bbb");
+    const headers = stringToHeaders("aaa=bbb");
     expect(headers).toEqual({ aaa: "bbb" });
   });
 
   it("should parse multiple headers", () => {
-    const headers = stringToHeader("aaa=bbb,ccc=ddd");
+    const headers = stringToHeaders("aaa=bbb,ccc=ddd");
     expect(headers).toEqual({ aaa: "bbb", ccc: "ddd" });
   });
 
   it("should parse base64 encoded header with =", () => {
-    const headers = stringToHeader("aaa=bnVsbA==");
+    const headers = stringToHeaders("aaa=bnVsbA==");
     expect(headers).toEqual({ aaa: "bnVsbA==" });
   });
 });

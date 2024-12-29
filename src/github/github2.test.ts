@@ -1,0 +1,60 @@
+import { Context } from "@actions/github/lib/context";
+import { replayOctokit } from "../replay";
+import { type Octokit, getPRLabels, getPRsLabels, getWorkflowRunJobs } from "./github";
+
+const token = process.env["GH_TOKEN"] ?? "";
+const owner = "corentinmusard";
+const repo = "otel-cicd-action";
+
+process.env["GITHUB_REPOSITORY"] = `${owner}/${repo}`;
+
+describe("getWorkflowRunJobs", () => {
+  let octokit: Octokit;
+
+  beforeAll(async () => {
+    octokit = await replayOctokit("getWorkflowRunJobs", token);
+  });
+
+  it("should return the workflow run jobs", async () => {
+    const context = new Context();
+    context.runId = 2; // different than 12456168064
+
+    const workflowRunJobs = await getWorkflowRunJobs(context, octokit, 12456168064);
+    expect(workflowRunJobs.jobs).toHaveLength(5);
+    expect(workflowRunJobs.workflowRun.id).toBe(12456168064);
+  }, 10000);
+});
+
+describe("getPRLabels", () => {
+  let octokit: Octokit;
+
+  beforeAll(async () => {
+    octokit = await replayOctokit("getPRLabels", token);
+  });
+
+  it("should return the labels for PR 18", async () => {
+    const labels = await getPRLabels(new Context(), octokit, 18);
+    expect(labels).toEqual(["enhancement", "test"]);
+  });
+
+  it("should return the labels for PR 19", async () => {
+    const labels = await getPRLabels(new Context(), octokit, 19);
+    expect(labels).toEqual([]);
+  });
+});
+
+describe("getPRsLabels", () => {
+  let octokit: Octokit;
+
+  beforeAll(async () => {
+    octokit = await replayOctokit("getPRsLabels", token);
+  });
+
+  it("should return the labels for PRs 18 and 19", async () => {
+    const labels = await getPRsLabels(new Context(), octokit, [18, 19]);
+    expect(labels).toEqual({
+      18: ["enhancement", "test"],
+      19: [],
+    });
+  });
+});

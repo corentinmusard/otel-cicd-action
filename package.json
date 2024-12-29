@@ -1,16 +1,17 @@
 {
   "private": true,
   "name": "otel-cicd-action",
+  "type": "module",
   "version": "1.9.0",
   "description": "Github Action that export CI/CD workflows to any endpoint compatible with OpenTelemetry",
   "scripts": {
     "prepare": "husky",
     "biome": "biome check --write .",
     "biome:ci": "biome ci .",
-    "build": "tsc && ncc build src/index.ts -o dist --source-map --license licenses.txt",
-    "test": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test jest",
-    "test:watch": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test jest --watch",
-    "test:ci": "cross-env NODE_ENV=test jest --collect-coverage -ci",
+    "build": "tsc && rollup -c --configPlugin @rollup/plugin-typescript",
+    "test:record": "rm {*}{*}.log; cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test RECORD_OCTOKIT=true jest",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test jest --collect-coverage",
+    "test:ci": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test jest --collect-coverage --ci",
     "all": "npm run biome && npm run build && npm run test"
   },
   "exports": {
@@ -30,13 +31,17 @@
     "@opentelemetry/resources": "^1.29.0",
     "@opentelemetry/sdk-trace-base": "^1.29.0",
     "@opentelemetry/semantic-conventions": "^1.28.0",
+    "caller-callsite": "^5.0.0",
     "jszip": "^3.10.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@octokit/rest": "^21.0.2",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@types/jest": "^29.5.14",
-    "@vercel/ncc": "^0.38.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "husky": "^9.1.7",
@@ -44,8 +49,11 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-junit": "^16.0.0",
     "jest-mock-extended": "^3.0.7",
+    "rollup": "^4.29.1",
+    "rollup-plugin-license": "^3.5.3",
     "ts-jest": "^29.2.5",
-    "ts-node": "^10.9.2",
+    "ts-jest-resolver": "^2.0.1",
+    "tslib": "^2.8.1",
     "typescript": "^5.7.2"
   },
   "lint-staged": {

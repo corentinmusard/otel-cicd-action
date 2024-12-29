@@ -1,11 +1,16 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+import * as url from "node:url";
 import type { Context } from "@actions/github/lib/context";
-import type { GitHub } from "@actions/github/lib/utils";
+import { jest } from "@jest/globals";
 import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 import fetchMock from "jest-fetch-mock";
 import { mock, mockDeep } from "jest-mock-extended";
-import { GetPRLabels, type WorkflowArtifact, type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
+import type { Octokit } from "./github";
+import { type WorkflowArtifact, type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 jest.mock("@actions/github");
 jest.mock("@actions/core");
@@ -15,12 +20,12 @@ type DownloadArtifactResponse = RestEndpointMethodTypes["actions"]["downloadArti
 
 describe("listWorkflowRunArtifacts", () => {
   let mockContext: Context;
-  let mockOctokit: InstanceType<typeof GitHub> = mockDeep<InstanceType<typeof GitHub>>() as InstanceType<typeof GitHub>;
+  let mockOctokit: Octokit = mockDeep<Octokit>();
   let subject: WorkflowArtifactDownload;
 
   beforeAll(async () => {
     mockContext = mockDeep<Context>();
-    mockOctokit = mockDeep<InstanceType<typeof GitHub>>();
+    mockOctokit = mockDeep<Octokit>();
     const mockListWorkflowRunArtifacts = mockOctokit.rest.actions.listWorkflowRunArtifacts as jest.MockedFunction<
       typeof mockOctokit.rest.actions.listWorkflowRunArtifacts
     >;
@@ -74,34 +79,5 @@ describe("listWorkflowRunArtifacts", () => {
     // expect(data.length).toBeGreaterThan(0);
     const lines = data.split("\n");
     expect(lines.length).toBeGreaterThan(1);
-  });
-});
-
-import * as core from "@actions/core";
-
-jest.mock("@actions/core");
-jest.mock("@actions/github/lib/utils");
-
-describe("GetPRLabels", () => {
-  let mockOctokit: InstanceType<typeof GitHub>;
-  let mockGetInput: jest.SpyInstance;
-
-  beforeAll(() => {
-    mockOctokit = mockDeep<InstanceType<typeof GitHub>>();
-    mockGetInput = jest.spyOn(core, "getInput");
-    mockGetInput.mockReturnValue("fake-token");
-
-    mockOctokit.rest.issues.listLabelsOnIssue = jest.fn().mockResolvedValue({
-      data: [{ name: "bug" }, { name: "enhancement" }],
-    }) as unknown as jest.MockedFunction<typeof mockOctokit.rest.issues.listLabelsOnIssue>;
-  });
-
-  it("should return a string array of label names", async () => {
-    const labels = await GetPRLabels(mockOctokit, "owner", "repo", 1);
-    expect(labels).toEqual(["bug", "enhancement"]);
-  });
-
-  afterAll(() => {
-    jest.resetAllMocks();
   });
 });

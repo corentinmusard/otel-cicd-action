@@ -1,11 +1,9 @@
 import * as fs from "node:fs";
 import * as readline from "node:readline";
-import * as core from "@actions/core";
 import {
   type AttributeValue,
   type Attributes,
   type Link,
-  type Span,
   SpanKind,
   type SpanStatusCode,
   context,
@@ -20,39 +18,30 @@ import {
 } from "@opentelemetry/otlp-transformer";
 import type { Tracer } from "@opentelemetry/sdk-trace-base";
 
-/* istanbul ignore next */
 function toSpanKind(spanKind: ESpanKind | undefined) {
   switch (spanKind) {
-    /* istanbul ignore next */
     case ESpanKind.SPAN_KIND_CLIENT:
       return SpanKind.CLIENT;
-    /* istanbul ignore next */
     case ESpanKind.SPAN_KIND_CONSUMER:
       return SpanKind.CONSUMER;
     case ESpanKind.SPAN_KIND_INTERNAL:
       return SpanKind.INTERNAL;
-    /* istanbul ignore next */
     case ESpanKind.SPAN_KIND_PRODUCER:
       return SpanKind.PRODUCER;
-    /* istanbul ignore next */
     case ESpanKind.SPAN_KIND_SERVER:
       return SpanKind.SERVER;
-    /* istanbul ignore next */
     default:
       return SpanKind.INTERNAL;
   }
 }
 
 function toLinks(links: ILink[] | undefined): Link[] {
-  /* istanbul ignore if */
   if (links === undefined) {
     return [];
   }
-  // TODO implement Links
   return [];
 }
 
-/* istanbul ignore next */
 function toAttributeValue(value: IAnyValue): AttributeValue | undefined {
   if ("stringValue" in value) {
     return value.stringValue ?? undefined;
@@ -80,7 +69,6 @@ function toAttributeValue(value: IAnyValue): AttributeValue | undefined {
 }
 
 function toAttributes(attributes: IKeyValue[] | undefined): Attributes {
-  /* istanbul ignore if */
   if (!attributes) {
     return {};
   }
@@ -113,13 +101,7 @@ function addSpanToTracer(otlpSpan: ISpan, tracer: Tracer) {
   span.end(new Date((otlpSpan.endTimeUnixNano as number) / 1000000));
 }
 
-type TraceOTLPFileParams = {
-  tracer: Tracer;
-  parentSpan: Span;
-  path: string;
-  startTime: Date;
-};
-async function traceOTLPFile({ tracer, parentSpan, path }: TraceOTLPFileParams) {
+async function traceOTLPFile(tracer: Tracer, path: string) {
   const fileStream = fs.createReadStream(path);
   const rl = readline.createInterface({
     input: fileStream,
@@ -127,22 +109,16 @@ async function traceOTLPFile({ tracer, parentSpan, path }: TraceOTLPFileParams) 
   });
 
   for await (const line of rl) {
-    if (line) {
-      const serviceRequest = JSON.parse(line) as IExportTraceServiceRequest;
-      /* istanbul ignore next */
-      for (const resourceSpans of serviceRequest.resourceSpans ?? []) {
-        /* istanbul ignore next */
-        for (const scopeSpans of resourceSpans.scopeSpans ?? []) {
-          if (scopeSpans.scope) {
-            /* istanbul ignore next */
-            for (const otlpSpan of scopeSpans.spans ?? []) {
-              core.debug(
-                `Trace Test ParentSpan<${
-                  otlpSpan.parentSpanId?.toString() || parentSpan.spanContext().spanId
-                }> -> Span<${otlpSpan.spanId.toString()}> `,
-              );
-              addSpanToTracer(otlpSpan, tracer);
-            }
+    if (!line) {
+      continue;
+    }
+    const serviceRequest = JSON.parse(line) as IExportTraceServiceRequest;
+
+    for (const resourceSpans of serviceRequest.resourceSpans ?? []) {
+      for (const scopeSpans of resourceSpans.scopeSpans ?? []) {
+        if (scopeSpans.scope) {
+          for (const otlpSpan of scopeSpans.spans ?? []) {
+            addSpanToTracer(otlpSpan, tracer);
           }
         }
       }
@@ -150,4 +126,4 @@ async function traceOTLPFile({ tracer, parentSpan, path }: TraceOTLPFileParams) 
   }
 }
 
-export { type TraceOTLPFileParams, traceOTLPFile };
+export { traceOTLPFile };
