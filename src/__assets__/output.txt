@@ -5,9 +5,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -21,8 +21,8 @@
   name: 'Queued',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887485000000,
-  duration: 6000000,
+  timestamp: 1735531663000000,
+  duration: 7000000,
   attributes: {},
   status: { code: 0 },
   events: [],
@@ -35,9 +35,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -51,13 +51,13 @@
   name: 'Set up job',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887491000000,
-  duration: 0,
+  timestamp: 1735531669000000,
+  duration: 1000000,
   attributes: {
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
-    'github.job.step.started_at': '2024-12-22T17:11:31Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:31Z',
+    'github.job.step.started_at': '2024-12-30T04:07:49Z',
+    'github.job.step.completed_at': '2024-12-30T04:07:50Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -72,9 +72,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -85,16 +85,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Run actions/checkout@v4',
+  name: 'Checkout repository',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887491000000,
-  duration: 1000000,
+  timestamp: 1735531670000000,
+  duration: 3000000,
   attributes: {
-    'github.job.step.name': 'Run actions/checkout@v4',
+    'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
-    'github.job.step.started_at': '2024-12-22T17:11:31Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:32Z',
+    'github.job.step.started_at': '2024-12-30T04:07:50Z',
+    'github.job.step.completed_at': '2024-12-30T04:07:53Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -109,9 +109,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -122,16 +122,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Run actions/setup-node@v4',
+  name: 'Free Disk Space',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887493000000,
-  duration: 0,
+  timestamp: 1735531673000000,
+  duration: 128000000,
   attributes: {
-    'github.job.step.name': 'Run actions/setup-node@v4',
+    'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 3,
-    'github.job.step.started_at': '2024-12-22T17:11:33Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:33Z',
+    'github.job.step.started_at': '2024-12-30T04:07:53Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:01Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -146,9 +146,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -159,16 +159,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Install Dependencies',
+  name: 'Install toolchain',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887493000000,
-  duration: 6000000,
+  timestamp: 1735531801000000,
+  duration: 8000000,
   attributes: {
-    'github.job.step.name': 'Install Dependencies',
+    'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 4,
-    'github.job.step.started_at': '2024-12-22T17:11:33Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:39Z',
+    'github.job.step.started_at': '2024-12-30T04:10:01Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:09Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -183,9 +183,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -196,16 +196,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Run Biome (format + lint + import sorting)',
+  name: 'Install udeps',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887499000000,
-  duration: 0,
+  timestamp: 1735531810000000,
+  duration: 339000000,
   attributes: {
-    'github.job.step.name': 'Run Biome (format + lint + import sorting)',
+    'github.job.step.name': 'Install udeps',
     'github.job.step.number': 5,
-    'github.job.step.started_at': '2024-12-22T17:11:39Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:39Z',
+    'github.job.step.started_at': '2024-12-30T04:10:10Z',
+    'github.job.step.completed_at': '2024-12-30T04:15:49Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -220,9 +220,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -233,16 +233,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Build',
+  name: 'Run udeps',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887499000000,
-  duration: 12000000,
+  timestamp: 1735532149000000,
+  duration: 168000000,
   attributes: {
-    'github.job.step.name': 'Build',
+    'github.job.step.name': 'Run udeps',
     'github.job.step.number': 6,
-    'github.job.step.started_at': '2024-12-22T17:11:39Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:51Z',
+    'github.job.step.started_at': '2024-12-30T04:15:49Z',
+    'github.job.step.completed_at': '2024-12-30T04:18:37Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -257,9 +257,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -270,16 +270,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Validate dist',
+  name: 'Post Install toolchain',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887511000000,
+  timestamp: 1735532317000000,
   duration: 0,
   attributes: {
-    'github.job.step.name': 'Validate dist',
-    'github.job.step.number': 7,
-    'github.job.step.started_at': '2024-12-22T17:11:51Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:51Z',
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2024-12-30T04:18:37Z',
+    'github.job.step.completed_at': '2024-12-30T04:18:37Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -294,9 +294,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -307,53 +307,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Post Run actions/setup-node@v4',
+  name: 'Post Checkout repository',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887511000000,
-  duration: 2000000,
-  attributes: {
-    'github.job.step.name': 'Post Run actions/setup-node@v4',
-    'github.job.step.number': 13,
-    'github.job.step.started_at': '2024-12-22T17:11:51Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:53Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/checkout@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887514000000,
+  timestamp: 1735532324000000,
   duration: 0,
   attributes: {
-    'github.job.step.name': 'Post Run actions/checkout@v4',
-    'github.job.step.number': 14,
-    'github.job.step.started_at': '2024-12-22T17:11:54Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:54Z',
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 12,
+    'github.job.step.started_at': '2024-12-30T04:18:44Z',
+    'github.job.step.completed_at': '2024-12-30T04:18:44Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -368,9 +331,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -384,13 +347,13 @@
   name: 'Complete job',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887514000000,
+  timestamp: 1735532317000000,
   duration: 0,
   attributes: {
     'github.job.step.name': 'Complete job',
-    'github.job.step.number': 15,
-    'github.job.step.started_at': '2024-12-22T17:11:54Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:54Z',
+    'github.job.step.number': 13,
+    'github.job.step.started_at': '2024-12-30T04:18:37Z',
+    'github.job.step.completed_at': '2024-12-30T04:18:37Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -405,9 +368,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -418,27 +381,1967 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'build',
+  name: 'Check Dependencies',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887491000000,
-  duration: 24000000,
+  timestamp: 1735531670000000,
+  duration: 654000000,
   attributes: {
-    'cicd.pipeline.task.name': 'build',
-    'cicd.pipeline.task.run.id': 34769389408,
-    'cicd.pipeline.task.run.url.full': 'https://github.com/corentinmusard/otel-cicd-action/actions/runs/12456168064/job/34769389408',
-    'cicd.pipeline.task.type': 'build',
-    'github.job.id': 34769389408,
-    'github.job.name': 'build',
-    'github.job.run_id': 12456168064,
+    'cicd.pipeline.task.name': 'Check Dependencies',
+    'cicd.pipeline.task.run.id': 34970679534,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970679534',
+    'github.job.id': 34970679534,
+    'github.job.name': 'Check Dependencies',
+    'github.job.run_id': 12541749172,
+    'github.job.run_attempt': 1,
+    'github.job.runner_group_id': 2,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 8',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.started_at': '2024-12-30T04:07:50Z',
+    'github.job.completed_at': '2024-12-30T04:18:44Z',
+    'github.conclusion': 'success',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531670000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2024-12-30T04:07:50Z',
+    'github.job.step.completed_at': '2024-12-30T04:07:51Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531672000000,
+  duration: 2000000,
+  attributes: {
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2024-12-30T04:07:52Z',
+    'github.job.step.completed_at': '2024-12-30T04:07:54Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Free Disk Space',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531674000000,
+  duration: 26000000,
+  attributes: {
+    'github.job.step.name': 'Free Disk Space',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2024-12-30T04:07:54Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:20Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531700000000,
+  duration: 18000000,
+  attributes: {
+    'github.job.step.name': 'Install toolchain',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2024-12-30T04:08:20Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:38Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Run cargo check',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531718000000,
+  duration: 181000000,
+  attributes: {
+    'github.job.step.name': 'Run cargo check',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2024-12-30T04:08:38Z',
+    'github.job.step.completed_at': '2024-12-30T04:11:39Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Run clippy',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531899000000,
+  duration: 219000000,
+  attributes: {
+    'github.job.step.name': 'Run clippy',
+    'github.job.step.number': 6,
+    'github.job.step.started_at': '2024-12-30T04:11:39Z',
+    'github.job.step.completed_at': '2024-12-30T04:15:18Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532119000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2024-12-30T04:15:19Z',
+    'github.job.step.completed_at': '2024-12-30T04:15:19Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532119000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 12,
+    'github.job.step.started_at': '2024-12-30T04:15:19Z',
+    'github.job.step.completed_at': '2024-12-30T04:15:19Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532119000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 13,
+    'github.job.step.started_at': '2024-12-30T04:15:19Z',
+    'github.job.step.completed_at': '2024-12-30T04:15:19Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Lint Rust Files',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531670000000,
+  duration: 452000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'Lint Rust Files',
+    'cicd.pipeline.task.run.id': 34970679834,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970679834',
+    'github.job.id': 34970679834,
+    'github.job.name': 'Lint Rust Files',
+    'github.job.run_id': 12541749172,
+    'github.job.run_attempt': 1,
+    'github.job.runner_group_id': 2,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 12',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.started_at': '2024-12-30T04:07:50Z',
+    'github.job.completed_at': '2024-12-30T04:15:22Z',
+    'github.conclusion': 'success',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531704000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2024-12-30T04:08:24Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:25Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Support longpaths',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531705000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Support longpaths',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2024-12-30T04:08:25Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:26Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531706000000,
+  duration: 11000000,
+  attributes: {
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2024-12-30T04:08:26Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:37Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Free Disk Space',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531718000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Free Disk Space',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2024-12-30T04:08:38Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:38Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531718000000,
+  duration: 17000000,
+  attributes: {
+    'github.job.step.name': 'Install toolchain',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2024-12-30T04:08:38Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:55Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Compile',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531735000000,
+  duration: 122000000,
+  attributes: {
+    'github.job.step.name': 'Compile',
+    'github.job.step.number': 6,
+    'github.job.step.started_at': '2024-12-30T04:08:55Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:57Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Run Test262 suite',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531857000000,
+  duration: 223000000,
+  attributes: {
+    'github.job.step.name': 'Run Test262 suite',
+    'github.job.step.number': 7,
+    'github.job.step.started_at': '2024-12-30T04:10:57Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:40Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Clean cache',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532080000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Clean cache',
+    'github.job.step.number': 8,
+    'github.job.step.started_at': '2024-12-30T04:14:40Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:41Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532082000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 15,
+    'github.job.step.started_at': '2024-12-30T04:14:42Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:42Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532082000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 16,
+    'github.job.step.started_at': '2024-12-30T04:14:42Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:43Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532083000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 17,
+    'github.job.step.started_at': '2024-12-30T04:14:43Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:43Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Test262 Coverage (windows-latest)',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531704000000,
+  duration: 380000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'Test262 Coverage (windows-latest)',
+    'cicd.pipeline.task.run.id': 34970680020,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970680020',
+    'cicd.pipeline.task.type': 'test',
+    'github.job.id': 34970680020,
+    'github.job.name': 'Test262 Coverage (windows-latest)',
+    'github.job.run_id': 12541749172,
+    'github.job.run_attempt': 1,
+    'github.job.runner_group_id': 2,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 18',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'windows-latest',
+    'github.job.started_at': '2024-12-30T04:08:24Z',
+    'github.job.completed_at': '2024-12-30T04:14:44Z',
+    'github.conclusion': 'success',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531813000000,
+  duration: 2000000,
+  attributes: {
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2024-12-30T04:10:13Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:15Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531815000000,
+  duration: 7000000,
+  attributes: {
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2024-12-30T04:10:15Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:22Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Free Disk Space',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531823000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Free Disk Space',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2024-12-30T04:10:23Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:23Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531823000000,
+  duration: 66000000,
+  attributes: {
+    'github.job.step.name': 'Install toolchain',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2024-12-30T04:10:23Z',
+    'github.job.step.completed_at': '2024-12-30T04:11:29Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Run tests on windows-latest',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531889000000,
+  duration: 617000000,
+  attributes: {
+    'github.job.step.name': 'Run tests on windows-latest',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2024-12-30T04:11:29Z',
+    'github.job.step.completed_at': '2024-12-30T04:21:46Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532507000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 9,
+    'github.job.step.started_at': '2024-12-30T04:21:47Z',
+    'github.job.step.completed_at': '2024-12-30T04:21:47Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532508000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 10,
+    'github.job.step.started_at': '2024-12-30T04:21:48Z',
+    'github.job.step.completed_at': '2024-12-30T04:21:48Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532508000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2024-12-30T04:21:48Z',
+    'github.job.step.completed_at': '2024-12-30T04:21:48Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Test (windows-latest)',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531814000000,
+  duration: 697000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'Test (windows-latest)',
+    'cicd.pipeline.task.run.id': 34970680168,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970680168',
+    'cicd.pipeline.task.type': 'test',
+    'github.job.id': 34970680168,
+    'github.job.name': 'Test (windows-latest)',
+    'github.job.run_id': 12541749172,
+    'github.job.run_attempt': 1,
+    'github.job.runner_group_id': 2,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 9',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'windows-latest',
+    'github.job.started_at': '2024-12-30T04:10:14Z',
+    'github.job.completed_at': '2024-12-30T04:21:51Z',
+    'github.conclusion': 'success',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531670000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2024-12-30T04:07:50Z',
+    'github.job.step.completed_at': '2024-12-30T04:07:51Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531671000000,
+  duration: 3000000,
+  attributes: {
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2024-12-30T04:07:51Z',
+    'github.job.step.completed_at': '2024-12-30T04:07:54Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Free Disk Space',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531675000000,
+  duration: 100000000,
+  attributes: {
+    'github.job.step.name': 'Free Disk Space',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2024-12-30T04:07:55Z',
+    'github.job.step.completed_at': '2024-12-30T04:09:35Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531776000000,
+  duration: 40000000,
+  attributes: {
+    'github.job.step.name': 'Install toolchain',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2024-12-30T04:09:36Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:16Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Compile',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531817000000,
+  duration: 77000000,
+  attributes: {
+    'github.job.step.name': 'Compile',
+    'github.job.step.number': 6,
+    'github.job.step.started_at': '2024-12-30T04:10:17Z',
+    'github.job.step.completed_at': '2024-12-30T04:11:34Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Run Test262 suite',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531895000000,
+  duration: 135000000,
+  attributes: {
+    'github.job.step.name': 'Run Test262 suite',
+    'github.job.step.number': 7,
+    'github.job.step.started_at': '2024-12-30T04:11:35Z',
+    'github.job.step.completed_at': '2024-12-30T04:13:50Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Clean cache',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532031000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Clean cache',
+    'github.job.step.number': 8,
+    'github.job.step.started_at': '2024-12-30T04:13:51Z',
+    'github.job.step.completed_at': '2024-12-30T04:13:51Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532036000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 15,
+    'github.job.step.started_at': '2024-12-30T04:13:56Z',
+    'github.job.step.completed_at': '2024-12-30T04:13:56Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532036000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 16,
+    'github.job.step.started_at': '2024-12-30T04:13:56Z',
+    'github.job.step.completed_at': '2024-12-30T04:13:56Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532031000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 17,
+    'github.job.step.started_at': '2024-12-30T04:13:51Z',
+    'github.job.step.completed_at': '2024-12-30T04:13:51Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Test262 Coverage (ubuntu-latest)',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531671000000,
+  duration: 365000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'Test262 Coverage (ubuntu-latest)',
+    'cicd.pipeline.task.run.id': 34970680323,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970680323',
+    'cicd.pipeline.task.type': 'test',
+    'github.job.id': 34970680323,
+    'github.job.name': 'Test262 Coverage (ubuntu-latest)',
+    'github.job.run_id': 12541749172,
+    'github.job.run_attempt': 1,
+    'github.job.runner_group_id': 2,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 1',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.started_at': '2024-12-30T04:07:51Z',
+    'github.job.completed_at': '2024-12-30T04:13:56Z',
+    'github.conclusion': 'success',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531811000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2024-12-30T04:10:11Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:12Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531812000000,
+  duration: 3000000,
+  attributes: {
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2024-12-30T04:10:12Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:15Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Free Disk Space',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531815000000,
+  duration: 19000000,
+  attributes: {
+    'github.job.step.name': 'Free Disk Space',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2024-12-30T04:10:15Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:34Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531834000000,
+  duration: 18000000,
+  attributes: {
+    'github.job.step.name': 'Install toolchain',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2024-12-30T04:10:34Z',
+    'github.job.step.completed_at': '2024-12-30T04:10:52Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Run tests on ubuntu-latest',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531852000000,
+  duration: 525000000,
+  attributes: {
+    'github.job.step.name': 'Run tests on ubuntu-latest',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2024-12-30T04:10:52Z',
+    'github.job.step.completed_at': '2024-12-30T04:19:37Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532382000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 9,
+    'github.job.step.started_at': '2024-12-30T04:19:42Z',
+    'github.job.step.completed_at': '2024-12-30T04:19:42Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532382000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 10,
+    'github.job.step.started_at': '2024-12-30T04:19:42Z',
+    'github.job.step.completed_at': '2024-12-30T04:19:42Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532377000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2024-12-30T04:19:37Z',
+    'github.job.step.completed_at': '2024-12-30T04:19:37Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Test (ubuntu-latest)',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531812000000,
+  duration: 570000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'Test (ubuntu-latest)',
+    'cicd.pipeline.task.run.id': 34970680487,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970680487',
+    'cicd.pipeline.task.type': 'test',
+    'github.job.id': 34970680487,
+    'github.job.name': 'Test (ubuntu-latest)',
+    'github.job.run_id': 12541749172,
     'github.job.run_attempt': 1,
     'github.job.runner_group_id': 2,
     'github.job.runner_group_name': 'GitHub Actions',
     'github.job.runner_name': 'GitHub Actions 7',
     'github.job.conclusion': 'success',
     'github.job.labels': 'ubuntu-latest',
-    'github.job.started_at': '2024-12-22T17:11:31Z',
-    'github.job.completed_at': '2024-12-22T17:11:55Z',
+    'github.job.started_at': '2024-12-30T04:10:12Z',
+    'github.job.completed_at': '2024-12-30T04:19:42Z',
     'github.conclusion': 'success',
     error: false
   },
@@ -453,9 +2356,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -469,13 +2372,13 @@
   name: 'Set up job',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887491000000,
+  timestamp: 1735531733000000,
   duration: 1000000,
   attributes: {
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
-    'github.job.step.started_at': '2024-12-22T17:11:31Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:32Z',
+    'github.job.step.started_at': '2024-12-30T04:08:53Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:54Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -490,9 +2393,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -503,852 +2406,90 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Run actions/checkout@v4',
+  name: 'Checkout repository',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887492000000,
-  duration: 1000000,
-  attributes: {
-    'github.job.step.name': 'Run actions/checkout@v4',
-    'github.job.step.number': 2,
-    'github.job.step.started_at': '2024-12-22T17:11:32Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:33Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Run actions/setup-node@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887493000000,
-  duration: 5000000,
-  attributes: {
-    'github.job.step.name': 'Run actions/setup-node@v4',
-    'github.job.step.number': 3,
-    'github.job.step.started_at': '2024-12-22T17:11:33Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:38Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Install Dependencies',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887498000000,
-  duration: 7000000,
-  attributes: {
-    'github.job.step.name': 'Install Dependencies',
-    'github.job.step.number': 4,
-    'github.job.step.started_at': '2024-12-22T17:11:38Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:45Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'run tests',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887506000000,
-  duration: 8000000,
-  attributes: {
-    'github.job.step.name': 'run tests',
-    'github.job.step.number': 5,
-    'github.job.step.started_at': '2024-12-22T17:11:46Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:54Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Run inception-health/otel-upload-test-artifact-action@v1',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887514000000,
-  duration: 3000000,
-  attributes: {
-    'github.job.step.name': 'Run inception-health/otel-upload-test-artifact-action@v1',
-    'github.job.step.number': 6,
-    'github.job.step.started_at': '2024-12-22T17:11:54Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:57Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/setup-node@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887517000000,
-  duration: 0,
-  attributes: {
-    'github.job.step.name': 'Post Run actions/setup-node@v4',
-    'github.job.step.number': 11,
-    'github.job.step.started_at': '2024-12-22T17:11:57Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:57Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/checkout@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887518000000,
-  duration: 0,
-  attributes: {
-    'github.job.step.name': 'Post Run actions/checkout@v4',
-    'github.job.step.number': 12,
-    'github.job.step.started_at': '2024-12-22T17:11:58Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:58Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Complete job',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887517000000,
-  duration: 0,
-  attributes: {
-    'github.job.step.name': 'Complete job',
-    'github.job.step.number': 13,
-    'github.job.step.started_at': '2024-12-22T17:11:57Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:57Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'tests (ubuntu-latest)',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887492000000,
-  duration: 26000000,
-  attributes: {
-    'cicd.pipeline.task.name': 'tests (ubuntu-latest)',
-    'cicd.pipeline.task.run.id': 34769389476,
-    'cicd.pipeline.task.run.url.full': 'https://github.com/corentinmusard/otel-cicd-action/actions/runs/12456168064/job/34769389476',
-    'cicd.pipeline.task.type': 'test',
-    'github.job.id': 34769389476,
-    'github.job.name': 'tests (ubuntu-latest)',
-    'github.job.run_id': 12456168064,
-    'github.job.run_attempt': 1,
-    'github.job.runner_group_id': 2,
-    'github.job.runner_group_name': 'GitHub Actions',
-    'github.job.runner_name': 'GitHub Actions 6',
-    'github.job.conclusion': 'success',
-    'github.job.labels': 'ubuntu-latest',
-    'github.job.started_at': '2024-12-22T17:11:32Z',
-    'github.job.completed_at': '2024-12-22T17:11:58Z',
-    'github.conclusion': 'success',
-    error: false
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Set up job',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887495000000,
-  duration: 1000000,
-  attributes: {
-    'github.job.step.name': 'Set up job',
-    'github.job.step.number': 1,
-    'github.job.step.started_at': '2024-12-22T17:11:35Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:36Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Run actions/checkout@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887496000000,
-  duration: 5000000,
-  attributes: {
-    'github.job.step.name': 'Run actions/checkout@v4',
-    'github.job.step.number': 2,
-    'github.job.step.started_at': '2024-12-22T17:11:36Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:41Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Run actions/setup-node@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887501000000,
-  duration: 5000000,
-  attributes: {
-    'github.job.step.name': 'Run actions/setup-node@v4',
-    'github.job.step.number': 3,
-    'github.job.step.started_at': '2024-12-22T17:11:41Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:46Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Install Dependencies',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887507000000,
-  duration: 10000000,
-  attributes: {
-    'github.job.step.name': 'Install Dependencies',
-    'github.job.step.number': 4,
-    'github.job.step.started_at': '2024-12-22T17:11:47Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:57Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'run tests',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887517000000,
-  duration: 11000000,
-  attributes: {
-    'github.job.step.name': 'run tests',
-    'github.job.step.number': 5,
-    'github.job.step.started_at': '2024-12-22T17:11:57Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:08Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Run inception-health/otel-upload-test-artifact-action@v1',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887529000000,
-  duration: 3000000,
-  attributes: {
-    'github.job.step.name': 'Run inception-health/otel-upload-test-artifact-action@v1',
-    'github.job.step.number': 6,
-    'github.job.step.started_at': '2024-12-22T17:12:09Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:12Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/setup-node@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887532000000,
-  duration: 5000000,
-  attributes: {
-    'github.job.step.name': 'Post Run actions/setup-node@v4',
-    'github.job.step.number': 11,
-    'github.job.step.started_at': '2024-12-22T17:12:12Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:17Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/checkout@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887537000000,
-  duration: 1000000,
-  attributes: {
-    'github.job.step.name': 'Post Run actions/checkout@v4',
-    'github.job.step.number': 12,
-    'github.job.step.started_at': '2024-12-22T17:12:17Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:18Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Complete job',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887538000000,
-  duration: 0,
-  attributes: {
-    'github.job.step.name': 'Complete job',
-    'github.job.step.number': 13,
-    'github.job.step.started_at': '2024-12-22T17:12:18Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:18Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'tests (windows-latest)',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887495000000,
-  duration: 45000000,
-  attributes: {
-    'cicd.pipeline.task.name': 'tests (windows-latest)',
-    'cicd.pipeline.task.run.id': 34769389529,
-    'cicd.pipeline.task.run.url.full': 'https://github.com/corentinmusard/otel-cicd-action/actions/runs/12456168064/job/34769389529',
-    'cicd.pipeline.task.type': 'test',
-    'github.job.id': 34769389529,
-    'github.job.name': 'tests (windows-latest)',
-    'github.job.run_id': 12456168064,
-    'github.job.run_attempt': 1,
-    'github.job.runner_group_id': 2,
-    'github.job.runner_group_name': 'GitHub Actions',
-    'github.job.runner_name': 'GitHub Actions 17',
-    'github.job.conclusion': 'success',
-    'github.job.labels': 'windows-latest',
-    'github.job.started_at': '2024-12-22T17:11:35Z',
-    'github.job.completed_at': '2024-12-22T17:12:20Z',
-    'github.conclusion': 'success',
-    error: false
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Set up job',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887491000000,
-  duration: 2000000,
-  attributes: {
-    'github.job.step.name': 'Set up job',
-    'github.job.step.number': 1,
-    'github.job.step.started_at': '2024-12-22T17:11:31Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:33Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Run actions/checkout@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887493000000,
-  duration: 2000000,
-  attributes: {
-    'github.job.step.name': 'Run actions/checkout@v4',
-    'github.job.step.number': 2,
-    'github.job.step.started_at': '2024-12-22T17:11:33Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:35Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Run actions/setup-node@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887495000000,
-  duration: 1000000,
-  attributes: {
-    'github.job.step.name': 'Run actions/setup-node@v4',
-    'github.job.step.number': 3,
-    'github.job.step.started_at': '2024-12-22T17:11:35Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:36Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Install Dependencies',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887496000000,
+  timestamp: 1735531735000000,
   duration: 4000000,
   attributes: {
-    'github.job.step.name': 'Install Dependencies',
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2024-12-30T04:08:55Z',
+    'github.job.step.completed_at': '2024-12-30T04:08:59Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Free Disk Space',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531739000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Free Disk Space',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2024-12-30T04:08:59Z',
+    'github.job.step.completed_at': '2024-12-30T04:09:00Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531740000000,
+  duration: 41000000,
+  attributes: {
+    'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 4,
-    'github.job.step.started_at': '2024-12-22T17:11:36Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:40Z',
+    'github.job.step.started_at': '2024-12-30T04:09:00Z',
+    'github.job.step.completed_at': '2024-12-30T04:09:41Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1363,9 +2504,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1376,16 +2517,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'run tests',
+  name: 'Run tests on macos-latest',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887500000000,
-  duration: 7000000,
+  timestamp: 1735531782000000,
+  duration: 287000000,
   attributes: {
-    'github.job.step.name': 'run tests',
+    'github.job.step.name': 'Run tests on macos-latest',
     'github.job.step.number': 5,
-    'github.job.step.started_at': '2024-12-22T17:11:40Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:47Z',
+    'github.job.step.started_at': '2024-12-30T04:09:42Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:29Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1400,9 +2541,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1413,90 +2554,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Run inception-health/otel-upload-test-artifact-action@v1',
+  name: 'Post Install toolchain',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887507000000,
-  duration: 3000000,
-  attributes: {
-    'github.job.step.name': 'Run inception-health/otel-upload-test-artifact-action@v1',
-    'github.job.step.number': 6,
-    'github.job.step.started_at': '2024-12-22T17:11:47Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:50Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/setup-node@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887510000000,
-  duration: 2000000,
-  attributes: {
-    'github.job.step.name': 'Post Run actions/setup-node@v4',
-    'github.job.step.number': 11,
-    'github.job.step.started_at': '2024-12-22T17:11:50Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:52Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/checkout@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887513000000,
+  timestamp: 1735532070000000,
   duration: 0,
   attributes: {
-    'github.job.step.name': 'Post Run actions/checkout@v4',
-    'github.job.step.number': 12,
-    'github.job.step.started_at': '2024-12-22T17:11:53Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:53Z',
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 9,
+    'github.job.step.started_at': '2024-12-30T04:14:30Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:30Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1511,9 +2578,46 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532070000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 10,
+    'github.job.step.started_at': '2024-12-30T04:14:30Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:30Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1527,13 +2631,13 @@
   name: 'Complete job',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887513000000,
-  duration: 0,
+  timestamp: 1735532070000000,
+  duration: 1000000,
   attributes: {
     'github.job.step.name': 'Complete job',
-    'github.job.step.number': 13,
-    'github.job.step.started_at': '2024-12-22T17:11:53Z',
-    'github.job.step.completed_at': '2024-12-22T17:11:53Z',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2024-12-30T04:14:30Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:31Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1548,9 +2652,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1561,27 +2665,27 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'tests (macos-latest)',
+  name: 'Test (macos-latest)',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887492000000,
-  duration: 23000000,
+  timestamp: 1735531733000000,
+  duration: 340000000,
   attributes: {
-    'cicd.pipeline.task.name': 'tests (macos-latest)',
-    'cicd.pipeline.task.run.id': 34769389607,
-    'cicd.pipeline.task.run.url.full': 'https://github.com/corentinmusard/otel-cicd-action/actions/runs/12456168064/job/34769389607',
+    'cicd.pipeline.task.name': 'Test (macos-latest)',
+    'cicd.pipeline.task.run.id': 34970680624,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970680624',
     'cicd.pipeline.task.type': 'test',
-    'github.job.id': 34769389607,
-    'github.job.name': 'tests (macos-latest)',
-    'github.job.run_id': 12456168064,
+    'github.job.id': 34970680624,
+    'github.job.name': 'Test (macos-latest)',
+    'github.job.run_id': 12541749172,
     'github.job.run_attempt': 1,
     'github.job.runner_group_id': 2,
     'github.job.runner_group_name': 'GitHub Actions',
-    'github.job.runner_name': 'GitHub Actions 8',
+    'github.job.runner_name': 'GitHub Actions 19',
     'github.job.conclusion': 'success',
     'github.job.labels': 'macos-latest',
-    'github.job.started_at': '2024-12-22T17:11:32Z',
-    'github.job.completed_at': '2024-12-22T17:11:55Z',
+    'github.job.started_at': '2024-12-30T04:08:53Z',
+    'github.job.completed_at': '2024-12-30T04:14:33Z',
     'github.conclusion': 'success',
     error: false
   },
@@ -1596,9 +2700,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1612,13 +2716,13 @@
   name: 'Set up job',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887547000000,
-  duration: 0,
+  timestamp: 1735531938000000,
+  duration: 1000000,
   attributes: {
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
-    'github.job.step.started_at': '2024-12-22T17:12:27Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:27Z',
+    'github.job.step.started_at': '2024-12-30T04:12:18Z',
+    'github.job.step.completed_at': '2024-12-30T04:12:19Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1633,9 +2737,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1646,16 +2750,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Run actions/checkout@v4',
+  name: 'Checkout repository',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887547000000,
-  duration: 1000000,
+  timestamp: 1735531939000000,
+  duration: 3000000,
   attributes: {
-    'github.job.step.name': 'Run actions/checkout@v4',
+    'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
-    'github.job.step.started_at': '2024-12-22T17:12:27Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:28Z',
+    'github.job.step.started_at': '2024-12-30T04:12:19Z',
+    'github.job.step.completed_at': '2024-12-30T04:12:22Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1670,9 +2774,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1683,53 +2787,16 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Export workflow',
+  name: 'Support longpaths',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887549000000,
-  duration: 4000000,
-  attributes: {
-    'github.job.step.name': 'Export workflow',
-    'github.job.step.number': 3,
-    'github.job.step.started_at': '2024-12-22T17:12:29Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:33Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
-  },
-  status: { code: 1 },
-  events: [],
-  links: []
-}
-{
-  resource: {
-    attributes: {
-      'service.name': 'otel-cicd-action',
-      'telemetry.sdk.language': 'nodejs',
-      'telemetry.sdk.name': 'opentelemetry',
-      'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
-    }
-  },
-  instrumentationScope: {
-    name: 'otel-cicd-action',
-    version: undefined,
-    schemaUrl: undefined
-  },
-  traceId: '00000000000000000000000000000000',
-  parentId: '0000000000000000',
-  traceState: undefined,
-  name: 'Post Run actions/checkout@v4',
-  id: '0000000000000000',
-  kind: 0,
-  timestamp: 1734887557000000,
+  timestamp: 1735531942000000,
   duration: 0,
   attributes: {
-    'github.job.step.name': 'Post Run actions/checkout@v4',
-    'github.job.step.number': 6,
-    'github.job.step.started_at': '2024-12-22T17:12:37Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:37Z',
+    'github.job.step.name': 'Support longpaths',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2024-12-30T04:12:22Z',
+    'github.job.step.completed_at': '2024-12-30T04:12:22Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1744,9 +2811,268 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531942000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2024-12-30T04:12:22Z',
+    'github.job.step.completed_at': '2024-12-30T04:12:23Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Free Disk Space',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735531943000000,
+  duration: 90000000,
+  attributes: {
+    'github.job.step.name': 'Free Disk Space',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2024-12-30T04:12:23Z',
+    'github.job.step.completed_at': '2024-12-30T04:13:53Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532034000000,
+  duration: 16000000,
+  attributes: {
+    'github.job.step.name': 'Install toolchain',
+    'github.job.step.number': 6,
+    'github.job.step.started_at': '2024-12-30T04:13:54Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:10Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Run rustfmt',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532050000000,
+  duration: 5000000,
+  attributes: {
+    'github.job.step.name': 'Run rustfmt',
+    'github.job.step.number': 7,
+    'github.job.step.started_at': '2024-12-30T04:14:10Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:15Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Install toolchain',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532055000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Install toolchain',
+    'github.job.step.number': 12,
+    'github.job.step.started_at': '2024-12-30T04:14:15Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:15Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532057000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 13,
+    'github.job.step.started_at': '2024-12-30T04:14:17Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:17Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '00000000000000000000000000000000',
+  parentId: '0000000000000000',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '0000000000000000',
+  kind: 0,
+  timestamp: 1735532057000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 14,
+    'github.job.step.started_at': '2024-12-30T04:14:17Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:17Z',
+    error: false,
+    'github.job.step.conclusion': 'success'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.0',
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1760,13 +3086,13 @@
   name: 'Complete job',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887554000000,
+  timestamp: 1735532055000000,
   duration: 0,
   attributes: {
     'github.job.step.name': 'Complete job',
-    'github.job.step.number': 7,
-    'github.job.step.started_at': '2024-12-22T17:12:34Z',
-    'github.job.step.completed_at': '2024-12-22T17:12:34Z',
+    'github.job.step.number': 15,
+    'github.job.step.started_at': '2024-12-30T04:14:15Z',
+    'github.job.step.completed_at': '2024-12-30T04:14:15Z',
     error: false,
     'github.job.step.conclusion': 'success'
   },
@@ -1781,9 +3107,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1794,26 +3120,26 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'otel-cicd',
+  name: 'Format Rust Files',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887547000000,
-  duration: 10000000,
+  timestamp: 1735531938000000,
+  duration: 119000000,
   attributes: {
-    'cicd.pipeline.task.name': 'otel-cicd',
-    'cicd.pipeline.task.run.id': 34769402426,
-    'cicd.pipeline.task.run.url.full': 'https://github.com/corentinmusard/otel-cicd-action/actions/runs/12456168064/job/34769402426',
-    'github.job.id': 34769402426,
-    'github.job.name': 'otel-cicd',
-    'github.job.run_id': 12456168064,
+    'cicd.pipeline.task.name': 'Format Rust Files',
+    'cicd.pipeline.task.run.id': 34970680756,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/12541749172/job/34970680756',
+    'github.job.id': 34970680756,
+    'github.job.name': 'Format Rust Files',
+    'github.job.run_id': 12541749172,
     'github.job.run_attempt': 1,
     'github.job.runner_group_id': 2,
     'github.job.runner_group_name': 'GitHub Actions',
-    'github.job.runner_name': 'GitHub Actions 17',
+    'github.job.runner_name': 'GitHub Actions 10',
     'github.job.conclusion': 'success',
     'github.job.labels': 'ubuntu-latest',
-    'github.job.started_at': '2024-12-22T17:12:27Z',
-    'github.job.completed_at': '2024-12-22T17:12:37Z',
+    'github.job.started_at': '2024-12-30T04:12:18Z',
+    'github.job.completed_at': '2024-12-30T04:14:17Z',
     'github.conclusion': 'success',
     error: false
   },
@@ -1828,9 +3154,9 @@
       'telemetry.sdk.language': 'nodejs',
       'telemetry.sdk.name': 'opentelemetry',
       'telemetry.sdk.version': '1.30.0',
-      'service.instance.id': 'corentinmusard/otel-cicd-action/96288187/12456168064/1',
-      'service.namespace': 'corentinmusard/otel-cicd-action',
-      'service.version': '607e6cc9b6c59889d2136df32b12599223203912'
+      'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
+      'service.namespace': 'biomejs/biome',
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
     }
   },
   instrumentationScope: {
@@ -1841,41 +3167,71 @@
   traceId: '00000000000000000000000000000000',
   parentId: '0000000000000000',
   traceState: undefined,
-  name: 'Build',
+  name: 'CI on main',
   id: '0000000000000000',
   kind: 0,
-  timestamp: 1734887485000000,
-  duration: 74000000,
+  timestamp: 1735531663000000,
+  duration: 849000000,
   attributes: {
-    'cicd.pipeline.name': 'Build',
-    'cicd.pipeline.run.id': 12456168064,
-    'github.workflow_id': 96288187,
-    'github.run_id': 12456168064,
-    'github.run_number': 67,
+    'cicd.pipeline.name': 'CI on main',
+    'cicd.pipeline.run.id': 12541749172,
+    'github.workflow_id': 65815714,
+    'github.run_id': 12541749172,
+    'github.run_number': 2822,
     'github.run_attempt': 1,
-    'github.html_url': 'https://github.com/corentinmusard/otel-cicd-action/actions/runs/12456168064',
-    'github.workflow_url': 'https://api.github.com/repos/corentinmusard/otel-cicd-action/actions/workflows/96288187',
+    'github.html_url': 'https://github.com/biomejs/biome/actions/runs/12541749172',
+    'github.workflow_url': 'https://api.github.com/repos/biomejs/biome/actions/workflows/65815714',
     'github.event': 'push',
-    'github.workflow': 'Build',
+    'github.workflow': 'CI on main',
     'github.conclusion': 'success',
-    'github.created_at': '2024-12-22T17:11:25Z',
-    'github.updated_at': '2024-12-22T17:12:39Z',
-    'github.run_started_at': '2024-12-22T17:11:25Z',
-    'github.author_name': 'Corentin',
-    'github.author_email': '33163342+corentinmusard@users.noreply.github.com',
-    'github.head_commit.id': '607e6cc9b6c59889d2136df32b12599223203912',
-    'github.head_commit.tree_id': 'b63e205ce4840cf60b6fac28636192aa1f8e4067',
-    'github.head_commit.author.name': '33163342+corentinmusard@users.noreply.github.com',
-    'github.head_commit.author.email': '33163342+corentinmusard@users.noreply.github.com',
+    'github.created_at': '2024-12-30T04:07:43Z',
+    'github.updated_at': '2024-12-30T04:21:52Z',
+    'github.run_started_at': '2024-12-30T04:07:43Z',
+    'github.author_name': 'renovate[bot]',
+    'github.author_email': '29139614+renovate[bot]@users.noreply.github.com',
+    'github.head_commit.id': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+    'github.head_commit.tree_id': '4f740dbb4ea81ccafbb8d552606792f012f98063',
+    'github.head_commit.author.name': '29139614+renovate[bot]@users.noreply.github.com',
+    'github.head_commit.author.email': '29139614+renovate[bot]@users.noreply.github.com',
     'github.head_commit.committer.name': 'noreply@github.com',
     'github.head_commit.committer.email': 'noreply@github.com',
-    'github.head_commit.message': 'Migrate from eslint/prettier to biome (#25)\n' +
+    'github.head_commit.message': 'chore(deps): update pnpm to v9.15.2 (#4807)\n' +
       '\n' +
-      '- **migrate from eslint/prettier to biome**\n' +
-      '- **lint and format project**',
-    'github.head_commit.timestamp': '2024-12-22T17:11:22Z',
-    'github.head_sha': '607e6cc9b6c59889d2136df32b12599223203912',
-    error: false
+      'Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>',
+    'github.head_commit.timestamp': '2024-12-30T04:07:40Z',
+    'github.head_sha': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+    'github.head_ref': 'main',
+    'github.base_ref': 'main',
+    'github.base_sha': '32d73c4f88a1c8066d0c8643cbb79b0cdd97b60d',
+    error: false,
+    'github.pull_requests.0.id': 1897035389,
+    'github.pull_requests.0.url': 'https://api.github.com/repos/Mu-L/biome/pulls/10',
+    'github.pull_requests.0.number': 10,
+    'github.pull_requests.0.labels': [],
+    'github.pull_requests.0.head.sha': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+    'github.pull_requests.0.head.ref': 'main',
+    'github.pull_requests.0.head.repo.id': 671654508,
+    'github.pull_requests.0.head.repo.url': 'https://api.github.com/repos/biomejs/biome',
+    'github.pull_requests.0.head.repo.name': 'biome',
+    'github.pull_requests.0.base.ref': 'main',
+    'github.pull_requests.0.base.sha': '32d73c4f88a1c8066d0c8643cbb79b0cdd97b60d',
+    'github.pull_requests.0.base.repo.id': 689818188,
+    'github.pull_requests.0.base.repo.url': 'https://api.github.com/repos/Mu-L/biome',
+    'github.pull_requests.0.base.repo.name': 'biome',
+    'github.pull_requests.1.id': 1660224577,
+    'github.pull_requests.1.url': 'https://api.github.com/repos/CodeWithShreyans/biome/pulls/15',
+    'github.pull_requests.1.number': 15,
+    'github.pull_requests.1.labels': [ 'A-Website' ],
+    'github.pull_requests.1.head.sha': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+    'github.pull_requests.1.head.ref': 'main',
+    'github.pull_requests.1.head.repo.id': 671654508,
+    'github.pull_requests.1.head.repo.url': 'https://api.github.com/repos/biomejs/biome',
+    'github.pull_requests.1.head.repo.name': 'biome',
+    'github.pull_requests.1.base.ref': 'main',
+    'github.pull_requests.1.base.sha': '63ed7bfb7905664ed40de28144fa1fe0b094c8a5',
+    'github.pull_requests.1.base.repo.id': 734728242,
+    'github.pull_requests.1.base.repo.url': 'https://api.github.com/repos/CodeWithShreyans/biome',
+    'github.pull_requests.1.base.repo.name': 'biome'
   },
   status: { code: 1 },
   events: [],

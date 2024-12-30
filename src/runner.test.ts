@@ -11,8 +11,8 @@ jest.unstable_mockModule("@actions/core", () => core);
 jest.unstable_mockModule("@actions/github", () => github);
 
 const token = process.env["GH_TOKEN"] ?? "";
-const owner = "corentinmusard";
-const repo = "otel-cicd-action";
+const owner = "biomejs";
+const repo = "biome";
 
 process.env["OTEL_CONSOLE_ONLY"] = "true";
 process.env["GITHUB_REPOSITORY"] = `${owner}/${repo}`;
@@ -38,7 +38,7 @@ describe("run", () => {
         case "otelServiceName":
           return "otel-cicd-action";
         case "runId":
-          return "12456168064";
+          return "12541749172";
         case "githubToken":
           return token;
         default:
@@ -51,7 +51,7 @@ describe("run", () => {
     jest.resetAllMocks();
   });
 
-  it("should run", async () => {
+  it("should run without artifacts", async () => {
     // redirect trace output to a file
     let output = "";
     // biome-ignore lint/suspicious/noExplicitAny: any is used to mock console.dir

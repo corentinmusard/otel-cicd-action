@@ -6,22 +6,21 @@ const token = process.env["GH_TOKEN"] ?? "";
 const owner = "corentinmusard";
 const repo = "otel-cicd-action";
 
-process.env["GITHUB_REPOSITORY"] = `${owner}/${repo}`;
-
 describe("getWorkflowRunJobs", () => {
   let octokit: Octokit;
 
   beforeAll(async () => {
+    process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
     octokit = await replayOctokit("getWorkflowRunJobs", token);
   });
 
   it("should return the workflow run jobs", async () => {
     const context = new Context();
-    context.runId = 2; // different than 12456168064
+    context.runId = 2; // different than 12541749172
 
-    const workflowRunJobs = await getWorkflowRunJobs(context, octokit, 12456168064);
-    expect(workflowRunJobs.jobs).toHaveLength(5);
-    expect(workflowRunJobs.workflowRun.id).toBe(12456168064);
+    const workflowRunJobs = await getWorkflowRunJobs(context, octokit, 12541749172);
+    expect(workflowRunJobs.jobs).toHaveLength(8);
+    expect(workflowRunJobs.workflowRun.id).toBe(12541749172);
   }, 10000);
 });
 
@@ -29,6 +28,7 @@ describe("getPRLabels", () => {
   let octokit: Octokit;
 
   beforeAll(async () => {
+    process.env["GITHUB_REPOSITORY"] = `${owner}/${repo}`;
     octokit = await replayOctokit("getPRLabels", token);
   });
 
@@ -47,6 +47,7 @@ describe("getPRsLabels", () => {
   let octokit: Octokit;
 
   beforeAll(async () => {
+    process.env["GITHUB_REPOSITORY"] = `${owner}/${repo}`;
     octokit = await replayOctokit("getPRsLabels", token);
   });
 
