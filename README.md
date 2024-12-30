@@ -81,7 +81,7 @@ jobs:
 | ------- | ----------------------------------------- |
 | traceId | The OpenTelemetry Trace ID for this Trace |
 
-[Sample OpenTelemetry Output](./src/__assets__/output.txt) (id, traceId and parentId have been redacted).
+[Sample OpenTelemetry Output](./src/__assets__/output.txt).
 
 #### Honeycomb Example Trace
 
