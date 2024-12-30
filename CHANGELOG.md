@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Use global context propagation instead of passing it around
+
 ## [1.12.0] - 2024-12-30
 
 ### Added
