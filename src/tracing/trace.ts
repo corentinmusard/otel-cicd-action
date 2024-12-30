@@ -1,4 +1,6 @@
 import * as grpc from "@grpc/grpc-js";
+import { context } from "@opentelemetry/api";
+import { AsyncHooksContextManager } from "@opentelemetry/context-async-hooks";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
 import { OTLPTraceExporter as ProtoOTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { Resource } from "@opentelemetry/resources";
@@ -39,6 +41,11 @@ interface Attributes {
 }
 
 function createTracerProvider(endpoint: string, headers: string, attributes: Attributes) {
+  // Register the context manager to enable context propagation
+  const contextManager = new AsyncHooksContextManager();
+  contextManager.enable();
+  context.setGlobalContextManager(contextManager);
+
   let exporter: SpanExporter = new ConsoleSpanExporter();
 
   if (!OTEL_CONSOLE_ONLY) {

@@ -19,20 +19,20 @@ import require$$0$b from 'node:events';
 import require$$0$d from 'worker_threads';
 import require$$2$4, { performance as performance$1 } from 'perf_hooks';
 import require$$5$1 from 'util/types';
-import require$$4$3 from 'async_hooks';
-import require$$1$3 from 'console';
+import require$$1$3 from 'async_hooks';
+import require$$1$4 from 'console';
 import require$$7 from 'url';
 import require$$3$3 from 'zlib';
 import require$$6$1 from 'string_decoder';
 import require$$0$e from 'diagnostics_channel';
-import require$$1$4 from 'child_process';
+import require$$1$5 from 'child_process';
 import require$$6$2 from 'timers';
 import * as fs from 'node:fs';
 import * as path$1 from 'node:path';
 import * as readline from 'node:readline';
 import process$1 from 'process';
 import require$$0$f from 'http2';
-import require$$1$5 from 'dns';
+import require$$1$6 from 'dns';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -12401,7 +12401,7 @@ function requireApiRequest () {
 	} = requireErrors();
 	const util = requireUtil$9();
 	const { getResolveErrorBodyCallback } = requireUtil$7();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$1$3;
 	const { addSignal, removeSignal } = requireAbortSignal();
 
 	class RequestHandler extends AsyncResource {
@@ -12590,7 +12590,7 @@ function requireApiStream () {
 	} = requireErrors();
 	const util = requireUtil$9();
 	const { getResolveErrorBodyCallback } = requireUtil$7();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$1$3;
 	const { addSignal, removeSignal } = requireAbortSignal();
 
 	class StreamHandler extends AsyncResource {
@@ -12821,7 +12821,7 @@ function requireApiPipeline () {
 	  RequestAbortedError
 	} = requireErrors();
 	const util = requireUtil$9();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$1$3;
 	const { addSignal, removeSignal } = requireAbortSignal();
 	const assert = require$$0$7;
 
@@ -13068,7 +13068,7 @@ function requireApiUpgrade () {
 	hasRequiredApiUpgrade = 1;
 
 	const { InvalidArgumentError, RequestAbortedError, SocketError } = requireErrors();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$1$3;
 	const util = requireUtil$9();
 	const { addSignal, removeSignal } = requireAbortSignal();
 	const assert = require$$0$7;
@@ -13180,7 +13180,7 @@ function requireApiConnect () {
 	if (hasRequiredApiConnect) return apiConnect;
 	hasRequiredApiConnect = 1;
 
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$1$3;
 	const { InvalidArgumentError, RequestAbortedError, SocketError } = requireErrors();
 	const util = requireUtil$9();
 	const { addSignal, removeSignal } = requireAbortSignal();
@@ -14108,7 +14108,7 @@ function requirePendingInterceptorsFormatter () {
 	hasRequiredPendingInterceptorsFormatter = 1;
 
 	const { Transform } = require$$0$8;
-	const { Console } = require$$1$3;
+	const { Console } = require$$1$4;
 
 	/**
 	 * Gets the output of `console.table(…)` as a string.
@@ -25791,7 +25791,7 @@ function requireIo () {
 	Object.defineProperty(io, "__esModule", { value: true });
 	io.findInPath = io.which = io.mkdirP = io.rmRF = io.mv = io.cp = void 0;
 	const assert_1 = require$$0$7;
-	const childProcess = __importStar(require$$1$4);
+	const childProcess = __importStar(require$$1$5);
 	const path = __importStar(require$$2$5);
 	const util_1 = require$$0$6;
 	const ioUtil = __importStar(requireIoUtil());
@@ -26140,7 +26140,7 @@ function requireToolrunner () {
 	toolrunner.argStringToArray = toolrunner.ToolRunner = void 0;
 	const os = __importStar(require$$0$2);
 	const events = __importStar(require$$0$5);
-	const child = __importStar(require$$1$4);
+	const child = __importStar(require$$1$5);
 	const path = __importStar(require$$2$5);
 	const io = __importStar(requireIo());
 	const ioUtil = __importStar(requireIoUtil());
@@ -68185,7 +68185,7 @@ async function traceOTLPFile(path) {
 }
 
 const tracer$1 = trace.getTracer("otel-cicd-action");
-async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, step, workflowArtifacts, }) {
+async function traceWorkflowRunStep(jobName, step, workflowArtifacts) {
     if (!step.completed_at || !step.started_at) {
         coreExports.warning(`Step ${step.name} is not completed yet.`);
         return;
@@ -68194,27 +68194,24 @@ async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, step, 
         coreExports.info(`Step ${step.name} did not run.`);
         return;
     }
-    coreExports.debug(`Trace Step ${step.name}`);
-    const ctx = trace.setSpan(parentContext, parentSpan);
     const startTime = new Date(step.started_at);
     const completedTime = new Date(step.completed_at);
-    const span = tracer$1.startSpan(step.name, {
-        attributes: {
-            "github.job.step.status": step.status,
-            "github.job.step.conclusion": step.conclusion ?? undefined,
-            "github.job.step.name": step.name,
-            "github.job.step.number": step.number,
-            "github.job.step.started_at": step.started_at ?? undefined,
-            "github.job.step.completed_at": step.completed_at ?? undefined,
-            error: step.conclusion === "failure",
-        },
-        startTime,
-    }, ctx);
-    const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-    span.setStatus({ code });
-    await traceArtifact(jobName, step.name, workflowArtifacts);
-    // Some skipped and post jobs return completed_at dates that are older than started_at
-    span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
+    const attributes = {
+        "github.job.step.status": step.status,
+        "github.job.step.conclusion": step.conclusion ?? undefined,
+        "github.job.step.name": step.name,
+        "github.job.step.number": step.number,
+        "github.job.step.started_at": step.started_at ?? undefined,
+        "github.job.step.completed_at": step.completed_at ?? undefined,
+        error: step.conclusion === "failure",
+    };
+    await tracer$1.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
+        const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+        span.setStatus({ code });
+        await traceArtifact(jobName, step.name, workflowArtifacts);
+        // Some skipped and post jobs return completed_at dates that are older than started_at
+        span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
+    });
 }
 async function traceArtifact(jobName, stepName, workflowArtifacts) {
     const artifact = workflowArtifacts(jobName, stepName);
@@ -68265,78 +68262,63 @@ async function traceWorkflowRunJobs(workflowRunJobs, prLabels) {
             };
         }, {});
     }
-    const rootSpan = tracer.startSpan(workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`, {
-        attributes: {
-            // OpenTelemetry semantic convention CICD Pipeline Attributes
-            // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
-            "cicd.pipeline.name": workflowRunJobs.workflowRun.name || undefined,
-            "cicd.pipeline.run.id": workflowRunJobs.workflowRun.id,
-            "github.workflow_id": workflowRunJobs.workflowRun.workflow_id,
-            "github.run_id": workflowRunJobs.workflowRun.id,
-            "github.run_number": workflowRunJobs.workflowRun.run_number,
-            "github.run_attempt": workflowRunJobs.workflowRun.run_attempt || 1,
-            "github.html_url": workflowRunJobs.workflowRun.html_url,
-            "github.workflow_url": workflowRunJobs.workflowRun.workflow_url,
-            "github.event": workflowRunJobs.workflowRun.event,
-            "github.workflow": workflowRunJobs.workflowRun.name || undefined,
-            "github.conclusion": workflowRunJobs.workflowRun.conclusion || undefined,
-            "github.created_at": workflowRunJobs.workflowRun.created_at,
-            "github.updated_at": workflowRunJobs.workflowRun.updated_at,
-            "github.run_started_at": workflowRunJobs.workflowRun.run_started_at,
-            "github.author_name": workflowRunJobs.workflowRun.head_commit?.author?.name || undefined,
-            "github.author_email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-            "github.head_commit.id": workflowRunJobs.workflowRun.head_commit?.id || undefined,
-            "github.head_commit.tree_id": workflowRunJobs.workflowRun.head_commit?.tree_id || undefined,
-            "github.head_commit.author.name": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-            "github.head_commit.author.email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-            "github.head_commit.committer.name": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
-            "github.head_commit.committer.email": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
-            "github.head_commit.message": workflowRunJobs.workflowRun.head_commit?.message || undefined,
-            "github.head_commit.timestamp": workflowRunJobs.workflowRun.head_commit?.timestamp || undefined,
-            "github.head_sha": workflowRunJobs.workflowRun.head_sha,
-            "github.head_ref": headRef,
-            "github.base_ref": baseRef,
-            "github.base_sha": baseSha,
-            error: workflowRunJobs.workflowRun.conclusion === "failure",
-            ...pull_requests,
-        },
-        root: true,
-        startTime,
-    }, ROOT_CONTEXT);
-    const code = workflowRunJobs.workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-    rootSpan.setStatus({ code });
-    coreExports.debug(`TraceID: ${rootSpan.spanContext().traceId}`);
-    coreExports.debug(`Root Span: ${rootSpan.spanContext().traceId}: ${workflowRunJobs.workflowRun.created_at}`);
-    try {
+    const attributes = {
+        // OpenTelemetry semantic convention CICD Pipeline Attributes
+        // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
+        "cicd.pipeline.name": workflowRunJobs.workflowRun.name || undefined,
+        "cicd.pipeline.run.id": workflowRunJobs.workflowRun.id,
+        "github.workflow_id": workflowRunJobs.workflowRun.workflow_id,
+        "github.run_id": workflowRunJobs.workflowRun.id,
+        "github.run_number": workflowRunJobs.workflowRun.run_number,
+        "github.run_attempt": workflowRunJobs.workflowRun.run_attempt || 1,
+        "github.html_url": workflowRunJobs.workflowRun.html_url,
+        "github.workflow_url": workflowRunJobs.workflowRun.workflow_url,
+        "github.event": workflowRunJobs.workflowRun.event,
+        "github.workflow": workflowRunJobs.workflowRun.name || undefined,
+        "github.conclusion": workflowRunJobs.workflowRun.conclusion || undefined,
+        "github.created_at": workflowRunJobs.workflowRun.created_at,
+        "github.updated_at": workflowRunJobs.workflowRun.updated_at,
+        "github.run_started_at": workflowRunJobs.workflowRun.run_started_at,
+        "github.author_name": workflowRunJobs.workflowRun.head_commit?.author?.name || undefined,
+        "github.author_email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
+        "github.head_commit.id": workflowRunJobs.workflowRun.head_commit?.id || undefined,
+        "github.head_commit.tree_id": workflowRunJobs.workflowRun.head_commit?.tree_id || undefined,
+        "github.head_commit.author.name": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
+        "github.head_commit.author.email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
+        "github.head_commit.committer.name": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
+        "github.head_commit.committer.email": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
+        "github.head_commit.message": workflowRunJobs.workflowRun.head_commit?.message || undefined,
+        "github.head_commit.timestamp": workflowRunJobs.workflowRun.head_commit?.timestamp || undefined,
+        "github.head_sha": workflowRunJobs.workflowRun.head_sha,
+        "github.head_ref": headRef,
+        "github.base_ref": baseRef,
+        "github.base_sha": baseSha,
+        error: workflowRunJobs.workflowRun.conclusion === "failure",
+        ...pull_requests,
+    };
+    return await tracer.startActiveSpan(workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`, { attributes, root: true, startTime }, async (rootSpan) => {
+        const code = workflowRunJobs.workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+        rootSpan.setStatus({ code });
+        coreExports.debug(`TraceID: ${rootSpan.spanContext().traceId}`);
+        coreExports.debug(`Root Span: ${rootSpan.spanContext().traceId}: ${workflowRunJobs.workflowRun.created_at}`);
         if (workflowRunJobs.jobs.length > 0) {
             // "Queued" span represent the time between the workflow has been started_at and
             // the first job has been picked up by a runner
-            const firstJob = workflowRunJobs.jobs[0];
-            const queuedCtx = trace.setSpan(ROOT_CONTEXT, rootSpan);
-            const queuedSpan = tracer.startSpan("Queued", { startTime }, queuedCtx);
-            queuedSpan.end(new Date(firstJob.started_at));
+            const queuedSpan = tracer.startSpan("Queued", { startTime }, context.active());
+            queuedSpan.end(new Date(workflowRunJobs.jobs[0].started_at));
         }
         for (const job of workflowRunJobs.jobs) {
-            await traceWorkflowRunJob({
-                parentSpan: rootSpan,
-                parentContext: ROOT_CONTEXT,
-                job,
-                workflowArtifacts: workflowRunJobs.workflowRunArtifacts,
-            });
+            await traceWorkflowRunJob(job, workflowRunJobs.workflowRunArtifacts);
         }
-    }
-    finally {
         rootSpan.end(new Date(workflowRunJobs.workflowRun.updated_at));
-    }
-    return rootSpan.spanContext().traceId;
+        return rootSpan.spanContext().traceId;
+    });
 }
-async function traceWorkflowRunJob({ parentSpan, parentContext, job, workflowArtifacts }) {
-    coreExports.debug(`Trace Job ${job.id}`);
+async function traceWorkflowRunJob(job, workflowArtifacts) {
     if (!job.completed_at) {
         coreExports.warning(`Job ${job.id} is not completed yet`);
         return;
     }
-    const ctx = trace.setSpan(parentContext, parentSpan);
     const startTime = new Date(job.started_at);
     const completedTime = new Date(job.completed_at);
     // Heuristic for task type.
@@ -68351,55 +68333,39 @@ async function traceWorkflowRunJob({ parentSpan, parentContext, job, workflowArt
     else if (job.name.toLowerCase().includes("deploy")) {
         taskType = "deploy";
     }
-    const span = tracer.startSpan(job.name, {
-        attributes: {
-            // OpenTelemetry semantic convention CICD Pipeline Attributes
-            // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
-            "cicd.pipeline.task.name": job.name,
-            "cicd.pipeline.task.run.id": job.id,
-            "cicd.pipeline.task.run.url.full": job.html_url || undefined,
-            "cicd.pipeline.task.type": taskType,
-            "github.job.id": job.id,
-            "github.job.name": job.name,
-            "github.job.run_id": job.run_id,
-            "github.job.run_attempt": job.run_attempt || 1,
-            "github.job.runner_group_id": job.runner_group_id || undefined,
-            "github.job.runner_group_name": job.runner_group_name || undefined,
-            "github.job.runner_name": job.runner_name || undefined,
-            "github.job.conclusion": job.conclusion || undefined,
-            "github.job.labels": job.labels.join(", ") || undefined,
-            "github.job.started_at": job.started_at || undefined,
-            "github.job.completed_at": job.completed_at || undefined,
-            "github.conclusion": job.conclusion || undefined,
-            error: job.conclusion === "failure",
-        },
-        startTime,
-    }, ctx);
-    const spanId = span.spanContext().spanId;
-    coreExports.debug(`Job Span<${spanId}>: Started<${job.started_at}>`);
-    try {
+    const attributes = {
+        // OpenTelemetry semantic convention CICD Pipeline Attributes
+        // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
+        "cicd.pipeline.task.name": job.name,
+        "cicd.pipeline.task.run.id": job.id,
+        "cicd.pipeline.task.run.url.full": job.html_url || undefined,
+        "cicd.pipeline.task.type": taskType,
+        "github.job.id": job.id,
+        "github.job.name": job.name,
+        "github.job.run_id": job.run_id,
+        "github.job.run_attempt": job.run_attempt || 1,
+        "github.job.runner_group_id": job.runner_group_id || undefined,
+        "github.job.runner_group_name": job.runner_group_name || undefined,
+        "github.job.runner_name": job.runner_name || undefined,
+        "github.job.conclusion": job.conclusion || undefined,
+        "github.job.labels": job.labels.join(", ") || undefined,
+        "github.job.started_at": job.started_at || undefined,
+        "github.job.completed_at": job.completed_at || undefined,
+        "github.conclusion": job.conclusion || undefined,
+        error: job.conclusion === "failure",
+    };
+    await tracer.startActiveSpan(job.name, { attributes, startTime }, async (span) => {
         const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         span.setStatus({ code });
-        const numSteps = job.steps?.length ?? 0;
-        coreExports.debug(`Trace ${numSteps} Steps`);
         for (const step of job.steps ?? []) {
-            await traceWorkflowRunStep({
-                parentSpan: span,
-                parentContext: ctx,
-                jobName: job.name,
-                step,
-                workflowArtifacts,
-            });
+            await traceWorkflowRunStep(job.name, step, workflowArtifacts);
         }
-    }
-    finally {
-        coreExports.debug(`Job Span<${spanId}>: Ended<${job.completed_at}>`);
         // Some skipped and post jobs return completed_at dates that are older than started_at
         span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
-    }
+    });
 }
 
-var src$4 = {};
+var src$5 = {};
 
 var callCredentials = {};
 
@@ -73686,7 +73652,7 @@ function requireMakeClient () {
 	return makeClient;
 }
 
-var src$3 = {};
+var src$4 = {};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -74292,7 +74258,7 @@ function requireLodash_camelcase () {
 	return lodash_camelcase;
 }
 
-var src$2 = {exports: {}};
+var src$3 = {exports: {}};
 
 var indexLight = {exports: {}};
 
@@ -80819,12 +80785,12 @@ function requireCommon () {
 	return common_1;
 }
 
-var hasRequiredSrc$4;
+var hasRequiredSrc$5;
 
-function requireSrc$4 () {
-	if (hasRequiredSrc$4) return src$2.exports;
-	hasRequiredSrc$4 = 1;
-	var protobuf = src$2.exports = requireIndexLight();
+function requireSrc$5 () {
+	if (hasRequiredSrc$5) return src$3.exports;
+	hasRequiredSrc$5 = 1;
+	var protobuf = src$3.exports = requireIndexLight();
 
 	protobuf.build = "full";
 
@@ -80835,7 +80801,7 @@ function requireSrc$4 () {
 
 	// Configure parser
 	protobuf.Root._configure(protobuf.Type, protobuf.parse, protobuf.common);
-	return src$2.exports;
+	return src$3.exports;
 }
 
 var protobufjs;
@@ -80844,7 +80810,7 @@ var hasRequiredProtobufjs;
 function requireProtobufjs () {
 	if (hasRequiredProtobufjs) return protobufjs;
 	hasRequiredProtobufjs = 1;
-	protobufjs = requireSrc$4();
+	protobufjs = requireSrc$5();
 	return protobufjs;
 }
 
@@ -84538,11 +84504,11 @@ function requireUmd () {
 	return umd.exports;
 }
 
-var hasRequiredSrc$3;
+var hasRequiredSrc$4;
 
-function requireSrc$3 () {
-	if (hasRequiredSrc$3) return src$3;
-	hasRequiredSrc$3 = 1;
+function requireSrc$4 () {
+	if (hasRequiredSrc$4) return src$4;
+	hasRequiredSrc$4 = 1;
 	(function (exports) {
 		/**
 		 * @license
@@ -84787,8 +84753,8 @@ function requireSrc$3 () {
 		exports.loadFileDescriptorSetFromObject = loadFileDescriptorSetFromObject;
 		(0, util_1.addCommonProtos)();
 		
-	} (src$3));
-	return src$3;
+	} (src$4));
+	return src$4;
 }
 
 var hasRequiredChannelz;
@@ -85358,7 +85324,7 @@ function requireChannelz () {
 	    }
 	    /* The purpose of this complexity is to avoid loading @grpc/proto-loader at
 	     * runtime for users who will not use/enable channelz. */
-	    const loaderLoadSync = requireSrc$3()
+	    const loaderLoadSync = requireSrc$4()
 	        .loadSync;
 	    const loadedProto = loaderLoadSync('channelz.proto', {
 	        keepCase: true,
@@ -85821,7 +85787,7 @@ function requireResolverDns () {
 		Object.defineProperty(exports, "__esModule", { value: true });
 		exports.setup = exports.DEFAULT_PORT = void 0;
 		const resolver_1 = requireResolver();
-		const dns_1 = require$$1$5;
+		const dns_1 = require$$1$6;
 		const service_config_1 = requireServiceConfig();
 		const constants_1 = requireConstants();
 		const metadata_1 = requireMetadata();
@@ -95278,11 +95244,11 @@ function requireLoadBalancerOutlierDetection () {
 	return loadBalancerOutlierDetection;
 }
 
-var hasRequiredSrc$2;
+var hasRequiredSrc$3;
 
-function requireSrc$2 () {
-	if (hasRequiredSrc$2) return src$4;
-	hasRequiredSrc$2 = 1;
+function requireSrc$3 () {
+	if (hasRequiredSrc$3) return src$5;
+	hasRequiredSrc$3 = 1;
 	(function (exports) {
 		/*
 		 * Copyright 2019 gRPC authors.
@@ -95427,11 +95393,425 @@ function requireSrc$2 () {
 		    channelz.setup();
 		})();
 		
-	} (src$4));
-	return src$4;
+	} (src$5));
+	return src$5;
 }
 
-var srcExports$1 = requireSrc$2();
+var srcExports$2 = requireSrc$3();
+
+var src$2 = {};
+
+var AsyncHooksContextManager = {};
+
+var require$$0$1 = /*@__PURE__*/getAugmentedNamespace(esm$4);
+
+var AbstractAsyncHooksContextManager = {};
+
+var hasRequiredAbstractAsyncHooksContextManager;
+
+function requireAbstractAsyncHooksContextManager () {
+	if (hasRequiredAbstractAsyncHooksContextManager) return AbstractAsyncHooksContextManager;
+	hasRequiredAbstractAsyncHooksContextManager = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(AbstractAsyncHooksContextManager, "__esModule", { value: true });
+	AbstractAsyncHooksContextManager.AbstractAsyncHooksContextManager = void 0;
+	const events_1 = require$$0$5;
+	const ADD_LISTENER_METHODS = [
+	    'addListener',
+	    'on',
+	    'once',
+	    'prependListener',
+	    'prependOnceListener',
+	];
+	let AbstractAsyncHooksContextManager$1 = class AbstractAsyncHooksContextManager {
+	    constructor() {
+	        this._kOtListeners = Symbol('OtListeners');
+	        this._wrapped = false;
+	    }
+	    /**
+	     * Binds a the certain context or the active one to the target function and then returns the target
+	     * @param context A context (span) to be bind to target
+	     * @param target a function or event emitter. When target or one of its callbacks is called,
+	     *  the provided context will be used as the active context for the duration of the call.
+	     */
+	    bind(context, target) {
+	        if (target instanceof events_1.EventEmitter) {
+	            return this._bindEventEmitter(context, target);
+	        }
+	        if (typeof target === 'function') {
+	            return this._bindFunction(context, target);
+	        }
+	        return target;
+	    }
+	    _bindFunction(context, target) {
+	        const manager = this;
+	        const contextWrapper = function (...args) {
+	            return manager.with(context, () => target.apply(this, args));
+	        };
+	        Object.defineProperty(contextWrapper, 'length', {
+	            enumerable: false,
+	            configurable: true,
+	            writable: false,
+	            value: target.length,
+	        });
+	        /**
+	         * It isn't possible to tell Typescript that contextWrapper is the same as T
+	         * so we forced to cast as any here.
+	         */
+	        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+	        return contextWrapper;
+	    }
+	    /**
+	     * By default, EventEmitter call their callback with their context, which we do
+	     * not want, instead we will bind a specific context to all callbacks that
+	     * go through it.
+	     * @param context the context we want to bind
+	     * @param ee EventEmitter an instance of EventEmitter to patch
+	     */
+	    _bindEventEmitter(context, ee) {
+	        const map = this._getPatchMap(ee);
+	        if (map !== undefined)
+	            return ee;
+	        this._createPatchMap(ee);
+	        // patch methods that add a listener to propagate context
+	        ADD_LISTENER_METHODS.forEach(methodName => {
+	            if (ee[methodName] === undefined)
+	                return;
+	            ee[methodName] = this._patchAddListener(ee, ee[methodName], context);
+	        });
+	        // patch methods that remove a listener
+	        if (typeof ee.removeListener === 'function') {
+	            ee.removeListener = this._patchRemoveListener(ee, ee.removeListener);
+	        }
+	        if (typeof ee.off === 'function') {
+	            ee.off = this._patchRemoveListener(ee, ee.off);
+	        }
+	        // patch method that remove all listeners
+	        if (typeof ee.removeAllListeners === 'function') {
+	            ee.removeAllListeners = this._patchRemoveAllListeners(ee, ee.removeAllListeners);
+	        }
+	        return ee;
+	    }
+	    /**
+	     * Patch methods that remove a given listener so that we match the "patched"
+	     * version of that listener (the one that propagate context).
+	     * @param ee EventEmitter instance
+	     * @param original reference to the patched method
+	     */
+	    _patchRemoveListener(ee, original) {
+	        const contextManager = this;
+	        return function (event, listener) {
+	            var _a;
+	            const events = (_a = contextManager._getPatchMap(ee)) === null || _a === void 0 ? void 0 : _a[event];
+	            if (events === undefined) {
+	                return original.call(this, event, listener);
+	            }
+	            const patchedListener = events.get(listener);
+	            return original.call(this, event, patchedListener || listener);
+	        };
+	    }
+	    /**
+	     * Patch methods that remove all listeners so we remove our
+	     * internal references for a given event.
+	     * @param ee EventEmitter instance
+	     * @param original reference to the patched method
+	     */
+	    _patchRemoveAllListeners(ee, original) {
+	        const contextManager = this;
+	        return function (event) {
+	            const map = contextManager._getPatchMap(ee);
+	            if (map !== undefined) {
+	                if (arguments.length === 0) {
+	                    contextManager._createPatchMap(ee);
+	                }
+	                else if (map[event] !== undefined) {
+	                    delete map[event];
+	                }
+	            }
+	            return original.apply(this, arguments);
+	        };
+	    }
+	    /**
+	     * Patch methods on an event emitter instance that can add listeners so we
+	     * can force them to propagate a given context.
+	     * @param ee EventEmitter instance
+	     * @param original reference to the patched method
+	     * @param [context] context to propagate when calling listeners
+	     */
+	    _patchAddListener(ee, original, context) {
+	        const contextManager = this;
+	        return function (event, listener) {
+	            /**
+	             * This check is required to prevent double-wrapping the listener.
+	             * The implementation for ee.once wraps the listener and calls ee.on.
+	             * Without this check, we would wrap that wrapped listener.
+	             * This causes an issue because ee.removeListener depends on the onceWrapper
+	             * to properly remove the listener. If we wrap their wrapper, we break
+	             * that detection.
+	             */
+	            if (contextManager._wrapped) {
+	                return original.call(this, event, listener);
+	            }
+	            let map = contextManager._getPatchMap(ee);
+	            if (map === undefined) {
+	                map = contextManager._createPatchMap(ee);
+	            }
+	            let listeners = map[event];
+	            if (listeners === undefined) {
+	                listeners = new WeakMap();
+	                map[event] = listeners;
+	            }
+	            const patchedListener = contextManager.bind(context, listener);
+	            // store a weak reference of the user listener to ours
+	            listeners.set(listener, patchedListener);
+	            /**
+	             * See comment at the start of this function for the explanation of this property.
+	             */
+	            contextManager._wrapped = true;
+	            try {
+	                return original.call(this, event, patchedListener);
+	            }
+	            finally {
+	                contextManager._wrapped = false;
+	            }
+	        };
+	    }
+	    _createPatchMap(ee) {
+	        const map = Object.create(null);
+	        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+	        ee[this._kOtListeners] = map;
+	        return map;
+	    }
+	    _getPatchMap(ee) {
+	        return ee[this._kOtListeners];
+	    }
+	};
+	AbstractAsyncHooksContextManager.AbstractAsyncHooksContextManager = AbstractAsyncHooksContextManager$1;
+	
+	return AbstractAsyncHooksContextManager;
+}
+
+var hasRequiredAsyncHooksContextManager;
+
+function requireAsyncHooksContextManager () {
+	if (hasRequiredAsyncHooksContextManager) return AsyncHooksContextManager;
+	hasRequiredAsyncHooksContextManager = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(AsyncHooksContextManager, "__esModule", { value: true });
+	AsyncHooksContextManager.AsyncHooksContextManager = void 0;
+	const api_1 = require$$0$1;
+	const asyncHooks = require$$1$3;
+	const AbstractAsyncHooksContextManager_1 = /*@__PURE__*/ requireAbstractAsyncHooksContextManager();
+	let AsyncHooksContextManager$1 = class AsyncHooksContextManager extends AbstractAsyncHooksContextManager_1.AbstractAsyncHooksContextManager {
+	    constructor() {
+	        super();
+	        this._contexts = new Map();
+	        this._stack = [];
+	        this._asyncHook = asyncHooks.createHook({
+	            init: this._init.bind(this),
+	            before: this._before.bind(this),
+	            after: this._after.bind(this),
+	            destroy: this._destroy.bind(this),
+	            promiseResolve: this._destroy.bind(this),
+	        });
+	    }
+	    active() {
+	        var _a;
+	        return (_a = this._stack[this._stack.length - 1]) !== null && _a !== void 0 ? _a : api_1.ROOT_CONTEXT;
+	    }
+	    with(context, fn, thisArg, ...args) {
+	        this._enterContext(context);
+	        try {
+	            return fn.call(thisArg, ...args);
+	        }
+	        finally {
+	            this._exitContext();
+	        }
+	    }
+	    enable() {
+	        this._asyncHook.enable();
+	        return this;
+	    }
+	    disable() {
+	        this._asyncHook.disable();
+	        this._contexts.clear();
+	        this._stack = [];
+	        return this;
+	    }
+	    /**
+	     * Init hook will be called when userland create a async context, setting the
+	     * context as the current one if it exist.
+	     * @param uid id of the async context
+	     * @param type the resource type
+	     */
+	    _init(uid, type) {
+	        // ignore TIMERWRAP as they combine timers with same timeout which can lead to
+	        // false context propagation. TIMERWRAP has been removed in node 11
+	        // every timer has it's own `Timeout` resource anyway which is used to propagate
+	        // context.
+	        if (type === 'TIMERWRAP')
+	            return;
+	        const context = this._stack[this._stack.length - 1];
+	        if (context !== undefined) {
+	            this._contexts.set(uid, context);
+	        }
+	    }
+	    /**
+	     * Destroy hook will be called when a given context is no longer used so we can
+	     * remove its attached context.
+	     * @param uid uid of the async context
+	     */
+	    _destroy(uid) {
+	        this._contexts.delete(uid);
+	    }
+	    /**
+	     * Before hook is called just before executing a async context.
+	     * @param uid uid of the async context
+	     */
+	    _before(uid) {
+	        const context = this._contexts.get(uid);
+	        if (context !== undefined) {
+	            this._enterContext(context);
+	        }
+	    }
+	    /**
+	     * After hook is called just after completing the execution of a async context.
+	     */
+	    _after() {
+	        this._exitContext();
+	    }
+	    /**
+	     * Set the given context as active
+	     */
+	    _enterContext(context) {
+	        this._stack.push(context);
+	    }
+	    /**
+	     * Remove the context at the root of the stack
+	     */
+	    _exitContext() {
+	        this._stack.pop();
+	    }
+	};
+	AsyncHooksContextManager.AsyncHooksContextManager = AsyncHooksContextManager$1;
+	
+	return AsyncHooksContextManager;
+}
+
+var AsyncLocalStorageContextManager = {};
+
+var hasRequiredAsyncLocalStorageContextManager;
+
+function requireAsyncLocalStorageContextManager () {
+	if (hasRequiredAsyncLocalStorageContextManager) return AsyncLocalStorageContextManager;
+	hasRequiredAsyncLocalStorageContextManager = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(AsyncLocalStorageContextManager, "__esModule", { value: true });
+	AsyncLocalStorageContextManager.AsyncLocalStorageContextManager = void 0;
+	const api_1 = require$$0$1;
+	const async_hooks_1 = require$$1$3;
+	const AbstractAsyncHooksContextManager_1 = /*@__PURE__*/ requireAbstractAsyncHooksContextManager();
+	let AsyncLocalStorageContextManager$1 = class AsyncLocalStorageContextManager extends AbstractAsyncHooksContextManager_1.AbstractAsyncHooksContextManager {
+	    constructor() {
+	        super();
+	        this._asyncLocalStorage = new async_hooks_1.AsyncLocalStorage();
+	    }
+	    active() {
+	        var _a;
+	        return (_a = this._asyncLocalStorage.getStore()) !== null && _a !== void 0 ? _a : api_1.ROOT_CONTEXT;
+	    }
+	    with(context, fn, thisArg, ...args) {
+	        const cb = thisArg == null ? fn : fn.bind(thisArg);
+	        return this._asyncLocalStorage.run(context, cb, ...args);
+	    }
+	    enable() {
+	        return this;
+	    }
+	    disable() {
+	        this._asyncLocalStorage.disable();
+	        return this;
+	    }
+	};
+	AsyncLocalStorageContextManager.AsyncLocalStorageContextManager = AsyncLocalStorageContextManager$1;
+	
+	return AsyncLocalStorageContextManager;
+}
+
+var hasRequiredSrc$2;
+
+function requireSrc$2 () {
+	if (hasRequiredSrc$2) return src$2;
+	hasRequiredSrc$2 = 1;
+	(function (exports) {
+		/*
+		 * Copyright The OpenTelemetry Authors
+		 *
+		 * Licensed under the Apache License, Version 2.0 (the "License");
+		 * you may not use this file except in compliance with the License.
+		 * You may obtain a copy of the License at
+		 *
+		 *      https://www.apache.org/licenses/LICENSE-2.0
+		 *
+		 * Unless required by applicable law or agreed to in writing, software
+		 * distributed under the License is distributed on an "AS IS" BASIS,
+		 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		 * See the License for the specific language governing permissions and
+		 * limitations under the License.
+		 */
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.AsyncLocalStorageContextManager = exports.AsyncHooksContextManager = void 0;
+		var AsyncHooksContextManager_1 = /*@__PURE__*/ requireAsyncHooksContextManager();
+		Object.defineProperty(exports, "AsyncHooksContextManager", { enumerable: true, get: function () { return AsyncHooksContextManager_1.AsyncHooksContextManager; } });
+		var AsyncLocalStorageContextManager_1 = /*@__PURE__*/ requireAsyncLocalStorageContextManager();
+		Object.defineProperty(exports, "AsyncLocalStorageContextManager", { enumerable: true, get: function () { return AsyncLocalStorageContextManager_1.AsyncLocalStorageContextManager; } });
+		
+	} (src$2));
+	return src$2;
+}
+
+var srcExports$1 = /*@__PURE__*/ requireSrc$2();
 
 var src$1 = {};
 
@@ -95440,8 +95820,6 @@ var OTLPTraceExporter$1 = {};
 var src = {};
 
 var convertLegacyOtlpGrpcOptions = {};
-
-var require$$0$1 = /*@__PURE__*/getAugmentedNamespace(esm$4);
 
 var otlpGrpcConfiguration = {};
 
@@ -96094,7 +96472,7 @@ function requireCreateServiceClientConstructor () {
 	 */
 	Object.defineProperty(createServiceClientConstructor, "__esModule", { value: true });
 	createServiceClientConstructor.createServiceClientConstructor = void 0;
-	const grpc = requireSrc$2();
+	const grpc = requireSrc$3();
 	/**
 	 * Creates a unary service client constructor that, when instantiated, does not serialize/deserialize anything.
 	 * Allows for passing in {@link Buffer} directly, serialization can be handled via protobufjs or custom implementations.
@@ -96161,7 +96539,7 @@ function requireGrpcExporterTransport () {
 	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
 	    const { credentials,
 	    // eslint-disable-next-line @typescript-eslint/no-var-requires
-	     } = requireSrc$2();
+	     } = requireSrc$3();
 	    return credentials.createInsecure();
 	}
 	grpcExporterTransport.createInsecureCredentials = createInsecureCredentials;
@@ -96169,7 +96547,7 @@ function requireGrpcExporterTransport () {
 	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
 	    const { credentials,
 	    // eslint-disable-next-line @typescript-eslint/no-var-requires
-	     } = requireSrc$2();
+	     } = requireSrc$3();
 	    return credentials.createSsl(rootCert, privateKey, certChain);
 	}
 	grpcExporterTransport.createSslCredentials = createSslCredentials;
@@ -96177,7 +96555,7 @@ function requireGrpcExporterTransport () {
 	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
 	    const { Metadata,
 	    // eslint-disable-next-line @typescript-eslint/no-var-requires
-	     } = requireSrc$2();
+	     } = requireSrc$3();
 	    return new Metadata();
 	}
 	grpcExporterTransport.createEmptyMetadata = createEmptyMetadata;
@@ -103439,6 +103817,10 @@ function isHttpEndpoint(endpoint) {
     return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
 function createTracerProvider(endpoint, headers, attributes) {
+    // Register the context manager to enable context propagation
+    const contextManager = new srcExports$1.AsyncHooksContextManager();
+    contextManager.enable();
+    context.setGlobalContextManager(contextManager);
     let exporter = new ConsoleSpanExporter();
     if (!OTEL_CONSOLE_ONLY) {
         if (isHttpEndpoint(endpoint)) {
@@ -103450,8 +103832,8 @@ function createTracerProvider(endpoint, headers, attributes) {
         else {
             exporter = new srcExports.OTLPTraceExporter({
                 url: endpoint,
-                credentials: srcExports$1.credentials.createSsl(),
-                metadata: srcExports$1.Metadata.fromHttp2Headers(stringToHeaders(headers)),
+                credentials: srcExports$2.credentials.createSsl(),
+                metadata: srcExports$2.Metadata.fromHttp2Headers(stringToHeaders(headers)),
             });
         }
     }
