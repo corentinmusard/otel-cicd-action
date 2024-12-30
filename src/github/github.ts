@@ -150,24 +150,13 @@ async function getSelfArtifactMap() {
   return artifactsMap;
 }
 
-async function listJobsForWorkflowRun(context: Context, octokit: Octokit, runId: number): Promise<WorkflowRunJob[]> {
-  const jobs: WorkflowRunJob[] = [];
-  const pageSize = 100;
-
-  for (let page = 1, hasNext = true; hasNext; page++) {
-    const listJobsForWorkflowRunResponse = await octokit.rest.actions.listJobsForWorkflowRun({
-      ...context.repo,
-      run_id: runId,
-      filter: "latest", // risk of missing a run if re-run happens between Action trigger and this query
-      page,
-      per_page: pageSize,
-    });
-
-    jobs.push(...listJobsForWorkflowRunResponse.data.jobs);
-    hasNext = jobs.length < listJobsForWorkflowRunResponse.data.total_count;
-  }
-
-  return jobs;
+async function listJobsForWorkflowRun(context: Context, octokit: Octokit, runId: number) {
+  return await octokit.paginate(octokit.rest.actions.listJobsForWorkflowRun, {
+    ...context.repo,
+    run_id: runId,
+    filter: "latest", // risk of missing a run if re-run happens between Action trigger and this query
+    per_page: 100,
+  });
 }
 
 type WorkflowRunJobs = {

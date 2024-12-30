@@ -49202,20 +49202,12 @@ async function getSelfArtifactMap() {
     return artifactsMap;
 }
 async function listJobsForWorkflowRun(context, octokit, runId) {
-    const jobs = [];
-    const pageSize = 100;
-    for (let page = 1, hasNext = true; hasNext; page++) {
-        const listJobsForWorkflowRunResponse = await octokit.rest.actions.listJobsForWorkflowRun({
-            ...context.repo,
-            run_id: runId,
-            filter: "latest", // risk of missing a run if re-run happens between Action trigger and this query
-            page,
-            per_page: pageSize,
-        });
-        jobs.push(...listJobsForWorkflowRunResponse.data.jobs);
-        hasNext = jobs.length < listJobsForWorkflowRunResponse.data.total_count;
-    }
-    return jobs;
+    return await octokit.paginate(octokit.rest.actions.listJobsForWorkflowRun, {
+        ...context.repo,
+        run_id: runId,
+        filter: "latest", // risk of missing a run if re-run happens between Action trigger and this query
+        per_page: 100,
+    });
 }
 async function getWorkflowRunJobs(context, octokit, runId) {
     const getWorkflowRunResponse = await octokit.rest.actions.getWorkflowRun({
