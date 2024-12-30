@@ -4,13 +4,11 @@ import * as artifact from "@actions/artifact";
 import * as core from "@actions/core";
 import type { Context } from "@actions/github/lib/context";
 import type { GitHub } from "@actions/github/lib/utils";
-import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
+import type { components } from "@octokit/openapi-types";
 import JSZip from "jszip";
 
 type Octokit = InstanceType<typeof GitHub>;
-type ListJobsForWorkflowRunType = RestEndpointMethodTypes["actions"]["listJobsForWorkflowRun"]["response"];
-type WorkflowRunJob = ListJobsForWorkflowRunType["data"]["jobs"][number];
-type WorkflowRun = RestEndpointMethodTypes["actions"]["getWorkflowRun"]["response"]["data"];
+type WorkflowRunJob = components["schemas"]["job"];
 
 type WorkflowArtifactMap = {
   [job: string]: {
@@ -147,7 +145,7 @@ async function listJobsForWorkflowRun(context: Context, octokit: Octokit, runId:
 }
 
 type WorkflowRunJobs = {
-  workflowRun: WorkflowRun;
+  workflowRun: components["schemas"]["workflow-run"];
   jobs: WorkflowRunJob[];
   workflowRunArtifacts: WorkflowArtifactLookup;
 };

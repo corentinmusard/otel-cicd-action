@@ -1,86 +1,44 @@
-import { jest } from "@jest/globals";
 import type { BasicTracerProvider } from "@opentelemetry/sdk-trace-base";
-import { ATTR_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
+import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
-import { mock } from "jest-mock-extended";
-import type { WorkflowRunJobs } from "../github/github";
-import { createTracerProvider, stringToHeaders } from "./trace";
+import { type Attributes, createTracerProvider, stringToHeaders } from "./trace";
 
 describe("createTracerProvider", () => {
-  let subject: BasicTracerProvider;
-  let mockWorkflowRunJobs: WorkflowRunJobs;
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-    mockWorkflowRunJobs = mock<WorkflowRunJobs>({
-      workflowRun: {
-        name: "workflow-name",
-        workflow_id: 1,
-        id: 1,
-        repository: {
-          full_name: "test/repo",
-        },
-        head_sha: "head-sha",
-      },
-    });
-  });
+  let provider: BasicTracerProvider;
+  const attributes: Attributes = {
+    serviceName: "workflow-name",
+    serviceVersion: "head-sha",
+    serviceInstanceId: "test/repo/1/1/1",
+    serviceNamespace: "test/repo",
+  };
 
   afterEach(() => {
-    jest.useRealTimers();
-    return subject.shutdown();
+    return provider.shutdown();
   });
-  describe("resource attributes", () => {
-    it("has service.name resource as workflow name", () => {
-      subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[ATTR_SERVICE_NAME]).toEqual(mockWorkflowRunJobs.workflowRun.name);
-    });
 
-    it("has service.name resource as workflow id", () => {
-      mockWorkflowRunJobs.workflowRun.name = null;
-      subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[ATTR_SERVICE_NAME]).toEqual(`${mockWorkflowRunJobs.workflowRun.id}`);
-    });
-
-    it("has service.name resource as a custom parameter", () => {
-      subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs, "custom-service-name");
-      expect(subject.resource.attributes[ATTR_SERVICE_NAME]).toEqual("custom-service-name");
-    });
-
-    it("has service.instance.id resource", () => {
-      subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[ATTR_SERVICE_INSTANCE_ID]).toEqual(
-        [
-          mockWorkflowRunJobs.workflowRun.repository.full_name,
-          mockWorkflowRunJobs.workflowRun.workflow_id,
-          mockWorkflowRunJobs.workflowRun.id,
-          mockWorkflowRunJobs.workflowRun.run_attempt,
-        ].join("/"),
-      );
-    });
-
-    it("has service.namespace resource", () => {
-      subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-      expect(subject.resource.attributes[ATTR_SERVICE_NAMESPACE]).toEqual(
-        mockWorkflowRunJobs.workflowRun.repository.full_name,
-      );
-    });
+  it("has resource attributes", () => {
+    provider = createTracerProvider("localhost", "test=foo", attributes);
+    expect(provider.resource.attributes[ATTR_SERVICE_NAME]).toEqual(attributes.serviceName);
+    expect(provider.resource.attributes[ATTR_SERVICE_VERSION]).toEqual(attributes.serviceVersion);
+    expect(provider.resource.attributes[ATTR_SERVICE_INSTANCE_ID]).toEqual(attributes.serviceInstanceId);
+    expect(provider.resource.attributes[ATTR_SERVICE_NAMESPACE]).toEqual(attributes.serviceNamespace);
   });
 
   it("has active span processor", () => {
-    subject = createTracerProvider("localhost", "test=foo", mockWorkflowRunJobs);
-    const spanProcessor = subject.getActiveSpanProcessor();
+    provider = createTracerProvider("localhost", "test=foo", attributes);
+    const spanProcessor = provider.getActiveSpanProcessor();
     expect(spanProcessor).toBeDefined();
   });
 
   it("supports https", () => {
-    subject = createTracerProvider("https://localhost", "test=foo", mockWorkflowRunJobs);
-    const spanProcessor = subject.getActiveSpanProcessor();
+    provider = createTracerProvider("https://localhost", "test=foo", attributes);
+    const spanProcessor = provider.getActiveSpanProcessor();
     expect(spanProcessor).toBeDefined();
   });
 
   it("supports http", () => {
-    subject = createTracerProvider("http://localhost", "test=foo", mockWorkflowRunJobs);
-    const spanProcessor = subject.getActiveSpanProcessor();
+    provider = createTracerProvider("http://localhost", "test=foo", attributes);
+    const spanProcessor = provider.getActiveSpanProcessor();
     expect(spanProcessor).toBeDefined();
   });
 });

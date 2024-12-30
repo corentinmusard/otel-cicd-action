@@ -2,7 +2,7 @@ import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { getPRsLabels, getWorkflowRunJobs } from "./github/github";
 import { traceWorkflowRunJobs } from "./tracing/job";
-import { createTracerProvider } from "./tracing/trace";
+import { type Attributes, createTracerProvider } from "./tracing/trace";
 
 async function run() {
   const otlpEndpoint = core.getInput("otlpEndpoint");
@@ -20,7 +20,18 @@ async function run() {
   const prLabels = await getPRsLabels(context, octokit, prNumbers);
 
   core.info(`Create Trace Provider for ${otlpEndpoint}`);
-  const provider = createTracerProvider(otlpEndpoint, otlpHeaders, workflowRunJobs, otelServiceName);
+  const attributes: Attributes = {
+    serviceName: otelServiceName || workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`,
+    serviceVersion: workflowRunJobs.workflowRun.head_sha,
+    serviceInstanceId: [
+      workflowRunJobs.workflowRun.repository.full_name,
+      `${workflowRunJobs.workflowRun.workflow_id}`,
+      `${workflowRunJobs.workflowRun.id}`,
+      `${workflowRunJobs.workflowRun.run_attempt ?? 1}`,
+    ].join("/"),
+    serviceNamespace: workflowRunJobs.workflowRun.repository.full_name,
+  };
+  const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
 
   try {
     core.info(`Trace Workflow Run Jobs for ${runId} and export to ${otlpEndpoint}`);

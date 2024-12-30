@@ -103445,38 +103445,29 @@ function stringToHeaders(s) {
 function isHttpEndpoint(endpoint) {
     return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
-function createTracerProvider(otlpEndpoint, otlpHeaders, workflowRunJobs, otelServiceName) {
-    const serviceName = otelServiceName || workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`;
-    const serviceInstanceId = [
-        workflowRunJobs.workflowRun.repository.full_name,
-        workflowRunJobs.workflowRun.workflow_id,
-        workflowRunJobs.workflowRun.id,
-        workflowRunJobs.workflowRun.run_attempt,
-    ].join("/");
-    const serviceNamespace = workflowRunJobs.workflowRun.repository.full_name;
-    const serviceVersion = workflowRunJobs.workflowRun.head_sha;
+function createTracerProvider(endpoint, headers, attributes) {
     let exporter = new ConsoleSpanExporter();
     if (!OTEL_CONSOLE_ONLY) {
-        if (isHttpEndpoint(otlpEndpoint)) {
+        if (isHttpEndpoint(endpoint)) {
             exporter = new OTLPTraceExporter({
-                url: otlpEndpoint,
-                headers: stringToHeaders(otlpHeaders),
+                url: endpoint,
+                headers: stringToHeaders(headers),
             });
         }
         else {
             exporter = new srcExports.OTLPTraceExporter({
-                url: otlpEndpoint,
+                url: endpoint,
                 credentials: srcExports$1.credentials.createSsl(),
-                metadata: srcExports$1.Metadata.fromHttp2Headers(stringToHeaders(otlpHeaders)),
+                metadata: srcExports$1.Metadata.fromHttp2Headers(stringToHeaders(headers)),
             });
         }
     }
     const provider = new BasicTracerProvider({
         resource: new Resource({
-            [ATTR_SERVICE_NAME]: serviceName,
-            [ATTR_SERVICE_INSTANCE_ID]: serviceInstanceId,
-            [ATTR_SERVICE_NAMESPACE]: serviceNamespace,
-            [ATTR_SERVICE_VERSION]: serviceVersion,
+            [ATTR_SERVICE_NAME]: attributes.serviceName,
+            [ATTR_SERVICE_INSTANCE_ID]: attributes.serviceInstanceId,
+            [ATTR_SERVICE_NAMESPACE]: attributes.serviceNamespace,
+            [ATTR_SERVICE_VERSION]: attributes.serviceVersion,
         }),
         spanProcessors: [new BatchSpanProcessor(exporter)],
     });
@@ -103497,7 +103488,18 @@ async function run() {
     const prNumbers = workflowRunJobs.workflowRun.pull_requests?.map((pr) => pr.number) ?? [];
     const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
     coreExports.info(`Create Trace Provider for ${otlpEndpoint}`);
-    const provider = createTracerProvider(otlpEndpoint, otlpHeaders, workflowRunJobs, otelServiceName);
+    const attributes = {
+        serviceName: otelServiceName || workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`,
+        serviceVersion: workflowRunJobs.workflowRun.head_sha,
+        serviceInstanceId: [
+            workflowRunJobs.workflowRun.repository.full_name,
+            `${workflowRunJobs.workflowRun.workflow_id}`,
+            `${workflowRunJobs.workflowRun.id}`,
+            `${workflowRunJobs.workflowRun.run_attempt ?? 1}`,
+        ].join("/"),
+        serviceNamespace: workflowRunJobs.workflowRun.repository.full_name,
+    };
+    const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
     try {
         coreExports.info(`Trace Workflow Run Jobs for ${runId} and export to ${otlpEndpoint}`);
         const traceId = await traceWorkflowRunJobs(workflowRunJobs, prLabels);

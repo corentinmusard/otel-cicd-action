@@ -10,7 +10,6 @@ import {
 } from "@opentelemetry/sdk-trace-base";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
-import type { WorkflowRunJobs } from "../github/github";
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 
@@ -30,46 +29,37 @@ function isHttpEndpoint(endpoint: string) {
   return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
 
-function createTracerProvider(
-  otlpEndpoint: string,
-  otlpHeaders: string,
-  workflowRunJobs: WorkflowRunJobs,
-  otelServiceName?: string | null | undefined,
-) {
-  const serviceName =
-    otelServiceName || workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`;
-  const serviceInstanceId = [
-    workflowRunJobs.workflowRun.repository.full_name,
-    workflowRunJobs.workflowRun.workflow_id,
-    workflowRunJobs.workflowRun.id,
-    workflowRunJobs.workflowRun.run_attempt,
-  ].join("/");
-  const serviceNamespace = workflowRunJobs.workflowRun.repository.full_name;
-  const serviceVersion = workflowRunJobs.workflowRun.head_sha;
+interface Attributes {
+  serviceName: string;
+  serviceInstanceId: string;
+  serviceNamespace: string;
+  serviceVersion: string;
+}
 
+function createTracerProvider(endpoint: string, headers: string, attributes: Attributes) {
   let exporter: SpanExporter = new ConsoleSpanExporter();
 
   if (!OTEL_CONSOLE_ONLY) {
-    if (isHttpEndpoint(otlpEndpoint)) {
+    if (isHttpEndpoint(endpoint)) {
       exporter = new ProtoOTLPTraceExporter({
-        url: otlpEndpoint,
-        headers: stringToHeaders(otlpHeaders),
+        url: endpoint,
+        headers: stringToHeaders(headers),
       });
     } else {
       exporter = new OTLPTraceExporter({
-        url: otlpEndpoint,
+        url: endpoint,
         credentials: grpc.credentials.createSsl(),
-        metadata: grpc.Metadata.fromHttp2Headers(stringToHeaders(otlpHeaders)),
+        metadata: grpc.Metadata.fromHttp2Headers(stringToHeaders(headers)),
       });
     }
   }
 
   const provider = new BasicTracerProvider({
     resource: new Resource({
-      [ATTR_SERVICE_NAME]: serviceName,
-      [ATTR_SERVICE_INSTANCE_ID]: serviceInstanceId,
-      [ATTR_SERVICE_NAMESPACE]: serviceNamespace,
-      [ATTR_SERVICE_VERSION]: serviceVersion,
+      [ATTR_SERVICE_NAME]: attributes.serviceName,
+      [ATTR_SERVICE_INSTANCE_ID]: attributes.serviceInstanceId,
+      [ATTR_SERVICE_NAMESPACE]: attributes.serviceNamespace,
+      [ATTR_SERVICE_VERSION]: attributes.serviceVersion,
     }),
     spanProcessors: [new BatchSpanProcessor(exporter)],
   });
@@ -78,4 +68,4 @@ function createTracerProvider(
   return provider;
 }
 
-export { stringToHeaders, createTracerProvider };
+export { type Attributes, stringToHeaders, createTracerProvider };
