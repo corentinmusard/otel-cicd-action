@@ -49115,19 +49115,12 @@ async function listWorkflowRunArtifacts(context, octokit, runId) {
 }
 const artifactNameRegex = /\{(?<jobName>.*)\}\{(?<stepName>.*)\}/;
 async function getWorkflowRunArtifactMap(context, octokit, runId) {
-    const artifactsList = [];
-    const pageSize = 100;
-    for (let page = 1, hasNext = true; hasNext; page++) {
-        const listArtifactsResponse = await octokit.rest.actions.listWorkflowRunArtifacts({
-            ...context.repo,
-            run_id: runId,
-            page,
-            per_page: pageSize,
-        });
-        artifactsList.push(...listArtifactsResponse.data.artifacts);
-        hasNext = artifactsList.length < listArtifactsResponse.data.total_count;
-    }
-    const artifactsLookup = await artifactsList.reduce(async (resultP, artifact) => {
+    const artifacts = await octokit.paginate(octokit.rest.actions.listWorkflowRunArtifacts, {
+        ...context.repo,
+        run_id: runId,
+        per_page: 100,
+    });
+    const artifactsLookup = await artifacts.reduce(async (resultP, artifact) => {
         const result = await resultP;
         const match = artifact.name.match(artifactNameRegex);
         const next = { ...result };

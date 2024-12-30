@@ -3,11 +3,12 @@ import * as path from "node:path";
 import * as url from "node:url";
 import type { Context } from "@actions/github/lib/context";
 import { jest } from "@jest/globals";
+import type { components } from "@octokit/openapi-types";
 import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 import fetchMock from "jest-fetch-mock";
 import { mock, mockDeep } from "jest-mock-extended";
 import type { Octokit } from "./github";
-import { type WorkflowArtifact, type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
+import { type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +16,7 @@ const __dirname = path.dirname(__filename);
 jest.mock("@actions/github");
 jest.mock("@actions/core");
 
-type ListWorkflowRunArtifactsResponse = RestEndpointMethodTypes["actions"]["listWorkflowRunArtifacts"]["response"];
+type Artifacts = components["schemas"]["artifact"][];
 type DownloadArtifactResponse = RestEndpointMethodTypes["actions"]["downloadArtifact"]["response"];
 
 describe("listWorkflowRunArtifacts", () => {
@@ -26,25 +27,18 @@ describe("listWorkflowRunArtifacts", () => {
   beforeAll(async () => {
     mockContext = mockDeep<Context>();
     mockOctokit = mockDeep<Octokit>();
-    const mockListWorkflowRunArtifacts = mockOctokit.rest.actions.listWorkflowRunArtifacts as jest.MockedFunction<
-      typeof mockOctokit.rest.actions.listWorkflowRunArtifacts
-    >;
+    const mockPaginate = mockOctokit.paginate as jest.MockedFunction<typeof mockOctokit.paginate>;
     const mockDownloadArtifact = mockOctokit.rest.actions.downloadArtifact as jest.MockedFunction<
       typeof mockOctokit.rest.actions.downloadArtifact
     >;
 
-    mockListWorkflowRunArtifacts.mockResolvedValue(
-      mock<ListWorkflowRunArtifactsResponse>({
-        data: {
-          total_count: 1,
-          artifacts: [
-            mock<WorkflowArtifact>({
-              id: 1,
-              name: "{lint-and-test}{run tests}",
-            }),
-          ],
+    mockPaginate.mockResolvedValue(
+      mock<Artifacts>([
+        {
+          id: 1,
+          name: "{lint-and-test}{run tests}",
         },
-      }),
+      ]),
     );
     mockDownloadArtifact.mockResolvedValue(mock<DownloadArtifactResponse>({ url: "localhost" }));
     const filePath = path.join(__dirname, "__assets__", "{lint-and-test}{run tests}.zip");

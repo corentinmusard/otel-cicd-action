@@ -12,11 +12,6 @@ type ListJobsForWorkflowRunType = RestEndpointMethodTypes["actions"]["listJobsFo
 type WorkflowRunJob = ListJobsForWorkflowRunType["data"]["jobs"][number];
 type WorkflowRun = RestEndpointMethodTypes["actions"]["getWorkflowRun"]["response"]["data"];
 
-interface WorkflowArtifact {
-  id: number;
-  name: string;
-}
-
 type WorkflowArtifactMap = {
   [job: string]: {
     [step: string]: WorkflowArtifactDownload;
@@ -55,21 +50,13 @@ async function listWorkflowRunArtifacts(
 const artifactNameRegex = /\{(?<jobName>.*)\}\{(?<stepName>.*)\}/;
 
 async function getWorkflowRunArtifactMap(context: Context, octokit: Octokit, runId: number) {
-  const artifactsList: WorkflowArtifact[] = [];
-  const pageSize = 100;
+  const artifacts = await octokit.paginate(octokit.rest.actions.listWorkflowRunArtifacts, {
+    ...context.repo,
+    run_id: runId,
+    per_page: 100,
+  });
 
-  for (let page = 1, hasNext = true; hasNext; page++) {
-    const listArtifactsResponse = await octokit.rest.actions.listWorkflowRunArtifacts({
-      ...context.repo,
-      run_id: runId,
-      page,
-      per_page: pageSize,
-    });
-    artifactsList.push(...listArtifactsResponse.data.artifacts);
-    hasNext = artifactsList.length < listArtifactsResponse.data.total_count;
-  }
-
-  const artifactsLookup: WorkflowArtifactMap = await artifactsList.reduce(async (resultP, artifact) => {
+  const artifactsLookup: WorkflowArtifactMap = await artifacts.reduce(async (resultP, artifact) => {
     const result = await resultP;
     const match = artifact.name.match(artifactNameRegex);
     const next: WorkflowArtifactMap = { ...result };
@@ -205,7 +192,6 @@ export {
   getPRLabels,
   getPRsLabels,
   type Octokit,
-  type WorkflowArtifact,
   type WorkflowArtifactDownload,
   type WorkflowArtifactLookup,
   type WorkflowRunJob,
