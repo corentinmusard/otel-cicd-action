@@ -68106,6 +68106,7 @@ var esm$3 = /*#__PURE__*/Object.freeze({
 	toLongBits: toLongBits
 });
 
+const tracer$2 = trace.getTracer("otel-cicd-action");
 function toSpanKind(spanKind) {
     switch (spanKind) {
         case ESpanKind.SPAN_KIND_CLIENT:
@@ -68160,8 +68161,8 @@ function toAttributes(attributes) {
     }, {});
     return rv;
 }
-function addSpanToTracer(otlpSpan, tracer) {
-    const span = tracer.startSpan(otlpSpan.name, {
+function addSpan(otlpSpan) {
+    const span = tracer$2.startSpan(otlpSpan.name, {
         kind: toSpanKind(otlpSpan.kind),
         attributes: toAttributes(otlpSpan.attributes),
         links: toLinks(otlpSpan.links),
@@ -68175,7 +68176,7 @@ function addSpanToTracer(otlpSpan, tracer) {
     }
     span.end(new Date(otlpSpan.endTimeUnixNano / 1000000));
 }
-async function traceOTLPFile(tracer, path) {
+async function traceOTLPFile(path) {
     const fileStream = fs.createReadStream(path);
     const rl = readline.createInterface({
         input: fileStream,
@@ -68190,7 +68191,7 @@ async function traceOTLPFile(tracer, path) {
             for (const scopeSpans of resourceSpans.scopeSpans ?? []) {
                 if (scopeSpans.scope) {
                     for (const otlpSpan of scopeSpans.spans ?? []) {
-                        addSpanToTracer(otlpSpan, tracer);
+                        addSpan(otlpSpan);
                     }
                 }
             }
@@ -68198,7 +68199,8 @@ async function traceOTLPFile(tracer, path) {
     }
 }
 
-async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, trace, tracer, step, workflowArtifacts, }) {
+const tracer$1 = trace.getTracer("otel-cicd-action");
+async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, step, workflowArtifacts, }) {
     if (!step || !step.completed_at || !step.started_at) {
         const stepName = step?.name || "UNDEFINED";
         coreExports.warning(`Step ${stepName} is not completed yet.`);
@@ -68212,7 +68214,7 @@ async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, trace,
     const ctx = trace.setSpan(parentContext, parentSpan);
     const startTime = new Date(step.started_at);
     const completedTime = new Date(step.completed_at);
-    const span = tracer.startSpan(step.name, {
+    const span = tracer$1.startSpan(step.name, {
         attributes: {
             "github.job.step.name": step.name,
             "github.job.step.number": step.number,
@@ -68232,7 +68234,6 @@ async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, trace,
             span.setAttribute("github.job.step.conclusion", step.conclusion);
         }
         await traceArtifact({
-            tracer,
             jobName,
             stepName: step.name,
             workflowArtifacts,
@@ -68244,19 +68245,19 @@ async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, trace,
         span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
     }
 }
-async function traceArtifact({ tracer, jobName, stepName, workflowArtifacts }) {
+async function traceArtifact({ jobName, stepName, workflowArtifacts }) {
     const artifact = workflowArtifacts(jobName, stepName);
     if (artifact) {
         coreExports.debug(`Found Artifact ${artifact?.path}`);
-        await traceOTLPFile(tracer, artifact.path);
+        await traceOTLPFile(artifact.path);
     }
     else {
         coreExports.debug(`No Artifact to trace for Job<${jobName}> Step<${stepName}>`);
     }
 }
 
-async function traceWorkflowRunJobs(provider, workflowRunJobs, prLabels) {
-    const tracer = provider.getTracer("otel-cicd-action");
+const tracer = trace.getTracer("otel-cicd-action");
+async function traceWorkflowRunJobs(workflowRunJobs, prLabels) {
     const startTime = new Date(workflowRunJobs.workflowRun.run_started_at || workflowRunJobs.workflowRun.created_at);
     let headRef;
     let baseRef;
@@ -68342,8 +68343,6 @@ async function traceWorkflowRunJobs(provider, workflowRunJobs, prLabels) {
             await traceWorkflowRunJob({
                 parentSpan: rootSpan,
                 parentContext: ROOT_CONTEXT,
-                trace,
-                tracer,
                 job,
                 workflowArtifacts: workflowRunJobs.workflowRunArtifacts,
             });
@@ -68354,7 +68353,7 @@ async function traceWorkflowRunJobs(provider, workflowRunJobs, prLabels) {
     }
     return rootSpan.spanContext().traceId;
 }
-async function traceWorkflowRunJob({ parentSpan, parentContext, trace, tracer, job, workflowArtifacts, }) {
+async function traceWorkflowRunJob({ parentSpan, parentContext, job, workflowArtifacts }) {
     coreExports.debug(`Trace Job ${job.id}`);
     if (!job.completed_at) {
         coreExports.warning(`Job ${job.id} is not completed yet`);
@@ -68410,8 +68409,6 @@ async function traceWorkflowRunJob({ parentSpan, parentContext, trace, tracer, j
             await traceWorkflowRunStep({
                 parentSpan: span,
                 parentContext: ctx,
-                trace,
-                tracer,
                 jobName: job.name,
                 step,
                 workflowArtifacts,
@@ -103518,7 +103515,7 @@ async function run() {
     const provider = createTracerProvider(otlpEndpoint, otlpHeaders, workflowRunJobs, otelServiceName);
     try {
         coreExports.info(`Trace Workflow Run Jobs for ${runId} and export to ${otlpEndpoint}`);
-        const traceId = await traceWorkflowRunJobs(provider, workflowRunJobs, prLabels);
+        const traceId = await traceWorkflowRunJobs(workflowRunJobs, prLabels);
         coreExports.setOutput("traceId", traceId);
         await provider.forceFlush();
     }

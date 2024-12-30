@@ -24,7 +24,7 @@ async function run() {
 
   try {
     core.info(`Trace Workflow Run Jobs for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = await traceWorkflowRunJobs(provider, workflowRunJobs, prLabels);
+    const traceId = await traceWorkflowRunJobs(workflowRunJobs, prLabels);
     core.setOutput("traceId", traceId);
     await provider.forceFlush();
   } finally {

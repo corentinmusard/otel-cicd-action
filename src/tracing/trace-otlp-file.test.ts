@@ -50,7 +50,7 @@ describe("traceOTLPFile", () => {
       { startTime, root: true, attributes: { root: true } },
       api.ROOT_CONTEXT,
     );
-    await traceOTLPFile(tracer, filePath);
+    await traceOTLPFile(filePath);
     parentSpan.end(new Date("2022-01-22T04:45:34"));
 
     const spans = memoryExporter.getFinishedSpans();
@@ -71,7 +71,7 @@ describe("traceOTLPFile", () => {
       { startTime, root: true, attributes: { root: true } },
       api.ROOT_CONTEXT,
     );
-    await traceOTLPFile(tracer, filePath);
+    await traceOTLPFile(filePath);
     parentSpan.end(new Date("2022-01-22T04:45:34"));
 
     const spans = memoryExporter.getFinishedSpans();
@@ -92,7 +92,7 @@ describe("traceOTLPFile", () => {
       { startTime, root: true, attributes: { root: true } },
       api.ROOT_CONTEXT,
     );
-    await traceOTLPFile(tracer, filePath);
+    await traceOTLPFile(filePath);
     parentSpan.end(new Date("2022-02-01T18:37:14"));
 
     const spans = memoryExporter.getFinishedSpans();

@@ -1,6 +1,5 @@
 import * as core from "@actions/core";
-import { type Context, type Span, SpanStatusCode, type TraceAPI } from "@opentelemetry/api";
-import type { Tracer } from "@opentelemetry/sdk-trace-base";
+import { type Context, type Span, SpanStatusCode, trace } from "@opentelemetry/api";
 import type { WorkflowArtifactLookup } from "../github/github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
@@ -21,18 +20,16 @@ type TraceWorkflowRunStepParams = {
   parentSpan: Span;
   parentContext: Context;
   jobName: string;
-  trace: TraceAPI;
-  tracer: Tracer;
   step: Step;
   workflowArtifacts: WorkflowArtifactLookup;
 };
+
+const tracer = trace.getTracer("otel-cicd-action");
 
 async function traceWorkflowRunStep({
   parentSpan,
   parentContext,
   jobName,
-  trace,
-  tracer,
   step,
   workflowArtifacts,
 }: TraceWorkflowRunStepParams) {
@@ -77,7 +74,6 @@ async function traceWorkflowRunStep({
       span.setAttribute("github.job.step.conclusion", step.conclusion);
     }
     await traceArtifact({
-      tracer,
       jobName,
       stepName: step.name,
       workflowArtifacts,
@@ -90,17 +86,16 @@ async function traceWorkflowRunStep({
 }
 
 type TraceArtifactParams = {
-  tracer: Tracer;
   jobName: string;
   stepName: string;
   workflowArtifacts: WorkflowArtifactLookup;
 };
 
-async function traceArtifact({ tracer, jobName, stepName, workflowArtifacts }: TraceArtifactParams) {
+async function traceArtifact({ jobName, stepName, workflowArtifacts }: TraceArtifactParams) {
   const artifact = workflowArtifacts(jobName, stepName);
   if (artifact) {
     core.debug(`Found Artifact ${artifact?.path}`);
-    await traceOTLPFile(tracer, artifact.path);
+    await traceOTLPFile(artifact.path);
   } else {
     core.debug(`No Artifact to trace for Job<${jobName}> Step<${stepName}>`);
   }

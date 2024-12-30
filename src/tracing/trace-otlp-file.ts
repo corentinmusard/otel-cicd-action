@@ -7,6 +7,7 @@ import {
   SpanKind,
   type SpanStatusCode,
   context,
+  trace,
 } from "@opentelemetry/api";
 import {
   ESpanKind,
@@ -16,7 +17,8 @@ import {
   type ILink,
   type ISpan,
 } from "@opentelemetry/otlp-transformer";
-import type { Tracer } from "@opentelemetry/sdk-trace-base";
+
+const tracer = trace.getTracer("otel-cicd-action");
 
 function toSpanKind(spanKind: ESpanKind | undefined) {
   switch (spanKind) {
@@ -80,7 +82,7 @@ function toAttributes(attributes: IKeyValue[] | undefined): Attributes {
   return rv;
 }
 
-function addSpanToTracer(otlpSpan: ISpan, tracer: Tracer) {
+function addSpan(otlpSpan: ISpan) {
   const span = tracer.startSpan(
     otlpSpan.name,
     {
@@ -101,7 +103,7 @@ function addSpanToTracer(otlpSpan: ISpan, tracer: Tracer) {
   span.end(new Date((otlpSpan.endTimeUnixNano as number) / 1000000));
 }
 
-async function traceOTLPFile(tracer: Tracer, path: string) {
+async function traceOTLPFile(path: string) {
   const fileStream = fs.createReadStream(path);
   const rl = readline.createInterface({
     input: fileStream,
@@ -118,7 +120,7 @@ async function traceOTLPFile(tracer: Tracer, path: string) {
       for (const scopeSpans of resourceSpans.scopeSpans ?? []) {
         if (scopeSpans.scope) {
           for (const otlpSpan of scopeSpans.spans ?? []) {
-            addSpanToTracer(otlpSpan, tracer);
+            addSpan(otlpSpan);
           }
         }
       }

@@ -1,16 +1,11 @@
 import * as core from "@actions/core";
-import { type Context, ROOT_CONTEXT, type Span, SpanStatusCode, type TraceAPI, trace } from "@opentelemetry/api";
-import type { BasicTracerProvider, Tracer } from "@opentelemetry/sdk-trace-base";
+import { type Context, ROOT_CONTEXT, type Span, SpanStatusCode, trace } from "@opentelemetry/api";
 import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobs } from "../github/github";
 import { traceWorkflowRunStep } from "./step";
 
-async function traceWorkflowRunJobs(
-  provider: BasicTracerProvider,
-  workflowRunJobs: WorkflowRunJobs,
-  prLabels: Record<number, string[]>,
-) {
-  const tracer = provider.getTracer("otel-cicd-action");
+const tracer = trace.getTracer("otel-cicd-action");
 
+async function traceWorkflowRunJobs(workflowRunJobs: WorkflowRunJobs, prLabels: Record<number, string[]>) {
   const startTime = new Date(workflowRunJobs.workflowRun.run_started_at || workflowRunJobs.workflowRun.created_at);
 
   let headRef: string | undefined;
@@ -108,8 +103,6 @@ async function traceWorkflowRunJobs(
       await traceWorkflowRunJob({
         parentSpan: rootSpan,
         parentContext: ROOT_CONTEXT,
-        trace,
-        tracer,
         job,
         workflowArtifacts: workflowRunJobs.workflowRunArtifacts,
       });
@@ -123,20 +116,11 @@ async function traceWorkflowRunJobs(
 type TraceWorkflowRunJobParams = {
   parentSpan: Span;
   parentContext: Context;
-  trace: TraceAPI;
-  tracer: Tracer;
   job: WorkflowRunJob;
   workflowArtifacts: WorkflowArtifactLookup;
 };
 
-async function traceWorkflowRunJob({
-  parentSpan,
-  parentContext,
-  trace,
-  tracer,
-  job,
-  workflowArtifacts,
-}: TraceWorkflowRunJobParams) {
+async function traceWorkflowRunJob({ parentSpan, parentContext, job, workflowArtifacts }: TraceWorkflowRunJobParams) {
   core.debug(`Trace Job ${job.id}`);
   if (!job.completed_at) {
     core.warning(`Job ${job.id} is not completed yet`);
@@ -200,8 +184,6 @@ async function traceWorkflowRunJob({
       await traceWorkflowRunStep({
         parentSpan: span,
         parentContext: ctx,
-        trace,
-        tracer,
         jobName: job.name,
         step,
         workflowArtifacts,
