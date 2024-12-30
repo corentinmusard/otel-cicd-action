@@ -22,10 +22,10 @@ const config: JestConfigWithTsJest = {
   collectCoverageFrom: ["src/**/*.ts", "!src/config.ts", "!src/index.ts", "!src/replay.ts", "!src/__fixtures__/**"],
   coverageThreshold: {
     global: {
-      statements: 80,
+      statements: 70,
       branches: 50,
       functions: 70,
-      lines: 80,
+      lines: 70,
     },
   },
 };

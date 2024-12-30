@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.0] - 2024-12-30
+
+### Added
+
+- Add step.status field
+
 ### Changed
 
 - Remove trace.ts dependency on github.ts
@@ -54,7 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.11.0...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.12.0...HEAD
+[1.12.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.11.0...v1.12.0
 [1.11.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.10.0...v1.11.0
 [1.10.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.9.1...v1.10.0
 [1.9.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.9.0...v1.9.1

@@ -1,26 +1,14 @@
 import * as core from "@actions/core";
+import type { components } from "@octokit/openapi-types";
 import { type Context, type Span, SpanStatusCode, trace } from "@opentelemetry/api";
 import type { WorkflowArtifactLookup } from "../github/github";
 import { traceOTLPFile } from "./trace-otlp-file";
-
-//type Steps = components["schemas"]["job"]["steps"];
-//type S = WorkflowRunJob["steps"];
-
-type Step = {
-  status: "queued" | "in_progress" | "completed";
-  conclusion?: string | null;
-  id?: string;
-  name: string;
-  number: number;
-  started_at?: string | null;
-  completed_at?: string | null;
-};
 
 type TraceWorkflowRunStepParams = {
   parentSpan: Span;
   parentContext: Context;
   jobName: string;
-  step: Step;
+  step: NonNullable<components["schemas"]["job"]["steps"]>[number];
   workflowArtifacts: WorkflowArtifactLookup;
 };
 
@@ -33,11 +21,11 @@ async function traceWorkflowRunStep({
   step,
   workflowArtifacts,
 }: TraceWorkflowRunStepParams) {
-  if (!step || !step.completed_at || !step.started_at) {
-    const stepName = step?.name || "UNDEFINED";
-    core.warning(`Step ${stepName} is not completed yet.`);
+  if (!step.completed_at || !step.started_at) {
+    core.warning(`Step ${step.name} is not completed yet.`);
     return;
   }
+
   if (step.conclusion === "cancelled" || step.conclusion === "skipped") {
     core.info(`Step ${step.name} did not run.`);
     return;
@@ -52,52 +40,42 @@ async function traceWorkflowRunStep({
     step.name,
     {
       attributes: {
+        "github.job.step.status": step.status,
+        "github.job.step.conclusion": step.conclusion ?? undefined,
         "github.job.step.name": step.name,
         "github.job.step.number": step.number,
-        "github.job.step.started_at": step.started_at || undefined,
-        "github.job.step.completed_at": step.completed_at || undefined,
-        "github.job.step.id": step.id,
+        "github.job.step.started_at": step.started_at ?? undefined,
+        "github.job.step.completed_at": step.completed_at ?? undefined,
         error: step.conclusion === "failure",
       },
       startTime,
     },
     ctx,
   );
-  const spanId = span.spanContext().spanId;
 
-  try {
-    const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-    span.setStatus({ code });
+  const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+  span.setStatus({ code });
 
-    core.debug(`Step Span<${spanId}>: Started<${step.started_at}>`);
-    if (step.conclusion) {
-      span.setAttribute("github.job.step.conclusion", step.conclusion);
-    }
-    await traceArtifact({
-      jobName,
-      stepName: step.name,
-      workflowArtifacts,
-    });
-  } finally {
-    core.debug(`Step Span<${spanId}>: Ended<${step.completed_at}>`);
-    // Some skipped and post jobs return completed_at dates that are older than started_at
-    span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
-  }
+  await traceArtifact(jobName, step.name, workflowArtifacts);
+
+  // Some skipped and post jobs return completed_at dates that are older than started_at
+  span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
 }
 
-type TraceArtifactParams = {
-  jobName: string;
-  stepName: string;
-  workflowArtifacts: WorkflowArtifactLookup;
-};
-
-async function traceArtifact({ jobName, stepName, workflowArtifacts }: TraceArtifactParams) {
+async function traceArtifact(jobName: string, stepName: string, workflowArtifacts: WorkflowArtifactLookup) {
   const artifact = workflowArtifacts(jobName, stepName);
-  if (artifact) {
-    core.debug(`Found Artifact ${artifact?.path}`);
+  if (!artifact) {
+    core.debug(`No artifact to trace for Job<${jobName}> Step<${stepName}>`);
+    return;
+  }
+
+  core.debug(`Found artifact ${artifact?.path}`);
+  try {
     await traceOTLPFile(artifact.path);
-  } else {
-    core.debug(`No Artifact to trace for Job<${jobName}> Step<${stepName}>`);
+  } catch (error) {
+    if (error instanceof Error) {
+      core.warning(`Failed to trace artifact ${artifact.path}: ${error.message}`);
+    }
   }
 }
 

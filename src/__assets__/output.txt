@@ -54,12 +54,13 @@
   timestamp: 1735531669000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:07:49Z',
     'github.job.step.completed_at': '2024-12-30T04:07:50Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -91,12 +92,13 @@
   timestamp: 1735531670000000,
   duration: 3000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
     'github.job.step.started_at': '2024-12-30T04:07:50Z',
     'github.job.step.completed_at': '2024-12-30T04:07:53Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -128,12 +130,13 @@
   timestamp: 1735531673000000,
   duration: 128000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:07:53Z',
     'github.job.step.completed_at': '2024-12-30T04:10:01Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -165,12 +168,13 @@
   timestamp: 1735531801000000,
   duration: 8000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:10:01Z',
     'github.job.step.completed_at': '2024-12-30T04:10:09Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -202,12 +206,13 @@
   timestamp: 1735531810000000,
   duration: 339000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install udeps',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:10:10Z',
     'github.job.step.completed_at': '2024-12-30T04:15:49Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -239,12 +244,13 @@
   timestamp: 1735532149000000,
   duration: 168000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run udeps',
     'github.job.step.number': 6,
     'github.job.step.started_at': '2024-12-30T04:15:49Z',
     'github.job.step.completed_at': '2024-12-30T04:18:37Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -276,12 +282,13 @@
   timestamp: 1735532317000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 11,
     'github.job.step.started_at': '2024-12-30T04:18:37Z',
     'github.job.step.completed_at': '2024-12-30T04:18:37Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -313,12 +320,13 @@
   timestamp: 1735532324000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 12,
     'github.job.step.started_at': '2024-12-30T04:18:44Z',
     'github.job.step.completed_at': '2024-12-30T04:18:44Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -350,12 +358,13 @@
   timestamp: 1735532317000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 13,
     'github.job.step.started_at': '2024-12-30T04:18:37Z',
     'github.job.step.completed_at': '2024-12-30T04:18:37Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -434,12 +443,13 @@
   timestamp: 1735531670000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:07:50Z',
     'github.job.step.completed_at': '2024-12-30T04:07:51Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -471,12 +481,13 @@
   timestamp: 1735531672000000,
   duration: 2000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
     'github.job.step.started_at': '2024-12-30T04:07:52Z',
     'github.job.step.completed_at': '2024-12-30T04:07:54Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -508,12 +519,13 @@
   timestamp: 1735531674000000,
   duration: 26000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:07:54Z',
     'github.job.step.completed_at': '2024-12-30T04:08:20Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -545,12 +557,13 @@
   timestamp: 1735531700000000,
   duration: 18000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:08:20Z',
     'github.job.step.completed_at': '2024-12-30T04:08:38Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -582,12 +595,13 @@
   timestamp: 1735531718000000,
   duration: 181000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run cargo check',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:08:38Z',
     'github.job.step.completed_at': '2024-12-30T04:11:39Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -619,12 +633,13 @@
   timestamp: 1735531899000000,
   duration: 219000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run clippy',
     'github.job.step.number': 6,
     'github.job.step.started_at': '2024-12-30T04:11:39Z',
     'github.job.step.completed_at': '2024-12-30T04:15:18Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -656,12 +671,13 @@
   timestamp: 1735532119000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 11,
     'github.job.step.started_at': '2024-12-30T04:15:19Z',
     'github.job.step.completed_at': '2024-12-30T04:15:19Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -693,12 +709,13 @@
   timestamp: 1735532119000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 12,
     'github.job.step.started_at': '2024-12-30T04:15:19Z',
     'github.job.step.completed_at': '2024-12-30T04:15:19Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -730,12 +747,13 @@
   timestamp: 1735532119000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 13,
     'github.job.step.started_at': '2024-12-30T04:15:19Z',
     'github.job.step.completed_at': '2024-12-30T04:15:19Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -814,12 +832,13 @@
   timestamp: 1735531704000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:08:24Z',
     'github.job.step.completed_at': '2024-12-30T04:08:25Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -851,12 +870,13 @@
   timestamp: 1735531705000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Support longpaths',
     'github.job.step.number': 2,
     'github.job.step.started_at': '2024-12-30T04:08:25Z',
     'github.job.step.completed_at': '2024-12-30T04:08:26Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -888,12 +908,13 @@
   timestamp: 1735531706000000,
   duration: 11000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:08:26Z',
     'github.job.step.completed_at': '2024-12-30T04:08:37Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -925,12 +946,13 @@
   timestamp: 1735531718000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:08:38Z',
     'github.job.step.completed_at': '2024-12-30T04:08:38Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -962,12 +984,13 @@
   timestamp: 1735531718000000,
   duration: 17000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:08:38Z',
     'github.job.step.completed_at': '2024-12-30T04:08:55Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -999,12 +1022,13 @@
   timestamp: 1735531735000000,
   duration: 122000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Compile',
     'github.job.step.number': 6,
     'github.job.step.started_at': '2024-12-30T04:08:55Z',
     'github.job.step.completed_at': '2024-12-30T04:10:57Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1036,12 +1060,13 @@
   timestamp: 1735531857000000,
   duration: 223000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run Test262 suite',
     'github.job.step.number': 7,
     'github.job.step.started_at': '2024-12-30T04:10:57Z',
     'github.job.step.completed_at': '2024-12-30T04:14:40Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1073,12 +1098,13 @@
   timestamp: 1735532080000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Clean cache',
     'github.job.step.number': 8,
     'github.job.step.started_at': '2024-12-30T04:14:40Z',
     'github.job.step.completed_at': '2024-12-30T04:14:41Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1110,12 +1136,13 @@
   timestamp: 1735532082000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 15,
     'github.job.step.started_at': '2024-12-30T04:14:42Z',
     'github.job.step.completed_at': '2024-12-30T04:14:42Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1147,12 +1174,13 @@
   timestamp: 1735532082000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 16,
     'github.job.step.started_at': '2024-12-30T04:14:42Z',
     'github.job.step.completed_at': '2024-12-30T04:14:43Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1184,12 +1212,13 @@
   timestamp: 1735532083000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 17,
     'github.job.step.started_at': '2024-12-30T04:14:43Z',
     'github.job.step.completed_at': '2024-12-30T04:14:43Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1269,12 +1298,13 @@
   timestamp: 1735531813000000,
   duration: 2000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:10:13Z',
     'github.job.step.completed_at': '2024-12-30T04:10:15Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1306,12 +1336,13 @@
   timestamp: 1735531815000000,
   duration: 7000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
     'github.job.step.started_at': '2024-12-30T04:10:15Z',
     'github.job.step.completed_at': '2024-12-30T04:10:22Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1343,12 +1374,13 @@
   timestamp: 1735531823000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:10:23Z',
     'github.job.step.completed_at': '2024-12-30T04:10:23Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1380,12 +1412,13 @@
   timestamp: 1735531823000000,
   duration: 66000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:10:23Z',
     'github.job.step.completed_at': '2024-12-30T04:11:29Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1417,12 +1450,13 @@
   timestamp: 1735531889000000,
   duration: 617000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run tests on windows-latest',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:11:29Z',
     'github.job.step.completed_at': '2024-12-30T04:21:46Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1454,12 +1488,13 @@
   timestamp: 1735532507000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 9,
     'github.job.step.started_at': '2024-12-30T04:21:47Z',
     'github.job.step.completed_at': '2024-12-30T04:21:47Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1491,12 +1526,13 @@
   timestamp: 1735532508000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 10,
     'github.job.step.started_at': '2024-12-30T04:21:48Z',
     'github.job.step.completed_at': '2024-12-30T04:21:48Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1528,12 +1564,13 @@
   timestamp: 1735532508000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 11,
     'github.job.step.started_at': '2024-12-30T04:21:48Z',
     'github.job.step.completed_at': '2024-12-30T04:21:48Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1613,12 +1650,13 @@
   timestamp: 1735531670000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:07:50Z',
     'github.job.step.completed_at': '2024-12-30T04:07:51Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1650,12 +1688,13 @@
   timestamp: 1735531671000000,
   duration: 3000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:07:51Z',
     'github.job.step.completed_at': '2024-12-30T04:07:54Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1687,12 +1726,13 @@
   timestamp: 1735531675000000,
   duration: 100000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:07:55Z',
     'github.job.step.completed_at': '2024-12-30T04:09:35Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1724,12 +1764,13 @@
   timestamp: 1735531776000000,
   duration: 40000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:09:36Z',
     'github.job.step.completed_at': '2024-12-30T04:10:16Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1761,12 +1802,13 @@
   timestamp: 1735531817000000,
   duration: 77000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Compile',
     'github.job.step.number': 6,
     'github.job.step.started_at': '2024-12-30T04:10:17Z',
     'github.job.step.completed_at': '2024-12-30T04:11:34Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1798,12 +1840,13 @@
   timestamp: 1735531895000000,
   duration: 135000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run Test262 suite',
     'github.job.step.number': 7,
     'github.job.step.started_at': '2024-12-30T04:11:35Z',
     'github.job.step.completed_at': '2024-12-30T04:13:50Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1835,12 +1878,13 @@
   timestamp: 1735532031000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Clean cache',
     'github.job.step.number': 8,
     'github.job.step.started_at': '2024-12-30T04:13:51Z',
     'github.job.step.completed_at': '2024-12-30T04:13:51Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1872,12 +1916,13 @@
   timestamp: 1735532036000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 15,
     'github.job.step.started_at': '2024-12-30T04:13:56Z',
     'github.job.step.completed_at': '2024-12-30T04:13:56Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1909,12 +1954,13 @@
   timestamp: 1735532036000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 16,
     'github.job.step.started_at': '2024-12-30T04:13:56Z',
     'github.job.step.completed_at': '2024-12-30T04:13:56Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -1946,12 +1992,13 @@
   timestamp: 1735532031000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 17,
     'github.job.step.started_at': '2024-12-30T04:13:51Z',
     'github.job.step.completed_at': '2024-12-30T04:13:51Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2031,12 +2078,13 @@
   timestamp: 1735531811000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:10:11Z',
     'github.job.step.completed_at': '2024-12-30T04:10:12Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2068,12 +2116,13 @@
   timestamp: 1735531812000000,
   duration: 3000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
     'github.job.step.started_at': '2024-12-30T04:10:12Z',
     'github.job.step.completed_at': '2024-12-30T04:10:15Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2105,12 +2154,13 @@
   timestamp: 1735531815000000,
   duration: 19000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:10:15Z',
     'github.job.step.completed_at': '2024-12-30T04:10:34Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2142,12 +2192,13 @@
   timestamp: 1735531834000000,
   duration: 18000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:10:34Z',
     'github.job.step.completed_at': '2024-12-30T04:10:52Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2179,12 +2230,13 @@
   timestamp: 1735531852000000,
   duration: 525000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run tests on ubuntu-latest',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:10:52Z',
     'github.job.step.completed_at': '2024-12-30T04:19:37Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2216,12 +2268,13 @@
   timestamp: 1735532382000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 9,
     'github.job.step.started_at': '2024-12-30T04:19:42Z',
     'github.job.step.completed_at': '2024-12-30T04:19:42Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2253,12 +2306,13 @@
   timestamp: 1735532382000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 10,
     'github.job.step.started_at': '2024-12-30T04:19:42Z',
     'github.job.step.completed_at': '2024-12-30T04:19:42Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2290,12 +2344,13 @@
   timestamp: 1735532377000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 11,
     'github.job.step.started_at': '2024-12-30T04:19:37Z',
     'github.job.step.completed_at': '2024-12-30T04:19:37Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2375,12 +2430,13 @@
   timestamp: 1735531733000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:08:53Z',
     'github.job.step.completed_at': '2024-12-30T04:08:54Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2412,12 +2468,13 @@
   timestamp: 1735531735000000,
   duration: 4000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
     'github.job.step.started_at': '2024-12-30T04:08:55Z',
     'github.job.step.completed_at': '2024-12-30T04:08:59Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2449,12 +2506,13 @@
   timestamp: 1735531739000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:08:59Z',
     'github.job.step.completed_at': '2024-12-30T04:09:00Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2486,12 +2544,13 @@
   timestamp: 1735531740000000,
   duration: 41000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:09:00Z',
     'github.job.step.completed_at': '2024-12-30T04:09:41Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2523,12 +2582,13 @@
   timestamp: 1735531782000000,
   duration: 287000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run tests on macos-latest',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:09:42Z',
     'github.job.step.completed_at': '2024-12-30T04:14:29Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2560,12 +2620,13 @@
   timestamp: 1735532070000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 9,
     'github.job.step.started_at': '2024-12-30T04:14:30Z',
     'github.job.step.completed_at': '2024-12-30T04:14:30Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2597,12 +2658,13 @@
   timestamp: 1735532070000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 10,
     'github.job.step.started_at': '2024-12-30T04:14:30Z',
     'github.job.step.completed_at': '2024-12-30T04:14:30Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2634,12 +2696,13 @@
   timestamp: 1735532070000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 11,
     'github.job.step.started_at': '2024-12-30T04:14:30Z',
     'github.job.step.completed_at': '2024-12-30T04:14:31Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2719,12 +2782,13 @@
   timestamp: 1735531938000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2024-12-30T04:12:18Z',
     'github.job.step.completed_at': '2024-12-30T04:12:19Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2756,12 +2820,13 @@
   timestamp: 1735531939000000,
   duration: 3000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 2,
     'github.job.step.started_at': '2024-12-30T04:12:19Z',
     'github.job.step.completed_at': '2024-12-30T04:12:22Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2793,12 +2858,13 @@
   timestamp: 1735531942000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Support longpaths',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2024-12-30T04:12:22Z',
     'github.job.step.completed_at': '2024-12-30T04:12:22Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2830,12 +2896,13 @@
   timestamp: 1735531942000000,
   duration: 1000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Checkout repository',
     'github.job.step.number': 4,
     'github.job.step.started_at': '2024-12-30T04:12:22Z',
     'github.job.step.completed_at': '2024-12-30T04:12:23Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2867,12 +2934,13 @@
   timestamp: 1735531943000000,
   duration: 90000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Free Disk Space',
     'github.job.step.number': 5,
     'github.job.step.started_at': '2024-12-30T04:12:23Z',
     'github.job.step.completed_at': '2024-12-30T04:13:53Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2904,12 +2972,13 @@
   timestamp: 1735532034000000,
   duration: 16000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Install toolchain',
     'github.job.step.number': 6,
     'github.job.step.started_at': '2024-12-30T04:13:54Z',
     'github.job.step.completed_at': '2024-12-30T04:14:10Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2941,12 +3010,13 @@
   timestamp: 1735532050000000,
   duration: 5000000,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Run rustfmt',
     'github.job.step.number': 7,
     'github.job.step.started_at': '2024-12-30T04:14:10Z',
     'github.job.step.completed_at': '2024-12-30T04:14:15Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -2978,12 +3048,13 @@
   timestamp: 1735532055000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Install toolchain',
     'github.job.step.number': 12,
     'github.job.step.started_at': '2024-12-30T04:14:15Z',
     'github.job.step.completed_at': '2024-12-30T04:14:15Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -3015,12 +3086,13 @@
   timestamp: 1735532057000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 13,
     'github.job.step.started_at': '2024-12-30T04:14:17Z',
     'github.job.step.completed_at': '2024-12-30T04:14:17Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -3052,12 +3124,13 @@
   timestamp: 1735532057000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Post Checkout repository',
     'github.job.step.number': 14,
     'github.job.step.started_at': '2024-12-30T04:14:17Z',
     'github.job.step.completed_at': '2024-12-30T04:14:17Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],
@@ -3089,12 +3162,13 @@
   timestamp: 1735532055000000,
   duration: 0,
   attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 15,
     'github.job.step.started_at': '2024-12-30T04:14:15Z',
     'github.job.step.completed_at': '2024-12-30T04:14:15Z',
-    error: false,
-    'github.job.step.conclusion': 'success'
+    error: false
   },
   status: { code: 1 },
   events: [],

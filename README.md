@@ -23,7 +23,7 @@ We provide sample code for popular platforms. If you feel one is missing, please
 | Jaeger                      | WIP                                                                                                           |
 | Grafana                     | WIP                                                                                                           |
 
-### On workflow_run event (recommended)
+### On workflow_run event
 
 ```yaml
 on:
@@ -81,7 +81,9 @@ jobs:
 | ------- | ----------------------------------------- |
 | traceId | The OpenTelemetry Trace ID for this Trace |
 
-## Honeycomb Example Trace
+[Sample OpenTelemetry Output](./src/__assets__/output.txt) (id, traceId and parentId have been redacted).
+
+#### Honeycomb Example Trace
 
 ![HoneyComb Example](./docs/honeycomb-example.png)
 

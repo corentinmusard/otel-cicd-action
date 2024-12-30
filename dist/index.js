@@ -68186,9 +68186,8 @@ async function traceOTLPFile(path) {
 
 const tracer$1 = trace.getTracer("otel-cicd-action");
 async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, step, workflowArtifacts, }) {
-    if (!step || !step.completed_at || !step.started_at) {
-        const stepName = step?.name || "UNDEFINED";
-        coreExports.warning(`Step ${stepName} is not completed yet.`);
+    if (!step.completed_at || !step.started_at) {
+        coreExports.warning(`Step ${step.name} is not completed yet.`);
         return;
     }
     if (step.conclusion === "cancelled" || step.conclusion === "skipped") {
@@ -68201,43 +68200,36 @@ async function traceWorkflowRunStep({ parentSpan, parentContext, jobName, step, 
     const completedTime = new Date(step.completed_at);
     const span = tracer$1.startSpan(step.name, {
         attributes: {
+            "github.job.step.status": step.status,
+            "github.job.step.conclusion": step.conclusion ?? undefined,
             "github.job.step.name": step.name,
             "github.job.step.number": step.number,
-            "github.job.step.started_at": step.started_at || undefined,
-            "github.job.step.completed_at": step.completed_at || undefined,
-            "github.job.step.id": step.id,
+            "github.job.step.started_at": step.started_at ?? undefined,
+            "github.job.step.completed_at": step.completed_at ?? undefined,
             error: step.conclusion === "failure",
         },
         startTime,
     }, ctx);
-    const spanId = span.spanContext().spanId;
-    try {
-        const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-        span.setStatus({ code });
-        coreExports.debug(`Step Span<${spanId}>: Started<${step.started_at}>`);
-        if (step.conclusion) {
-            span.setAttribute("github.job.step.conclusion", step.conclusion);
-        }
-        await traceArtifact({
-            jobName,
-            stepName: step.name,
-            workflowArtifacts,
-        });
-    }
-    finally {
-        coreExports.debug(`Step Span<${spanId}>: Ended<${step.completed_at}>`);
-        // Some skipped and post jobs return completed_at dates that are older than started_at
-        span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
-    }
+    const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+    span.setStatus({ code });
+    await traceArtifact(jobName, step.name, workflowArtifacts);
+    // Some skipped and post jobs return completed_at dates that are older than started_at
+    span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
 }
-async function traceArtifact({ jobName, stepName, workflowArtifacts }) {
+async function traceArtifact(jobName, stepName, workflowArtifacts) {
     const artifact = workflowArtifacts(jobName, stepName);
-    if (artifact) {
-        coreExports.debug(`Found Artifact ${artifact?.path}`);
+    if (!artifact) {
+        coreExports.debug(`No artifact to trace for Job<${jobName}> Step<${stepName}>`);
+        return;
+    }
+    coreExports.debug(`Found artifact ${artifact?.path}`);
+    try {
         await traceOTLPFile(artifact.path);
     }
-    else {
-        coreExports.debug(`No Artifact to trace for Job<${jobName}> Step<${stepName}>`);
+    catch (error) {
+        if (error instanceof Error) {
+            coreExports.warning(`Failed to trace artifact ${artifact.path}: ${error.message}`);
+        }
     }
 }
 
