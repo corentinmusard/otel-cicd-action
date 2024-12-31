@@ -13,15 +13,16 @@ This is a fork of [otel-export-trace-action](https://github.com/inception-health
 
 We provide sample code for popular platforms. If you feel one is missing, please open an issue.
 
-| Code Sample                 | File                                                                                                          |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Inside an existing workflow | [build.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/build.yml)         |
-| Axiom                       | [axiom.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/axiom.yml)         |
-| New Relic                   | [newrelic.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/newrelic.yml)   |
-| Honeycomb                   | [honeycomb.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/honeycomb.yml) |
-| Dash0                       | [dash0.yml](https://github.com/corentinmusard/otel-cicd-action/tree/main/.github/workflows/dash0.yml)         |
-| Jaeger                      | WIP                                                                                                           |
-| Grafana                     | WIP                                                                                                           |
+| Code Sample                 | File                                             |
+| --------------------------- | ------------------------------------------------ |
+| Inside an existing workflow | [build.yml](.github/workflows/build.yml)         |
+| From a private repository   | [private.yml](.github/workflows/private.yml)     |
+| Axiom                       | [axiom.yml](.github/workflows/axiom.yml)         |
+| New Relic                   | [newrelic.yml](.github/workflows/newrelic.yml)   |
+| Honeycomb                   | [honeycomb.yml](.github/workflows/honeycomb.yml) |
+| Dash0                       | [dash0.yml](.github/workflows/dash0.yml)         |
+| Jaeger                      | WIP                                              |
+| Grafana                     | WIP                                              |
 
 ### On workflow_run event
 
@@ -65,11 +66,23 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+### Private Repository
+
+If you are using a private repository, you need to set the following permissions in your workflow file.
+It can be done at the global level or at the job level.
+
+```yaml
+permissions:
+  contents: read # To access the private repository
+  actions: read # To read workflow runs
+  pull-requests: read # To read PR labels
+```
+
 ### Action Inputs
 
 | name            | description                                                                                                 | required | default                               | example                                                          |
 | --------------- | ----------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------- | ---------------------------------------------------------------- |
-| otlpEndpoint    | The destination endpoint to export OpenTelemetry traces to. It supports `https://` and `grpc://` endpoints. | true     |                                       | `https://api.axiom.co/v1/traces`                                 |
+| otlpEndpoint    | The destination endpoint to export OpenTelemetry traces to. It supports `https://`, `http://` and `grpc://` endpoints. | true     |                                       | `https://api.axiom.co/v1/traces`                                 |
 | otlpHeaders     | Headers to add to the OpenTelemetry exporter .                                                              | true     |                                       | `x-honeycomb-team=YOUR_API_KEY,x-honeycomb-dataset=YOUR_DATASET` |
 | otelServiceName | OpenTelemetry service name                                                                                  | false    | `<The name of the exported workflow>` | `Build CI`                                                       |
 | githubToken     | The repository token with Workflow permissions. Required for private repos                                  | false    |                                       | `${{ secrets.GITHUB_TOKEN }}`                                    |
@@ -77,9 +90,9 @@ jobs:
 
 ### Action Outputs
 
-| name    | description                               |
-| ------- | ----------------------------------------- |
-| traceId | The OpenTelemetry Trace ID for this Trace |
+| name    | description                                 |
+| ------- | ------------------------------------------- |
+| traceId | The OpenTelemetry Trace ID of the root span |
 
 [Sample OpenTelemetry Output](./src/__assets__/output.txt).
 
@@ -207,7 +220,7 @@ jobs:
 | github.job.runner_group_id              | integer  | Github Job Runner Group ID                            |
 | github.job.runner_group_name            | string   | Github Job Runner Group Name                          |
 | github.job.runner_name                  | string   | Github Job Runner Name                                |
-| github.job.step.id                      | string   | GitHub Step ID                                        |
+| github.job.step.status                  | string   | GitHub Step Run Status                                |
 | github.job.step.conclusion              | string   | Github Step Run Conclusion                            |
 | github.job.step.name                    | string   | Github Step Run Name                                  |
 | github.job.step.number                  | integer  | Github Step Run Number                                |
