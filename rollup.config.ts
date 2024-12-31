@@ -17,7 +17,9 @@ const config: RollupOptions = {
   plugins: [
     typescript(),
     nodeResolve(),
-    commonjs(),
+    commonjs({
+      transformMixedEsModules: true,
+    }),
     json(),
     license({
       thirdParty: {

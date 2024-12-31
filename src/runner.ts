@@ -37,19 +37,17 @@ async function run() {
     core.info(`Trace Workflow Run Jobs for ${runId} and export to ${otlpEndpoint}`);
     const traceId = await traceWorkflowRunJobs(workflowRunJobs, prLabels);
     core.setOutput("traceId", traceId);
+
+    core.info("Flush and shutdown trace provider");
     await provider.forceFlush();
-  } finally {
-    core.info("Shutdown Trace Provider");
-    setTimeout(() => {
-      provider
-        .shutdown()
-        .then(() => {
-          core.info("Provider shutdown");
-        })
-        .catch((error: Error) => {
-          core.warning(error.message);
-        });
-    }, 2000);
+    await provider.shutdown();
+    core.info("Provider shutdown");
+  } catch (error) {
+    if (error instanceof Error) {
+      core.setFailed(error);
+    } else {
+      core.setFailed(`Unknown error: ${JSON.stringify(error)}`);
+    }
   }
 }
 
