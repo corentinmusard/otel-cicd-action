@@ -1,16 +1,14 @@
 import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
-import { SpanStatusCode, trace } from "@opentelemetry/api";
+import { type Attributes, SpanStatusCode, trace } from "@opentelemetry/api";
 import type { WorkflowArtifactLookup } from "../github/github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
 const tracer = trace.getTracer("otel-cicd-action");
 
-async function traceWorkflowRunStep(
-  jobName: string,
-  step: NonNullable<components["schemas"]["job"]["steps"]>[number],
-  workflowArtifacts: WorkflowArtifactLookup,
-) {
+type Step = NonNullable<components["schemas"]["job"]["steps"]>[number];
+
+async function traceStep(jobName: string, step: Step, workflowArtifacts: WorkflowArtifactLookup) {
   if (!step.completed_at || !step.started_at) {
     core.warning(`Step ${step.name} is not completed yet.`);
     return;
@@ -23,16 +21,7 @@ async function traceWorkflowRunStep(
 
   const startTime = new Date(step.started_at);
   const completedTime = new Date(step.completed_at);
-
-  const attributes = {
-    "github.job.step.status": step.status,
-    "github.job.step.conclusion": step.conclusion ?? undefined,
-    "github.job.step.name": step.name,
-    "github.job.step.number": step.number,
-    "github.job.step.started_at": step.started_at ?? undefined,
-    "github.job.step.completed_at": step.completed_at ?? undefined,
-    error: step.conclusion === "failure",
-  };
+  const attributes = stepToAttributes(step);
 
   await tracer.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
     const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
@@ -43,6 +32,18 @@ async function traceWorkflowRunStep(
     // Some skipped and post jobs return completed_at dates that are older than started_at
     span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
   });
+}
+
+function stepToAttributes(step: Step): Attributes {
+  return {
+    "github.job.step.status": step.status,
+    "github.job.step.conclusion": step.conclusion ?? undefined,
+    "github.job.step.name": step.name,
+    "github.job.step.number": step.number,
+    "github.job.step.started_at": step.started_at ?? undefined,
+    "github.job.step.completed_at": step.completed_at ?? undefined,
+    error: step.conclusion === "failure",
+  };
 }
 
 async function traceArtifact(jobName: string, stepName: string, workflowArtifacts: WorkflowArtifactLookup) {
@@ -62,4 +63,4 @@ async function traceArtifact(jobName: string, stepName: string, workflowArtifact
   }
 }
 
-export { traceWorkflowRunStep };
+export { traceStep };

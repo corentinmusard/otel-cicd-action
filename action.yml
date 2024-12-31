@@ -25,7 +25,7 @@ inputs:
     required: false
 outputs:
   traceId:
-    description: The OpenTelemetry Trace ID for this Trace
+    description: The OpenTelemetry Trace ID of the root span
 
 branding:
   icon: bar-chart-2

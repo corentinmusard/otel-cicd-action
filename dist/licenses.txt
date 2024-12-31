@@ -2173,13 +2173,13 @@ License Copyright:
 
 ---
 
-Name: @opentelemetry/core
-Version: 1.29.0
+Name: @opentelemetry/semantic-conventions
+Version: 1.28.0
 License: Apache-2.0
 Private: false
-Description: OpenTelemetry Core provides constants and utilities shared by all OpenTelemetry SDK packages.
+Description: OpenTelemetry semantic conventions
 Repository: undefined
-Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-core
+Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/semantic-conventions
 Author: OpenTelemetry Authors
 License Copyright:
 ===
@@ -2388,13 +2388,13 @@ License Copyright:
 
 ---
 
-Name: @opentelemetry/semantic-conventions
-Version: 1.28.0
+Name: @opentelemetry/core
+Version: 1.29.0
 License: Apache-2.0
 Private: false
-Description: OpenTelemetry semantic conventions
+Description: OpenTelemetry Core provides constants and utilities shared by all OpenTelemetry SDK packages.
 Repository: undefined
-Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/semantic-conventions
+Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-core
 Author: OpenTelemetry Authors
 License Copyright:
 ===

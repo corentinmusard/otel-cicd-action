@@ -1,82 +1,28 @@
 import * as core from "@actions/core";
-import { SpanStatusCode, context, trace } from "@opentelemetry/api";
+import type { components } from "@octokit/openapi-types";
+import { type Attributes, SpanStatusCode, context, trace } from "@opentelemetry/api";
+import {
+  ATTR_CICD_PIPELINE_NAME,
+  ATTR_CICD_PIPELINE_RUN_ID,
+  ATTR_CICD_PIPELINE_TASK_NAME,
+  ATTR_CICD_PIPELINE_TASK_RUN_ID,
+  ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL,
+  ATTR_CICD_PIPELINE_TASK_TYPE,
+  CICD_PIPELINE_TASK_TYPE_VALUE_BUILD,
+  CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY,
+  CICD_PIPELINE_TASK_TYPE_VALUE_TEST,
+} from "@opentelemetry/semantic-conventions/incubating";
 import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobs } from "../github/github";
-import { traceWorkflowRunStep } from "./step";
+import { traceStep } from "./step";
 
 const tracer = trace.getTracer("otel-cicd-action");
 
-async function traceWorkflowRunJobs(workflowRunJobs: WorkflowRunJobs, prLabels: Record<number, string[]>) {
-  const startTime = new Date(workflowRunJobs.workflowRun.run_started_at || workflowRunJobs.workflowRun.created_at);
-
-  let headRef: string | undefined;
-  let baseRef: string | undefined;
-  let baseSha: string | undefined;
-  let pull_requests = {};
-  if (workflowRunJobs.workflowRun.pull_requests && workflowRunJobs.workflowRun.pull_requests.length > 0) {
-    headRef = workflowRunJobs.workflowRun.pull_requests[0].head?.ref;
-    baseRef = workflowRunJobs.workflowRun.pull_requests[0].base?.ref;
-    baseSha = workflowRunJobs.workflowRun.pull_requests[0].base?.sha;
-
-    pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce((result, pr, idx) => {
-      const prefix = `github.pull_requests.${idx}`;
-
-      return {
-        ...result,
-        [`${prefix}.id`]: pr.id,
-        [`${prefix}.url`]: pr.url,
-        [`${prefix}.number`]: pr.number,
-        [`${prefix}.labels`]: prLabels[pr.number],
-        [`${prefix}.head.sha`]: pr.head.sha,
-        [`${prefix}.head.ref`]: pr.head.ref,
-        [`${prefix}.head.repo.id`]: pr.head.repo.id,
-        [`${prefix}.head.repo.url`]: pr.head.repo.url,
-        [`${prefix}.head.repo.name`]: pr.head.repo.name,
-        [`${prefix}.base.ref`]: pr.base.ref,
-        [`${prefix}.base.sha`]: pr.base.sha,
-        [`${prefix}.base.repo.id`]: pr.base.repo.id,
-        [`${prefix}.base.repo.url`]: pr.base.repo.url,
-        [`${prefix}.base.repo.name`]: pr.base.repo.name,
-      };
-    }, {});
-  }
-
-  const attributes = {
-    // OpenTelemetry semantic convention CICD Pipeline Attributes
-    // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
-    "cicd.pipeline.name": workflowRunJobs.workflowRun.name || undefined,
-    "cicd.pipeline.run.id": workflowRunJobs.workflowRun.id,
-    "github.workflow_id": workflowRunJobs.workflowRun.workflow_id,
-    "github.run_id": workflowRunJobs.workflowRun.id,
-    "github.run_number": workflowRunJobs.workflowRun.run_number,
-    "github.run_attempt": workflowRunJobs.workflowRun.run_attempt || 1,
-    "github.html_url": workflowRunJobs.workflowRun.html_url,
-    "github.workflow_url": workflowRunJobs.workflowRun.workflow_url,
-    "github.event": workflowRunJobs.workflowRun.event,
-    "github.workflow": workflowRunJobs.workflowRun.name || undefined,
-    "github.conclusion": workflowRunJobs.workflowRun.conclusion || undefined,
-    "github.created_at": workflowRunJobs.workflowRun.created_at,
-    "github.updated_at": workflowRunJobs.workflowRun.updated_at,
-    "github.run_started_at": workflowRunJobs.workflowRun.run_started_at,
-    "github.author_name": workflowRunJobs.workflowRun.head_commit?.author?.name || undefined,
-    "github.author_email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-    "github.head_commit.id": workflowRunJobs.workflowRun.head_commit?.id || undefined,
-    "github.head_commit.tree_id": workflowRunJobs.workflowRun.head_commit?.tree_id || undefined,
-    "github.head_commit.author.name": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-    "github.head_commit.author.email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-    "github.head_commit.committer.name": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
-    "github.head_commit.committer.email": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
-    "github.head_commit.message": workflowRunJobs.workflowRun.head_commit?.message || undefined,
-    "github.head_commit.timestamp": workflowRunJobs.workflowRun.head_commit?.timestamp || undefined,
-    "github.head_sha": workflowRunJobs.workflowRun.head_sha,
-    "github.head_ref": headRef,
-    "github.base_ref": baseRef,
-    "github.base_sha": baseSha,
-    error: workflowRunJobs.workflowRun.conclusion === "failure",
-    ...pull_requests,
-  };
+async function traceWorkflowRun(workflowRunJobs: WorkflowRunJobs, prLabels: Record<number, string[]>) {
+  const startTime = new Date(workflowRunJobs.workflowRun.run_started_at ?? workflowRunJobs.workflowRun.created_at);
+  const attributes = workflowRunToAttributes(workflowRunJobs.workflowRun, prLabels);
 
   return await tracer.startActiveSpan(
-    workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`,
+    workflowRunJobs.workflowRun.name ?? workflowRunJobs.workflowRun.display_title,
     { attributes, root: true, startTime },
     async (rootSpan) => {
       const code = workflowRunJobs.workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
@@ -93,7 +39,7 @@ async function traceWorkflowRunJobs(workflowRunJobs: WorkflowRunJobs, prLabels: 
       }
 
       for (const job of workflowRunJobs.jobs) {
-        await traceWorkflowRunJob(job, workflowRunJobs.workflowRunArtifacts);
+        await traceJob(job, workflowRunJobs.workflowRunArtifacts);
       }
 
       rootSpan.end(new Date(workflowRunJobs.workflowRun.updated_at));
@@ -102,7 +48,114 @@ async function traceWorkflowRunJobs(workflowRunJobs: WorkflowRunJobs, prLabels: 
   );
 }
 
-async function traceWorkflowRunJob(job: WorkflowRunJob, workflowArtifacts: WorkflowArtifactLookup) {
+function workflowRunToAttributes(
+  workflowRun: components["schemas"]["workflow-run"],
+  prLabels: Record<number, string[]>,
+): Attributes {
+  return {
+    // OpenTelemetry semantic convention CICD Pipeline Attributes
+    // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
+    [ATTR_CICD_PIPELINE_NAME]: workflowRun.name ?? undefined,
+    [ATTR_CICD_PIPELINE_RUN_ID]: workflowRun.id,
+    "github.workflow_id": workflowRun.workflow_id,
+    "github.run_id": workflowRun.id,
+    "github.run_number": workflowRun.run_number,
+    "github.run_attempt": workflowRun.run_attempt ?? 1,
+    ...referencedWorkflowsToAttributes(workflowRun.referenced_workflows),
+    "github.url": workflowRun.url,
+    "github.html_url": workflowRun.html_url,
+    "github.workflow_url": workflowRun.workflow_url,
+    "github.event": workflowRun.event,
+    "github.status": workflowRun.status ?? undefined,
+    "github.workflow": workflowRun.name ?? undefined,
+    "github.node_id": workflowRun.node_id,
+    "github.check_suite_id": workflowRun.check_suite_id,
+    "github.check_suite_node_id": workflowRun.check_suite_node_id,
+    "github.conclusion": workflowRun.conclusion ?? undefined,
+    "github.created_at": workflowRun.created_at,
+    "github.updated_at": workflowRun.updated_at,
+    "github.run_started_at": workflowRun.run_started_at,
+    "github.jobs_url": workflowRun.jobs_url,
+    "github.logs_url": workflowRun.logs_url,
+    "github.check_suite_url": workflowRun.check_suite_url,
+    "github.artifacts_url": workflowRun.artifacts_url,
+    "github.cancel_url": workflowRun.cancel_url,
+    "github.rerun_url": workflowRun.rerun_url,
+    "github.previous_attempt_url": workflowRun.previous_attempt_url ?? undefined,
+    ...headCommitToAttributes(workflowRun.head_commit),
+    "github.head_branch": workflowRun.head_branch ?? undefined,
+    "github.head_sha": workflowRun.head_sha,
+    "github.path": workflowRun.path,
+    "github.display_title": workflowRun.display_title,
+    error: workflowRun.conclusion === "failure",
+    ...prsToAttributes(workflowRun.pull_requests, prLabels),
+  };
+}
+
+function referencedWorkflowsToAttributes(refs: components["schemas"]["referenced-workflow"][] | null | undefined) {
+  const attributes: Attributes = {};
+
+  for (let i = 0; refs && i < refs.length; i++) {
+    const ref = refs[i];
+    const prefix = `github.referenced_workflows.${i}`;
+
+    attributes[`${prefix}.path`] = ref.path;
+    attributes[`${prefix}.sha`] = ref.sha;
+    attributes[`${prefix}.ref`] = ref.ref;
+  }
+
+  return attributes;
+}
+
+function headCommitToAttributes(head_commit: components["schemas"]["nullable-simple-commit"]): Attributes {
+  return {
+    "github.author_name": head_commit?.author?.name, // deprecated, duplicates of github.head_commit.author.name
+    "github.author_email": head_commit?.author?.email, // deprecated, duplicates of github.head_commit.author.email
+    "github.head_commit.id": head_commit?.id,
+    "github.head_commit.tree_id": head_commit?.tree_id,
+    "github.head_commit.author.name": head_commit?.author?.name,
+    "github.head_commit.author.email": head_commit?.author?.email,
+    "github.head_commit.committer.name": head_commit?.committer?.name,
+    "github.head_commit.committer.email": head_commit?.committer?.email,
+    "github.head_commit.message": head_commit?.message,
+    "github.head_commit.timestamp": head_commit?.timestamp,
+  };
+}
+
+function prsToAttributes(
+  pullRequests: components["schemas"]["pull-request-minimal"][] | null,
+  prLabels: Record<number, string[]>,
+) {
+  const attributes: Attributes = {
+    "github.head_ref": pullRequests?.[0].head?.ref,
+    "github.base_ref": pullRequests?.[0].base?.ref,
+    "github.base_sha": pullRequests?.[0].base?.sha,
+  };
+
+  for (let i = 0; pullRequests && i < pullRequests.length; i++) {
+    const pr = pullRequests[i];
+    const prefix = `github.pull_requests.${i}`;
+
+    attributes[`${prefix}.id`] = pr.id;
+    attributes[`${prefix}.url`] = pr.url;
+    attributes[`${prefix}.number`] = pr.number;
+    attributes[`${prefix}.labels`] = prLabels[pr.number];
+    attributes[`${prefix}.head.sha`] = pr.head.sha;
+    attributes[`${prefix}.head.ref`] = pr.head.ref;
+    attributes[`${prefix}.head.repo.id`] = pr.head.repo.id;
+    attributes[`${prefix}.head.repo.url`] = pr.head.repo.url;
+    attributes[`${prefix}.head.repo.name`] = pr.head.repo.name;
+    attributes[`${prefix}.base.ref`] = pr.base.ref;
+    attributes[`${prefix}.base.sha`] = pr.base.sha;
+    attributes[`${prefix}.base.repo.id`] = pr.base.repo.id;
+    attributes[`${prefix}.base.repo.url`] = pr.base.repo.url;
+    attributes[`${prefix}.base.repo.name`] = pr.base.repo.name;
+  }
+
+  return attributes;
+}
+
+async function traceJob(job: WorkflowRunJob, workflowArtifacts: WorkflowArtifactLookup) {
   if (!job.completed_at) {
     core.warning(`Job ${job.id} is not completed yet`);
     return;
@@ -110,46 +163,14 @@ async function traceWorkflowRunJob(job: WorkflowRunJob, workflowArtifacts: Workf
 
   const startTime = new Date(job.started_at);
   const completedTime = new Date(job.completed_at);
-
-  // Heuristic for task type.
-  // taskType can be either "build", "test", or "deploy" according to the OpenTelemetry semantic convention
-  let taskType: string | undefined;
-  if (job.name.toLowerCase().includes("build")) {
-    taskType = "build";
-  } else if (job.name.toLowerCase().includes("test")) {
-    taskType = "test";
-  } else if (job.name.toLowerCase().includes("deploy")) {
-    taskType = "deploy";
-  }
-
-  const attributes = {
-    // OpenTelemetry semantic convention CICD Pipeline Attributes
-    // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
-    "cicd.pipeline.task.name": job.name,
-    "cicd.pipeline.task.run.id": job.id,
-    "cicd.pipeline.task.run.url.full": job.html_url || undefined,
-    "cicd.pipeline.task.type": taskType,
-    "github.job.id": job.id,
-    "github.job.name": job.name,
-    "github.job.run_id": job.run_id,
-    "github.job.run_attempt": job.run_attempt || 1,
-    "github.job.runner_group_id": job.runner_group_id || undefined,
-    "github.job.runner_group_name": job.runner_group_name || undefined,
-    "github.job.runner_name": job.runner_name || undefined,
-    "github.job.conclusion": job.conclusion || undefined,
-    "github.job.labels": job.labels.join(", ") || undefined,
-    "github.job.started_at": job.started_at || undefined,
-    "github.job.completed_at": job.completed_at || undefined,
-    "github.conclusion": job.conclusion || undefined,
-    error: job.conclusion === "failure",
-  };
+  const attributes = jobToAttributes(job);
 
   await tracer.startActiveSpan(job.name, { attributes, startTime }, async (span) => {
     const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
     span.setStatus({ code });
 
     for (const step of job.steps ?? []) {
-      await traceWorkflowRunStep(job.name, step, workflowArtifacts);
+      await traceStep(job.name, step, workflowArtifacts);
     }
 
     // Some skipped and post jobs return completed_at dates that are older than started_at
@@ -157,4 +178,49 @@ async function traceWorkflowRunJob(job: WorkflowRunJob, workflowArtifacts: Workf
   });
 }
 
-export { traceWorkflowRunJobs };
+function jobToAttributes(job: components["schemas"]["job"]): Attributes {
+  // Heuristic for task type
+  let taskType: string | undefined;
+  if (job.name.toLowerCase().includes("build")) {
+    taskType = CICD_PIPELINE_TASK_TYPE_VALUE_BUILD;
+  } else if (job.name.toLowerCase().includes("test")) {
+    taskType = CICD_PIPELINE_TASK_TYPE_VALUE_TEST;
+  } else if (job.name.toLowerCase().includes("deploy")) {
+    taskType = CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY;
+  }
+
+  return {
+    // OpenTelemetry semantic convention CICD Pipeline Attributes
+    // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
+    [ATTR_CICD_PIPELINE_TASK_NAME]: job.name,
+    [ATTR_CICD_PIPELINE_TASK_RUN_ID]: job.id,
+    [ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL]: job.html_url ?? undefined,
+    [ATTR_CICD_PIPELINE_TASK_TYPE]: taskType,
+    "github.job.id": job.id,
+    "github.job.name": job.name,
+    "github.job.run_id": job.run_id,
+    "github.job.run_url": job.run_url,
+    "github.job.run_attempt": job.run_attempt ?? 1,
+    "github.job.node_id": job.node_id,
+    "github.job.head_sha": job.head_sha,
+    "github.job.url": job.url,
+    "github.job.html_url": job.html_url ?? undefined,
+    "github.job.status": job.status,
+    "github.job.runner_id": job.runner_id ?? undefined,
+    "github.job.runner_group_id": job.runner_group_id ?? undefined,
+    "github.job.runner_group_name": job.runner_group_name ?? undefined,
+    "github.job.runner_name": job.runner_name ?? undefined,
+    "github.job.conclusion": job.conclusion ?? undefined,
+    "github.job.labels": job.labels.join(", "),
+    "github.job.created_at": job.created_at,
+    "github.job.started_at": job.started_at,
+    "github.job.completed_at": job.completed_at ?? undefined,
+    "github.conclusion": job.conclusion ?? undefined, // FIXME: it overrides the workflow conclusion
+    "github.job.check_run_url": job.check_run_url,
+    "github.job.workflow_name": job.workflow_name ?? undefined,
+    "github.job.head_branch": job.head_branch ?? undefined,
+    error: job.conclusion === "failure",
+  };
+}
+
+export { traceWorkflowRun };

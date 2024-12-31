@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.13.0] - 2024-12-31
+
+### Added
+
+- Add attributes on the workflow span:
+  - `github.referenced_workflows`
+  - `github.url`
+  - `github.status`
+  - `github.node_id`
+  - `github.check_suite_id`
+  - `github.check_suite_node_id`
+  - `github.jobs_url`
+  - `github.logs_url`
+  - `github.check_suite_url`
+  - `github.artifacts_url`
+  - `github.cancel_url`
+  - `github.rerun_url`
+  - `github.head_branch`
+  - `github.path`
+  - `github.display_title`
+- Add attributes on the job spans:
+  - `github.job.run_url`
+  - `github.job.node_id`
+  - `github.job.head_sha`
+  - `github.job.url`
+  - `github.job.html_url`
+  - `github.job.status`
+  - `github.job.runner_id`
+  - `github.job.created_at`
+  - `github.job.check_run_url`
+  - `github.job.workflow_name`
+  - `github.job.head_branch`
+
+### Fixed
+
+- Return the correct value for `github.head_commit.author.name` and `github.head_commit.committer.name`
+
 ## [1.12.1] - 2024-12-31
 
 ### Fixed
@@ -70,7 +107,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.12.1...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.0...HEAD
+[1.13.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.12.1...v1.13.0
 [1.12.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.12.0...v1.12.1
 [1.12.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.11.0...v1.12.0
 [1.11.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.10.0...v1.11.0

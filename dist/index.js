@@ -51597,6 +51597,186 @@ var esm$4 = /*#__PURE__*/Object.freeze({
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//----------------------------------------------------------------------------------------------------------
+// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
+//----------------------------------------------------------------------------------------------------------
+/**
+ * Rate-limiting result, shows whether the lease was acquired or contains a rejection reason
+ *
+ * @example acquired
+ * @example request_canceled
+ */
+/**
+ * Logical name of the service.
+ *
+ * @example shoppingcart
+ *
+ * @note **MUST** be the same for all instances of horizontally scaled services. If the value was not specified, SDKs **MUST** fallback to `unknown_service:` concatenated with [`process.executable.name`](process.md), e.g. `unknown_service:bash`. If `process.executable.name` is not available, the value **MUST** be set to `unknown_service`.
+ */
+var ATTR_SERVICE_NAME = 'service.name';
+/**
+ * The version string of the service API or implementation. The format is not defined by these conventions.
+ *
+ * @example 2.0.0
+ * @example a01dbef8a
+ */
+var ATTR_SERVICE_VERSION = 'service.version';
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+//----------------------------------------------------------------------------------------------------------
+// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
+//----------------------------------------------------------------------------------------------------------
+/**
+ * The ID of a running ECS task. The ID **MUST** be extracted from `task.arn`.
+ *
+ * @example 10838bed-421f-43ef-870a-f43feacbbb5b
+ * @example 23ebb8ac-c18f-46c6-8bbe-d55d0e37cfbd
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+/**
+ * The human readable name of the pipeline within a CI/CD system.
+ *
+ * @example Build and Test
+ * @example Lint
+ * @example Deploy Go Project
+ * @example deploy_to_environment
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_NAME = 'cicd.pipeline.name';
+/**
+ * The unique identifier of a pipeline run within a CI/CD system.
+ *
+ * @example 120912
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_RUN_ID = 'cicd.pipeline.run.id';
+/**
+ * The human readable name of a task within a pipeline. Task here most closely aligns with a [computing process](https://en.wikipedia.org/wiki/Pipeline_(computing)) in a pipeline. Other terms for tasks include commands, steps, and procedures.
+ *
+ * @example Run GoLang Linter
+ * @example Go Build
+ * @example go-test
+ * @example deploy_binary
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_NAME = 'cicd.pipeline.task.name';
+/**
+ * The unique identifier of a task run within a pipeline.
+ *
+ * @example 12097
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_RUN_ID = 'cicd.pipeline.task.run.id';
+/**
+ * The [URL](https://en.wikipedia.org/wiki/URL) of the pipeline run providing the complete address in order to locate and identify the pipeline run.
+ *
+ * @example https://github.com/open-telemetry/semantic-conventions/actions/runs/9753949763/job/26920038674?pr=1075
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL = 'cicd.pipeline.task.run.url.full';
+/**
+ * The type of the task within a pipeline.
+ *
+ * @example build
+ * @example test
+ * @example deploy
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_TYPE = 'cicd.pipeline.task.type';
+/**
+  * Enum value "build" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
+  */
+var CICD_PIPELINE_TASK_TYPE_VALUE_BUILD = "build";
+/**
+  * Enum value "deploy" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
+  */
+var CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY = "deploy";
+/**
+  * Enum value "test" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
+  */
+var CICD_PIPELINE_TASK_TYPE_VALUE_TEST = "test";
+/**
+ * The string ID of the service instance.
+ *
+ * @example 627cc493-f310-47de-96bd-71410b7dec09
+ *
+ * @note **MUST** be unique for each instance of the same `service.namespace,service.name` pair (in other words
+ * `service.namespace,service.name,service.instance.id` triplet **MUST** be globally unique). The ID helps to
+ * distinguish instances of the same service that exist at the same time (e.g. instances of a horizontally scaled
+ * service).
+ *
+ * Implementations, such as SDKs, are recommended to generate a random Version 1 or Version 4 [RFC
+ * 4122](https://www.ietf.org/rfc/rfc4122.txt) UUID, but are free to use an inherent unique ID as the source of
+ * this value if stability is desirable. In that case, the ID **SHOULD** be used as source of a UUID Version 5 and
+ * **SHOULD** use the following UUID as the namespace: `4d63009a-8d0f-11ee-aad7-4c796ed8e320`.
+ *
+ * UUIDs are typically recommended, as only an opaque value for the purposes of identifying a service instance is
+ * needed. Similar to what can be seen in the man page for the
+ * [`/etc/machine-id`](https://www.freedesktop.org/software/systemd/man/machine-id.html) file, the underlying
+ * data, such as pod name and namespace should be treated as confidential, being the user's choice to expose it
+ * or not via another resource attribute.
+ *
+ * For applications running behind an application server (like unicorn), we do not recommend using one identifier
+ * for all processes participating in the application. Instead, it's recommended each division (e.g. a worker
+ * thread in unicorn) to have its own instance.id.
+ *
+ * It's not recommended for a Collector to set `service.instance.id` if it can't unambiguously determine the
+ * service instance that is generating that telemetry. For instance, creating an UUID based on `pod.name` will
+ * likely be wrong, as the Collector might not know from which container within that pod the telemetry originated.
+ * However, Collectors can set the `service.instance.id` if they can unambiguously determine the service instance
+ * for that telemetry. This is typically the case for scraping receivers, as they know the target address and
+ * port.
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_SERVICE_INSTANCE_ID = 'service.instance.id';
+/**
+ * A namespace for `service.name`.
+ *
+ * @example Shop
+ *
+ * @note A string value having a meaning that helps to distinguish a group of services, for example the team name that owns a group of services. `service.name` is expected to be unique within the same namespace. If `service.namespace` is not specified in the Resource then `service.name` is expected to be unique for all services that have no explicit namespace defined (so the empty/unspecified namespace is simply one more valid namespace). Zero-length namespace string is assumed equal to unspecified namespace.
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_SERVICE_NAMESPACE = 'service.namespace';
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 function intValue$1(charCode) {
     // 0-9
     if (charCode >= 48 && charCode <= 57) {
@@ -51716,46 +51896,6 @@ var TMP_TELEMETRYSDKLANGUAGEVALUES_NODEJS = 'nodejs';
  * @deprecated Use TELEMETRY_SDK_LANGUAGE_VALUE_NODEJS.
  */
 var TELEMETRYSDKLANGUAGEVALUES_NODEJS = TMP_TELEMETRYSDKLANGUAGEVALUES_NODEJS;
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-//----------------------------------------------------------------------------------------------------------
-// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
-//----------------------------------------------------------------------------------------------------------
-/**
- * Rate-limiting result, shows whether the lease was acquired or contains a rejection reason
- *
- * @example acquired
- * @example request_canceled
- */
-/**
- * Logical name of the service.
- *
- * @example shoppingcart
- *
- * @note **MUST** be the same for all instances of horizontally scaled services. If the value was not specified, SDKs **MUST** fallback to `unknown_service:` concatenated with [`process.executable.name`](process.md), e.g. `unknown_service:bash`. If `process.executable.name` is not available, the value **MUST** be set to `unknown_service`.
- */
-var ATTR_SERVICE_NAME = 'service.name';
-/**
- * The version string of the service API or implementation. The format is not defined by these conventions.
- *
- * @example 2.0.0
- * @example a01dbef8a
- */
-var ATTR_SERVICE_VERSION = 'service.version';
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -68186,7 +68326,7 @@ async function traceOTLPFile(path) {
 }
 
 const tracer$1 = trace.getTracer("otel-cicd-action");
-async function traceWorkflowRunStep(jobName, step, workflowArtifacts) {
+async function traceStep(jobName, step, workflowArtifacts) {
     if (!step.completed_at || !step.started_at) {
         coreExports.warning(`Step ${step.name} is not completed yet.`);
         return;
@@ -68197,7 +68337,17 @@ async function traceWorkflowRunStep(jobName, step, workflowArtifacts) {
     }
     const startTime = new Date(step.started_at);
     const completedTime = new Date(step.completed_at);
-    const attributes = {
+    const attributes = stepToAttributes(step);
+    await tracer$1.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
+        const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+        span.setStatus({ code });
+        await traceArtifact(jobName, step.name, workflowArtifacts);
+        // Some skipped and post jobs return completed_at dates that are older than started_at
+        span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
+    });
+}
+function stepToAttributes(step) {
+    return {
         "github.job.step.status": step.status,
         "github.job.step.conclusion": step.conclusion ?? undefined,
         "github.job.step.name": step.name,
@@ -68206,13 +68356,6 @@ async function traceWorkflowRunStep(jobName, step, workflowArtifacts) {
         "github.job.step.completed_at": step.completed_at ?? undefined,
         error: step.conclusion === "failure",
     };
-    await tracer$1.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
-        const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-        span.setStatus({ code });
-        await traceArtifact(jobName, step.name, workflowArtifacts);
-        // Some skipped and post jobs return completed_at dates that are older than started_at
-        span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
-    });
 }
 async function traceArtifact(jobName, stepName, workflowArtifacts) {
     const artifact = workflowArtifacts(jobName, stepName);
@@ -68232,72 +68375,10 @@ async function traceArtifact(jobName, stepName, workflowArtifacts) {
 }
 
 const tracer = trace.getTracer("otel-cicd-action");
-async function traceWorkflowRunJobs(workflowRunJobs, prLabels) {
-    const startTime = new Date(workflowRunJobs.workflowRun.run_started_at || workflowRunJobs.workflowRun.created_at);
-    let headRef;
-    let baseRef;
-    let baseSha;
-    let pull_requests = {};
-    if (workflowRunJobs.workflowRun.pull_requests && workflowRunJobs.workflowRun.pull_requests.length > 0) {
-        headRef = workflowRunJobs.workflowRun.pull_requests[0].head?.ref;
-        baseRef = workflowRunJobs.workflowRun.pull_requests[0].base?.ref;
-        baseSha = workflowRunJobs.workflowRun.pull_requests[0].base?.sha;
-        pull_requests = workflowRunJobs.workflowRun.pull_requests.reduce((result, pr, idx) => {
-            const prefix = `github.pull_requests.${idx}`;
-            return {
-                ...result,
-                [`${prefix}.id`]: pr.id,
-                [`${prefix}.url`]: pr.url,
-                [`${prefix}.number`]: pr.number,
-                [`${prefix}.labels`]: prLabels[pr.number],
-                [`${prefix}.head.sha`]: pr.head.sha,
-                [`${prefix}.head.ref`]: pr.head.ref,
-                [`${prefix}.head.repo.id`]: pr.head.repo.id,
-                [`${prefix}.head.repo.url`]: pr.head.repo.url,
-                [`${prefix}.head.repo.name`]: pr.head.repo.name,
-                [`${prefix}.base.ref`]: pr.base.ref,
-                [`${prefix}.base.sha`]: pr.base.sha,
-                [`${prefix}.base.repo.id`]: pr.base.repo.id,
-                [`${prefix}.base.repo.url`]: pr.base.repo.url,
-                [`${prefix}.base.repo.name`]: pr.base.repo.name,
-            };
-        }, {});
-    }
-    const attributes = {
-        // OpenTelemetry semantic convention CICD Pipeline Attributes
-        // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
-        "cicd.pipeline.name": workflowRunJobs.workflowRun.name || undefined,
-        "cicd.pipeline.run.id": workflowRunJobs.workflowRun.id,
-        "github.workflow_id": workflowRunJobs.workflowRun.workflow_id,
-        "github.run_id": workflowRunJobs.workflowRun.id,
-        "github.run_number": workflowRunJobs.workflowRun.run_number,
-        "github.run_attempt": workflowRunJobs.workflowRun.run_attempt || 1,
-        "github.html_url": workflowRunJobs.workflowRun.html_url,
-        "github.workflow_url": workflowRunJobs.workflowRun.workflow_url,
-        "github.event": workflowRunJobs.workflowRun.event,
-        "github.workflow": workflowRunJobs.workflowRun.name || undefined,
-        "github.conclusion": workflowRunJobs.workflowRun.conclusion || undefined,
-        "github.created_at": workflowRunJobs.workflowRun.created_at,
-        "github.updated_at": workflowRunJobs.workflowRun.updated_at,
-        "github.run_started_at": workflowRunJobs.workflowRun.run_started_at,
-        "github.author_name": workflowRunJobs.workflowRun.head_commit?.author?.name || undefined,
-        "github.author_email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-        "github.head_commit.id": workflowRunJobs.workflowRun.head_commit?.id || undefined,
-        "github.head_commit.tree_id": workflowRunJobs.workflowRun.head_commit?.tree_id || undefined,
-        "github.head_commit.author.name": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-        "github.head_commit.author.email": workflowRunJobs.workflowRun.head_commit?.author?.email || undefined,
-        "github.head_commit.committer.name": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
-        "github.head_commit.committer.email": workflowRunJobs.workflowRun.head_commit?.committer?.email || undefined,
-        "github.head_commit.message": workflowRunJobs.workflowRun.head_commit?.message || undefined,
-        "github.head_commit.timestamp": workflowRunJobs.workflowRun.head_commit?.timestamp || undefined,
-        "github.head_sha": workflowRunJobs.workflowRun.head_sha,
-        "github.head_ref": headRef,
-        "github.base_ref": baseRef,
-        "github.base_sha": baseSha,
-        error: workflowRunJobs.workflowRun.conclusion === "failure",
-        ...pull_requests,
-    };
-    return await tracer.startActiveSpan(workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`, { attributes, root: true, startTime }, async (rootSpan) => {
+async function traceWorkflowRun(workflowRunJobs, prLabels) {
+    const startTime = new Date(workflowRunJobs.workflowRun.run_started_at ?? workflowRunJobs.workflowRun.created_at);
+    const attributes = workflowRunToAttributes(workflowRunJobs.workflowRun, prLabels);
+    return await tracer.startActiveSpan(workflowRunJobs.workflowRun.name ?? workflowRunJobs.workflowRun.display_title, { attributes, root: true, startTime }, async (rootSpan) => {
         const code = workflowRunJobs.workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         rootSpan.setStatus({ code });
         coreExports.debug(`TraceID: ${rootSpan.spanContext().traceId}`);
@@ -68309,61 +68390,165 @@ async function traceWorkflowRunJobs(workflowRunJobs, prLabels) {
             queuedSpan.end(new Date(workflowRunJobs.jobs[0].started_at));
         }
         for (const job of workflowRunJobs.jobs) {
-            await traceWorkflowRunJob(job, workflowRunJobs.workflowRunArtifacts);
+            await traceJob(job, workflowRunJobs.workflowRunArtifacts);
         }
         rootSpan.end(new Date(workflowRunJobs.workflowRun.updated_at));
         return rootSpan.spanContext().traceId;
     });
 }
-async function traceWorkflowRunJob(job, workflowArtifacts) {
+function workflowRunToAttributes(workflowRun, prLabels) {
+    return {
+        // OpenTelemetry semantic convention CICD Pipeline Attributes
+        // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
+        [ATTR_CICD_PIPELINE_NAME]: workflowRun.name ?? undefined,
+        [ATTR_CICD_PIPELINE_RUN_ID]: workflowRun.id,
+        "github.workflow_id": workflowRun.workflow_id,
+        "github.run_id": workflowRun.id,
+        "github.run_number": workflowRun.run_number,
+        "github.run_attempt": workflowRun.run_attempt ?? 1,
+        ...referencedWorkflowsToAttributes(workflowRun.referenced_workflows),
+        "github.url": workflowRun.url,
+        "github.html_url": workflowRun.html_url,
+        "github.workflow_url": workflowRun.workflow_url,
+        "github.event": workflowRun.event,
+        "github.status": workflowRun.status ?? undefined,
+        "github.workflow": workflowRun.name ?? undefined,
+        "github.node_id": workflowRun.node_id,
+        "github.check_suite_id": workflowRun.check_suite_id,
+        "github.check_suite_node_id": workflowRun.check_suite_node_id,
+        "github.conclusion": workflowRun.conclusion ?? undefined,
+        "github.created_at": workflowRun.created_at,
+        "github.updated_at": workflowRun.updated_at,
+        "github.run_started_at": workflowRun.run_started_at,
+        "github.jobs_url": workflowRun.jobs_url,
+        "github.logs_url": workflowRun.logs_url,
+        "github.check_suite_url": workflowRun.check_suite_url,
+        "github.artifacts_url": workflowRun.artifacts_url,
+        "github.cancel_url": workflowRun.cancel_url,
+        "github.rerun_url": workflowRun.rerun_url,
+        "github.previous_attempt_url": workflowRun.previous_attempt_url ?? undefined,
+        ...headCommitToAttributes(workflowRun.head_commit),
+        "github.head_branch": workflowRun.head_branch ?? undefined,
+        "github.head_sha": workflowRun.head_sha,
+        "github.path": workflowRun.path,
+        "github.display_title": workflowRun.display_title,
+        error: workflowRun.conclusion === "failure",
+        ...prsToAttributes(workflowRun.pull_requests, prLabels),
+    };
+}
+function referencedWorkflowsToAttributes(refs) {
+    const attributes = {};
+    for (let i = 0; refs && i < refs.length; i++) {
+        const ref = refs[i];
+        const prefix = `github.referenced_workflows.${i}`;
+        attributes[`${prefix}.path`] = ref.path;
+        attributes[`${prefix}.sha`] = ref.sha;
+        attributes[`${prefix}.ref`] = ref.ref;
+    }
+    return attributes;
+}
+function headCommitToAttributes(head_commit) {
+    return {
+        "github.author_name": head_commit?.author?.name, // deprecated, duplicates of github.head_commit.author.name
+        "github.author_email": head_commit?.author?.email, // deprecated, duplicates of github.head_commit.author.email
+        "github.head_commit.id": head_commit?.id,
+        "github.head_commit.tree_id": head_commit?.tree_id,
+        "github.head_commit.author.name": head_commit?.author?.name,
+        "github.head_commit.author.email": head_commit?.author?.email,
+        "github.head_commit.committer.name": head_commit?.committer?.name,
+        "github.head_commit.committer.email": head_commit?.committer?.email,
+        "github.head_commit.message": head_commit?.message,
+        "github.head_commit.timestamp": head_commit?.timestamp,
+    };
+}
+function prsToAttributes(pullRequests, prLabels) {
+    const attributes = {
+        "github.head_ref": pullRequests?.[0].head?.ref,
+        "github.base_ref": pullRequests?.[0].base?.ref,
+        "github.base_sha": pullRequests?.[0].base?.sha,
+    };
+    for (let i = 0; pullRequests && i < pullRequests.length; i++) {
+        const pr = pullRequests[i];
+        const prefix = `github.pull_requests.${i}`;
+        attributes[`${prefix}.id`] = pr.id;
+        attributes[`${prefix}.url`] = pr.url;
+        attributes[`${prefix}.number`] = pr.number;
+        attributes[`${prefix}.labels`] = prLabels[pr.number];
+        attributes[`${prefix}.head.sha`] = pr.head.sha;
+        attributes[`${prefix}.head.ref`] = pr.head.ref;
+        attributes[`${prefix}.head.repo.id`] = pr.head.repo.id;
+        attributes[`${prefix}.head.repo.url`] = pr.head.repo.url;
+        attributes[`${prefix}.head.repo.name`] = pr.head.repo.name;
+        attributes[`${prefix}.base.ref`] = pr.base.ref;
+        attributes[`${prefix}.base.sha`] = pr.base.sha;
+        attributes[`${prefix}.base.repo.id`] = pr.base.repo.id;
+        attributes[`${prefix}.base.repo.url`] = pr.base.repo.url;
+        attributes[`${prefix}.base.repo.name`] = pr.base.repo.name;
+    }
+    return attributes;
+}
+async function traceJob(job, workflowArtifacts) {
     if (!job.completed_at) {
         coreExports.warning(`Job ${job.id} is not completed yet`);
         return;
     }
     const startTime = new Date(job.started_at);
     const completedTime = new Date(job.completed_at);
-    // Heuristic for task type.
-    // taskType can be either "build", "test", or "deploy" according to the OpenTelemetry semantic convention
-    let taskType;
-    if (job.name.toLowerCase().includes("build")) {
-        taskType = "build";
-    }
-    else if (job.name.toLowerCase().includes("test")) {
-        taskType = "test";
-    }
-    else if (job.name.toLowerCase().includes("deploy")) {
-        taskType = "deploy";
-    }
-    const attributes = {
-        // OpenTelemetry semantic convention CICD Pipeline Attributes
-        // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
-        "cicd.pipeline.task.name": job.name,
-        "cicd.pipeline.task.run.id": job.id,
-        "cicd.pipeline.task.run.url.full": job.html_url || undefined,
-        "cicd.pipeline.task.type": taskType,
-        "github.job.id": job.id,
-        "github.job.name": job.name,
-        "github.job.run_id": job.run_id,
-        "github.job.run_attempt": job.run_attempt || 1,
-        "github.job.runner_group_id": job.runner_group_id || undefined,
-        "github.job.runner_group_name": job.runner_group_name || undefined,
-        "github.job.runner_name": job.runner_name || undefined,
-        "github.job.conclusion": job.conclusion || undefined,
-        "github.job.labels": job.labels.join(", ") || undefined,
-        "github.job.started_at": job.started_at || undefined,
-        "github.job.completed_at": job.completed_at || undefined,
-        "github.conclusion": job.conclusion || undefined,
-        error: job.conclusion === "failure",
-    };
+    const attributes = jobToAttributes(job);
     await tracer.startActiveSpan(job.name, { attributes, startTime }, async (span) => {
         const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         span.setStatus({ code });
         for (const step of job.steps ?? []) {
-            await traceWorkflowRunStep(job.name, step, workflowArtifacts);
+            await traceStep(job.name, step, workflowArtifacts);
         }
         // Some skipped and post jobs return completed_at dates that are older than started_at
         span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
     });
+}
+function jobToAttributes(job) {
+    // Heuristic for task type
+    let taskType;
+    if (job.name.toLowerCase().includes("build")) {
+        taskType = CICD_PIPELINE_TASK_TYPE_VALUE_BUILD;
+    }
+    else if (job.name.toLowerCase().includes("test")) {
+        taskType = CICD_PIPELINE_TASK_TYPE_VALUE_TEST;
+    }
+    else if (job.name.toLowerCase().includes("deploy")) {
+        taskType = CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY;
+    }
+    return {
+        // OpenTelemetry semantic convention CICD Pipeline Attributes
+        // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
+        [ATTR_CICD_PIPELINE_TASK_NAME]: job.name,
+        [ATTR_CICD_PIPELINE_TASK_RUN_ID]: job.id,
+        [ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL]: job.html_url ?? undefined,
+        [ATTR_CICD_PIPELINE_TASK_TYPE]: taskType,
+        "github.job.id": job.id,
+        "github.job.name": job.name,
+        "github.job.run_id": job.run_id,
+        "github.job.run_url": job.run_url,
+        "github.job.run_attempt": job.run_attempt ?? 1,
+        "github.job.node_id": job.node_id,
+        "github.job.head_sha": job.head_sha,
+        "github.job.url": job.url,
+        "github.job.html_url": job.html_url ?? undefined,
+        "github.job.status": job.status,
+        "github.job.runner_id": job.runner_id ?? undefined,
+        "github.job.runner_group_id": job.runner_group_id ?? undefined,
+        "github.job.runner_group_name": job.runner_group_name ?? undefined,
+        "github.job.runner_name": job.runner_name ?? undefined,
+        "github.job.conclusion": job.conclusion ?? undefined,
+        "github.job.labels": job.labels.join(", "),
+        "github.job.created_at": job.created_at,
+        "github.job.started_at": job.started_at,
+        "github.job.completed_at": job.completed_at ?? undefined,
+        "github.conclusion": job.conclusion ?? undefined, // FIXME: it overrides the workflow conclusion
+        "github.job.check_run_url": job.check_run_url,
+        "github.job.workflow_name": job.workflow_name ?? undefined,
+        "github.job.head_branch": job.head_branch ?? undefined,
+        error: job.conclusion === "failure",
+    };
 }
 
 var src$5 = {};
@@ -103881,78 +104066,6 @@ var ConsoleSpanExporter = /** @class */ (function () {
     return ConsoleSpanExporter;
 }());
 
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-//----------------------------------------------------------------------------------------------------------
-// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
-//----------------------------------------------------------------------------------------------------------
-/**
- * The ID of a running ECS task. The ID **MUST** be extracted from `task.arn`.
- *
- * @example 10838bed-421f-43ef-870a-f43feacbbb5b
- * @example 23ebb8ac-c18f-46c6-8bbe-d55d0e37cfbd
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-/**
- * The string ID of the service instance.
- *
- * @example 627cc493-f310-47de-96bd-71410b7dec09
- *
- * @note **MUST** be unique for each instance of the same `service.namespace,service.name` pair (in other words
- * `service.namespace,service.name,service.instance.id` triplet **MUST** be globally unique). The ID helps to
- * distinguish instances of the same service that exist at the same time (e.g. instances of a horizontally scaled
- * service).
- *
- * Implementations, such as SDKs, are recommended to generate a random Version 1 or Version 4 [RFC
- * 4122](https://www.ietf.org/rfc/rfc4122.txt) UUID, but are free to use an inherent unique ID as the source of
- * this value if stability is desirable. In that case, the ID **SHOULD** be used as source of a UUID Version 5 and
- * **SHOULD** use the following UUID as the namespace: `4d63009a-8d0f-11ee-aad7-4c796ed8e320`.
- *
- * UUIDs are typically recommended, as only an opaque value for the purposes of identifying a service instance is
- * needed. Similar to what can be seen in the man page for the
- * [`/etc/machine-id`](https://www.freedesktop.org/software/systemd/man/machine-id.html) file, the underlying
- * data, such as pod name and namespace should be treated as confidential, being the user's choice to expose it
- * or not via another resource attribute.
- *
- * For applications running behind an application server (like unicorn), we do not recommend using one identifier
- * for all processes participating in the application. Instead, it's recommended each division (e.g. a worker
- * thread in unicorn) to have its own instance.id.
- *
- * It's not recommended for a Collector to set `service.instance.id` if it can't unambiguously determine the
- * service instance that is generating that telemetry. For instance, creating an UUID based on `pod.name` will
- * likely be wrong, as the Collector might not know from which container within that pod the telemetry originated.
- * However, Collectors can set the `service.instance.id` if they can unambiguously determine the service instance
- * for that telemetry. This is typically the case for scraping receivers, as they know the target address and
- * port.
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_SERVICE_INSTANCE_ID = 'service.instance.id';
-/**
- * A namespace for `service.name`.
- *
- * @example Shop
- *
- * @note A string value having a meaning that helps to distinguish a group of services, for example the team name that owns a group of services. `service.name` is expected to be unique within the same namespace. If `service.namespace` is not specified in the Resource then `service.name` is expected to be unique for all services that have no explicit namespace defined (so the empty/unspecified namespace is simply one more valid namespace). Zero-length namespace string is assumed equal to unspecified namespace.
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_SERVICE_NAMESPACE = 'service.namespace';
-
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 const OTEL_ID_SEED = Number.parseInt(process.env["OTEL_ID_SEED"] ?? "0");
 function stringToHeaders(s) {
@@ -104046,12 +104159,12 @@ async function run() {
     const runId = Number.parseInt(coreExports.getInput("runId") || `${githubExports.context.runId}`);
     const ghToken = coreExports.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
     const octokit = githubExports.getOctokit(ghToken);
-    coreExports.info(`Get Workflow Run Jobs for ${runId}`);
+    coreExports.info(`Get workflow run jobs for ${runId}`);
     const workflowRunJobs = await getWorkflowRunJobs(githubExports.context, octokit, runId);
     coreExports.info("Get PRs labels");
     const prNumbers = workflowRunJobs.workflowRun.pull_requests?.map((pr) => pr.number) ?? [];
     const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
-    coreExports.info(`Create Trace Provider for ${otlpEndpoint}`);
+    coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes = {
         serviceName: otelServiceName || workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`,
         serviceVersion: workflowRunJobs.workflowRun.head_sha,
@@ -104065,10 +104178,10 @@ async function run() {
     };
     const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
     try {
-        coreExports.info(`Trace Workflow Run Jobs for ${runId} and export to ${otlpEndpoint}`);
-        const traceId = await traceWorkflowRunJobs(workflowRunJobs, prLabels);
+        coreExports.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
+        const traceId = await traceWorkflowRun(workflowRunJobs, prLabels);
         coreExports.setOutput("traceId", traceId);
-        coreExports.info("Flush and shutdown trace provider");
+        coreExports.info("Flush and shutdown tracer provider");
         await provider.forceFlush();
         await provider.shutdown();
         coreExports.info("Provider shutdown");
