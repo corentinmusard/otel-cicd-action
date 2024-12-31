@@ -68463,9 +68463,9 @@ function headCommitToAttributes(head_commit) {
 }
 function prsToAttributes(pullRequests, prLabels) {
     const attributes = {
-        "github.head_ref": pullRequests?.[0].head?.ref,
-        "github.base_ref": pullRequests?.[0].base?.ref,
-        "github.base_sha": pullRequests?.[0].base?.sha,
+        "github.head_ref": pullRequests?.[0]?.head?.ref,
+        "github.base_ref": pullRequests?.[0]?.base?.ref,
+        "github.base_sha": pullRequests?.[0]?.base?.sha,
     };
     for (let i = 0; pullRequests && i < pullRequests.length; i++) {
         const pr = pullRequests[i];

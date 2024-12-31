@@ -127,9 +127,9 @@ function prsToAttributes(
   prLabels: Record<number, string[]>,
 ) {
   const attributes: Attributes = {
-    "github.head_ref": pullRequests?.[0].head?.ref,
-    "github.base_ref": pullRequests?.[0].base?.ref,
-    "github.base_sha": pullRequests?.[0].base?.sha,
+    "github.head_ref": pullRequests?.[0]?.head?.ref,
+    "github.base_ref": pullRequests?.[0]?.base?.ref,
+    "github.base_sha": pullRequests?.[0]?.base?.sha,
   };
 
   for (let i = 0; pullRequests && i < pullRequests.length; i++) {
