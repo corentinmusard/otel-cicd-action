@@ -6,17 +6,9 @@ import {
   type Link,
   SpanKind,
   type SpanStatusCode,
-  context,
   trace,
 } from "@opentelemetry/api";
-import {
-  ESpanKind,
-  type IAnyValue,
-  type IExportTraceServiceRequest,
-  type IKeyValue,
-  type ILink,
-  type ISpan,
-} from "@opentelemetry/otlp-transformer";
+import { ESpanKind, type IAnyValue, type IKeyValue, type ILink, type ISpan } from "@opentelemetry/otlp-transformer";
 
 const tracer = trace.getTracer("otel-cicd-action");
 
@@ -83,7 +75,7 @@ function toAttributes(attributes: IKeyValue[] | undefined): Attributes {
 }
 
 function addSpan(otlpSpan: ISpan) {
-  const span = tracer.startSpan(
+  tracer.startActiveSpan(
     otlpSpan.name,
     {
       kind: toSpanKind(otlpSpan.kind),
@@ -91,16 +83,16 @@ function addSpan(otlpSpan: ISpan) {
       links: toLinks(otlpSpan.links),
       startTime: new Date((otlpSpan.startTimeUnixNano as number) / 1000000),
     },
-    context.active(),
+    (span) => {
+      if (otlpSpan.status) {
+        span.setStatus({
+          code: otlpSpan.status.code as unknown as SpanStatusCode,
+          message: otlpSpan.status.message ?? "",
+        });
+      }
+      span.end(new Date((otlpSpan.endTimeUnixNano as number) / 1000000));
+    },
   );
-
-  if (otlpSpan.status) {
-    span.setStatus({
-      code: otlpSpan.status.code as unknown as SpanStatusCode,
-      message: otlpSpan.status.message ?? "",
-    });
-  }
-  span.end(new Date((otlpSpan.endTimeUnixNano as number) / 1000000));
 }
 
 async function traceOTLPFile(path: string) {
@@ -114,14 +106,12 @@ async function traceOTLPFile(path: string) {
     if (!line) {
       continue;
     }
-    const serviceRequest = JSON.parse(line) as IExportTraceServiceRequest;
+    const serviceRequest = JSON.parse(line);
 
     for (const resourceSpans of serviceRequest.resourceSpans ?? []) {
-      for (const scopeSpans of resourceSpans.scopeSpans ?? []) {
-        if (scopeSpans.scope) {
-          for (const otlpSpan of scopeSpans.spans ?? []) {
-            addSpan(otlpSpan);
-          }
+      for (const scopeSpans of resourceSpans.scopeSpans ?? resourceSpans.instrumentationLibrarySpans ?? []) {
+        for (const otlpSpan of scopeSpans.spans ?? []) {
+          addSpan(otlpSpan);
         }
       }
     }

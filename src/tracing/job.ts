@@ -12,37 +12,39 @@ import {
   CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY,
   CICD_PIPELINE_TASK_TYPE_VALUE_TEST,
 } from "@opentelemetry/semantic-conventions/incubating";
-import type { WorkflowArtifactLookup, WorkflowRunJob, WorkflowRunJobs } from "../github/github";
+import type { JobArtifactMap, StepArtifactMap } from "../github/github";
 import { traceStep } from "./step";
 
 const tracer = trace.getTracer("otel-cicd-action");
 
-async function traceWorkflowRun(workflowRunJobs: WorkflowRunJobs, prLabels: Record<number, string[]>) {
-  const startTime = new Date(workflowRunJobs.workflowRun.run_started_at ?? workflowRunJobs.workflowRun.created_at);
-  const attributes = workflowRunToAttributes(workflowRunJobs.workflowRun, prLabels);
+async function traceWorkflowRun(
+  workflowRun: components["schemas"]["workflow-run"],
+  jobs: components["schemas"]["job"][],
+  artifacts: JobArtifactMap,
+  prLabels: Record<number, string[]>,
+) {
+  const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
+  const attributes = workflowRunToAttributes(workflowRun, prLabels);
 
   return await tracer.startActiveSpan(
-    workflowRunJobs.workflowRun.name ?? workflowRunJobs.workflowRun.display_title,
+    workflowRun.name ?? workflowRun.display_title,
     { attributes, root: true, startTime },
     async (rootSpan) => {
-      const code = workflowRunJobs.workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+      const code = workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
       rootSpan.setStatus({ code });
 
-      core.debug(`TraceID: ${rootSpan.spanContext().traceId}`);
-      core.debug(`Root Span: ${rootSpan.spanContext().traceId}: ${workflowRunJobs.workflowRun.created_at}`);
-
-      if (workflowRunJobs.jobs.length > 0) {
+      if (jobs.length > 0) {
         // "Queued" span represent the time between the workflow has been started_at and
         // the first job has been picked up by a runner
         const queuedSpan = tracer.startSpan("Queued", { startTime }, context.active());
-        queuedSpan.end(new Date(workflowRunJobs.jobs[0].started_at));
+        queuedSpan.end(new Date(jobs[0].started_at));
       }
 
-      for (const job of workflowRunJobs.jobs) {
-        await traceJob(job, workflowRunJobs.workflowRunArtifacts);
+      for (const job of jobs) {
+        await traceJob(job, artifacts.get(job.name));
       }
 
-      rootSpan.end(new Date(workflowRunJobs.workflowRun.updated_at));
+      rootSpan.end(new Date(workflowRun.updated_at));
       return rootSpan.spanContext().traceId;
     },
   );
@@ -155,7 +157,7 @@ function prsToAttributes(
   return attributes;
 }
 
-async function traceJob(job: WorkflowRunJob, workflowArtifacts: WorkflowArtifactLookup) {
+async function traceJob(job: components["schemas"]["job"], artifacts?: StepArtifactMap) {
   if (!job.completed_at) {
     core.warning(`Job ${job.id} is not completed yet`);
     return;
@@ -170,7 +172,7 @@ async function traceJob(job: WorkflowRunJob, workflowArtifacts: WorkflowArtifact
     span.setStatus({ code });
 
     for (const step of job.steps ?? []) {
-      await traceStep(job.name, step, workflowArtifacts);
+      await traceStep(step, artifacts?.get(step.name));
     }
 
     // Some skipped and post jobs return completed_at dates that are older than started_at

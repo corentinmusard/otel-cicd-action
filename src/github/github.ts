@@ -4,45 +4,21 @@ import * as artifact from "@actions/artifact";
 import * as core from "@actions/core";
 import type { Context } from "@actions/github/lib/context";
 import type { GitHub } from "@actions/github/lib/utils";
-import type { components } from "@octokit/openapi-types";
 import JSZip from "jszip";
 
 type Octokit = InstanceType<typeof GitHub>;
-type WorkflowRunJob = components["schemas"]["job"];
 
-type WorkflowArtifactMap = {
-  [job: string]: {
-    [step: string]: WorkflowArtifactDownload;
-  };
-};
+type JobName = string;
+type StepName = string;
+type ArtifactPath = string;
 
-type WorkflowArtifactDownload = {
-  jobName: string;
-  stepName: string;
-  path: string;
-};
+type StepArtifactMap = Map<StepName, ArtifactPath>;
+type JobArtifactMap = Map<JobName, StepArtifactMap>;
 
-type WorkflowArtifactLookup = (jobName: string, stepName: string) => WorkflowArtifactDownload | undefined;
-
-async function listWorkflowRunArtifacts(
-  context: Context,
-  octokit: Octokit,
-  runId: number,
-): Promise<WorkflowArtifactLookup> {
-  let artifactsLookup: WorkflowArtifactMap = {};
-
-  if (runId === context.runId) {
-    artifactsLookup = await getSelfArtifactMap();
-  } else {
-    artifactsLookup = await getWorkflowRunArtifactMap(context, octokit, runId);
-  }
-  return (jobName: string, stepName: string) => {
-    try {
-      return artifactsLookup[jobName][stepName];
-    } catch (_e) {
-      return undefined;
-    }
-  };
+async function listWorkflowRunArtifacts(context: Context, octokit: Octokit, runId: number) {
+  return runId === context.runId
+    ? await getSelfArtifactMap()
+    : await getWorkflowRunArtifactMap(context, octokit, runId);
 }
 
 const artifactNameRegex = /\{(?<jobName>.*)\}\{(?<stepName>.*)\}/;
@@ -54,15 +30,14 @@ async function getWorkflowRunArtifactMap(context: Context, octokit: Octokit, run
     per_page: 100,
   });
 
-  const artifactsLookup: WorkflowArtifactMap = await artifacts.reduce(async (resultP, artifact) => {
-    const result = await resultP;
+  return await artifacts.reduce(async (resultP: Promise<JobArtifactMap>, artifact) => {
+    const next = await resultP;
     const match = artifact.name.match(artifactNameRegex);
-    const next: WorkflowArtifactMap = { ...result };
     if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
       const { jobName, stepName } = match.groups;
       core.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
-      if (!(jobName in next)) {
-        next[jobName] = {};
+      if (!next.has(jobName)) {
+        next.set(jobName, new Map());
       }
 
       const downloadResponse = await octokit.rest.actions.downloadArtifact({
@@ -77,11 +52,7 @@ async function getWorkflowRunArtifactMap(context: Context, octokit: Octokit, run
       // useful for testing because the artifact url expires after 1 minute
       if (fs.existsSync(`${artifact.name}.log`)) {
         core.debug(`Artifact ${artifact.name} already exists, skipping download`);
-        next[jobName][stepName] = {
-          jobName,
-          stepName,
-          path: filename,
-        };
+        next.get(jobName)?.set(stepName, filename);
         return next;
       }
 
@@ -93,46 +64,45 @@ async function getWorkflowRunArtifactMap(context: Context, octokit: Octokit, run
         zip.files[Object.keys(zip.files)[0]].nodeStream().pipe(writeStream);
         await new Promise((fulfill) => writeStream.on("finish", fulfill));
         core.debug(`Downloaded Artifact ${writeStream.path.toString()}`);
-        next[jobName][stepName] = {
-          jobName,
-          stepName,
-          path: writeStream.path.toString(),
-        };
+        next.get(jobName)?.set(stepName, writeStream.path.toString());
       } finally {
         writeStream.close();
       }
     }
 
     return next;
-  }, Promise.resolve({}));
-  return artifactsLookup;
+  }, Promise.resolve(new Map()));
 }
 
 async function getSelfArtifactMap() {
   const client = artifact.create();
   const responses = await client.downloadAllArtifacts();
-  const artifactsMap: WorkflowArtifactMap = responses.reduce((result, { artifactName, downloadPath }) => {
-    const next: WorkflowArtifactMap = { ...result };
+
+  return responses.reduce((result: JobArtifactMap, { artifactName, downloadPath }) => {
+    const next = result;
     const match = artifactName.match(artifactNameRegex);
     if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
       const { jobName, stepName } = match.groups;
       core.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
-      if (!(jobName in next)) {
-        next[jobName] = {};
+      if (!next.has(jobName)) {
+        next.set(jobName, new Map());
       }
+
       const artifactDirFiles = fs.readdirSync(downloadPath);
-      if (artifactDirFiles && artifactDirFiles.length > 0) {
-        next[jobName][stepName] = {
-          jobName,
-          stepName,
-          path: path.join(downloadPath, artifactDirFiles[0]),
-        };
+      if (artifactDirFiles.length > 0) {
+        next.get(jobName)?.set(stepName, path.join(downloadPath, artifactDirFiles[0]));
       }
     }
     return next;
-  }, {});
+  }, new Map());
+}
 
-  return artifactsMap;
+async function getWorkflowRun(context: Context, octokit: Octokit, runId: number) {
+  const res = await octokit.rest.actions.getWorkflowRun({
+    ...context.repo,
+    run_id: runId,
+  });
+  return res.data;
 }
 
 async function listJobsForWorkflowRun(context: Context, octokit: Octokit, runId: number) {
@@ -144,37 +114,6 @@ async function listJobsForWorkflowRun(context: Context, octokit: Octokit, runId:
   });
 }
 
-type WorkflowRunJobs = {
-  workflowRun: components["schemas"]["workflow-run"];
-  jobs: WorkflowRunJob[];
-  workflowRunArtifacts: WorkflowArtifactLookup;
-};
-
-async function getWorkflowRunJobs(context: Context, octokit: Octokit, runId: number) {
-  const getWorkflowRunResponse = await octokit.rest.actions.getWorkflowRun({
-    ...context.repo,
-    run_id: runId,
-  });
-
-  const workflowRunArtifacts = await listWorkflowRunArtifacts(context, octokit, runId);
-  const jobs = await listJobsForWorkflowRun(context, octokit, runId);
-
-  const workflowRunJobs: WorkflowRunJobs = {
-    workflowRun: getWorkflowRunResponse.data,
-    jobs,
-    workflowRunArtifacts,
-  };
-  return workflowRunJobs;
-}
-
-async function getPRLabels(context: Context, octokit: Octokit, prNumber: number) {
-  const labelResponse = await octokit.rest.issues.listLabelsOnIssue({
-    ...context.repo,
-    issue_number: prNumber,
-  });
-  return labelResponse.data.map((l) => l.name);
-}
-
 async function getPRsLabels(context: Context, octokit: Octokit, prNumbers: number[]) {
   const labels: Record<number, string[]> = {};
 
@@ -184,14 +123,24 @@ async function getPRsLabels(context: Context, octokit: Octokit, prNumbers: numbe
   return labels;
 }
 
+async function getPRLabels(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(
+    octokit.rest.issues.listLabelsOnIssue,
+    {
+      ...context.repo,
+      issue_number: prNumber,
+    },
+    (response) => response.data.map((issue) => issue.name),
+  );
+}
+
 export {
-  getWorkflowRunJobs,
+  getWorkflowRun,
   listWorkflowRunArtifacts,
+  listJobsForWorkflowRun,
   getPRLabels,
   getPRsLabels,
   type Octokit,
-  type WorkflowArtifactDownload,
-  type WorkflowArtifactLookup,
-  type WorkflowRunJob,
-  type WorkflowRunJobs,
+  type StepArtifactMap,
+  type JobArtifactMap,
 };

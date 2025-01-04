@@ -49098,21 +49098,9 @@ var libExports = requireLib();
 var JSZip = /*@__PURE__*/getDefaultExportFromCjs(libExports);
 
 async function listWorkflowRunArtifacts(context, octokit, runId) {
-    let artifactsLookup = {};
-    if (runId === context.runId) {
-        artifactsLookup = await getSelfArtifactMap();
-    }
-    else {
-        artifactsLookup = await getWorkflowRunArtifactMap(context, octokit, runId);
-    }
-    return (jobName, stepName) => {
-        try {
-            return artifactsLookup[jobName][stepName];
-        }
-        catch (_e) {
-            return undefined;
-        }
-    };
+    return runId === context.runId
+        ? await getSelfArtifactMap()
+        : await getWorkflowRunArtifactMap(context, octokit, runId);
 }
 const artifactNameRegex = /\{(?<jobName>.*)\}\{(?<stepName>.*)\}/;
 async function getWorkflowRunArtifactMap(context, octokit, runId) {
@@ -49121,15 +49109,14 @@ async function getWorkflowRunArtifactMap(context, octokit, runId) {
         run_id: runId,
         per_page: 100,
     });
-    const artifactsLookup = await artifacts.reduce(async (resultP, artifact) => {
-        const result = await resultP;
+    return await artifacts.reduce(async (resultP, artifact) => {
+        const next = await resultP;
         const match = artifact.name.match(artifactNameRegex);
-        const next = { ...result };
         if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
             const { jobName, stepName } = match.groups;
             coreExports.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
-            if (!(jobName in next)) {
-                next[jobName] = {};
+            if (!next.has(jobName)) {
+                next.set(jobName, new Map());
             }
             const downloadResponse = await octokit.rest.actions.downloadArtifact({
                 ...context.repo,
@@ -49141,11 +49128,7 @@ async function getWorkflowRunArtifactMap(context, octokit, runId) {
             // useful for testing because the artifact url expires after 1 minute
             if (fs.existsSync(`${artifact.name}.log`)) {
                 coreExports.debug(`Artifact ${artifact.name} already exists, skipping download`);
-                next[jobName][stepName] = {
-                    jobName,
-                    stepName,
-                    path: filename,
-                };
+                next.get(jobName)?.set(stepName, filename);
                 return next;
             }
             const response = await fetch(downloadResponse.url);
@@ -49156,44 +49139,41 @@ async function getWorkflowRunArtifactMap(context, octokit, runId) {
                 zip.files[Object.keys(zip.files)[0]].nodeStream().pipe(writeStream);
                 await new Promise((fulfill) => writeStream.on("finish", fulfill));
                 coreExports.debug(`Downloaded Artifact ${writeStream.path.toString()}`);
-                next[jobName][stepName] = {
-                    jobName,
-                    stepName,
-                    path: writeStream.path.toString(),
-                };
+                next.get(jobName)?.set(stepName, writeStream.path.toString());
             }
             finally {
                 writeStream.close();
             }
         }
         return next;
-    }, Promise.resolve({}));
-    return artifactsLookup;
+    }, Promise.resolve(new Map()));
 }
 async function getSelfArtifactMap() {
     const client = artifactClientExports.create();
     const responses = await client.downloadAllArtifacts();
-    const artifactsMap = responses.reduce((result, { artifactName, downloadPath }) => {
-        const next = { ...result };
+    return responses.reduce((result, { artifactName, downloadPath }) => {
+        const next = result;
         const match = artifactName.match(artifactNameRegex);
         if (match?.groups?.["jobName"] && match?.groups?.["stepName"]) {
             const { jobName, stepName } = match.groups;
             coreExports.debug(`Found Artifact for Job<${jobName}> Step<${stepName}>`);
-            if (!(jobName in next)) {
-                next[jobName] = {};
+            if (!next.has(jobName)) {
+                next.set(jobName, new Map());
             }
             const artifactDirFiles = fs.readdirSync(downloadPath);
-            if (artifactDirFiles && artifactDirFiles.length > 0) {
-                next[jobName][stepName] = {
-                    jobName,
-                    stepName,
-                    path: path$1.join(downloadPath, artifactDirFiles[0]),
-                };
+            if (artifactDirFiles.length > 0) {
+                next.get(jobName)?.set(stepName, path$1.join(downloadPath, artifactDirFiles[0]));
             }
         }
         return next;
-    }, {});
-    return artifactsMap;
+    }, new Map());
+}
+async function getWorkflowRun(context, octokit, runId) {
+    const res = await octokit.rest.actions.getWorkflowRun({
+        ...context.repo,
+        run_id: runId,
+    });
+    return res.data;
 }
 async function listJobsForWorkflowRun(context, octokit, runId) {
     return await octokit.paginate(octokit.rest.actions.listJobsForWorkflowRun, {
@@ -49203,33 +49183,18 @@ async function listJobsForWorkflowRun(context, octokit, runId) {
         per_page: 100,
     });
 }
-async function getWorkflowRunJobs(context, octokit, runId) {
-    const getWorkflowRunResponse = await octokit.rest.actions.getWorkflowRun({
-        ...context.repo,
-        run_id: runId,
-    });
-    const workflowRunArtifacts = await listWorkflowRunArtifacts(context, octokit, runId);
-    const jobs = await listJobsForWorkflowRun(context, octokit, runId);
-    const workflowRunJobs = {
-        workflowRun: getWorkflowRunResponse.data,
-        jobs,
-        workflowRunArtifacts,
-    };
-    return workflowRunJobs;
-}
-async function getPRLabels(context, octokit, prNumber) {
-    const labelResponse = await octokit.rest.issues.listLabelsOnIssue({
-        ...context.repo,
-        issue_number: prNumber,
-    });
-    return labelResponse.data.map((l) => l.name);
-}
 async function getPRsLabels(context, octokit, prNumbers) {
     const labels = {};
     for (const prNumber of prNumbers) {
         labels[prNumber] = await getPRLabels(context, octokit, prNumber);
     }
     return labels;
+}
+async function getPRLabels(context, octokit, prNumber) {
+    return await octokit.paginate(octokit.rest.issues.listLabelsOnIssue, {
+        ...context.repo,
+        issue_number: prNumber,
+    }, (response) => response.data.map((issue) => issue.name));
 }
 
 /*
@@ -68288,19 +68253,20 @@ function toAttributes(attributes) {
     return rv;
 }
 function addSpan(otlpSpan) {
-    const span = tracer$2.startSpan(otlpSpan.name, {
+    tracer$2.startActiveSpan(otlpSpan.name, {
         kind: toSpanKind(otlpSpan.kind),
         attributes: toAttributes(otlpSpan.attributes),
         links: toLinks(otlpSpan.links),
         startTime: new Date(otlpSpan.startTimeUnixNano / 1000000),
-    }, context.active());
-    if (otlpSpan.status) {
-        span.setStatus({
-            code: otlpSpan.status.code,
-            message: otlpSpan.status.message ?? "",
-        });
-    }
-    span.end(new Date(otlpSpan.endTimeUnixNano / 1000000));
+    }, (span) => {
+        if (otlpSpan.status) {
+            span.setStatus({
+                code: otlpSpan.status.code,
+                message: otlpSpan.status.message ?? "",
+            });
+        }
+        span.end(new Date(otlpSpan.endTimeUnixNano / 1000000));
+    });
 }
 async function traceOTLPFile(path) {
     const fileStream = fs.createReadStream(path);
@@ -68314,11 +68280,9 @@ async function traceOTLPFile(path) {
         }
         const serviceRequest = JSON.parse(line);
         for (const resourceSpans of serviceRequest.resourceSpans ?? []) {
-            for (const scopeSpans of resourceSpans.scopeSpans ?? []) {
-                if (scopeSpans.scope) {
-                    for (const otlpSpan of scopeSpans.spans ?? []) {
-                        addSpan(otlpSpan);
-                    }
+            for (const scopeSpans of resourceSpans.scopeSpans ?? resourceSpans.instrumentationLibrarySpans ?? []) {
+                for (const otlpSpan of scopeSpans.spans ?? []) {
+                    addSpan(otlpSpan);
                 }
             }
         }
@@ -68326,7 +68290,7 @@ async function traceOTLPFile(path) {
 }
 
 const tracer$1 = trace.getTracer("otel-cicd-action");
-async function traceStep(jobName, step, workflowArtifacts) {
+async function traceStep(step, artifactPath) {
     if (!step.completed_at || !step.started_at) {
         coreExports.warning(`Step ${step.name} is not completed yet.`);
         return;
@@ -68341,7 +68305,15 @@ async function traceStep(jobName, step, workflowArtifacts) {
     await tracer$1.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
         const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         span.setStatus({ code });
-        await traceArtifact(jobName, step.name, workflowArtifacts);
+        if (artifactPath) {
+            coreExports.debug(`Found artifact ${artifactPath}`);
+            try {
+                await traceOTLPFile(artifactPath);
+            }
+            catch (error) {
+                coreExports.warning(`Failed to trace artifact ${artifactPath}: ${error instanceof Error ? error.message : JSON.stringify(error)}`);
+            }
+        }
         // Some skipped and post jobs return completed_at dates that are older than started_at
         span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
     });
@@ -68357,42 +68329,24 @@ function stepToAttributes(step) {
         error: step.conclusion === "failure",
     };
 }
-async function traceArtifact(jobName, stepName, workflowArtifacts) {
-    const artifact = workflowArtifacts(jobName, stepName);
-    if (!artifact) {
-        coreExports.debug(`No artifact to trace for Job<${jobName}> Step<${stepName}>`);
-        return;
-    }
-    coreExports.debug(`Found artifact ${artifact?.path}`);
-    try {
-        await traceOTLPFile(artifact.path);
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            coreExports.warning(`Failed to trace artifact ${artifact.path}: ${error.message}`);
-        }
-    }
-}
 
 const tracer = trace.getTracer("otel-cicd-action");
-async function traceWorkflowRun(workflowRunJobs, prLabels) {
-    const startTime = new Date(workflowRunJobs.workflowRun.run_started_at ?? workflowRunJobs.workflowRun.created_at);
-    const attributes = workflowRunToAttributes(workflowRunJobs.workflowRun, prLabels);
-    return await tracer.startActiveSpan(workflowRunJobs.workflowRun.name ?? workflowRunJobs.workflowRun.display_title, { attributes, root: true, startTime }, async (rootSpan) => {
-        const code = workflowRunJobs.workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
+async function traceWorkflowRun(workflowRun, jobs, artifacts, prLabels) {
+    const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
+    const attributes = workflowRunToAttributes(workflowRun, prLabels);
+    return await tracer.startActiveSpan(workflowRun.name ?? workflowRun.display_title, { attributes, root: true, startTime }, async (rootSpan) => {
+        const code = workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         rootSpan.setStatus({ code });
-        coreExports.debug(`TraceID: ${rootSpan.spanContext().traceId}`);
-        coreExports.debug(`Root Span: ${rootSpan.spanContext().traceId}: ${workflowRunJobs.workflowRun.created_at}`);
-        if (workflowRunJobs.jobs.length > 0) {
+        if (jobs.length > 0) {
             // "Queued" span represent the time between the workflow has been started_at and
             // the first job has been picked up by a runner
             const queuedSpan = tracer.startSpan("Queued", { startTime }, context.active());
-            queuedSpan.end(new Date(workflowRunJobs.jobs[0].started_at));
+            queuedSpan.end(new Date(jobs[0].started_at));
         }
-        for (const job of workflowRunJobs.jobs) {
-            await traceJob(job, workflowRunJobs.workflowRunArtifacts);
+        for (const job of jobs) {
+            await traceJob(job, artifacts.get(job.name));
         }
-        rootSpan.end(new Date(workflowRunJobs.workflowRun.updated_at));
+        rootSpan.end(new Date(workflowRun.updated_at));
         return rootSpan.spanContext().traceId;
     });
 }
@@ -68487,7 +68441,7 @@ function prsToAttributes(pullRequests, prLabels) {
     }
     return attributes;
 }
-async function traceJob(job, workflowArtifacts) {
+async function traceJob(job, artifacts) {
     if (!job.completed_at) {
         coreExports.warning(`Job ${job.id} is not completed yet`);
         return;
@@ -68499,7 +68453,7 @@ async function traceJob(job, workflowArtifacts) {
         const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         span.setStatus({ code });
         for (const step of job.steps ?? []) {
-            await traceStep(job.name, step, workflowArtifacts);
+            await traceStep(step, artifacts?.get(step.name));
         }
         // Some skipped and post jobs return completed_at dates that are older than started_at
         span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
@@ -104159,28 +104113,33 @@ async function run() {
     const runId = Number.parseInt(coreExports.getInput("runId") || `${githubExports.context.runId}`);
     const ghToken = coreExports.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
     const octokit = githubExports.getOctokit(ghToken);
-    coreExports.info(`Get workflow run jobs for ${runId}`);
-    const workflowRunJobs = await getWorkflowRunJobs(githubExports.context, octokit, runId);
+    coreExports.info(`Get workflow run for ${runId}`);
+    const workflowRun = await getWorkflowRun(githubExports.context, octokit, runId);
+    coreExports.info("Get artifacts");
+    const artifacts = await listWorkflowRunArtifacts(githubExports.context, octokit, runId);
+    coreExports.info("Get jobs");
+    const jobs = await listJobsForWorkflowRun(githubExports.context, octokit, runId);
     coreExports.info("Get PRs labels");
-    const prNumbers = workflowRunJobs.workflowRun.pull_requests?.map((pr) => pr.number) ?? [];
+    const prNumbers = workflowRun.pull_requests?.map((pr) => pr.number) ?? [];
     const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
     coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes = {
-        serviceName: otelServiceName || workflowRunJobs.workflowRun.name || `${workflowRunJobs.workflowRun.workflow_id}`,
-        serviceVersion: workflowRunJobs.workflowRun.head_sha,
+        serviceName: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
+        serviceVersion: workflowRun.head_sha,
         serviceInstanceId: [
-            workflowRunJobs.workflowRun.repository.full_name,
-            `${workflowRunJobs.workflowRun.workflow_id}`,
-            `${workflowRunJobs.workflowRun.id}`,
-            `${workflowRunJobs.workflowRun.run_attempt ?? 1}`,
+            workflowRun.repository.full_name,
+            `${workflowRun.workflow_id}`,
+            `${workflowRun.id}`,
+            `${workflowRun.run_attempt ?? 1}`,
         ].join("/"),
-        serviceNamespace: workflowRunJobs.workflowRun.repository.full_name,
+        serviceNamespace: workflowRun.repository.full_name,
     };
     const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
     try {
         coreExports.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-        const traceId = await traceWorkflowRun(workflowRunJobs, prLabels);
+        const traceId = await traceWorkflowRun(workflowRun, jobs, artifacts, prLabels);
         coreExports.setOutput("traceId", traceId);
+        coreExports.debug(`traceId: ${traceId}`);
         coreExports.info("Flush and shutdown tracer provider");
         await provider.forceFlush();
         await provider.shutdown();

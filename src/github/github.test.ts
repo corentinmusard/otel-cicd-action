@@ -8,7 +8,7 @@ import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-meth
 import fetchMock from "jest-fetch-mock";
 import { mock, mockDeep } from "jest-mock-extended";
 import type { Octokit } from "./github";
-import { type WorkflowArtifactDownload, listWorkflowRunArtifacts } from "./github";
+import { listWorkflowRunArtifacts } from "./github";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,7 +22,7 @@ type DownloadArtifactResponse = RestEndpointMethodTypes["actions"]["downloadArti
 describe("listWorkflowRunArtifacts", () => {
   let mockContext: Context;
   let mockOctokit: Octokit = mockDeep<Octokit>();
-  let subject: WorkflowArtifactDownload;
+  let artifactPath: string;
 
   beforeAll(async () => {
     mockContext = mockDeep<Context>();
@@ -47,29 +47,29 @@ describe("listWorkflowRunArtifacts", () => {
     fetchMock.mockResponseOnce(() => Promise.resolve({ body: zipFile as unknown as string }));
 
     const lookup = await listWorkflowRunArtifacts(mockContext, mockOctokit, 1);
-    const response = lookup("lint-and-test", "run tests");
+    const response = lookup.get("lint-and-test")?.get("run tests");
     if (!response) {
       fail("Lookup Failed: Did not parse zip file correctly");
     }
-    subject = response;
+    artifactPath = response;
   });
 
   afterAll(() => {
-    if (subject?.path) {
-      fs.unlinkSync(subject.path);
+    if (artifactPath) {
+      fs.unlinkSync(artifactPath);
     }
   });
 
   it("test WorkflowArtifactDownload return to be defined", () => {
-    expect(subject).toBeDefined();
+    expect(artifactPath).toBeDefined();
   });
 
   it("test WorkflowArtifactDownload path exists", () => {
-    expect(subject.path).toEqual("{lint-and-test}{run tests}.log");
-    expect(fs.existsSync(subject.path)).toBeTruthy();
+    expect(artifactPath).toEqual("{lint-and-test}{run tests}.log");
+    expect(fs.existsSync(artifactPath)).toBeTruthy();
   });
   it("test WorkflowArtifactDownload has data", () => {
-    const data = fs.readFileSync(subject.path, { encoding: "utf8", flag: "r" });
+    const data = fs.readFileSync(artifactPath, { encoding: "utf8", flag: "r" });
     // expect(data.length).toBeGreaterThan(0);
     const lines = data.split("\n");
     expect(lines.length).toBeGreaterThan(1);

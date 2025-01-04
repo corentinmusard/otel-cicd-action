@@ -1,14 +1,13 @@
 import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
 import { type Attributes, SpanStatusCode, trace } from "@opentelemetry/api";
-import type { WorkflowArtifactLookup } from "../github/github";
 import { traceOTLPFile } from "./trace-otlp-file";
 
 const tracer = trace.getTracer("otel-cicd-action");
 
 type Step = NonNullable<components["schemas"]["job"]["steps"]>[number];
 
-async function traceStep(jobName: string, step: Step, workflowArtifacts: WorkflowArtifactLookup) {
+async function traceStep(step: Step, artifactPath?: string) {
   if (!step.completed_at || !step.started_at) {
     core.warning(`Step ${step.name} is not completed yet.`);
     return;
@@ -27,7 +26,16 @@ async function traceStep(jobName: string, step: Step, workflowArtifacts: Workflo
     const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
     span.setStatus({ code });
 
-    await traceArtifact(jobName, step.name, workflowArtifacts);
+    if (artifactPath) {
+      core.debug(`Found artifact ${artifactPath}`);
+      try {
+        await traceOTLPFile(artifactPath);
+      } catch (error) {
+        core.warning(
+          `Failed to trace artifact ${artifactPath}: ${error instanceof Error ? error.message : JSON.stringify(error)}`,
+        );
+      }
+    }
 
     // Some skipped and post jobs return completed_at dates that are older than started_at
     span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
@@ -44,23 +52,6 @@ function stepToAttributes(step: Step): Attributes {
     "github.job.step.completed_at": step.completed_at ?? undefined,
     error: step.conclusion === "failure",
   };
-}
-
-async function traceArtifact(jobName: string, stepName: string, workflowArtifacts: WorkflowArtifactLookup) {
-  const artifact = workflowArtifacts(jobName, stepName);
-  if (!artifact) {
-    core.debug(`No artifact to trace for Job<${jobName}> Step<${stepName}>`);
-    return;
-  }
-
-  core.debug(`Found artifact ${artifact?.path}`);
-  try {
-    await traceOTLPFile(artifact.path);
-  } catch (error) {
-    if (error instanceof Error) {
-      core.warning(`Failed to trace artifact ${artifact.path}: ${error.message}`);
-    }
-  }
 }
 
 export { traceStep };

@@ -11,12 +11,9 @@ jest.unstable_mockModule("@actions/core", () => core);
 jest.unstable_mockModule("@actions/github", () => github);
 
 const token = process.env["GH_TOKEN"] ?? "";
-const owner = "biomejs";
-const repo = "biome";
 
 process.env["OTEL_CONSOLE_ONLY"] = "true";
-process.env["OTEL_ID_SEED"] = "123"; // seed for random id generation
-process.env["GITHUB_REPOSITORY"] = `${owner}/${repo}`;
+process.env["OTEL_ID_SEED"] = "123"; // seed for stable otel ids generation
 
 // The module being tested should be imported dynamically. This ensures that the
 // mocks are used in place of any actual dependencies.
@@ -24,6 +21,9 @@ const { run } = await import("./runner");
 
 describe("run", () => {
   let octokit: Octokit;
+  let runId: string;
+  // redirect trace output to a file
+  let output = "";
 
   beforeAll(async () => {
     octokit = await replayOctokit("run", token);
@@ -39,12 +39,17 @@ describe("run", () => {
         case "otelServiceName":
           return "otel-cicd-action";
         case "runId":
-          return "12541749172";
+          return runId;
         case "githubToken":
           return token;
         default:
           return "";
       }
+    });
+
+    // biome-ignore lint/suspicious/noExplicitAny: any is used to mock console.dir
+    jest.spyOn(console, "dir").mockImplementation((item?: any) => {
+      output += `${util.inspect(item)}\n`;
     });
   });
 
@@ -52,17 +57,15 @@ describe("run", () => {
     jest.resetAllMocks();
   });
 
+  afterEach(() => {
+    output = "";
+  });
+
   it("should run without artifacts", async () => {
-    // redirect trace output to a file
-    let output = "";
-    // biome-ignore lint/suspicious/noExplicitAny: any is used to mock console.dir
-    const dir = jest.spyOn(console, "dir").mockImplementation((item?: any) => {
-      output += `${util.inspect(item)}\n`;
-    });
+    process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
+    runId = "12541749172";
 
     await run();
     await fs.writeFile("src/__assets__/output.txt", output);
-
-    dir.mockRestore();
   }, 10000);
 });
