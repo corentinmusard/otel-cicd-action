@@ -10,9 +10,6 @@
       "complexity": {
         "useLiteralKeys": "off",
         "noExcessiveCognitiveComplexity": "info"
-      },
-      "performance": {
-        "noAccumulatingSpread": "off"
       }
     }
   },

@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import { getPRsLabels, getWorkflowRun, listJobsForWorkflowRun, listWorkflowRunArtifacts } from "./github/github";
+import { getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github/github";
 import { traceWorkflowRun } from "./tracing/job";
 import { type Attributes, createTracerProvider } from "./tracing/trace";
 
@@ -14,9 +14,6 @@ async function run() {
 
   core.info(`Get workflow run for ${runId}`);
   const workflowRun = await getWorkflowRun(context, octokit, runId);
-
-  core.info("Get artifacts");
-  const artifacts = await listWorkflowRunArtifacts(context, octokit, runId);
 
   core.info("Get jobs");
   const jobs = await listJobsForWorkflowRun(context, octokit, runId);
@@ -41,7 +38,7 @@ async function run() {
 
   try {
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = await traceWorkflowRun(workflowRun, jobs, artifacts, prLabels);
+    const traceId = await traceWorkflowRun(workflowRun, jobs, prLabels);
 
     core.setOutput("traceId", traceId);
     core.debug(`traceId: ${traceId}`);

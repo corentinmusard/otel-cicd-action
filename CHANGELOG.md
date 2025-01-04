@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2025-01-04
+
+### ⚠ BREAKING CHANGES
+
+- Removed compatibility with [inception-health/otel-upload-test-artifact-action](https://github.com/inception-health/otel-upload-test-artifact-action) action. It is based on `@actions/artifact` prior to `v2` which is deprecated since June 2024 and will be removed in [January 30th, 2025](https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/). If you were using this action, please open an issue to discuss your use case.
+- Removed `github.author_name` attribute, use `github.head_commit.author.name` instead
+- Removed `github.author_email` attribute, use `github.head_commit.author.email` instead
+
+### Changed
+
+- Changed licence under my name (still MIT)
+
 ## [1.13.2] - 2025-01-04
 
 ### Fixed
@@ -123,7 +135,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.2...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.2...v2.0.0
 [1.13.2]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.1...v1.13.2
 [1.13.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.0...v1.13.1
 [1.13.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.12.1...v1.13.0

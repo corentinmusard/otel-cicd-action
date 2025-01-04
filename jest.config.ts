@@ -14,7 +14,7 @@ const config: JestConfigWithTsJest = {
     ],
   },
   setupFiles: ["dotenv/config"],
-  reporters: ["default", "jest-junit"],
+  reporters: ["default"],
   extensionsToTreatAsEsm: [".ts"],
   moduleFileExtensions: ["ts", "js"],
   resolver: "ts-jest-resolver",
@@ -22,10 +22,10 @@ const config: JestConfigWithTsJest = {
   collectCoverageFrom: ["src/**/*.ts", "!src/config.ts", "!src/index.ts", "!src/replay.ts", "!src/__fixtures__/**"],
   coverageThreshold: {
     global: {
-      statements: 70,
+      statements: 90,
       branches: 50,
-      functions: 70,
-      lines: 70,
+      functions: 100,
+      lines: 90,
     },
   },
 };

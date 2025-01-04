@@ -8,7 +8,7 @@ on:
     types: [completed]
 
 jobs:
-  otel-export-axiom:
+  otel-export-private:
     runs-on: ubuntu-latest
     # Permissions can be set on a per-job basis or at the top level
     permissions:

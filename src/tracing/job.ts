@@ -12,7 +12,6 @@ import {
   CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY,
   CICD_PIPELINE_TASK_TYPE_VALUE_TEST,
 } from "@opentelemetry/semantic-conventions/incubating";
-import type { JobArtifactMap, StepArtifactMap } from "../github/github";
 import { traceStep } from "./step";
 
 const tracer = trace.getTracer("otel-cicd-action");
@@ -20,7 +19,6 @@ const tracer = trace.getTracer("otel-cicd-action");
 async function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
-  artifacts: JobArtifactMap,
   prLabels: Record<number, string[]>,
 ) {
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
@@ -41,7 +39,7 @@ async function traceWorkflowRun(
       }
 
       for (const job of jobs) {
-        await traceJob(job, artifacts.get(job.name));
+        await traceJob(job);
       }
 
       rootSpan.end(new Date(workflowRun.updated_at));
@@ -111,8 +109,6 @@ function referencedWorkflowsToAttributes(refs: components["schemas"]["referenced
 
 function headCommitToAttributes(head_commit: components["schemas"]["nullable-simple-commit"]): Attributes {
   return {
-    "github.author_name": head_commit?.author?.name, // deprecated, duplicates of github.head_commit.author.name
-    "github.author_email": head_commit?.author?.email, // deprecated, duplicates of github.head_commit.author.email
     "github.head_commit.id": head_commit?.id,
     "github.head_commit.tree_id": head_commit?.tree_id,
     "github.head_commit.author.name": head_commit?.author?.name,
@@ -157,7 +153,7 @@ function prsToAttributes(
   return attributes;
 }
 
-async function traceJob(job: components["schemas"]["job"], artifacts?: StepArtifactMap) {
+async function traceJob(job: components["schemas"]["job"]) {
   if (!job.completed_at) {
     core.warning(`Job ${job.id} is not completed yet`);
     return;
@@ -172,7 +168,7 @@ async function traceJob(job: components["schemas"]["job"], artifacts?: StepArtif
     span.setStatus({ code });
 
     for (const step of job.steps ?? []) {
-      await traceStep(step, artifacts?.get(step.name));
+      await traceStep(step);
     }
 
     // Some skipped and post jobs return completed_at dates that are older than started_at

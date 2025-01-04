@@ -39,14 +39,6 @@ jobs:
         run: npm ci
       - name: run tests
         run: npm run test:ci
-      - uses: inception-health/otel-upload-test-artifact-action@v1
-        if: always()
-        with:
-          jobName: "tests (${{ matrix.os }})"
-          stepName: "run tests"
-          path: "junit.xml"
-          type: "junit"
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
   otel-cicd:
     needs: [tests, build]
     if: always()
@@ -60,4 +52,4 @@ jobs:
           otlpHeaders: "test"
           githubToken: ${{ secrets.GITHUB_TOKEN }}
         env:
-          OTEL_CONSOLE_ONLY: "true"
+          OTEL_CONSOLE_ONLY: "true" # Internal flag used to disable sending data to the collector

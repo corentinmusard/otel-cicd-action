@@ -7,6 +7,9 @@ This action exports Github CI/CD workflows to any endpoint compatible with OpenT
 
 This is a fork of [otel-export-trace-action](https://github.com/inception-health/otel-export-trace-action) with more features and better support.
 
+Compliant with OpenTelemetry [CICD semconv](https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/).
+Look at [Sample OpenTelemetry Output](./src/__assets__/output.txt) for the list of attributes and their values.
+
 ![Example](./docs/honeycomb-example.png)
 
 ## Usage
@@ -106,71 +109,6 @@ permissions:
 | name    | description                                 |
 | ------- | ------------------------------------------- |
 | traceId | The OpenTelemetry Trace ID of the root span |
-
-Look at [Sample OpenTelemetry Output](./src/__assets__/output.txt) for the list of attributes and their values.
-
-#### Honeycomb Example Trace
-
-![HoneyComb Example](./docs/honeycomb-example.png)
-
-_with JUnit traces_
-![HoneyComb Junit Example](./docs/honeycomb-junit-example.png)
-
-## With Junit Tracing
-
-Combined with [OpenTelemetry Upload Trace Artifact](https://github.com/marketplace/actions/opentelemetry-upload-trace-artifact) this action will Download the OTLP Trace Log Artifact uploaded from the Workflow Run and export it.
-
-**pr-workflow.yml**
-
-```yaml
-name: "PR check"
-
-on:
-  pull_request:
-    branches: [main]
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - name: Install Dependencies
-        run: npm ci --ignore-scripts
-      - name: run tests
-        run: npm run test:ci
-      - uses: inception-health/otel-upload-test-artifact-action@v1
-        if: always()
-        with:
-          jobName: "build-and-test"
-          stepName: "run tests"
-          path: "junit.xml"
-          type: "junit"
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-```
-
-**otel-cicd.yml**
-
-```yaml
-name: OpenTelemetry Export Traces
-
-on:
-  workflow_run:
-    workflows: ["PR check"]
-    types: [completed]
-
-jobs:
-  otel-cicd-action:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Export Workflow Traces
-        uses: corentinmusard/otel-cicd-action@v1
-        with:
-          otlpEndpoint: grpc://api.honeycomb.io:443/
-          otlpHeaders: ${{ secrets.OTLP_HEADERS }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          runId: ${{ github.event.workflow_run.id }}
-```
 
 [ci-img]: https://github.com/corentinmusard/otel-cicd-action/actions/workflows/build.yml/badge.svg?branch=main
 [ci]: https://github.com/corentinmusard/otel-cicd-action/actions/workflows/build.yml?query=branch%3Amain

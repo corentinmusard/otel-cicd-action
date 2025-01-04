@@ -3360,8 +3360,6 @@
     'github.artifacts_url': 'https://api.github.com/repos/biomejs/biome/actions/runs/12541749172/artifacts',
     'github.cancel_url': 'https://api.github.com/repos/biomejs/biome/actions/runs/12541749172/cancel',
     'github.rerun_url': 'https://api.github.com/repos/biomejs/biome/actions/runs/12541749172/rerun',
-    'github.author_name': 'renovate[bot]',
-    'github.author_email': '29139614+renovate[bot]@users.noreply.github.com',
     'github.head_commit.id': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
     'github.head_commit.tree_id': '4f740dbb4ea81ccafbb8d552606792f012f98063',
     'github.head_commit.author.name': 'renovate[bot]',
