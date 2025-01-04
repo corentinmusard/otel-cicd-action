@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Export workflow to New Relic
-        uses: corentinmusard/otel-cicd-action@v1
+        uses: corentinmusard/otel-cicd-action@v2
         with:
           otlpEndpoint: grpc://otlp.eu01.nr-data.net
           # Example value for NEWRELIC_OTLP_HEADERS:

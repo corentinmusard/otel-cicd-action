@@ -43,7 +43,7 @@ jobs:
   otel-cicd-actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: corentinmusard/otel-cicd-action@v1
+      - uses: corentinmusard/otel-cicd-action@v2
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
@@ -64,7 +64,7 @@ jobs:
     needs: [build] # must run when all jobs are completed
     steps:
       - name: Export workflow
-        uses: corentinmusard/otel-cicd-action@v1
+        uses: corentinmusard/otel-cicd-action@v2
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
