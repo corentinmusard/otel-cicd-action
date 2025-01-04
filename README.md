@@ -26,6 +26,8 @@ We provide sample code for popular platforms. If you feel one is missing, please
 
 ### On workflow_run event
 
+[workflow_run github documentation](<https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_run>)
+
 ```yaml
 on:
   workflow_run:
@@ -65,6 +67,17 @@ jobs:
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+### `On workflow_run event` vs `Inside an existing workflow`
+
+Both methods must be run when the workflow is completed, otherwise, the trace will be incomplete.
+
+| Differences                                         | On workflow_run event | Inside an existing workflow |
+| --------------------------------------------------- | --------------------- | --------------------------- |
+| Shows in PR page                                    | No                    | Yes                         |
+| Shows in Actions tab                                | Yes                   | Yes                         |
+| Needs extra consideration to be run as the last job | No                    | Yes                         |
+| Must be duplicated for multiple workflows           | No                    | Yes                         |
 
 ### Private Repository
 
