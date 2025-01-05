@@ -3,7 +3,7 @@ import util from "node:util";
 import { jest } from "@jest/globals";
 import * as core from "./__fixtures__/core";
 import * as github from "./__fixtures__/github";
-import type { Octokit } from "./github/github";
+import type { Octokit } from "./github";
 import { replayOctokit } from "./replay";
 
 // Mocks should be declared before the module being tested is imported.

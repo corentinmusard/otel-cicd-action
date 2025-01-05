@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import { getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github/github";
+import { getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
 import { traceWorkflowRun } from "./tracing/job";
 import { type Attributes, createTracerProvider } from "./tracing/trace";
 
