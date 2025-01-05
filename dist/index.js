@@ -31263,11 +31263,11 @@ async function listJobsForWorkflowRun(context, octokit, runId) {
 async function getPRsLabels(context, octokit, prNumbers) {
     const labels = {};
     for (const prNumber of prNumbers) {
-        labels[prNumber] = await getPRLabels(context, octokit, prNumber);
+        labels[prNumber] = await listLabelsOnIssue(context, octokit, prNumber);
     }
     return labels;
 }
-async function getPRLabels(context, octokit, prNumber) {
+async function listLabelsOnIssue(context, octokit, prNumber) {
     return await octokit.paginate(octokit.rest.issues.listLabelsOnIssue, {
         ...context.repo,
         issue_number: prNumber,
@@ -86094,7 +86094,7 @@ async function run() {
     coreExports.info("Get jobs");
     const jobs = await listJobsForWorkflowRun(githubExports.context, octokit, runId);
     coreExports.info("Get PRs labels");
-    const prNumbers = workflowRun.pull_requests?.map((pr) => pr.number) ?? [];
+    const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
     const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
     coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes = {

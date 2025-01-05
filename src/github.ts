@@ -24,12 +24,12 @@ async function getPRsLabels(context: Context, octokit: Octokit, prNumbers: numbe
   const labels: Record<number, string[]> = {};
 
   for (const prNumber of prNumbers) {
-    labels[prNumber] = await getPRLabels(context, octokit, prNumber);
+    labels[prNumber] = await listLabelsOnIssue(context, octokit, prNumber);
   }
   return labels;
 }
 
-async function getPRLabels(context: Context, octokit: Octokit, prNumber: number) {
+async function listLabelsOnIssue(context: Context, octokit: Octokit, prNumber: number) {
   return await octokit.paginate(
     octokit.rest.issues.listLabelsOnIssue,
     {
@@ -40,4 +40,4 @@ async function getPRLabels(context: Context, octokit: Octokit, prNumber: number)
   );
 }
 
-export { getWorkflowRun, listJobsForWorkflowRun, getPRLabels, getPRsLabels, type Octokit };
+export { getWorkflowRun, listJobsForWorkflowRun, getPRsLabels, type Octokit };

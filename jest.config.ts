@@ -19,7 +19,7 @@ const config: JestConfigWithTsJest = {
   moduleFileExtensions: ["ts", "js"],
   resolver: "ts-jest-resolver",
   coverageReporters: ["lcov", "html", "text"],
-  collectCoverageFrom: ["src/**/*.ts", "!src/config.ts", "!src/index.ts", "!src/replay.ts", "!src/__fixtures__/**"],
+  collectCoverageFrom: ["src/**/*.ts", "!src/index.ts", "!src/replay.ts", "!src/__fixtures__/**"],
   coverageThreshold: {
     global: {
       statements: 90,

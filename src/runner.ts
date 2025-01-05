@@ -19,7 +19,7 @@ async function run() {
   const jobs = await listJobsForWorkflowRun(context, octokit, runId);
 
   core.info("Get PRs labels");
-  const prNumbers = workflowRun.pull_requests?.map((pr) => pr.number) ?? [];
+  const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
   const prLabels = await getPRsLabels(context, octokit, prNumbers);
 
   core.info(`Create tracer provider for ${otlpEndpoint}`);
