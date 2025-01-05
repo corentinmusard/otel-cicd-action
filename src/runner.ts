@@ -1,14 +1,18 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
+import type { ResourceAttributes } from "@opentelemetry/resources";
+import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
+import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 import { getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
 import { traceWorkflowRun } from "./trace/workflow";
-import { type Attributes, createTracerProvider } from "./tracer";
+import { createTracerProvider, stringToRecord } from "./tracer";
 
 async function run() {
   const otlpEndpoint = core.getInput("otlpEndpoint");
   const otlpHeaders = core.getInput("otlpHeaders");
   const otelServiceName = core.getInput("otelServiceName") || process.env["OTEL_SERVICE_NAME"] || "";
   const runId = Number.parseInt(core.getInput("runId") || `${context.runId}`);
+  const extraAttributes = stringToRecord(core.getInput("extraAttributes"));
   const ghToken = core.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
   const octokit = getOctokit(ghToken);
 
@@ -23,16 +27,17 @@ async function run() {
   const prLabels = await getPRsLabels(context, octokit, prNumbers);
 
   core.info(`Create tracer provider for ${otlpEndpoint}`);
-  const attributes: Attributes = {
-    serviceName: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
-    serviceVersion: workflowRun.head_sha,
-    serviceInstanceId: [
+  const attributes: ResourceAttributes = {
+    [ATTR_SERVICE_NAME]: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
+    [ATTR_SERVICE_INSTANCE_ID]: [
       workflowRun.repository.full_name,
       `${workflowRun.workflow_id}`,
       `${workflowRun.id}`,
       `${workflowRun.run_attempt ?? 1}`,
     ].join("/"),
-    serviceNamespace: workflowRun.repository.full_name,
+    [ATTR_SERVICE_NAMESPACE]: workflowRun.repository.full_name,
+    [ATTR_SERVICE_VERSION]: workflowRun.head_sha,
+    ...extraAttributes,
   };
   const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
 

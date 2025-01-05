@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2025-01-05
+
+### Added
+
+- Add `extraAttributes` input to add arbitrary resource attributes
+
 ## [2.0.0] - 2025-01-04
 
 ### ⚠ BREAKING CHANGES
@@ -135,7 +141,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.2...v2.0.0
 [1.13.2]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.1...v1.13.2
 [1.13.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.0...v1.13.1

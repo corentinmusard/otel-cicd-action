@@ -94,6 +94,21 @@ permissions:
   pull-requests: read # To read PR labels
 ```
 
+### Adding arbitrary resource attributes
+
+You can use `extraAttributes` to set any additional string resource attributes.
+Attributes are splitted on `,` and then each key/value are splitted on the first `=`.
+
+```yaml
+- name: Export workflow
+  uses: corentinmusard/otel-cicd-action@v2
+  with:
+    otlpEndpoint: "CHANGE ME"
+    otlpHeaders: "CHANGE ME"
+    githubToken: ${{ secrets.GITHUB_TOKEN }}
+    extraAttributes: "extra.attribute=1,key2=value2"
+```
+
 ### Action Inputs
 
 | name            | description                                                                                                 | required | default                               | example                                                          |
@@ -103,6 +118,7 @@ permissions:
 | otelServiceName | OpenTelemetry service name                                                                                  | false    | `<The name of the exported workflow>` | `Build CI`                                                       |
 | githubToken     | The repository token with Workflow permissions. Required for private repos                                  | false    |                                       | `${{ secrets.GITHUB_TOKEN }}`                                    |
 | runId           | Workflow Run ID to Export                                                                                   | false    | env.GITHUB_RUN_ID                     | `${{ github.event.workflow_run.id }}`                            |
+| extraAttributes | Extra resource attributes to add to each span | false |  | extra.attribute=1,key2=value2 |
 
 ### Action Outputs
 

@@ -31245,6 +31245,283 @@ function requireGithub () {
 
 var githubExports = requireGithub();
 
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var TMP_EXCEPTION_TYPE = 'exception.type';
+var TMP_EXCEPTION_MESSAGE = 'exception.message';
+var TMP_EXCEPTION_STACKTRACE = 'exception.stacktrace';
+/**
+ * The type of the exception (its fully-qualified class name, if applicable). The dynamic type of the exception should be preferred over the static type in languages that support it.
+ *
+ * @deprecated Use ATTR_EXCEPTION_TYPE.
+ */
+var SEMATTRS_EXCEPTION_TYPE = TMP_EXCEPTION_TYPE;
+/**
+ * The exception message.
+ *
+ * @deprecated Use ATTR_EXCEPTION_MESSAGE.
+ */
+var SEMATTRS_EXCEPTION_MESSAGE = TMP_EXCEPTION_MESSAGE;
+/**
+ * A stacktrace as a string in the natural representation for the language runtime. The representation is to be determined and documented by each language SIG.
+ *
+ * @deprecated Use ATTR_EXCEPTION_STACKTRACE.
+ */
+var SEMATTRS_EXCEPTION_STACKTRACE = TMP_EXCEPTION_STACKTRACE;
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var TMP_PROCESS_RUNTIME_NAME = 'process.runtime.name';
+var TMP_SERVICE_NAME = 'service.name';
+var TMP_TELEMETRY_SDK_NAME = 'telemetry.sdk.name';
+var TMP_TELEMETRY_SDK_LANGUAGE = 'telemetry.sdk.language';
+var TMP_TELEMETRY_SDK_VERSION = 'telemetry.sdk.version';
+/**
+ * The name of the runtime of this process. For compiled native binaries, this SHOULD be the name of the compiler.
+ *
+ * @deprecated Use ATTR_PROCESS_RUNTIME_NAME in [incubating entry-point]({@link https://github.com/open-telemetry/opentelemetry-js/blob/main/semantic-conventions/README.md#unstable-semconv}).
+ */
+var SEMRESATTRS_PROCESS_RUNTIME_NAME = TMP_PROCESS_RUNTIME_NAME;
+/**
+ * Logical name of the service.
+ *
+ * Note: MUST be the same for all instances of horizontally scaled services. If the value was not specified, SDKs MUST fallback to `unknown_service:` concatenated with [`process.executable.name`](process.md#process), e.g. `unknown_service:bash`. If `process.executable.name` is not available, the value MUST be set to `unknown_service`.
+ *
+ * @deprecated Use ATTR_SERVICE_NAME.
+ */
+var SEMRESATTRS_SERVICE_NAME = TMP_SERVICE_NAME;
+/**
+ * The name of the telemetry SDK as defined above.
+ *
+ * @deprecated Use ATTR_TELEMETRY_SDK_NAME.
+ */
+var SEMRESATTRS_TELEMETRY_SDK_NAME = TMP_TELEMETRY_SDK_NAME;
+/**
+ * The language of the telemetry SDK.
+ *
+ * @deprecated Use ATTR_TELEMETRY_SDK_LANGUAGE.
+ */
+var SEMRESATTRS_TELEMETRY_SDK_LANGUAGE = TMP_TELEMETRY_SDK_LANGUAGE;
+/**
+ * The version string of the telemetry SDK.
+ *
+ * @deprecated Use ATTR_TELEMETRY_SDK_VERSION.
+ */
+var SEMRESATTRS_TELEMETRY_SDK_VERSION = TMP_TELEMETRY_SDK_VERSION;
+var TMP_TELEMETRYSDKLANGUAGEVALUES_NODEJS = 'nodejs';
+/**
+ * The language of the telemetry SDK.
+ *
+ * @deprecated Use TELEMETRY_SDK_LANGUAGE_VALUE_NODEJS.
+ */
+var TELEMETRYSDKLANGUAGEVALUES_NODEJS = TMP_TELEMETRYSDKLANGUAGEVALUES_NODEJS;
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+//----------------------------------------------------------------------------------------------------------
+// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
+//----------------------------------------------------------------------------------------------------------
+/**
+ * Rate-limiting result, shows whether the lease was acquired or contains a rejection reason
+ *
+ * @example acquired
+ * @example request_canceled
+ */
+/**
+ * Logical name of the service.
+ *
+ * @example shoppingcart
+ *
+ * @note **MUST** be the same for all instances of horizontally scaled services. If the value was not specified, SDKs **MUST** fallback to `unknown_service:` concatenated with [`process.executable.name`](process.md), e.g. `unknown_service:bash`. If `process.executable.name` is not available, the value **MUST** be set to `unknown_service`.
+ */
+var ATTR_SERVICE_NAME = 'service.name';
+/**
+ * The version string of the service API or implementation. The format is not defined by these conventions.
+ *
+ * @example 2.0.0
+ * @example a01dbef8a
+ */
+var ATTR_SERVICE_VERSION = 'service.version';
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+//----------------------------------------------------------------------------------------------------------
+// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
+//----------------------------------------------------------------------------------------------------------
+/**
+ * The ID of a running ECS task. The ID **MUST** be extracted from `task.arn`.
+ *
+ * @example 10838bed-421f-43ef-870a-f43feacbbb5b
+ * @example 23ebb8ac-c18f-46c6-8bbe-d55d0e37cfbd
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+/**
+ * The human readable name of the pipeline within a CI/CD system.
+ *
+ * @example Build and Test
+ * @example Lint
+ * @example Deploy Go Project
+ * @example deploy_to_environment
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_NAME = 'cicd.pipeline.name';
+/**
+ * The unique identifier of a pipeline run within a CI/CD system.
+ *
+ * @example 120912
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_RUN_ID = 'cicd.pipeline.run.id';
+/**
+ * The human readable name of a task within a pipeline. Task here most closely aligns with a [computing process](https://en.wikipedia.org/wiki/Pipeline_(computing)) in a pipeline. Other terms for tasks include commands, steps, and procedures.
+ *
+ * @example Run GoLang Linter
+ * @example Go Build
+ * @example go-test
+ * @example deploy_binary
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_NAME = 'cicd.pipeline.task.name';
+/**
+ * The unique identifier of a task run within a pipeline.
+ *
+ * @example 12097
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_RUN_ID = 'cicd.pipeline.task.run.id';
+/**
+ * The [URL](https://en.wikipedia.org/wiki/URL) of the pipeline run providing the complete address in order to locate and identify the pipeline run.
+ *
+ * @example https://github.com/open-telemetry/semantic-conventions/actions/runs/9753949763/job/26920038674?pr=1075
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL = 'cicd.pipeline.task.run.url.full';
+/**
+ * The type of the task within a pipeline.
+ *
+ * @example build
+ * @example test
+ * @example deploy
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_CICD_PIPELINE_TASK_TYPE = 'cicd.pipeline.task.type';
+/**
+  * Enum value "build" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
+  */
+var CICD_PIPELINE_TASK_TYPE_VALUE_BUILD = "build";
+/**
+  * Enum value "deploy" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
+  */
+var CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY = "deploy";
+/**
+  * Enum value "test" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
+  */
+var CICD_PIPELINE_TASK_TYPE_VALUE_TEST = "test";
+/**
+ * The string ID of the service instance.
+ *
+ * @example 627cc493-f310-47de-96bd-71410b7dec09
+ *
+ * @note **MUST** be unique for each instance of the same `service.namespace,service.name` pair (in other words
+ * `service.namespace,service.name,service.instance.id` triplet **MUST** be globally unique). The ID helps to
+ * distinguish instances of the same service that exist at the same time (e.g. instances of a horizontally scaled
+ * service).
+ *
+ * Implementations, such as SDKs, are recommended to generate a random Version 1 or Version 4 [RFC
+ * 4122](https://www.ietf.org/rfc/rfc4122.txt) UUID, but are free to use an inherent unique ID as the source of
+ * this value if stability is desirable. In that case, the ID **SHOULD** be used as source of a UUID Version 5 and
+ * **SHOULD** use the following UUID as the namespace: `4d63009a-8d0f-11ee-aad7-4c796ed8e320`.
+ *
+ * UUIDs are typically recommended, as only an opaque value for the purposes of identifying a service instance is
+ * needed. Similar to what can be seen in the man page for the
+ * [`/etc/machine-id`](https://www.freedesktop.org/software/systemd/man/machine-id.html) file, the underlying
+ * data, such as pod name and namespace should be treated as confidential, being the user's choice to expose it
+ * or not via another resource attribute.
+ *
+ * For applications running behind an application server (like unicorn), we do not recommend using one identifier
+ * for all processes participating in the application. Instead, it's recommended each division (e.g. a worker
+ * thread in unicorn) to have its own instance.id.
+ *
+ * It's not recommended for a Collector to set `service.instance.id` if it can't unambiguously determine the
+ * service instance that is generating that telemetry. For instance, creating an UUID based on `pod.name` will
+ * likely be wrong, as the Collector might not know from which container within that pod the telemetry originated.
+ * However, Collectors can set the `service.instance.id` if they can unambiguously determine the service instance
+ * for that telemetry. This is typically the case for scraping receivers, as they know the target address and
+ * port.
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_SERVICE_INSTANCE_ID = 'service.instance.id';
+/**
+ * A namespace for `service.name`.
+ *
+ * @example Shop
+ *
+ * @note A string value having a meaning that helps to distinguish a group of services, for example the team name that owns a group of services. `service.name` is expected to be unique within the same namespace. If `service.namespace` is not specified in the Resource then `service.name` is expected to be unique for all services that have no explicit namespace defined (so the empty/unspecified namespace is simply one more valid namespace). Zero-length namespace string is assumed equal to unspecified namespace.
+ *
+ * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
+ */
+var ATTR_SERVICE_NAMESPACE = 'service.namespace';
+
 async function getWorkflowRun(context, octokit, runId) {
     const res = await octokit.rest.actions.getWorkflowRun({
         ...context.repo,
@@ -33623,186 +33900,6 @@ var esm$4 = /*#__PURE__*/Object.freeze({
 	propagation: propagation,
 	trace: trace
 });
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-//----------------------------------------------------------------------------------------------------------
-// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
-//----------------------------------------------------------------------------------------------------------
-/**
- * Rate-limiting result, shows whether the lease was acquired or contains a rejection reason
- *
- * @example acquired
- * @example request_canceled
- */
-/**
- * Logical name of the service.
- *
- * @example shoppingcart
- *
- * @note **MUST** be the same for all instances of horizontally scaled services. If the value was not specified, SDKs **MUST** fallback to `unknown_service:` concatenated with [`process.executable.name`](process.md), e.g. `unknown_service:bash`. If `process.executable.name` is not available, the value **MUST** be set to `unknown_service`.
- */
-var ATTR_SERVICE_NAME = 'service.name';
-/**
- * The version string of the service API or implementation. The format is not defined by these conventions.
- *
- * @example 2.0.0
- * @example a01dbef8a
- */
-var ATTR_SERVICE_VERSION = 'service.version';
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-//----------------------------------------------------------------------------------------------------------
-// DO NOT EDIT, this is an Auto-generated file from scripts/semconv/templates/registry/stable/attributes.ts.j2
-//----------------------------------------------------------------------------------------------------------
-/**
- * The ID of a running ECS task. The ID **MUST** be extracted from `task.arn`.
- *
- * @example 10838bed-421f-43ef-870a-f43feacbbb5b
- * @example 23ebb8ac-c18f-46c6-8bbe-d55d0e37cfbd
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-/**
- * The human readable name of the pipeline within a CI/CD system.
- *
- * @example Build and Test
- * @example Lint
- * @example Deploy Go Project
- * @example deploy_to_environment
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_CICD_PIPELINE_NAME = 'cicd.pipeline.name';
-/**
- * The unique identifier of a pipeline run within a CI/CD system.
- *
- * @example 120912
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_CICD_PIPELINE_RUN_ID = 'cicd.pipeline.run.id';
-/**
- * The human readable name of a task within a pipeline. Task here most closely aligns with a [computing process](https://en.wikipedia.org/wiki/Pipeline_(computing)) in a pipeline. Other terms for tasks include commands, steps, and procedures.
- *
- * @example Run GoLang Linter
- * @example Go Build
- * @example go-test
- * @example deploy_binary
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_CICD_PIPELINE_TASK_NAME = 'cicd.pipeline.task.name';
-/**
- * The unique identifier of a task run within a pipeline.
- *
- * @example 12097
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_CICD_PIPELINE_TASK_RUN_ID = 'cicd.pipeline.task.run.id';
-/**
- * The [URL](https://en.wikipedia.org/wiki/URL) of the pipeline run providing the complete address in order to locate and identify the pipeline run.
- *
- * @example https://github.com/open-telemetry/semantic-conventions/actions/runs/9753949763/job/26920038674?pr=1075
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL = 'cicd.pipeline.task.run.url.full';
-/**
- * The type of the task within a pipeline.
- *
- * @example build
- * @example test
- * @example deploy
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_CICD_PIPELINE_TASK_TYPE = 'cicd.pipeline.task.type';
-/**
-  * Enum value "build" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
-  */
-var CICD_PIPELINE_TASK_TYPE_VALUE_BUILD = "build";
-/**
-  * Enum value "deploy" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
-  */
-var CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY = "deploy";
-/**
-  * Enum value "test" for attribute {@link ATTR_CICD_PIPELINE_TASK_TYPE}.
-  */
-var CICD_PIPELINE_TASK_TYPE_VALUE_TEST = "test";
-/**
- * The string ID of the service instance.
- *
- * @example 627cc493-f310-47de-96bd-71410b7dec09
- *
- * @note **MUST** be unique for each instance of the same `service.namespace,service.name` pair (in other words
- * `service.namespace,service.name,service.instance.id` triplet **MUST** be globally unique). The ID helps to
- * distinguish instances of the same service that exist at the same time (e.g. instances of a horizontally scaled
- * service).
- *
- * Implementations, such as SDKs, are recommended to generate a random Version 1 or Version 4 [RFC
- * 4122](https://www.ietf.org/rfc/rfc4122.txt) UUID, but are free to use an inherent unique ID as the source of
- * this value if stability is desirable. In that case, the ID **SHOULD** be used as source of a UUID Version 5 and
- * **SHOULD** use the following UUID as the namespace: `4d63009a-8d0f-11ee-aad7-4c796ed8e320`.
- *
- * UUIDs are typically recommended, as only an opaque value for the purposes of identifying a service instance is
- * needed. Similar to what can be seen in the man page for the
- * [`/etc/machine-id`](https://www.freedesktop.org/software/systemd/man/machine-id.html) file, the underlying
- * data, such as pod name and namespace should be treated as confidential, being the user's choice to expose it
- * or not via another resource attribute.
- *
- * For applications running behind an application server (like unicorn), we do not recommend using one identifier
- * for all processes participating in the application. Instead, it's recommended each division (e.g. a worker
- * thread in unicorn) to have its own instance.id.
- *
- * It's not recommended for a Collector to set `service.instance.id` if it can't unambiguously determine the
- * service instance that is generating that telemetry. For instance, creating an UUID based on `pod.name` will
- * likely be wrong, as the Collector might not know from which container within that pod the telemetry originated.
- * However, Collectors can set the `service.instance.id` if they can unambiguously determine the service instance
- * for that telemetry. This is typically the case for scraping receivers, as they know the target address and
- * port.
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_SERVICE_INSTANCE_ID = 'service.instance.id';
-/**
- * A namespace for `service.name`.
- *
- * @example Shop
- *
- * @note A string value having a meaning that helps to distinguish a group of services, for example the team name that owns a group of services. `service.name` is expected to be unique within the same namespace. If `service.namespace` is not specified in the Resource then `service.name` is expected to be unique for all services that have no explicit namespace defined (so the empty/unspecified namespace is simply one more valid namespace). Zero-length namespace string is assumed equal to unspecified namespace.
- *
- * @experimental This attribute is experimental and is subject to breaking changes in minor releases of `@opentelemetry/semantic-conventions`.
- */
-var ATTR_SERVICE_NAMESPACE = 'service.namespace';
 
 const tracer$2 = trace.getTracer("otel-cicd-action");
 async function traceStep(step) {
@@ -64635,103 +64732,6 @@ function parseKeyPairsIntoRecord$1(value) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var TMP_EXCEPTION_TYPE = 'exception.type';
-var TMP_EXCEPTION_MESSAGE = 'exception.message';
-var TMP_EXCEPTION_STACKTRACE = 'exception.stacktrace';
-/**
- * The type of the exception (its fully-qualified class name, if applicable). The dynamic type of the exception should be preferred over the static type in languages that support it.
- *
- * @deprecated Use ATTR_EXCEPTION_TYPE.
- */
-var SEMATTRS_EXCEPTION_TYPE = TMP_EXCEPTION_TYPE;
-/**
- * The exception message.
- *
- * @deprecated Use ATTR_EXCEPTION_MESSAGE.
- */
-var SEMATTRS_EXCEPTION_MESSAGE = TMP_EXCEPTION_MESSAGE;
-/**
- * A stacktrace as a string in the natural representation for the language runtime. The representation is to be determined and documented by each language SIG.
- *
- * @deprecated Use ATTR_EXCEPTION_STACKTRACE.
- */
-var SEMATTRS_EXCEPTION_STACKTRACE = TMP_EXCEPTION_STACKTRACE;
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var TMP_PROCESS_RUNTIME_NAME = 'process.runtime.name';
-var TMP_SERVICE_NAME = 'service.name';
-var TMP_TELEMETRY_SDK_NAME = 'telemetry.sdk.name';
-var TMP_TELEMETRY_SDK_LANGUAGE = 'telemetry.sdk.language';
-var TMP_TELEMETRY_SDK_VERSION = 'telemetry.sdk.version';
-/**
- * The name of the runtime of this process. For compiled native binaries, this SHOULD be the name of the compiler.
- *
- * @deprecated Use ATTR_PROCESS_RUNTIME_NAME in [incubating entry-point]({@link https://github.com/open-telemetry/opentelemetry-js/blob/main/semantic-conventions/README.md#unstable-semconv}).
- */
-var SEMRESATTRS_PROCESS_RUNTIME_NAME = TMP_PROCESS_RUNTIME_NAME;
-/**
- * Logical name of the service.
- *
- * Note: MUST be the same for all instances of horizontally scaled services. If the value was not specified, SDKs MUST fallback to `unknown_service:` concatenated with [`process.executable.name`](process.md#process), e.g. `unknown_service:bash`. If `process.executable.name` is not available, the value MUST be set to `unknown_service`.
- *
- * @deprecated Use ATTR_SERVICE_NAME.
- */
-var SEMRESATTRS_SERVICE_NAME = TMP_SERVICE_NAME;
-/**
- * The name of the telemetry SDK as defined above.
- *
- * @deprecated Use ATTR_TELEMETRY_SDK_NAME.
- */
-var SEMRESATTRS_TELEMETRY_SDK_NAME = TMP_TELEMETRY_SDK_NAME;
-/**
- * The language of the telemetry SDK.
- *
- * @deprecated Use ATTR_TELEMETRY_SDK_LANGUAGE.
- */
-var SEMRESATTRS_TELEMETRY_SDK_LANGUAGE = TMP_TELEMETRY_SDK_LANGUAGE;
-/**
- * The version string of the telemetry SDK.
- *
- * @deprecated Use ATTR_TELEMETRY_SDK_VERSION.
- */
-var SEMRESATTRS_TELEMETRY_SDK_VERSION = TMP_TELEMETRY_SDK_VERSION;
-var TMP_TELEMETRYSDKLANGUAGEVALUES_NODEJS = 'nodejs';
-/**
- * The language of the telemetry SDK.
- *
- * @deprecated Use TELEMETRY_SDK_LANGUAGE_VALUE_NODEJS.
- */
-var TELEMETRYSDKLANGUAGEVALUES_NODEJS = TMP_TELEMETRYSDKLANGUAGEVALUES_NODEJS;
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 var ExportResultCode$2;
 (function (ExportResultCode) {
     ExportResultCode[ExportResultCode["SUCCESS"] = 0] = "SUCCESS";
@@ -85998,15 +85998,15 @@ var ConsoleSpanExporter = /** @class */ (function () {
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 const OTEL_ID_SEED = Number.parseInt(process.env["OTEL_ID_SEED"] ?? "0");
-function stringToHeaders(s) {
-    const headers = {};
+function stringToRecord(s) {
+    const record = {};
     for (const pair of s.split(",")) {
         const [key, value] = pair.split(/=(.*)/s);
         if (key && value) {
-            headers[key.trim()] = value.trim();
+            record[key.trim()] = value.trim();
         }
     }
-    return headers;
+    return record;
 }
 function isHttpEndpoint(endpoint) {
     return endpoint.startsWith("https://") || endpoint.startsWith("http://");
@@ -86021,24 +86021,19 @@ function createTracerProvider(endpoint, headers, attributes) {
         if (isHttpEndpoint(endpoint)) {
             exporter = new OTLPTraceExporter({
                 url: endpoint,
-                headers: stringToHeaders(headers),
+                headers: stringToRecord(headers),
             });
         }
         else {
             exporter = new srcExports.OTLPTraceExporter({
                 url: endpoint,
                 credentials: srcExports$2.credentials.createSsl(),
-                metadata: srcExports$2.Metadata.fromHttp2Headers(stringToHeaders(headers)),
+                metadata: srcExports$2.Metadata.fromHttp2Headers(stringToRecord(headers)),
             });
         }
     }
     const provider = new BasicTracerProvider({
-        resource: new Resource({
-            [ATTR_SERVICE_NAME]: attributes.serviceName,
-            [ATTR_SERVICE_INSTANCE_ID]: attributes.serviceInstanceId,
-            [ATTR_SERVICE_NAMESPACE]: attributes.serviceNamespace,
-            [ATTR_SERVICE_VERSION]: attributes.serviceVersion,
-        }),
+        resource: new Resource(attributes),
         spanProcessors: [new BatchSpanProcessor(exporter)],
         ...(OTEL_ID_SEED && { idGenerator: new DeterministicIdGenerator(OTEL_ID_SEED) }),
     });
@@ -86087,6 +86082,7 @@ async function run() {
     const otlpHeaders = coreExports.getInput("otlpHeaders");
     const otelServiceName = coreExports.getInput("otelServiceName") || process.env["OTEL_SERVICE_NAME"] || "";
     const runId = Number.parseInt(coreExports.getInput("runId") || `${githubExports.context.runId}`);
+    const extraAttributes = stringToRecord(coreExports.getInput("extraAttributes"));
     const ghToken = coreExports.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
     const octokit = githubExports.getOctokit(ghToken);
     coreExports.info(`Get workflow run for ${runId}`);
@@ -86098,15 +86094,16 @@ async function run() {
     const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
     coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes = {
-        serviceName: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
-        serviceVersion: workflowRun.head_sha,
-        serviceInstanceId: [
+        [ATTR_SERVICE_NAME]: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
+        [ATTR_SERVICE_INSTANCE_ID]: [
             workflowRun.repository.full_name,
             `${workflowRun.workflow_id}`,
             `${workflowRun.id}`,
             `${workflowRun.run_attempt ?? 1}`,
         ].join("/"),
-        serviceNamespace: workflowRun.repository.full_name,
+        [ATTR_SERVICE_NAMESPACE]: workflowRun.repository.full_name,
+        [ATTR_SERVICE_VERSION]: workflowRun.head_sha,
+        ...extraAttributes,
     };
     const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
     try {

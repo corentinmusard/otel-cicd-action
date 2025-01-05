@@ -3,7 +3,7 @@ import { context } from "@opentelemetry/api";
 import { AsyncHooksContextManager } from "@opentelemetry/context-async-hooks";
 import { OTLPTraceExporter as GrpcOTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
 import { OTLPTraceExporter as ProtoOTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
-import { Resource } from "@opentelemetry/resources";
+import { Resource, type ResourceAttributes } from "@opentelemetry/resources";
 import {
   BasicTracerProvider,
   BatchSpanProcessor,
@@ -11,36 +11,27 @@ import {
   type IdGenerator,
   type SpanExporter,
 } from "@opentelemetry/sdk-trace-base";
-import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
-import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 const OTEL_ID_SEED = Number.parseInt(process.env["OTEL_ID_SEED"] ?? "0");
 
-function stringToHeaders(s: string) {
-  const headers: Record<string, string> = {};
+function stringToRecord(s: string) {
+  const record: Record<string, string> = {};
 
   for (const pair of s.split(",")) {
     const [key, value] = pair.split(/=(.*)/s);
     if (key && value) {
-      headers[key.trim()] = value.trim();
+      record[key.trim()] = value.trim();
     }
   }
-  return headers;
+  return record;
 }
 
 function isHttpEndpoint(endpoint: string) {
   return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
 
-interface Attributes {
-  serviceName: string;
-  serviceInstanceId: string;
-  serviceNamespace: string;
-  serviceVersion: string;
-}
-
-function createTracerProvider(endpoint: string, headers: string, attributes: Attributes) {
+function createTracerProvider(endpoint: string, headers: string, attributes: ResourceAttributes) {
   // Register the context manager to enable context propagation
   const contextManager = new AsyncHooksContextManager();
   contextManager.enable();
@@ -52,24 +43,19 @@ function createTracerProvider(endpoint: string, headers: string, attributes: Att
     if (isHttpEndpoint(endpoint)) {
       exporter = new ProtoOTLPTraceExporter({
         url: endpoint,
-        headers: stringToHeaders(headers),
+        headers: stringToRecord(headers),
       });
     } else {
       exporter = new GrpcOTLPTraceExporter({
         url: endpoint,
         credentials: grpc.credentials.createSsl(),
-        metadata: grpc.Metadata.fromHttp2Headers(stringToHeaders(headers)),
+        metadata: grpc.Metadata.fromHttp2Headers(stringToRecord(headers)),
       });
     }
   }
 
   const provider = new BasicTracerProvider({
-    resource: new Resource({
-      [ATTR_SERVICE_NAME]: attributes.serviceName,
-      [ATTR_SERVICE_INSTANCE_ID]: attributes.serviceInstanceId,
-      [ATTR_SERVICE_NAMESPACE]: attributes.serviceNamespace,
-      [ATTR_SERVICE_VERSION]: attributes.serviceVersion,
-    }),
+    resource: new Resource(attributes),
     spanProcessors: [new BatchSpanProcessor(exporter)],
     ...(OTEL_ID_SEED && { idGenerator: new DeterministicIdGenerator(OTEL_ID_SEED) }),
   });
@@ -122,4 +108,4 @@ class DeterministicIdGenerator implements IdGenerator {
   }
 }
 
-export { type Attributes, stringToHeaders, createTracerProvider };
+export { stringToRecord, createTracerProvider };

@@ -42,6 +42,8 @@ describe("run", () => {
           return runId;
         case "githubToken":
           return token;
+        case "extraAttributes":
+          return "extra.attribute=1,key2=value2";
         default:
           return "";
       }

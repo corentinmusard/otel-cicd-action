@@ -7,7 +7,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -37,7 +39,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -75,7 +79,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -113,7 +119,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -151,7 +159,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -189,7 +199,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -227,7 +239,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -265,7 +279,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -303,7 +319,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -341,7 +359,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -379,7 +399,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -437,7 +459,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -475,7 +499,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -513,7 +539,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -551,7 +579,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -589,7 +619,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -627,7 +659,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -665,7 +699,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -703,7 +739,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -741,7 +779,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -779,7 +819,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -837,7 +879,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -875,7 +919,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -913,7 +959,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -951,7 +999,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -989,7 +1039,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1027,7 +1079,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1065,7 +1119,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1103,7 +1159,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1141,7 +1199,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1179,7 +1239,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1217,7 +1279,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1255,7 +1319,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1314,7 +1380,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1352,7 +1420,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1390,7 +1460,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1428,7 +1500,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1466,7 +1540,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1504,7 +1580,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1542,7 +1620,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1580,7 +1660,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1618,7 +1700,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1677,7 +1761,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1715,7 +1801,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1753,7 +1841,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1791,7 +1881,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1829,7 +1921,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1867,7 +1961,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1905,7 +2001,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1943,7 +2041,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -1981,7 +2081,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2019,7 +2121,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2057,7 +2161,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2116,7 +2222,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2154,7 +2262,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2192,7 +2302,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2230,7 +2342,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2268,7 +2382,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2306,7 +2422,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2344,7 +2462,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2382,7 +2502,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2420,7 +2542,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2479,7 +2603,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2517,7 +2643,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2555,7 +2683,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2593,7 +2723,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2631,7 +2763,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2669,7 +2803,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2707,7 +2843,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2745,7 +2883,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2783,7 +2923,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2842,7 +2984,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2880,7 +3024,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2918,7 +3064,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2956,7 +3104,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -2994,7 +3144,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3032,7 +3184,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3070,7 +3224,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3108,7 +3264,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3146,7 +3304,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3184,7 +3344,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3222,7 +3384,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3260,7 +3424,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {
@@ -3318,7 +3484,9 @@
       'telemetry.sdk.version': '1.30.0',
       'service.instance.id': 'biomejs/biome/65815714/12541749172/1',
       'service.namespace': 'biomejs/biome',
-      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839'
+      'service.version': 'f9ff72d3f58c24db73fa84967eea489ce8492839',
+      'extra.attribute': '1',
+      key2: 'value2'
     }
   },
   instrumentationScope: {

@@ -792,13 +792,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ---
 
-Name: @opentelemetry/api
-Version: 1.9.0
+Name: @opentelemetry/semantic-conventions
+Version: 1.28.0
 License: Apache-2.0
 Private: false
-Description: Public API for OpenTelemetry
+Description: OpenTelemetry semantic conventions
 Repository: undefined
-Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/api
+Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/semantic-conventions
 Author: OpenTelemetry Authors
 License Copyright:
 ===
@@ -1007,13 +1007,13 @@ License Copyright:
 
 ---
 
-Name: @opentelemetry/semantic-conventions
-Version: 1.28.0
+Name: @opentelemetry/api
+Version: 1.9.0
 License: Apache-2.0
 Private: false
-Description: OpenTelemetry semantic conventions
+Description: Public API for OpenTelemetry
 Repository: undefined
-Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/semantic-conventions
+Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/api
 Author: OpenTelemetry Authors
 License Copyright:
 ===
