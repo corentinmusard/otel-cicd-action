@@ -3,8 +3,9 @@ import { dirname, join } from "node:path";
 import * as readline from "node:readline";
 import { getOctokit } from "@actions/github";
 import type { GitHub } from "@actions/github/lib/utils";
+import { RequestError } from "@octokit/request-error";
 import { Octokit } from "@octokit/rest";
-import type { OctokitResponse } from "@octokit/types";
+import type { OctokitResponse, RequestMethod } from "@octokit/types";
 import callerCallsite from "caller-callsite";
 
 async function recordOctokit(name: string, token: string) {
@@ -20,21 +21,36 @@ async function recordOctokit(name: string, token: string) {
   const octokit = getOctokit(token);
 
   octokit.hook.wrap("request", async (request, options) => {
-    const response = await request(options);
-    await writeReplay(file, {
-      path: options.url,
-      url: response.url,
-      status: response.status,
-      data: response.data,
-    });
+    try {
+      const response = await request(options);
+      await writeReplay(file, {
+        method: options.method,
+        path: options.url,
+        url: response.url,
+        status: response.status,
+        data: response.data,
+      });
 
-    return response;
+      return response;
+    } catch (error) {
+      if (error instanceof RequestError) {
+        await writeReplay(file, {
+          method: options.method,
+          path: options.url,
+          url: error.response?.url ?? "",
+          status: error.response?.status ?? 0,
+          data: error.response?.data,
+        });
+      }
+      throw error;
+    }
   });
 
   return octokit;
 }
 
 interface Replay {
+  method: RequestMethod;
   path: string;
   url: string;
   status: number;
@@ -45,6 +61,7 @@ async function writeReplay(path: FileHandle, replay: Replay) {
   const jsonData = JSON.stringify(replay.data);
   const base64Data = Buffer.from(jsonData).toString("base64");
 
+  await appendFile(path, `${replay.method}\n`);
   await appendFile(path, `${replay.path}\n`);
   await appendFile(path, `${replay.url}\n`);
   await appendFile(path, `${replay.status}\n`);
@@ -69,9 +86,11 @@ async function replayOctokit(name: string, token: string) {
   octokit.hook.wrap("request", async (_, options) => {
     const replay = await readReplay(rl);
 
-    if (options.url !== replay.path) {
+    if (options.url !== replay.path || options.method !== replay.method) {
       return Promise.reject(
-        new Error(`replay: request order changed: called with ${options.url} but replay has ${replay.path}`),
+        new Error(
+          `replay: request order changed: called with ${options.method} ${options.url} but replay has ${replay.method} ${replay.path}`,
+        ),
       );
     }
 
@@ -81,6 +100,19 @@ async function replayOctokit(name: string, token: string) {
       url: replay.url,
       data: replay.data,
     };
+
+    if (replay.status >= 400 && replay.status < 600) {
+      const error = replay.data as { message: string; documentation_url: string };
+      throw new RequestError(`${error?.message} - ${error?.documentation_url}`, replay.status, {
+        response,
+        request: {
+          method: replay.method,
+          url: replay.path,
+          headers: {},
+        },
+      });
+    }
+
     return response;
   });
 
@@ -91,20 +123,21 @@ async function readReplay(rl: readline.Interface) {
   const lines: string[] = [];
   for await (const line of rl) {
     lines.push(line);
-    if (lines.length === 4) {
+    if (lines.length === 5) {
       break;
     }
   }
 
-  if (lines.length !== 4) {
+  if (lines.length !== 5) {
     throw new Error("replay: number of requests changed: unexpected end of file");
   }
 
   const replay: Replay = {
-    path: lines[0],
-    url: lines[1],
-    status: Number.parseInt(lines[2]),
-    data: JSON.parse(Buffer.from(lines[3], "base64").toString()),
+    method: lines[0] as RequestMethod,
+    path: lines[1],
+    url: lines[2],
+    status: Number.parseInt(lines[3]),
+    data: JSON.parse(Buffer.from(lines[4], "base64").toString()),
   };
   return replay;
 }

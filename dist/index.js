@@ -86078,35 +86078,35 @@ class DeterministicIdGenerator {
 }
 
 async function run() {
-    const otlpEndpoint = coreExports.getInput("otlpEndpoint");
-    const otlpHeaders = coreExports.getInput("otlpHeaders");
-    const otelServiceName = coreExports.getInput("otelServiceName") || process.env["OTEL_SERVICE_NAME"] || "";
-    const runId = Number.parseInt(coreExports.getInput("runId") || `${githubExports.context.runId}`);
-    const extraAttributes = stringToRecord(coreExports.getInput("extraAttributes"));
-    const ghToken = coreExports.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
-    const octokit = githubExports.getOctokit(ghToken);
-    coreExports.info(`Get workflow run for ${runId}`);
-    const workflowRun = await getWorkflowRun(githubExports.context, octokit, runId);
-    coreExports.info("Get jobs");
-    const jobs = await listJobsForWorkflowRun(githubExports.context, octokit, runId);
-    coreExports.info("Get PRs labels");
-    const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
-    const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
-    coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
-    const attributes = {
-        [ATTR_SERVICE_NAME]: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
-        [ATTR_SERVICE_INSTANCE_ID]: [
-            workflowRun.repository.full_name,
-            `${workflowRun.workflow_id}`,
-            `${workflowRun.id}`,
-            `${workflowRun.run_attempt ?? 1}`,
-        ].join("/"),
-        [ATTR_SERVICE_NAMESPACE]: workflowRun.repository.full_name,
-        [ATTR_SERVICE_VERSION]: workflowRun.head_sha,
-        ...extraAttributes,
-    };
-    const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
     try {
+        const otlpEndpoint = coreExports.getInput("otlpEndpoint");
+        const otlpHeaders = coreExports.getInput("otlpHeaders");
+        const otelServiceName = coreExports.getInput("otelServiceName") || process.env["OTEL_SERVICE_NAME"] || "";
+        const runId = Number.parseInt(coreExports.getInput("runId") || `${githubExports.context.runId}`);
+        const extraAttributes = stringToRecord(coreExports.getInput("extraAttributes"));
+        const ghToken = coreExports.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
+        const octokit = githubExports.getOctokit(ghToken);
+        coreExports.info(`Get workflow run for ${runId}`);
+        const workflowRun = await getWorkflowRun(githubExports.context, octokit, runId);
+        coreExports.info("Get jobs");
+        const jobs = await listJobsForWorkflowRun(githubExports.context, octokit, runId);
+        coreExports.info("Get PRs labels");
+        const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
+        const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
+        coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
+        const attributes = {
+            [ATTR_SERVICE_NAME]: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
+            [ATTR_SERVICE_INSTANCE_ID]: [
+                workflowRun.repository.full_name,
+                `${workflowRun.workflow_id}`,
+                `${workflowRun.id}`,
+                `${workflowRun.run_attempt ?? 1}`,
+            ].join("/"),
+            [ATTR_SERVICE_NAMESPACE]: workflowRun.repository.full_name,
+            [ATTR_SERVICE_VERSION]: workflowRun.head_sha,
+            ...extraAttributes,
+        };
+        const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
         coreExports.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
         const traceId = await traceWorkflowRun(workflowRun, jobs, prLabels);
         coreExports.setOutput("traceId", traceId);

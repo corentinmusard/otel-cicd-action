@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import util from "node:util";
 import { jest } from "@jest/globals";
+import { RequestError } from "@octokit/request-error";
 import * as core from "./__fixtures__/core";
 import * as github from "./__fixtures__/github";
 import type { Octokit } from "./github";
@@ -61,6 +62,8 @@ describe("run", () => {
 
   afterEach(() => {
     output = "";
+    core.setOutput.mockReset();
+    core.setFailed.mockReset();
   });
 
   it("should run", async () => {
@@ -69,5 +72,19 @@ describe("run", () => {
 
     await run();
     await fs.writeFile("src/__assets__/output.txt", output);
+
+    expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
+    expect(core.setFailed).not.toHaveBeenCalled();
+  }, 10000);
+
+  it("should fail", async () => {
+    process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
+    runId = "111"; // does not exist
+
+    await run();
+
+    expect(core.setOutput).not.toHaveBeenCalled();
+    expect(core.setFailed).toHaveBeenCalledTimes(1);
+    expect(core.setFailed).toHaveBeenCalledWith(expect.any(RequestError));
   }, 10000);
 });
