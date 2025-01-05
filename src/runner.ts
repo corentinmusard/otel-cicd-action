@@ -1,8 +1,8 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
+import { type Attributes, createTracerProvider } from "./tracer";
 import { traceWorkflowRun } from "./tracing/job";
-import { type Attributes, createTracerProvider } from "./tracing/trace";
 
 async function run() {
   const otlpEndpoint = core.getInput("otlpEndpoint");

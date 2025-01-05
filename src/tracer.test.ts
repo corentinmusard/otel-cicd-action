@@ -1,7 +1,7 @@
 import type { BasicTracerProvider } from "@opentelemetry/sdk-trace-base";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
-import { type Attributes, createTracerProvider, stringToHeaders } from "./trace";
+import { type Attributes, createTracerProvider, stringToHeaders } from "./tracer";
 
 describe("createTracerProvider", () => {
   let provider: BasicTracerProvider;
