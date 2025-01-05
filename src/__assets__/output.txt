@@ -444,7 +444,9 @@
     'github.job.check_run_url': 'https://api.github.com/repos/biomejs/biome/check-runs/34970679534',
     'github.job.workflow_name': 'CI on main',
     'github.job.head_branch': 'main',
-    error: false
+    error: false,
+    'github.job.annotations.0.level': 'warning',
+    'github.job.annotations.0.message': 'ubuntu-latest pipelines will use ubuntu-24.04 soon. For more details, see https://github.com/actions/runner-images/issues/10636'
   },
   status: { code: 1 },
   events: [],
@@ -864,7 +866,9 @@
     'github.job.check_run_url': 'https://api.github.com/repos/biomejs/biome/check-runs/34970679834',
     'github.job.workflow_name': 'CI on main',
     'github.job.head_branch': 'main',
-    error: false
+    error: false,
+    'github.job.annotations.0.level': 'warning',
+    'github.job.annotations.0.message': 'ubuntu-latest pipelines will use ubuntu-24.04 soon. For more details, see https://github.com/actions/runner-images/issues/10636'
   },
   status: { code: 1 },
   events: [],
@@ -2207,7 +2211,9 @@
     'github.job.check_run_url': 'https://api.github.com/repos/biomejs/biome/check-runs/34970680323',
     'github.job.workflow_name': 'CI on main',
     'github.job.head_branch': 'main',
-    error: false
+    error: false,
+    'github.job.annotations.0.level': 'warning',
+    'github.job.annotations.0.message': 'ubuntu-latest pipelines will use ubuntu-24.04 soon. For more details, see https://github.com/actions/runner-images/issues/10636'
   },
   status: { code: 1 },
   events: [],
@@ -2588,7 +2594,9 @@
     'github.job.check_run_url': 'https://api.github.com/repos/biomejs/biome/check-runs/34970680487',
     'github.job.workflow_name': 'CI on main',
     'github.job.head_branch': 'main',
-    error: false
+    error: false,
+    'github.job.annotations.0.level': 'warning',
+    'github.job.annotations.0.message': 'ubuntu-latest pipelines will use ubuntu-24.04 soon. For more details, see https://github.com/actions/runner-images/issues/10636'
   },
   status: { code: 1 },
   events: [],
@@ -3469,7 +3477,9 @@
     'github.job.check_run_url': 'https://api.github.com/repos/biomejs/biome/check-runs/34970680756',
     'github.job.workflow_name': 'CI on main',
     'github.job.head_branch': 'main',
-    error: false
+    error: false,
+    'github.job.annotations.0.level': 'warning',
+    'github.job.annotations.0.message': 'ubuntu-latest pipelines will use ubuntu-24.04 soon. For more details, see https://github.com/actions/runner-images/issues/10636'
   },
   status: { code: 1 },
   events: [],

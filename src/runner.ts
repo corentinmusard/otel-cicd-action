@@ -3,7 +3,7 @@ import { context, getOctokit } from "@actions/github";
 import type { ResourceAttributes } from "@opentelemetry/resources";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
-import { getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
+import { getJobsAnnotations, getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
 import { traceWorkflowRun } from "./trace/workflow";
 import { createTracerProvider, stringToRecord } from "./tracer";
 
@@ -22,6 +22,15 @@ async function run() {
 
     core.info("Get jobs");
     const jobs = await listJobsForWorkflowRun(context, octokit, runId);
+
+    core.info("Get job annotations");
+    const jobsId = (jobs ?? []).map((job) => job.id);
+    let jobAnnotations = {};
+    try {
+      jobAnnotations = await getJobsAnnotations(context, octokit, jobsId);
+    } catch (error) {
+      core.info(`Failed to get job annotations: ${error instanceof Error && error.message}`);
+    }
 
     core.info("Get PRs labels");
     const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
@@ -43,7 +52,7 @@ async function run() {
     const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
 
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = await traceWorkflowRun(workflowRun, jobs, prLabels);
+    const traceId = await traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
 
     core.setOutput("traceId", traceId);
     core.debug(`traceId: ${traceId}`);

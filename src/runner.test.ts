@@ -73,8 +73,8 @@ describe("run", () => {
     await run();
     await fs.writeFile("src/__assets__/output.txt", output);
 
-    expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
     expect(core.setFailed).not.toHaveBeenCalled();
+    expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
   }, 10000);
 
   it("should fail", async () => {
@@ -83,8 +83,8 @@ describe("run", () => {
 
     await run();
 
-    expect(core.setOutput).not.toHaveBeenCalled();
     expect(core.setFailed).toHaveBeenCalledTimes(1);
     expect(core.setFailed).toHaveBeenCalledWith(expect.any(RequestError));
+    expect(core.setOutput).not.toHaveBeenCalled();
   }, 10000);
 });

@@ -14,7 +14,7 @@ import { traceStep } from "./step";
 
 const tracer = trace.getTracer("otel-cicd-action");
 
-async function traceJob(job: components["schemas"]["job"]) {
+async function traceJob(job: components["schemas"]["job"], annotations?: components["schemas"]["check-annotation"][]) {
   if (!job.completed_at) {
     core.warning(`Job ${job.id} is not completed yet`);
     return;
@@ -22,7 +22,10 @@ async function traceJob(job: components["schemas"]["job"]) {
 
   const startTime = new Date(job.started_at);
   const completedTime = new Date(job.completed_at);
-  const attributes = jobToAttributes(job);
+  const attributes = {
+    ...jobToAttributes(job),
+    ...annotationsToAttributes(annotations),
+  };
 
   await tracer.startActiveSpan(job.name, { attributes, startTime }, async (span) => {
     const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
@@ -80,6 +83,20 @@ function jobToAttributes(job: components["schemas"]["job"]): Attributes {
     "github.job.head_branch": job.head_branch ?? undefined,
     error: job.conclusion === "failure",
   };
+}
+
+function annotationsToAttributes(annotations: components["schemas"]["check-annotation"][] | undefined) {
+  const attributes: Attributes = {};
+
+  for (let i = 0; annotations && i < annotations.length; i++) {
+    const annotation = annotations[i];
+    const prefix = `github.job.annotations.${i}`;
+
+    attributes[`${prefix}.level`] = annotation.annotation_level ?? undefined;
+    attributes[`${prefix}.message`] = annotation.message ?? undefined;
+  }
+
+  return attributes;
 }
 
 export { traceJob };

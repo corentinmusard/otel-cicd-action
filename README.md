@@ -92,6 +92,7 @@ permissions:
   contents: read # To access the private repository
   actions: read # To read workflow runs
   pull-requests: read # To read PR labels
+  checks: read # Optional. To read run annotations
 ```
 
 ### Adding arbitrary resource attributes

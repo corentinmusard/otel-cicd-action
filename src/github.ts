@@ -1,5 +1,6 @@
 import type { Context } from "@actions/github/lib/context";
 import type { GitHub } from "@actions/github/lib/utils";
+import type { components } from "@octokit/openapi-types";
 
 type Octokit = InstanceType<typeof GitHub>;
 
@@ -17,6 +18,22 @@ async function listJobsForWorkflowRun(context: Context, octokit: Octokit, runId:
     run_id: runId,
     filter: "latest", // risk of missing a run if re-run happens between Action trigger and this query
     per_page: 100,
+  });
+}
+
+async function getJobsAnnotations(context: Context, octokit: Octokit, jobIds: number[]) {
+  const annotations: Record<number, components["schemas"]["check-annotation"][]> = {};
+
+  for (const jobId of jobIds) {
+    annotations[jobId] = await listAnnotations(context, octokit, jobId);
+  }
+  return annotations;
+}
+
+async function listAnnotations(context: Context, octokit: Octokit, checkRunId: number) {
+  return await octokit.paginate(octokit.rest.checks.listAnnotations, {
+    ...context.repo,
+    check_run_id: checkRunId,
   });
 }
 
@@ -40,4 +57,4 @@ async function listLabelsOnIssue(context: Context, octokit: Octokit, prNumber: n
   );
 }
 
-export { getWorkflowRun, listJobsForWorkflowRun, getPRsLabels, type Octokit };
+export { getWorkflowRun, listJobsForWorkflowRun, getJobsAnnotations, getPRsLabels, type Octokit };

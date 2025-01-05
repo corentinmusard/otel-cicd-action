@@ -8,6 +8,7 @@ const tracer = trace.getTracer("otel-cicd-action");
 async function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
+  jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
   prLabels: Record<number, string[]>,
 ) {
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
@@ -28,7 +29,7 @@ async function traceWorkflowRun(
       }
 
       for (const job of jobs) {
-        await traceJob(job);
+        await traceJob(job, jobAnnotations[job.id]);
       }
 
       rootSpan.end(new Date(workflowRun.updated_at));
