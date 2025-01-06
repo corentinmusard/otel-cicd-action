@@ -3,14 +3,14 @@ import { type Attributes, SpanStatusCode, context, trace } from "@opentelemetry/
 import { ATTR_CICD_PIPELINE_NAME, ATTR_CICD_PIPELINE_RUN_ID } from "@opentelemetry/semantic-conventions/incubating";
 import { traceJob } from "./job";
 
-const tracer = trace.getTracer("otel-cicd-action");
-
 async function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
   jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
   prLabels: Record<number, string[]>,
 ) {
+  const tracer = trace.getTracer("otel-cicd-action");
+
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
   const attributes = workflowRunToAttributes(workflowRun, prLabels);
 

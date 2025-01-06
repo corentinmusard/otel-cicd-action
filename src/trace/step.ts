@@ -2,11 +2,11 @@ import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
 import { type Attributes, SpanStatusCode, trace } from "@opentelemetry/api";
 
-const tracer = trace.getTracer("otel-cicd-action");
-
 type Step = NonNullable<components["schemas"]["job"]["steps"]>[number];
 
 async function traceStep(step: Step) {
+  const tracer = trace.getTracer("otel-cicd-action");
+
   if (!step.completed_at || !step.started_at) {
     core.info(`Step ${step.name} is not completed yet.`);
     return;

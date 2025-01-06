@@ -33914,8 +33914,8 @@ var esm$4 = /*#__PURE__*/Object.freeze({
 	trace: trace
 });
 
-const tracer$2 = trace.getTracer("otel-cicd-action");
 async function traceStep(step) {
+    const tracer = trace.getTracer("otel-cicd-action");
     if (!step.completed_at || !step.started_at) {
         coreExports.info(`Step ${step.name} is not completed yet.`);
         return;
@@ -33927,7 +33927,7 @@ async function traceStep(step) {
     const startTime = new Date(step.started_at);
     const completedTime = new Date(step.completed_at);
     const attributes = stepToAttributes(step);
-    await tracer$2.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
+    await tracer.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
         const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         span.setStatus({ code });
         // Some skipped and post jobs return completed_at dates that are older than started_at
@@ -33946,8 +33946,8 @@ function stepToAttributes(step) {
     };
 }
 
-const tracer$1 = trace.getTracer("otel-cicd-action");
 async function traceJob(job, annotations) {
+    const tracer = trace.getTracer("otel-cicd-action");
     if (!job.completed_at) {
         coreExports.info(`Job ${job.id} is not completed yet`);
         return;
@@ -33958,7 +33958,7 @@ async function traceJob(job, annotations) {
         ...jobToAttributes(job),
         ...annotationsToAttributes(annotations),
     };
-    await tracer$1.startActiveSpan(job.name, { attributes, startTime }, async (span) => {
+    await tracer.startActiveSpan(job.name, { attributes, startTime }, async (span) => {
         const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
         span.setStatus({ code });
         for (const step of job.steps ?? []) {
@@ -34024,8 +34024,8 @@ function annotationsToAttributes(annotations) {
     return attributes;
 }
 
-const tracer = trace.getTracer("otel-cicd-action");
 async function traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels) {
+    const tracer = trace.getTracer("otel-cicd-action");
     const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
     const attributes = workflowRunToAttributes(workflowRun, prLabels);
     return await tracer.startActiveSpan(workflowRun.name ?? workflowRun.display_title, { attributes, root: true, startTime }, async (rootSpan) => {
@@ -86103,6 +86103,42 @@ class DeterministicIdGenerator {
     }
 }
 
+async function fetchGithub(token, runId) {
+    const octokit = githubExports.getOctokit(token);
+    coreExports.info(`Get workflow run for ${runId}`);
+    const workflowRun = await getWorkflowRun(githubExports.context, octokit, runId);
+    coreExports.info("Get jobs");
+    const jobs = await listJobsForWorkflowRun(githubExports.context, octokit, runId);
+    coreExports.info("Get job annotations");
+    const jobsId = (jobs ?? []).map((job) => job.id);
+    let jobAnnotations = {};
+    try {
+        jobAnnotations = await getJobsAnnotations(githubExports.context, octokit, jobsId);
+    }
+    catch (error) {
+        if (error instanceof RequestError) {
+            coreExports.info(`Failed to get job annotations: ${error.message}}`);
+        }
+        else {
+            throw error;
+        }
+    }
+    coreExports.info("Get PRs labels");
+    const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
+    let prLabels = {};
+    try {
+        prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
+    }
+    catch (error) {
+        if (error instanceof RequestError) {
+            coreExports.info(`Failed to get PRs labels: ${error.message}}`);
+        }
+        else {
+            throw error;
+        }
+    }
+    return { workflowRun, jobs, jobAnnotations, prLabels };
+}
 async function run() {
     try {
         const otlpEndpoint = coreExports.getInput("otlpEndpoint");
@@ -86111,31 +86147,8 @@ async function run() {
         const runId = Number.parseInt(coreExports.getInput("runId") || `${githubExports.context.runId}`);
         const extraAttributes = stringToRecord(coreExports.getInput("extraAttributes"));
         const ghToken = coreExports.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
-        const octokit = githubExports.getOctokit(ghToken);
-        coreExports.info(`Get workflow run for ${runId}`);
-        const workflowRun = await getWorkflowRun(githubExports.context, octokit, runId);
-        coreExports.info("Get jobs");
-        const jobs = await listJobsForWorkflowRun(githubExports.context, octokit, runId);
-        coreExports.info("Get job annotations");
-        const jobsId = (jobs ?? []).map((job) => job.id);
-        let jobAnnotations = {};
-        try {
-            jobAnnotations = await getJobsAnnotations(githubExports.context, octokit, jobsId);
-        }
-        catch (error) {
-            const message = error instanceof Error ? error.message : JSON.stringify(error);
-            coreExports.info(`Failed to get job annotations: ${message}}`);
-        }
-        coreExports.info("Get PRs labels");
-        const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
-        let prLabels = {};
-        try {
-            prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
-        }
-        catch (error) {
-            const message = error instanceof Error ? error.message : JSON.stringify(error);
-            coreExports.info(`Failed to get PRs labels: ${message}}`);
-        }
+        coreExports.info("Use Github API to fetch workflow data");
+        const { workflowRun, jobs, jobAnnotations, prLabels } = await fetchGithub(ghToken, runId);
         coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
         const attributes = {
             [ATTR_SERVICE_NAME]: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,

@@ -119,27 +119,31 @@ async function replayOctokit(name: string, token: string) {
   return octokit;
 }
 
-async function readReplay(rl: readline.Interface) {
+async function readReplay(rl: readline.Interface): Promise<Replay> {
   const lines: string[] = [];
-  for await (const line of rl) {
-    lines.push(line);
-    if (lines.length === 5) {
-      break;
-    }
-  }
+  lines.push(await oneLine(rl));
+  lines.push(await oneLine(rl));
+  lines.push(await oneLine(rl));
+  lines.push(await oneLine(rl));
+  lines.push(await oneLine(rl));
 
-  if (lines.length !== 5) {
-    throw new Error("replay: number of requests changed: unexpected end of file");
-  }
-
-  const replay: Replay = {
+  return {
     method: lines[0] as RequestMethod,
     path: lines[1],
     url: lines[2],
     status: Number.parseInt(lines[3]),
     data: JSON.parse(Buffer.from(lines[4], "base64").toString()),
   };
-  return replay;
+}
+
+async function oneLine(rl: readline.Interface) {
+  const iter = rl[Symbol.asyncIterator]();
+
+  const { done, value } = await iter.next();
+  if (done) {
+    throw new Error("replay: number of requests changed: unexpected end of file");
+  }
+  return value;
 }
 
 export { recordOctokit, replayOctokit };

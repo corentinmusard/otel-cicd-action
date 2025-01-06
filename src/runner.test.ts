@@ -1,7 +1,8 @@
 import fs from "node:fs/promises";
-import util from "node:util";
+import util, { type InspectOptions } from "node:util";
 import { jest } from "@jest/globals";
 import { RequestError } from "@octokit/request-error";
+import { trace } from "@opentelemetry/api";
 import * as core from "./__fixtures__/core";
 import * as github from "./__fixtures__/github";
 import type { Octokit } from "./github";
@@ -51,8 +52,9 @@ describe("run", () => {
     });
 
     // ConsoleSpanExporter calls console.dir to output telemetry, so we mock it to save the output
-    jest.spyOn(console, "dir").mockImplementation((item?: unknown) => {
-      output += `${util.inspect(item)}\n`;
+    // See: https://github.com/open-telemetry/opentelemetry-js/blob/main/packages/opentelemetry-sdk-trace-base/src/export/ConsoleSpanExporter.ts
+    jest.spyOn(console, "dir").mockImplementation((item: unknown, options?: InspectOptions) => {
+      output += `${util.inspect(item, options)}\n`;
     });
   });
 
@@ -61,28 +63,44 @@ describe("run", () => {
   });
 
   afterEach(() => {
+    trace.disable(); // Remove the global tracer provider
     output = "";
     core.setOutput.mockReset();
     core.setFailed.mockReset();
   });
 
-  it("should run", async () => {
+  it("should run a successful workflow", async () => {
+    // https://github.com/biomejs/biome/actions/runs/12541749172
     process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
     runId = "12541749172";
 
     await run();
-    await fs.writeFile("src/__assets__/output.txt", output);
+    await fs.writeFile("src/__assets__/output_success.txt", output);
+
+    expect(core.setFailed).not.toHaveBeenCalled();
+    expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
+  }, 10000);
+
+  it("should run a failed workflow", async () => {
+    // https://github.com/corentinmusard/otel-cicd-action/actions/runs/12562475696
+    process.env["GITHUB_REPOSITORY"] = "corentinmusard/otel-cicd-action";
+    runId = "12562475696";
+
+    await run();
+    await fs.writeFile("src/__assets__/output_failed.txt", output);
 
     expect(core.setFailed).not.toHaveBeenCalled();
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
   }, 10000);
 
   it("should fail", async () => {
-    process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
+    // https://github.com/corentinmusard/otel-cicd-action/actions/runs/111
+    process.env["GITHUB_REPOSITORY"] = "corentinmusard/otel-cicd-action";
     runId = "111"; // does not exist
 
     await run();
 
+    expect(output).toBe("");
     expect(core.setFailed).toHaveBeenCalledTimes(1);
     expect(core.setFailed).toHaveBeenCalledWith(expect.any(RequestError));
     expect(core.setOutput).not.toHaveBeenCalled();

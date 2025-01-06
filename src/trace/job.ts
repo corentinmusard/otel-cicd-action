@@ -12,9 +12,9 @@ import {
 } from "@opentelemetry/semantic-conventions/incubating";
 import { traceStep } from "./step";
 
-const tracer = trace.getTracer("otel-cicd-action");
-
 async function traceJob(job: components["schemas"]["job"], annotations?: components["schemas"]["check-annotation"][]) {
+  const tracer = trace.getTracer("otel-cicd-action");
+
   if (!job.completed_at) {
     core.info(`Job ${job.id} is not completed yet`);
     return;

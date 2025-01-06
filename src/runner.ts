@@ -1,11 +1,50 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
+import { RequestError } from "@octokit/request-error";
 import type { ResourceAttributes } from "@opentelemetry/resources";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 import { getJobsAnnotations, getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
 import { traceWorkflowRun } from "./trace/workflow";
 import { createTracerProvider, stringToRecord } from "./tracer";
+
+async function fetchGithub(token: string, runId: number) {
+  const octokit = getOctokit(token);
+
+  core.info(`Get workflow run for ${runId}`);
+  const workflowRun = await getWorkflowRun(context, octokit, runId);
+
+  core.info("Get jobs");
+  const jobs = await listJobsForWorkflowRun(context, octokit, runId);
+
+  core.info("Get job annotations");
+  const jobsId = (jobs ?? []).map((job) => job.id);
+  let jobAnnotations = {};
+  try {
+    jobAnnotations = await getJobsAnnotations(context, octokit, jobsId);
+  } catch (error) {
+    if (error instanceof RequestError) {
+      core.info(`Failed to get job annotations: ${error.message}}`);
+    } else {
+      throw error;
+    }
+  }
+
+  core.info("Get PRs labels");
+  const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
+  let prLabels = {};
+  try {
+    prLabels = await getPRsLabels(context, octokit, prNumbers);
+  } catch (error) {
+    if (error instanceof RequestError) {
+      core.info(`Failed to get PRs labels: ${error.message}}`);
+    } else {
+      throw error;
+    }
+  }
+
+  return { workflowRun, jobs, jobAnnotations, prLabels };
+}
 
 async function run() {
   try {
@@ -15,33 +54,9 @@ async function run() {
     const runId = Number.parseInt(core.getInput("runId") || `${context.runId}`);
     const extraAttributes = stringToRecord(core.getInput("extraAttributes"));
     const ghToken = core.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
-    const octokit = getOctokit(ghToken);
 
-    core.info(`Get workflow run for ${runId}`);
-    const workflowRun = await getWorkflowRun(context, octokit, runId);
-
-    core.info("Get jobs");
-    const jobs = await listJobsForWorkflowRun(context, octokit, runId);
-
-    core.info("Get job annotations");
-    const jobsId = (jobs ?? []).map((job) => job.id);
-    let jobAnnotations = {};
-    try {
-      jobAnnotations = await getJobsAnnotations(context, octokit, jobsId);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : JSON.stringify(error);
-      core.info(`Failed to get job annotations: ${message}}`);
-    }
-
-    core.info("Get PRs labels");
-    const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
-    let prLabels = {};
-    try {
-      prLabels = await getPRsLabels(context, octokit, prNumbers);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : JSON.stringify(error);
-      core.info(`Failed to get PRs labels: ${message}}`);
-    }
+    core.info("Use Github API to fetch workflow data");
+    const { workflowRun, jobs, jobAnnotations, prLabels } = await fetchGithub(ghToken, runId);
 
     core.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes: ResourceAttributes = {

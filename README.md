@@ -8,7 +8,7 @@ This action exports Github CI/CD workflows to any endpoint compatible with OpenT
 This is a fork of [otel-export-trace-action](https://github.com/inception-health/otel-export-trace-action) with more features and better support.
 
 Compliant with OpenTelemetry [CICD semconv](https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/).
-Look at [Sample OpenTelemetry Output](./src/__assets__/output.txt) for the list of attributes and their values.
+Look at [Sample OpenTelemetry Output](./src/__assets__/output_success.txt) for the list of attributes and their values.
 
 ![Example](./docs/honeycomb-example.png)
 
