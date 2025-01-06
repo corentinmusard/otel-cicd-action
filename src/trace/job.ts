@@ -16,7 +16,7 @@ const tracer = trace.getTracer("otel-cicd-action");
 
 async function traceJob(job: components["schemas"]["job"], annotations?: components["schemas"]["check-annotation"][]) {
   if (!job.completed_at) {
-    core.warning(`Job ${job.id} is not completed yet`);
+    core.info(`Job ${job.id} is not completed yet`);
     return;
   }
 

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2025-01-06
+
+### Fixed
+
+- `pull-requests: read` permission is now optional. If not set, PRs labels will not be added to the trace
+
 ## [2.2.0] - 2025-01-05
 
 ### Added
@@ -156,7 +162,8 @@ permissions:
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.0...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.2...v2.0.0

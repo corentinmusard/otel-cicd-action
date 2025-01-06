@@ -89,9 +89,9 @@ It can be done at the global level or at the job level.
 
 ```yaml
 permissions:
-  contents: read # To access the private repository
-  actions: read # To read workflow runs
-  pull-requests: read # To read PR labels
+  contents: read # Required. To access the private repository
+  actions: read # Required. To read workflow runs
+  pull-requests: read # Optional. To read PR labels
   checks: read # Optional. To read run annotations
 ```
 

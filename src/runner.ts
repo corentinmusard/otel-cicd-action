@@ -29,12 +29,19 @@ async function run() {
     try {
       jobAnnotations = await getJobsAnnotations(context, octokit, jobsId);
     } catch (error) {
-      core.info(`Failed to get job annotations: ${error instanceof Error && error.message}`);
+      const message = error instanceof Error ? error.message : JSON.stringify(error);
+      core.info(`Failed to get job annotations: ${message}}`);
     }
 
     core.info("Get PRs labels");
     const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
-    const prLabels = await getPRsLabels(context, octokit, prNumbers);
+    let prLabels = {};
+    try {
+      prLabels = await getPRsLabels(context, octokit, prNumbers);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : JSON.stringify(error);
+      core.info(`Failed to get PRs labels: ${message}}`);
+    }
 
     core.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes: ResourceAttributes = {
@@ -55,18 +62,15 @@ async function run() {
     const traceId = await traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
 
     core.setOutput("traceId", traceId);
-    core.debug(`traceId: ${traceId}`);
+    core.info(`traceId: ${traceId}`);
 
     core.info("Flush and shutdown tracer provider");
     await provider.forceFlush();
     await provider.shutdown();
     core.info("Provider shutdown");
   } catch (error) {
-    if (error instanceof Error) {
-      core.setFailed(error);
-    } else {
-      core.setFailed(`Unknown error: ${JSON.stringify(error)}`);
-    }
+    const message = error instanceof Error ? error : JSON.stringify(error);
+    core.setFailed(message);
   }
 }
 

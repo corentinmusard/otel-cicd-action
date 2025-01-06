@@ -8,7 +8,7 @@ type Step = NonNullable<components["schemas"]["job"]["steps"]>[number];
 
 async function traceStep(step: Step) {
   if (!step.completed_at || !step.started_at) {
-    core.warning(`Step ${step.name} is not completed yet.`);
+    core.info(`Step ${step.name} is not completed yet.`);
     return;
   }
 

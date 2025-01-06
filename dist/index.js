@@ -33917,7 +33917,7 @@ var esm$4 = /*#__PURE__*/Object.freeze({
 const tracer$2 = trace.getTracer("otel-cicd-action");
 async function traceStep(step) {
     if (!step.completed_at || !step.started_at) {
-        coreExports.warning(`Step ${step.name} is not completed yet.`);
+        coreExports.info(`Step ${step.name} is not completed yet.`);
         return;
     }
     if (step.conclusion === "cancelled" || step.conclusion === "skipped") {
@@ -33949,7 +33949,7 @@ function stepToAttributes(step) {
 const tracer$1 = trace.getTracer("otel-cicd-action");
 async function traceJob(job, annotations) {
     if (!job.completed_at) {
-        coreExports.warning(`Job ${job.id} is not completed yet`);
+        coreExports.info(`Job ${job.id} is not completed yet`);
         return;
     }
     const startTime = new Date(job.started_at);
@@ -86123,11 +86123,19 @@ async function run() {
             jobAnnotations = await getJobsAnnotations(githubExports.context, octokit, jobsId);
         }
         catch (error) {
-            coreExports.info(`Failed to get job annotations: ${error instanceof Error && error.message}`);
+            const message = error instanceof Error ? error.message : JSON.stringify(error);
+            coreExports.info(`Failed to get job annotations: ${message}}`);
         }
         coreExports.info("Get PRs labels");
         const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
-        const prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
+        let prLabels = {};
+        try {
+            prLabels = await getPRsLabels(githubExports.context, octokit, prNumbers);
+        }
+        catch (error) {
+            const message = error instanceof Error ? error.message : JSON.stringify(error);
+            coreExports.info(`Failed to get PRs labels: ${message}}`);
+        }
         coreExports.info(`Create tracer provider for ${otlpEndpoint}`);
         const attributes = {
             [ATTR_SERVICE_NAME]: otelServiceName || workflowRun.name || `${workflowRun.workflow_id}`,
@@ -86145,19 +86153,15 @@ async function run() {
         coreExports.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
         const traceId = await traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
         coreExports.setOutput("traceId", traceId);
-        coreExports.debug(`traceId: ${traceId}`);
+        coreExports.info(`traceId: ${traceId}`);
         coreExports.info("Flush and shutdown tracer provider");
         await provider.forceFlush();
         await provider.shutdown();
         coreExports.info("Provider shutdown");
     }
     catch (error) {
-        if (error instanceof Error) {
-            coreExports.setFailed(error);
-        }
-        else {
-            coreExports.setFailed(`Unknown error: ${JSON.stringify(error)}`);
-        }
+        const message = error instanceof Error ? error : JSON.stringify(error);
+        coreExports.setFailed(message);
     }
 }
 
