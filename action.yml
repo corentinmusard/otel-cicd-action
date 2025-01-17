@@ -24,7 +24,7 @@ inputs:
     description: Workflow Run ID to Export. Defaults to env.GITHUB_RUN_ID
     required: false
   extraAttributes:
-    description: Extra resource attributes
+    description: Extra resource attributes to add to each span
     required: false
 outputs:
   traceId:
