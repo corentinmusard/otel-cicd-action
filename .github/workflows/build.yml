@@ -39,6 +39,18 @@ jobs:
         run: npm ci
       - name: run tests
         run: npm run test:ci
+  newrelic-test:
+    needs: [tests, build]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test New Relic Export
+        uses: corentinmusard/otel-cicd-action@v2
+        with:
+          otlpEndpoint: "grpc://otlp.eu01.nr-data.net"
+          otlpHeaders: "api-key=YOUR_NEWRELIC_API_KEY" # unknown api key, should fail
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
   otel-cicd:
     needs: [tests, build]
     if: always()
