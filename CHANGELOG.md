@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.3] - 2025-01-30
+
+### Fixed
+
+- Update dependencies
+
 ## [2.2.2] - 2025-01-17
 
 ### Fixed
@@ -168,7 +174,8 @@ permissions:
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.2...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.3...HEAD
+[2.2.3]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.2...v2.2.3
 [2.2.2]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.1.0...v2.2.0
