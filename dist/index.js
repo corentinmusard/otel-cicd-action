@@ -14,7 +14,7 @@ import require$$0$7 from 'util';
 import require$$0$9, { Readable } from 'stream';
 import require$$7 from 'buffer';
 import require$$8 from 'querystring';
-import require$$13 from 'stream/web';
+import require$$14 from 'stream/web';
 import require$$0$c from 'node:stream';
 import require$$1$2 from 'node:util';
 import require$$0$b from 'node:events';
@@ -28,11 +28,11 @@ import * as require$$3$2 from 'zlib';
 import require$$3__default from 'zlib';
 import require$$6$1 from 'string_decoder';
 import require$$0$e from 'diagnostics_channel';
-import child_process from 'child_process';
+import require$$1$7 from 'child_process';
 import require$$6$2 from 'timers';
 import process$1 from 'process';
 import require$$0$f from 'http2';
-import require$$1$7 from 'dns';
+import require$$1$8 from 'dns';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -79,7 +79,7 @@ function requireUtils$3 () {
 	// We use any as a valid input type
 	/* eslint-disable @typescript-eslint/no-explicit-any */
 	Object.defineProperty(utils$3, "__esModule", { value: true });
-	utils$3.toCommandProperties = utils$3.toCommandValue = void 0;
+	utils$3.toCommandProperties = utils$3.toCommandValue = undefined;
 	/**
 	 * Sanitizes an input into a string so it can be passed into issueCommand safely
 	 * @param input input to sanitize into a string
@@ -147,7 +147,7 @@ function requireCommand () {
 	    return result;
 	};
 	Object.defineProperty(command, "__esModule", { value: true });
-	command.issue = command.issueCommand = void 0;
+	command.issue = command.issueCommand = undefined;
 	const os = __importStar(require$$0$3);
 	const utils_1 = requireUtils$3();
 	/**
@@ -253,7 +253,7 @@ function requireFileCommand () {
 	    return result;
 	};
 	Object.defineProperty(fileCommand, "__esModule", { value: true });
-	fileCommand.prepareKeyValueMessage = fileCommand.issueFileCommand = void 0;
+	fileCommand.prepareKeyValueMessage = fileCommand.issueFileCommand = undefined;
 	// We use any as a valid input type
 	/* eslint-disable @typescript-eslint/no-explicit-any */
 	const crypto = __importStar(require$$0$4);
@@ -304,7 +304,7 @@ function requireProxy () {
 	if (hasRequiredProxy) return proxy;
 	hasRequiredProxy = 1;
 	Object.defineProperty(proxy, "__esModule", { value: true });
-	proxy.checkBypass = proxy.getProxyUrl = void 0;
+	proxy.checkBypass = proxy.getProxyUrl = undefined;
 	function getProxyUrl(reqUrl) {
 	    const usingSsl = reqUrl.protocol === 'https:';
 	    if (checkBypass(reqUrl)) {
@@ -1490,7 +1490,7 @@ function requireUtil$8 () {
 	let ReadableStream;
 	function ReadableStreamFrom (iterable) {
 	  if (!ReadableStream) {
-	    ReadableStream = require$$13.ReadableStream;
+	    ReadableStream = require$$14.ReadableStream;
 	  }
 
 	  if (ReadableStream.from) {
@@ -4547,7 +4547,7 @@ function requireUtil$7 () {
 
 	function isReadableStreamLike (stream) {
 	  if (!ReadableStream) {
-	    ReadableStream = require$$13.ReadableStream;
+	    ReadableStream = require$$14.ReadableStream;
 	  }
 
 	  return stream instanceof ReadableStream || (
@@ -6687,6 +6687,14 @@ function requireBody () {
 	const { File: UndiciFile } = requireFile();
 	const { parseMIMEType, serializeAMimeType } = requireDataURL();
 
+	let random;
+	try {
+	  const crypto = require('node:crypto');
+	  random = (max) => crypto.randomInt(0, max);
+	} catch {
+	  random = (max) => Math.floor(Math.random(max));
+	}
+
 	let ReadableStream = globalThis.ReadableStream;
 
 	/** @type {globalThis['File']} */
@@ -6697,7 +6705,7 @@ function requireBody () {
 	// https://fetch.spec.whatwg.org/#concept-bodyinit-extract
 	function extractBody (object, keepalive = false) {
 	  if (!ReadableStream) {
-	    ReadableStream = require$$13.ReadableStream;
+	    ReadableStream = require$$14.ReadableStream;
 	  }
 
 	  // 1. Let stream be null.
@@ -6772,7 +6780,7 @@ function requireBody () {
 	    // Set source to a copy of the bytes held by object.
 	    source = new Uint8Array(object.buffer.slice(object.byteOffset, object.byteOffset + object.byteLength));
 	  } else if (util.isFormDataLike(object)) {
-	    const boundary = `----formdata-undici-0${`${Math.floor(Math.random() * 1e11)}`.padStart(11, '0')}`;
+	    const boundary = `----formdata-undici-0${`${random(1e11)}`.padStart(11, '0')}`;
 	    const prefix = `--${boundary}\r\nContent-Disposition: form-data`;
 
 	    /*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
@@ -6918,7 +6926,7 @@ function requireBody () {
 	function safelyExtractBody (object, keepalive = false) {
 	  if (!ReadableStream) {
 	    // istanbul ignore next
-	    ReadableStream = require$$13.ReadableStream;
+	    ReadableStream = require$$14.ReadableStream;
 	  }
 
 	  // To safely extract a body and a `Content-Type` value from
@@ -8212,7 +8220,7 @@ function requireUtils$2 () {
 	if (hasRequiredUtils$2) return utils$2;
 	hasRequiredUtils$2 = 1;
 	Object.defineProperty(utils$2, "__esModule", { value: true });
-	utils$2.enumToMap = void 0;
+	utils$2.enumToMap = undefined;
 	function enumToMap(obj) {
 	    const res = {};
 	    Object.keys(obj).forEach((key) => {
@@ -8235,7 +8243,7 @@ function requireConstants$3 () {
 	hasRequiredConstants$3 = 1;
 	(function (exports) {
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.SPECIAL_HEADERS = exports.HEADER_STATE = exports.MINOR = exports.MAJOR = exports.CONNECTION_TOKEN_CHARS = exports.HEADER_CHARS = exports.TOKEN = exports.STRICT_TOKEN = exports.HEX = exports.URL_CHAR = exports.STRICT_URL_CHAR = exports.USERINFO_CHARS = exports.MARK = exports.ALPHANUM = exports.NUM = exports.HEX_MAP = exports.NUM_MAP = exports.ALPHA = exports.FINISH = exports.H_METHOD_MAP = exports.METHOD_MAP = exports.METHODS_RTSP = exports.METHODS_ICE = exports.METHODS_HTTP = exports.METHODS = exports.LENIENT_FLAGS = exports.FLAGS = exports.TYPE = exports.ERROR = void 0;
+		exports.SPECIAL_HEADERS = exports.HEADER_STATE = exports.MINOR = exports.MAJOR = exports.CONNECTION_TOKEN_CHARS = exports.HEADER_CHARS = exports.TOKEN = exports.STRICT_TOKEN = exports.HEX = exports.URL_CHAR = exports.STRICT_URL_CHAR = exports.USERINFO_CHARS = exports.MARK = exports.ALPHANUM = exports.NUM = exports.HEX_MAP = exports.NUM_MAP = exports.ALPHA = exports.FINISH = exports.H_METHOD_MAP = exports.METHOD_MAP = exports.METHODS_RTSP = exports.METHODS_ICE = exports.METHODS_HTTP = exports.METHODS = exports.LENIENT_FLAGS = exports.FLAGS = exports.TYPE = exports.ERROR = undefined;
 		const utils_1 = requireUtils$2();
 		(function (ERROR) {
 		    ERROR[ERROR["OK"] = 0] = "OK";
@@ -15574,7 +15582,7 @@ function requireResponse () {
 	const assert = require$$0$8;
 	const { types } = require$$0$7;
 
-	const ReadableStream = globalThis.ReadableStream || require$$13.ReadableStream;
+	const ReadableStream = globalThis.ReadableStream || require$$14.ReadableStream;
 	const textEncoder = new TextEncoder('utf-8');
 
 	// https://fetch.spec.whatwg.org/#response-class
@@ -16643,7 +16651,7 @@ function requireRequest () {
 
 	      // 2. Set finalBody to the result of creating a proxy for inputBody.
 	      if (!TransformStream) {
-	        TransformStream = require$$13.TransformStream;
+	        TransformStream = require$$14.TransformStream;
 	      }
 
 	      // https://streams.spec.whatwg.org/#readablestream-create-a-proxy
@@ -17136,7 +17144,7 @@ function requireFetch$1 () {
 	const { Readable, pipeline } = require$$0$9;
 	const { addAbortListener, isErrored, isReadable, nodeMajor, nodeMinor } = requireUtil$8();
 	const { dataURLProcessor, serializeAMimeType } = requireDataURL();
-	const { TransformStream } = require$$13;
+	const { TransformStream } = require$$14;
 	const { getGlobalDispatcher } = requireGlobal();
 	const { webidl } = requireWebidl();
 	const { STATUS_CODES } = require$$2__default;
@@ -18806,7 +18814,7 @@ function requireFetch$1 () {
 	  // cancelAlgorithm set to cancelAlgorithm, highWaterMark set to
 	  // highWaterMark, and sizeAlgorithm set to sizeAlgorithm.
 	  if (!ReadableStream) {
-	    ReadableStream = require$$13.ReadableStream;
+	    ReadableStream = require$$14.ReadableStream;
 	  }
 
 	  const stream = new ReadableStream(
@@ -24400,7 +24408,7 @@ function requireLib () {
 	    });
 	};
 	Object.defineProperty(lib, "__esModule", { value: true });
-	lib.HttpClient = lib.isHttps = lib.HttpClientResponse = lib.HttpClientError = lib.getProxyUrl = lib.MediaTypes = lib.Headers = lib.HttpCodes = void 0;
+	lib.HttpClient = lib.isHttps = lib.HttpClientResponse = lib.HttpClientError = lib.getProxyUrl = lib.MediaTypes = lib.Headers = lib.HttpCodes = undefined;
 	const http = __importStar(require$$2__default);
 	const https = __importStar(https__default);
 	const pm = __importStar(requireProxy());
@@ -24483,8 +24491,8 @@ function requireLib () {
 	        this.message = message;
 	    }
 	    readBody() {
-	        return __awaiter(this, void 0, void 0, function* () {
-	            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
+	            return new Promise((resolve) => __awaiter(this, undefined, undefined, function* () {
 	                let output = Buffer.alloc(0);
 	                this.message.on('data', (chunk) => {
 	                    output = Buffer.concat([output, chunk]);
@@ -24496,8 +24504,8 @@ function requireLib () {
 	        });
 	    }
 	    readBodyBuffer() {
-	        return __awaiter(this, void 0, void 0, function* () {
-	            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
+	            return new Promise((resolve) => __awaiter(this, undefined, undefined, function* () {
 	                const chunks = [];
 	                this.message.on('data', (chunk) => {
 	                    chunks.push(chunk);
@@ -24554,42 +24562,42 @@ function requireLib () {
 	        }
 	    }
 	    options(requestUrl, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request('OPTIONS', requestUrl, null, additionalHeaders || {});
 	        });
 	    }
 	    get(requestUrl, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request('GET', requestUrl, null, additionalHeaders || {});
 	        });
 	    }
 	    del(requestUrl, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request('DELETE', requestUrl, null, additionalHeaders || {});
 	        });
 	    }
 	    post(requestUrl, data, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request('POST', requestUrl, data, additionalHeaders || {});
 	        });
 	    }
 	    patch(requestUrl, data, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request('PATCH', requestUrl, data, additionalHeaders || {});
 	        });
 	    }
 	    put(requestUrl, data, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request('PUT', requestUrl, data, additionalHeaders || {});
 	        });
 	    }
 	    head(requestUrl, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request('HEAD', requestUrl, null, additionalHeaders || {});
 	        });
 	    }
 	    sendStream(verb, requestUrl, stream, additionalHeaders) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return this.request(verb, requestUrl, stream, additionalHeaders);
 	        });
 	    }
@@ -24598,14 +24606,14 @@ function requireLib () {
 	     * Be aware that not found returns a null.  Other errors (4xx, 5xx) reject the promise
 	     */
 	    getJson(requestUrl, additionalHeaders = {}) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
 	            const res = yield this.get(requestUrl, additionalHeaders);
 	            return this._processResponse(res, this.requestOptions);
 	        });
 	    }
 	    postJson(requestUrl, obj, additionalHeaders = {}) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            const data = JSON.stringify(obj, null, 2);
 	            additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
 	            additionalHeaders[Headers.ContentType] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.ContentType, MediaTypes.ApplicationJson);
@@ -24614,7 +24622,7 @@ function requireLib () {
 	        });
 	    }
 	    putJson(requestUrl, obj, additionalHeaders = {}) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            const data = JSON.stringify(obj, null, 2);
 	            additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
 	            additionalHeaders[Headers.ContentType] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.ContentType, MediaTypes.ApplicationJson);
@@ -24623,7 +24631,7 @@ function requireLib () {
 	        });
 	    }
 	    patchJson(requestUrl, obj, additionalHeaders = {}) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            const data = JSON.stringify(obj, null, 2);
 	            additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.Accept, MediaTypes.ApplicationJson);
 	            additionalHeaders[Headers.ContentType] = this._getExistingOrDefaultHeader(additionalHeaders, Headers.ContentType, MediaTypes.ApplicationJson);
@@ -24637,7 +24645,7 @@ function requireLib () {
 	     * Prefer get, del, post and patch
 	     */
 	    request(verb, requestUrl, data, headers) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            if (this._disposed) {
 	                throw new Error('Client has already been disposed.');
 	            }
@@ -24733,7 +24741,7 @@ function requireLib () {
 	     * @param data
 	     */
 	    requestRaw(info, data) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            return new Promise((resolve, reject) => {
 	                function callbackForResult(err, res) {
 	                    if (err) {
@@ -24942,15 +24950,15 @@ function requireLib () {
 	        return proxyAgent;
 	    }
 	    _performExponentialBackoff(retryNumber) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            retryNumber = Math.min(ExponentialBackoffCeiling, retryNumber);
 	            const ms = ExponentialBackoffTimeSlice * Math.pow(2, retryNumber);
 	            return new Promise(resolve => setTimeout(() => resolve(), ms));
 	        });
 	    }
 	    _processResponse(res, options) {
-	        return __awaiter(this, void 0, void 0, function* () {
-	            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
+	            return new Promise((resolve, reject) => __awaiter(this, undefined, undefined, function* () {
 	                const statusCode = res.message.statusCode || 0;
 	                const response = {
 	                    statusCode,
@@ -25037,7 +25045,7 @@ function requireAuth () {
 	    });
 	};
 	Object.defineProperty(auth$1, "__esModule", { value: true });
-	auth$1.PersonalAccessTokenCredentialHandler = auth$1.BearerCredentialHandler = auth$1.BasicCredentialHandler = void 0;
+	auth$1.PersonalAccessTokenCredentialHandler = auth$1.BearerCredentialHandler = auth$1.BasicCredentialHandler = undefined;
 	class BasicCredentialHandler {
 	    constructor(username, password) {
 	        this.username = username;
@@ -25054,7 +25062,7 @@ function requireAuth () {
 	        return false;
 	    }
 	    handleAuthentication() {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            throw new Error('not implemented');
 	        });
 	    }
@@ -25077,7 +25085,7 @@ function requireAuth () {
 	        return false;
 	    }
 	    handleAuthentication() {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            throw new Error('not implemented');
 	        });
 	    }
@@ -25100,7 +25108,7 @@ function requireAuth () {
 	        return false;
 	    }
 	    handleAuthentication() {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            throw new Error('not implemented');
 	        });
 	    }
@@ -25125,7 +25133,7 @@ function requireOidcUtils () {
 	    });
 	};
 	Object.defineProperty(oidcUtils, "__esModule", { value: true });
-	oidcUtils.OidcClient = void 0;
+	oidcUtils.OidcClient = undefined;
 	const http_client_1 = requireLib();
 	const auth_1 = requireAuth();
 	const core_1 = requireCore();
@@ -25153,7 +25161,7 @@ function requireOidcUtils () {
 	    }
 	    static getCall(id_token_url) {
 	        var _a;
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            const httpclient = OidcClient.createHttpClient();
 	            const res = yield httpclient
 	                .getJson(id_token_url)
@@ -25162,7 +25170,7 @@ function requireOidcUtils () {
         Error Code : ${error.statusCode}\n 
         Error Message: ${error.message}`);
 	            });
-	            const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
+	            const id_token = (_a = res.result) === null || _a === undefined ? undefined : _a.value;
 	            if (!id_token) {
 	                throw new Error('Response json body do not have ID Token field');
 	            }
@@ -25170,7 +25178,7 @@ function requireOidcUtils () {
 	        });
 	    }
 	    static getIDToken(audience) {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            try {
 	                // New ID Token is requested from action service
 	                let id_token_url = OidcClient.getIDTokenUrl();
@@ -25212,7 +25220,7 @@ function requireSummary () {
 		    });
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.summary = exports.markdownSummary = exports.SUMMARY_DOCS_URL = exports.SUMMARY_ENV_VAR = void 0;
+		exports.summary = exports.markdownSummary = exports.SUMMARY_DOCS_URL = exports.SUMMARY_ENV_VAR = undefined;
 		const os_1 = require$$0$3;
 		const fs_1 = require$$0$5;
 		const { access, appendFile, writeFile } = fs_1.promises;
@@ -25229,7 +25237,7 @@ function requireSummary () {
 		     * @returns step summary file path
 		     */
 		    filePath() {
-		        return __awaiter(this, void 0, void 0, function* () {
+		        return __awaiter(this, undefined, undefined, function* () {
 		            if (this._filePath) {
 		                return this._filePath;
 		            }
@@ -25273,8 +25281,8 @@ function requireSummary () {
 		     * @returns {Promise<Summary>} summary instance
 		     */
 		    write(options) {
-		        return __awaiter(this, void 0, void 0, function* () {
-		            const overwrite = !!(options === null || options === void 0 ? void 0 : options.overwrite);
+		        return __awaiter(this, undefined, undefined, function* () {
+		            const overwrite = !!(options === null || options === undefined ? undefined : options.overwrite);
 		            const filePath = yield this.filePath();
 		            const writeFunc = overwrite ? writeFile : appendFile;
 		            yield writeFunc(filePath, this._buffer, { encoding: 'utf8' });
@@ -25287,7 +25295,7 @@ function requireSummary () {
 		     * @returns {Summary} summary instance
 		     */
 		    clear() {
-		        return __awaiter(this, void 0, void 0, function* () {
+		        return __awaiter(this, undefined, undefined, function* () {
 		            return this.emptyBuffer().write({ overwrite: true });
 		        });
 		    }
@@ -25519,7 +25527,7 @@ function requirePathUtils () {
 	    return result;
 	};
 	Object.defineProperty(pathUtils, "__esModule", { value: true });
-	pathUtils.toPlatformPath = pathUtils.toWin32Path = pathUtils.toPosixPath = void 0;
+	pathUtils.toPlatformPath = pathUtils.toWin32Path = pathUtils.toPosixPath = undefined;
 	const path = __importStar(require$$1$6);
 	/**
 	 * toPosixPath converts the given path to the posix form. On Windows, \\ will be
@@ -25605,13 +25613,13 @@ function requireIoUtil () {
 		};
 		var _a;
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.getCmdPath = exports.tryGetExecutablePath = exports.isRooted = exports.isDirectory = exports.exists = exports.IS_WINDOWS = exports.unlink = exports.symlink = exports.stat = exports.rmdir = exports.rename = exports.readlink = exports.readdir = exports.mkdir = exports.lstat = exports.copyFile = exports.chmod = void 0;
+		exports.getCmdPath = exports.tryGetExecutablePath = exports.isRooted = exports.isDirectory = exports.exists = exports.IS_WINDOWS = exports.unlink = exports.symlink = exports.stat = exports.rmdir = exports.rename = exports.readlink = exports.readdir = exports.mkdir = exports.lstat = exports.copyFile = exports.chmod = undefined;
 		const fs = __importStar(require$$0$5);
 		const path = __importStar(require$$1$6);
 		_a = fs.promises, exports.chmod = _a.chmod, exports.copyFile = _a.copyFile, exports.lstat = _a.lstat, exports.mkdir = _a.mkdir, exports.readdir = _a.readdir, exports.readlink = _a.readlink, exports.rename = _a.rename, exports.rmdir = _a.rmdir, exports.stat = _a.stat, exports.symlink = _a.symlink, exports.unlink = _a.unlink;
 		exports.IS_WINDOWS = process.platform === 'win32';
 		function exists(fsPath) {
-		    return __awaiter(this, void 0, void 0, function* () {
+		    return __awaiter(this, undefined, undefined, function* () {
 		        try {
 		            yield exports.stat(fsPath);
 		        }
@@ -25626,7 +25634,7 @@ function requireIoUtil () {
 		}
 		exports.exists = exists;
 		function isDirectory(fsPath, useStat = false) {
-		    return __awaiter(this, void 0, void 0, function* () {
+		    return __awaiter(this, undefined, undefined, function* () {
 		        const stats = useStat ? yield exports.stat(fsPath) : yield exports.lstat(fsPath);
 		        return stats.isDirectory();
 		    });
@@ -25655,7 +25663,7 @@ function requireIoUtil () {
 		 * @return if file exists and is executable, returns the file path. otherwise empty string.
 		 */
 		function tryGetExecutablePath(filePath, extensions) {
-		    return __awaiter(this, void 0, void 0, function* () {
+		    return __awaiter(this, undefined, undefined, function* () {
 		        let stats = undefined;
 		        try {
 		            // test file exists
@@ -25747,7 +25755,7 @@ function requireIoUtil () {
 		// Get the path of cmd.exe in windows
 		function getCmdPath() {
 		    var _a;
-		    return (_a = process.env['COMSPEC']) !== null && _a !== void 0 ? _a : `cmd.exe`;
+		    return (_a = process.env['COMSPEC']) !== null && _a !== undefined ? _a : `cmd.exe`;
 		}
 		exports.getCmdPath = getCmdPath;
 		
@@ -25789,9 +25797,9 @@ function requireIo () {
 	    });
 	};
 	Object.defineProperty(io, "__esModule", { value: true });
-	io.findInPath = io.which = io.mkdirP = io.rmRF = io.mv = io.cp = void 0;
+	io.findInPath = io.which = io.mkdirP = io.rmRF = io.mv = io.cp = undefined;
 	const assert_1 = require$$0$8;
-	const childProcess = __importStar(child_process);
+	const childProcess = __importStar(require$$1$7);
 	const path = __importStar(require$$1$6);
 	const util_1 = require$$0$7;
 	const ioUtil = __importStar(requireIoUtil());
@@ -25806,7 +25814,7 @@ function requireIo () {
 	 * @param     options   optional. See CopyOptions.
 	 */
 	function cp(source, dest, options = {}) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        const { force, recursive, copySourceDirectory } = readCopyOptions(options);
 	        const destStat = (yield ioUtil.exists(dest)) ? yield ioUtil.stat(dest) : null;
 	        // Dest is an existing file, but not forcing
@@ -25847,7 +25855,7 @@ function requireIo () {
 	 * @param     options   optional. See MoveOptions.
 	 */
 	function mv(source, dest, options = {}) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        if (yield ioUtil.exists(dest)) {
 	            let destExists = true;
 	            if (yield ioUtil.isDirectory(dest)) {
@@ -25875,7 +25883,7 @@ function requireIo () {
 	 * @param inputPath path to remove
 	 */
 	function rmRF(inputPath) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        if (ioUtil.IS_WINDOWS) {
 	            // Node doesn't provide a delete operation, only an unlink function. This means that if the file is being used by another
 	            // program (e.g. antivirus), it won't be deleted. To address this, we shell out the work to rd/del.
@@ -25944,7 +25952,7 @@ function requireIo () {
 	 * @returns Promise<void>
 	 */
 	function mkdirP(fsPath) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        assert_1.ok(fsPath, 'a path argument must be provided');
 	        yield ioUtil.mkdir(fsPath, { recursive: true });
 	    });
@@ -25959,7 +25967,7 @@ function requireIo () {
 	 * @returns   Promise<string>   path to tool
 	 */
 	function which(tool, check) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        if (!tool) {
 	            throw new Error("parameter 'tool' is required");
 	        }
@@ -25990,7 +25998,7 @@ function requireIo () {
 	 * @returns   Promise<string[]>  the paths of the tool
 	 */
 	function findInPath(tool) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        if (!tool) {
 	            throw new Error("parameter 'tool' is required");
 	        }
@@ -26050,7 +26058,7 @@ function requireIo () {
 	    return { force, recursive, copySourceDirectory };
 	}
 	function cpDirRecursive(sourceDir, destDir, currentDepth, force) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        // Ensure there is not a run away recursive copy
 	        if (currentDepth >= 255)
 	            return;
@@ -26075,7 +26083,7 @@ function requireIo () {
 	}
 	// Buffered file copy
 	function copyFile(srcFile, destFile, force) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        if ((yield ioUtil.lstat(srcFile)).isSymbolicLink()) {
 	            // unlink/re-link it
 	            try {
@@ -26137,10 +26145,10 @@ function requireToolrunner () {
 	    });
 	};
 	Object.defineProperty(toolrunner, "__esModule", { value: true });
-	toolrunner.argStringToArray = toolrunner.ToolRunner = void 0;
+	toolrunner.argStringToArray = toolrunner.ToolRunner = undefined;
 	const os = __importStar(require$$0$3);
 	const events = __importStar(require$$0$6);
-	const child = __importStar(child_process);
+	const child = __importStar(require$$1$7);
 	const path = __importStar(require$$1$6);
 	const io = __importStar(requireIo());
 	const ioUtil = __importStar(requireIoUtil());
@@ -26490,7 +26498,7 @@ function requireToolrunner () {
 	     * @returns   number
 	     */
 	    exec() {
-	        return __awaiter(this, void 0, void 0, function* () {
+	        return __awaiter(this, undefined, undefined, function* () {
 	            // root the tool path if it is unrooted and contains relative pathing
 	            if (!ioUtil.isRooted(this.toolPath) &&
 	                (this.toolPath.includes('/') ||
@@ -26501,7 +26509,7 @@ function requireToolrunner () {
 	            // if the tool is only a file name, then resolve it from the PATH
 	            // otherwise verify it exists (add extension on Windows if necessary)
 	            this.toolPath = yield io.which(this.toolPath, true);
-	            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+	            return new Promise((resolve, reject) => __awaiter(this, undefined, undefined, function* () {
 	                this._debug(`exec tool: ${this.toolPath}`);
 	                this._debug('arguments:');
 	                for (const arg of this.args) {
@@ -26762,7 +26770,7 @@ function requireExec () {
 	    });
 	};
 	Object.defineProperty(exec, "__esModule", { value: true });
-	exec.getExecOutput = exec.exec = void 0;
+	exec.getExecOutput = exec.exec = undefined;
 	const string_decoder_1 = require$$6$1;
 	const tr = __importStar(requireToolrunner());
 	/**
@@ -26776,7 +26784,7 @@ function requireExec () {
 	 * @returns   Promise<number>    exit code
 	 */
 	function exec$1(commandLine, args, options) {
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        const commandArgs = tr.argStringToArray(commandLine);
 	        if (commandArgs.length === 0) {
 	            throw new Error(`Parameter 'commandLine' cannot be null or empty.`);
@@ -26801,14 +26809,14 @@ function requireExec () {
 	 */
 	function getExecOutput(commandLine, args, options) {
 	    var _a, _b;
-	    return __awaiter(this, void 0, void 0, function* () {
+	    return __awaiter(this, undefined, undefined, function* () {
 	        let stdout = '';
 	        let stderr = '';
 	        //Using string decoder covers the case where a mult-byte character is split
 	        const stdoutDecoder = new string_decoder_1.StringDecoder('utf8');
 	        const stderrDecoder = new string_decoder_1.StringDecoder('utf8');
-	        const originalStdoutListener = (_a = options === null || options === void 0 ? void 0 : options.listeners) === null || _a === void 0 ? void 0 : _a.stdout;
-	        const originalStdErrListener = (_b = options === null || options === void 0 ? void 0 : options.listeners) === null || _b === void 0 ? void 0 : _b.stderr;
+	        const originalStdoutListener = (_a = options === null || options === undefined ? undefined : options.listeners) === null || _a === undefined ? undefined : _a.stdout;
+	        const originalStdErrListener = (_b = options === null || options === undefined ? undefined : options.listeners) === null || _b === undefined ? undefined : _b.stderr;
 	        const stdErrListener = (data) => {
 	            stderr += stderrDecoder.write(data);
 	            if (originalStdErrListener) {
@@ -26821,7 +26829,7 @@ function requireExec () {
 	                originalStdoutListener(data);
 	            }
 	        };
-	        const listeners = Object.assign(Object.assign({}, options === null || options === void 0 ? void 0 : options.listeners), { stdout: stdOutListener, stderr: stdErrListener });
+	        const listeners = Object.assign(Object.assign({}, options === null || options === undefined ? undefined : options.listeners), { stdout: stdOutListener, stderr: stdErrListener });
 	        const exitCode = yield exec$1(commandLine, args, Object.assign(Object.assign({}, options), { listeners }));
 	        //flush any remaining characters
 	        stdout += stdoutDecoder.end();
@@ -26880,10 +26888,10 @@ function requirePlatform () {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.getDetails = exports.isLinux = exports.isMacOS = exports.isWindows = exports.arch = exports.platform = void 0;
+		exports.getDetails = exports.isLinux = exports.isMacOS = exports.isWindows = exports.arch = exports.platform = undefined;
 		const os_1 = __importDefault(require$$0$3);
 		const exec = __importStar(requireExec());
-		const getWindowsInfo = () => __awaiter(void 0, void 0, void 0, function* () {
+		const getWindowsInfo = () => __awaiter(undefined, undefined, undefined, function* () {
 		    const { stdout: version } = yield exec.getExecOutput('powershell -command "(Get-CimInstance -ClassName Win32_OperatingSystem).Version"', undefined, {
 		        silent: true
 		    });
@@ -26895,19 +26903,19 @@ function requirePlatform () {
 		        version: version.trim()
 		    };
 		});
-		const getMacOsInfo = () => __awaiter(void 0, void 0, void 0, function* () {
+		const getMacOsInfo = () => __awaiter(undefined, undefined, undefined, function* () {
 		    var _a, _b, _c, _d;
 		    const { stdout } = yield exec.getExecOutput('sw_vers', undefined, {
 		        silent: true
 		    });
-		    const version = (_b = (_a = stdout.match(/ProductVersion:\s*(.+)/)) === null || _a === void 0 ? void 0 : _a[1]) !== null && _b !== void 0 ? _b : '';
-		    const name = (_d = (_c = stdout.match(/ProductName:\s*(.+)/)) === null || _c === void 0 ? void 0 : _c[1]) !== null && _d !== void 0 ? _d : '';
+		    const version = (_b = (_a = stdout.match(/ProductVersion:\s*(.+)/)) === null || _a === undefined ? undefined : _a[1]) !== null && _b !== undefined ? _b : '';
+		    const name = (_d = (_c = stdout.match(/ProductName:\s*(.+)/)) === null || _c === undefined ? undefined : _c[1]) !== null && _d !== undefined ? _d : '';
 		    return {
 		        name,
 		        version
 		    };
 		});
-		const getLinuxInfo = () => __awaiter(void 0, void 0, void 0, function* () {
+		const getLinuxInfo = () => __awaiter(undefined, undefined, undefined, function* () {
 		    const { stdout } = yield exec.getExecOutput('lsb_release', ['-i', '-r', '-s'], {
 		        silent: true
 		    });
@@ -26923,7 +26931,7 @@ function requirePlatform () {
 		exports.isMacOS = exports.platform === 'darwin';
 		exports.isLinux = exports.platform === 'linux';
 		function getDetails() {
-		    return __awaiter(this, void 0, void 0, function* () {
+		    return __awaiter(this, undefined, undefined, function* () {
 		        return Object.assign(Object.assign({}, (yield (exports.isWindows
 		            ? getWindowsInfo()
 		            : exports.isMacOS
@@ -26980,7 +26988,7 @@ function requireCore () {
 		    });
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.platform = exports.toPlatformPath = exports.toWin32Path = exports.toPosixPath = exports.markdownSummary = exports.summary = exports.getIDToken = exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.notice = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
+		exports.platform = exports.toPlatformPath = exports.toWin32Path = exports.toPosixPath = exports.markdownSummary = exports.summary = exports.getIDToken = exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.notice = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = undefined;
 		const command_1 = requireCommand();
 		const file_command_1 = requireFileCommand();
 		const utils_1 = requireUtils$3();
@@ -27221,7 +27229,7 @@ function requireCore () {
 		 * @param fn The function to wrap in the group
 		 */
 		function group(name, fn) {
-		    return __awaiter(this, void 0, void 0, function* () {
+		    return __awaiter(this, undefined, undefined, function* () {
 		        startGroup(name);
 		        let result;
 		        try {
@@ -27263,7 +27271,7 @@ function requireCore () {
 		}
 		exports.getState = getState;
 		function getIDToken(aud) {
-		    return __awaiter(this, void 0, void 0, function* () {
+		    return __awaiter(this, undefined, undefined, function* () {
 		        return yield oidc_utils_1.OidcClient.getIDToken(aud);
 		    });
 		}
@@ -27306,7 +27314,7 @@ function requireContext () {
 	if (hasRequiredContext) return context$1;
 	hasRequiredContext = 1;
 	Object.defineProperty(context$1, "__esModule", { value: true });
-	context$1.Context = void 0;
+	context$1.Context = undefined;
 	const fs_1 = require$$0$5;
 	const os_1 = require$$0$3;
 	class Context {
@@ -27334,10 +27342,10 @@ function requireContext () {
 	        this.job = process.env.GITHUB_JOB;
 	        this.runNumber = parseInt(process.env.GITHUB_RUN_NUMBER, 10);
 	        this.runId = parseInt(process.env.GITHUB_RUN_ID, 10);
-	        this.apiUrl = (_a = process.env.GITHUB_API_URL) !== null && _a !== void 0 ? _a : `https://api.github.com`;
-	        this.serverUrl = (_b = process.env.GITHUB_SERVER_URL) !== null && _b !== void 0 ? _b : `https://github.com`;
+	        this.apiUrl = (_a = process.env.GITHUB_API_URL) !== null && _a !== undefined ? _a : `https://api.github.com`;
+	        this.serverUrl = (_b = process.env.GITHUB_SERVER_URL) !== null && _b !== undefined ? _b : `https://github.com`;
 	        this.graphqlUrl =
-	            (_c = process.env.GITHUB_GRAPHQL_URL) !== null && _c !== void 0 ? _c : `https://api.github.com/graphql`;
+	            (_c = process.env.GITHUB_GRAPHQL_URL) !== null && _c !== undefined ? _c : `https://api.github.com/graphql`;
 	    }
 	    get issue() {
 	        const payload = this.payload;
@@ -27404,7 +27412,7 @@ function requireUtils$1 () {
 	    });
 	};
 	Object.defineProperty(utils, "__esModule", { value: true });
-	utils.getApiBaseUrl = utils.getProxyFetch = utils.getProxyAgentDispatcher = utils.getProxyAgent = utils.getAuthString = void 0;
+	utils.getApiBaseUrl = utils.getProxyFetch = utils.getProxyAgentDispatcher = utils.getProxyAgent = utils.getAuthString = undefined;
 	const httpClient = __importStar(requireLib());
 	const undici_1 = requireUndici();
 	function getAuthString(token, options) {
@@ -27429,7 +27437,7 @@ function requireUtils$1 () {
 	utils.getProxyAgentDispatcher = getProxyAgentDispatcher;
 	function getProxyFetch(destinationUrl) {
 	    const httpDispatcher = getProxyAgentDispatcher(destinationUrl);
-	    const proxyFetch = (url, opts) => __awaiter(this, void 0, void 0, function* () {
+	    const proxyFetch = (url, opts) => __awaiter(this, undefined, undefined, function* () {
 	        return (0, undici_1.fetch)(url, Object.assign(Object.assign({}, opts), { dispatcher: httpDispatcher }));
 	    });
 	    return proxyFetch;
@@ -27641,9 +27649,9 @@ function requireBeforeAfterHook () {
 
 var beforeAfterHookExports = requireBeforeAfterHook();
 
-const VERSION$b = "9.0.5";
+const VERSION$9 = "9.0.5";
 
-const userAgent = `octokit-endpoint.js/${VERSION$b} ${getUserAgent()}`;
+const userAgent = `octokit-endpoint.js/${VERSION$9} ${getUserAgent()}`;
 const DEFAULTS = {
   method: "GET",
   baseUrl: "https://api.github.com",
@@ -27666,7 +27674,7 @@ function lowercaseKeys(object) {
   }, {});
 }
 
-function isPlainObject$3(value) {
+function isPlainObject$2(value) {
   if (typeof value !== "object" || value === null)
     return false;
   if (Object.prototype.toString.call(value) !== "[object Object]")
@@ -27681,7 +27689,7 @@ function isPlainObject$3(value) {
 function mergeDeep(defaults, options) {
   const result = Object.assign({}, defaults);
   Object.keys(options).forEach((key) => {
-    if (isPlainObject$3(options[key])) {
+    if (isPlainObject$2(options[key])) {
       if (!(key in defaults))
         Object.assign(result, { [key]: options[key] });
       else
@@ -27695,14 +27703,14 @@ function mergeDeep(defaults, options) {
 
 function removeUndefinedProperties(obj) {
   for (const key in obj) {
-    if (obj[key] === void 0) {
+    if (obj[key] === undefined) {
       delete obj[key];
     }
   }
   return obj;
 }
 
-function merge$2(defaults, route, options) {
+function merge$1(defaults, route, options) {
   if (typeof route === "string") {
     let [method, url] = route.split(" ");
     options = Object.assign(url ? { method, url } : { url: method }, options);
@@ -27782,7 +27790,7 @@ function encodeValue(operator, value, key) {
   }
 }
 function isDefined(value) {
-  return value !== void 0 && value !== null;
+  return value !== undefined && value !== null;
 }
 function isKeyOperator(operator) {
   return operator === ";" || operator === "&" || operator === "?";
@@ -27956,25 +27964,25 @@ function parse(options) {
 }
 
 function endpointWithDefaults(defaults, route, options) {
-  return parse(merge$2(defaults, route, options));
+  return parse(merge$1(defaults, route, options));
 }
 
 function withDefaults$2(oldDefaults, newDefaults) {
-  const DEFAULTS = merge$2(oldDefaults, newDefaults);
+  const DEFAULTS = merge$1(oldDefaults, newDefaults);
   const endpoint = endpointWithDefaults.bind(null, DEFAULTS);
   return Object.assign(endpoint, {
     DEFAULTS,
     defaults: withDefaults$2.bind(null, DEFAULTS),
-    merge: merge$2.bind(null, DEFAULTS),
+    merge: merge$1.bind(null, DEFAULTS),
     parse
   });
 }
 
 const endpoint = withDefaults$2(null, DEFAULTS);
 
-const VERSION$a = "8.4.0";
+const VERSION$8 = "8.4.0";
 
-function isPlainObject$2(value) {
+function isPlainObject$1(value) {
   if (typeof value !== "object" || value === null)
     return false;
   if (Object.prototype.toString.call(value) !== "[object Object]")
@@ -28157,7 +28165,7 @@ function getBufferResponse(response) {
 function fetchWrapper(requestOptions) {
   const log = requestOptions.request && requestOptions.request.log ? requestOptions.request.log : console;
   const parseSuccessResponseBody = requestOptions.request?.parseSuccessResponseBody !== false;
-  if (isPlainObject$2(requestOptions.body) || Array.isArray(requestOptions.body)) {
+  if (isPlainObject$1(requestOptions.body) || Array.isArray(requestOptions.body)) {
     requestOptions.body = JSON.stringify(requestOptions.body);
   }
   let headers = {};
@@ -28206,7 +28214,7 @@ function fetchWrapper(requestOptions) {
           url,
           status,
           headers,
-          data: void 0
+          data: undefined
         },
         request: requestOptions
       });
@@ -28315,14 +28323,14 @@ function withDefaults$1(oldEndpoint, newDefaults) {
 
 const request = withDefaults$1(endpoint, {
   headers: {
-    "user-agent": `octokit-request.js/${VERSION$a} ${getUserAgent()}`
+    "user-agent": `octokit-request.js/${VERSION$8} ${getUserAgent()}`
   }
 });
 
 // pkg/dist-src/index.js
 
 // pkg/dist-src/version.js
-var VERSION$9 = "7.1.0";
+var VERSION$7 = "7.1.0";
 
 // pkg/dist-src/error.js
 function _buildMessageForResponseErrors(data) {
@@ -28422,7 +28430,7 @@ function withDefaults(request2, newDefaults) {
 // pkg/dist-src/index.js
 withDefaults(request, {
   headers: {
-    "user-agent": `octokit-graphql.js/${VERSION$9} ${getUserAgent()}`
+    "user-agent": `octokit-graphql.js/${VERSION$7} ${getUserAgent()}`
   },
   method: "POST",
   url: "/graphql"
@@ -28481,17 +28489,17 @@ const createTokenAuth = function createTokenAuth2(token) {
 };
 
 // pkg/dist-src/version.js
-var VERSION$8 = "5.2.0";
+var VERSION$6 = "5.2.0";
 
 // pkg/dist-src/index.js
 var noop = () => {
 };
 var consoleWarn = console.warn.bind(console);
 var consoleError = console.error.bind(console);
-var userAgentTrail = `octokit-core.js/${VERSION$8} ${getUserAgent()}`;
+var userAgentTrail = `octokit-core.js/${VERSION$6} ${getUserAgent()}`;
 var Octokit = class {
   static {
-    this.VERSION = VERSION$8;
+    this.VERSION = VERSION$6;
   }
   static defaults(defaults) {
     const OctokitWithDefaults = class extends this {
@@ -28616,7 +28624,7 @@ var distWeb$1 = /*#__PURE__*/Object.freeze({
 
 var require$$2$2 = /*@__PURE__*/getAugmentedNamespace(distWeb$1);
 
-const VERSION$7 = "10.4.1";
+const VERSION$5 = "10.4.1";
 
 const Endpoints = {
   actions: {
@@ -30664,7 +30672,7 @@ const handler = {
     }
     const method = endpointMethodsMap.get(scope).get(methodName);
     if (!method) {
-      return void 0;
+      return undefined;
     }
     const { endpointDefaults, decorations } = method;
     if (decorations) {
@@ -30695,7 +30703,7 @@ function decorate(octokit, scope, methodName, defaults, decorations) {
     if (decorations.mapToData) {
       options = Object.assign({}, options, {
         data: options[decorations.mapToData],
-        [decorations.mapToData]: void 0
+        [decorations.mapToData]: undefined
       });
       return requestWithDefaults(options);
     }
@@ -30736,7 +30744,7 @@ function restEndpointMethods(octokit) {
     rest: api
   };
 }
-restEndpointMethods.VERSION = VERSION$7;
+restEndpointMethods.VERSION = VERSION$5;
 function legacyRestEndpointMethods(octokit) {
   const api = endpointsToMethods(octokit);
   return {
@@ -30744,7 +30752,7 @@ function legacyRestEndpointMethods(octokit) {
     rest: api
   };
 }
-legacyRestEndpointMethods.VERSION = VERSION$7;
+legacyRestEndpointMethods.VERSION = VERSION$5;
 
 var distSrc = /*#__PURE__*/Object.freeze({
 	__proto__: null,
@@ -30755,7 +30763,7 @@ var distSrc = /*#__PURE__*/Object.freeze({
 var require$$3$1 = /*@__PURE__*/getAugmentedNamespace(distSrc);
 
 // pkg/dist-src/version.js
-var VERSION$6 = "9.2.1";
+var VERSION$4 = "9.2.1";
 
 // pkg/dist-src/normalize-paginated-list-response.js
 function normalizePaginatedListResponse(response) {
@@ -30827,7 +30835,7 @@ function iterator(octokit, route, parameters) {
 function paginate(octokit, route, parameters, mapFn) {
   if (typeof parameters === "function") {
     mapFn = parameters;
-    parameters = void 0;
+    parameters = undefined;
   }
   return gather(
     octokit,
@@ -31115,7 +31123,7 @@ function paginateRest(octokit) {
     })
   };
 }
-paginateRest.VERSION = VERSION$6;
+paginateRest.VERSION = VERSION$4;
 
 var distWeb = /*#__PURE__*/Object.freeze({
 	__proto__: null,
@@ -31157,7 +31165,7 @@ function requireUtils () {
 		    return result;
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.getOctokitOptions = exports.GitHub = exports.defaults = exports.context = void 0;
+		exports.getOctokitOptions = exports.GitHub = exports.defaults = exports.context = undefined;
 		const Context = __importStar(requireContext());
 		const Utils = __importStar(requireUtils$1());
 		// octokit + plugins
@@ -31224,7 +31232,7 @@ function requireGithub () {
 	    return result;
 	};
 	Object.defineProperty(github, "__esModule", { value: true });
-	github.getOctokit = github.context = void 0;
+	github.getOctokit = github.context = undefined;
 	const Context = __importStar(requireContext());
 	const utils_1 = requireUtils();
 	github.context = new Context.Context();
@@ -31599,7 +31607,7 @@ var _globalThis$1 = typeof globalThis === 'object' ? globalThis : global;
  * limitations under the License.
  */
 // this is autogenerated file, see scripts/version-update.js
-var VERSION$5 = '1.9.0';
+var VERSION$3 = '1.9.0';
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -31716,7 +31724,7 @@ function _makeCompatibilityCheck(ownVersion) {
  *
  * @param version version of the API requesting an instance of the global API
  */
-var isCompatible = _makeCompatibilityCheck(VERSION$5);
+var isCompatible = _makeCompatibilityCheck(VERSION$3);
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -31733,14 +31741,14 @@ var isCompatible = _makeCompatibilityCheck(VERSION$5);
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var major = VERSION$5.split('.')[0];
+var major = VERSION$3.split('.')[0];
 var GLOBAL_OPENTELEMETRY_API_KEY = Symbol.for("opentelemetry.js.api." + major);
 var _global = _globalThis$1;
 function registerGlobal(type, instance, diag, allowOverride) {
     var _a;
-    if (allowOverride === void 0) { allowOverride = false; }
-    var api = (_global[GLOBAL_OPENTELEMETRY_API_KEY] = (_a = _global[GLOBAL_OPENTELEMETRY_API_KEY]) !== null && _a !== void 0 ? _a : {
-        version: VERSION$5,
+    if (allowOverride === undefined) { allowOverride = false; }
+    var api = (_global[GLOBAL_OPENTELEMETRY_API_KEY] = (_a = _global[GLOBAL_OPENTELEMETRY_API_KEY]) !== null && _a !== undefined ? _a : {
+        version: VERSION$3,
     });
     if (!allowOverride && api[type]) {
         // already registered an API of this type
@@ -31748,26 +31756,26 @@ function registerGlobal(type, instance, diag, allowOverride) {
         diag.error(err.stack || err.message);
         return false;
     }
-    if (api.version !== VERSION$5) {
+    if (api.version !== VERSION$3) {
         // All registered APIs must be of the same version exactly
-        var err = new Error("@opentelemetry/api: Registration of version v" + api.version + " for " + type + " does not match previously registered API v" + VERSION$5);
+        var err = new Error("@opentelemetry/api: Registration of version v" + api.version + " for " + type + " does not match previously registered API v" + VERSION$3);
         diag.error(err.stack || err.message);
         return false;
     }
     api[type] = instance;
-    diag.debug("@opentelemetry/api: Registered a global for " + type + " v" + VERSION$5 + ".");
+    diag.debug("@opentelemetry/api: Registered a global for " + type + " v" + VERSION$3 + ".");
     return true;
 }
 function getGlobal(type) {
     var _a, _b;
-    var globalVersion = (_a = _global[GLOBAL_OPENTELEMETRY_API_KEY]) === null || _a === void 0 ? void 0 : _a.version;
+    var globalVersion = (_a = _global[GLOBAL_OPENTELEMETRY_API_KEY]) === null || _a === undefined ? undefined : _a.version;
     if (!globalVersion || !isCompatible(globalVersion)) {
         return;
     }
-    return (_b = _global[GLOBAL_OPENTELEMETRY_API_KEY]) === null || _b === void 0 ? void 0 : _b[type];
+    return (_b = _global[GLOBAL_OPENTELEMETRY_API_KEY]) === null || _b === undefined ? undefined : _b[type];
 }
 function unregisterGlobal(type, diag) {
-    diag.debug("@opentelemetry/api: Unregistering a global for " + type + " v" + VERSION$5 + ".");
+    diag.debug("@opentelemetry/api: Unregistering a global for " + type + " v" + VERSION$3 + ".");
     var api = _global[GLOBAL_OPENTELEMETRY_API_KEY];
     if (api) {
         delete api[type];
@@ -31789,7 +31797,7 @@ function unregisterGlobal(type, diag) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __read$i = (undefined && undefined.__read) || function (o, n) {
+var __read$e = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -31805,7 +31813,7 @@ var __read$i = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray$7 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+var __spreadArray$6 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
             if (!ar) ar = Array.prototype.slice.call(from, 0, i);
@@ -31871,7 +31879,7 @@ function logProxy(funcName, namespace, args) {
         return;
     }
     args.unshift(namespace);
-    return logger[funcName].apply(logger, __spreadArray$7([], __read$i(args), false));
+    return logger[funcName].apply(logger, __spreadArray$6([], __read$e(args), false));
 }
 
 /*
@@ -31970,7 +31978,7 @@ function createLogLevelDiagLogger(maxLevel, logger) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __read$h = (undefined && undefined.__read) || function (o, n) {
+var __read$d = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -31986,7 +31994,7 @@ var __read$h = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray$6 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+var __spreadArray$5 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
             if (!ar) ar = Array.prototype.slice.call(from, 0, i);
@@ -32016,7 +32024,7 @@ var DiagAPI = /** @class */ (function () {
                 // shortcut if logger not set
                 if (!logger)
                     return;
-                return logger[funcName].apply(logger, __spreadArray$6([], __read$h(args), false));
+                return logger[funcName].apply(logger, __spreadArray$5([], __read$d(args), false));
             };
         }
         // Using self local variable for minification purposes as 'this' cannot be minified
@@ -32024,13 +32032,13 @@ var DiagAPI = /** @class */ (function () {
         // DiagAPI specific functions
         var setLogger = function (logger, optionsOrLogLevel) {
             var _a, _b, _c;
-            if (optionsOrLogLevel === void 0) { optionsOrLogLevel = { logLevel: DiagLogLevel.INFO }; }
+            if (optionsOrLogLevel === undefined) { optionsOrLogLevel = { logLevel: DiagLogLevel.INFO }; }
             if (logger === self) {
                 // There isn't much we can do here.
                 // Logging to the console might break the user application.
                 // Try to log to self. If a logger was previously registered it will receive the log.
                 var err = new Error('Cannot use diag as the logger for itself. Please use a DiagLogger implementation like ConsoleDiagLogger or a custom implementation');
-                self.error((_a = err.stack) !== null && _a !== void 0 ? _a : err.message);
+                self.error((_a = err.stack) !== null && _a !== undefined ? _a : err.message);
                 return false;
             }
             if (typeof optionsOrLogLevel === 'number') {
@@ -32039,10 +32047,10 @@ var DiagAPI = /** @class */ (function () {
                 };
             }
             var oldLogger = getGlobal('diag');
-            var newLogger = createLogLevelDiagLogger((_b = optionsOrLogLevel.logLevel) !== null && _b !== void 0 ? _b : DiagLogLevel.INFO, logger);
+            var newLogger = createLogLevelDiagLogger((_b = optionsOrLogLevel.logLevel) !== null && _b !== undefined ? _b : DiagLogLevel.INFO, logger);
             // There already is an logger registered. We'll let it know before overwriting it.
             if (oldLogger && !optionsOrLogLevel.suppressOverrideMessage) {
-                var stack = (_c = new Error().stack) !== null && _c !== void 0 ? _c : '<failed to generate stacktrace>';
+                var stack = (_c = new Error().stack) !== null && _c !== undefined ? _c : '<failed to generate stacktrace>';
                 oldLogger.warn("Current logger will be overwritten from " + stack);
                 newLogger.warn("Current logger will overwrite one already registered from " + stack);
             }
@@ -32086,7 +32094,7 @@ var DiagAPI = /** @class */ (function () {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __read$g = (undefined && undefined.__read) || function (o, n) {
+var __read$c = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -32102,12 +32110,12 @@ var __read$g = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __values$a = (undefined && undefined.__values) || function(o) {
+var __values$8 = (undefined && undefined.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
@@ -32126,7 +32134,7 @@ var BaggageImpl = /** @class */ (function () {
     };
     BaggageImpl.prototype.getAllEntries = function () {
         return Array.from(this._entries.entries()).map(function (_a) {
-            var _b = __read$g(_a, 2), k = _b[0], v = _b[1];
+            var _b = __read$c(_a, 2), k = _b[0], v = _b[1];
             return [k, v];
         });
     };
@@ -32148,7 +32156,7 @@ var BaggageImpl = /** @class */ (function () {
         }
         var newBaggage = new BaggageImpl(this._entries);
         try {
-            for (var keys_1 = __values$a(keys), keys_1_1 = keys_1.next(); !keys_1_1.done; keys_1_1 = keys_1.next()) {
+            for (var keys_1 = __values$8(keys), keys_1_1 = keys_1.next(); !keys_1_1.done; keys_1_1 = keys_1.next()) {
                 var key = keys_1_1.value;
                 newBaggage._entries.delete(key);
             }
@@ -32210,7 +32218,7 @@ var diag$1 = DiagAPI.instance();
  * @param entries An array of baggage entries the new baggage should contain
  */
 function createBaggage(entries) {
-    if (entries === void 0) { entries = {}; }
+    if (entries === undefined) { entries = {}; }
     return new BaggageImpl(new Map(Object.entries(entries)));
 }
 /**
@@ -32588,7 +32596,7 @@ var defaultTextMapSetter = {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __read$f = (undefined && undefined.__read) || function (o, n) {
+var __read$b = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -32604,7 +32612,7 @@ var __read$f = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray$5 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+var __spreadArray$4 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
             if (!ar) ar = Array.prototype.slice.call(from, 0, i);
@@ -32624,7 +32632,7 @@ var NoopContextManager = /** @class */ (function () {
         for (var _i = 3; _i < arguments.length; _i++) {
             args[_i - 3] = arguments[_i];
         }
-        return fn.call.apply(fn, __spreadArray$5([thisArg], __read$f(args), false));
+        return fn.call.apply(fn, __spreadArray$4([thisArg], __read$b(args), false));
     };
     NoopContextManager.prototype.bind = function (_context, target) {
         return target;
@@ -32653,7 +32661,7 @@ var NoopContextManager = /** @class */ (function () {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __read$e = (undefined && undefined.__read) || function (o, n) {
+var __read$a = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -32669,7 +32677,7 @@ var __read$e = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray$4 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+var __spreadArray$3 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
             if (!ar) ar = Array.prototype.slice.call(from, 0, i);
@@ -32722,7 +32730,7 @@ var ContextAPI = /** @class */ (function () {
         for (var _i = 3; _i < arguments.length; _i++) {
             args[_i - 3] = arguments[_i];
         }
-        return (_a = this._getContextManager()).with.apply(_a, __spreadArray$4([context, fn, thisArg], __read$e(args), false));
+        return (_a = this._getContextManager()).with.apply(_a, __spreadArray$3([context, fn, thisArg], __read$a(args), false));
     };
     /**
      * Bind a context to a target function or event emitter
@@ -32812,7 +32820,7 @@ var INVALID_SPAN_CONTEXT = {
  */
 var NonRecordingSpan = /** @class */ (function () {
     function NonRecordingSpan(_spanContext) {
-        if (_spanContext === void 0) { _spanContext = INVALID_SPAN_CONTEXT; }
+        if (_spanContext === undefined) { _spanContext = INVALID_SPAN_CONTEXT; }
         this._spanContext = _spanContext;
     }
     // Returns a SpanContext.
@@ -32923,7 +32931,7 @@ function setSpanContext(context, spanContext) {
  */
 function getSpanContext(context) {
     var _a;
-    return (_a = getSpan(context)) === null || _a === void 0 ? void 0 : _a.spanContext();
+    return (_a = getSpan(context)) === null || _a === undefined ? undefined : _a.spanContext();
 }
 
 /*
@@ -32990,8 +32998,8 @@ var NoopTracer = /** @class */ (function () {
     }
     // startSpan starts a noop span.
     NoopTracer.prototype.startSpan = function (name, options, context) {
-        if (context === void 0) { context = contextApi.active(); }
-        var root = Boolean(options === null || options === void 0 ? void 0 : options.root);
+        if (context === undefined) { context = contextApi.active(); }
+        var root = Boolean(options === null || options === undefined ? undefined : options.root);
         if (root) {
             return new NonRecordingSpan();
         }
@@ -33023,7 +33031,7 @@ var NoopTracer = /** @class */ (function () {
             ctx = arg3;
             fn = arg4;
         }
-        var parentContext = ctx !== null && ctx !== void 0 ? ctx : contextApi.active();
+        var parentContext = ctx !== null && ctx !== undefined ? ctx : contextApi.active();
         var span = this.startSpan(name, opts, parentContext);
         var contextWithSpanSet = setSpan(parentContext, span);
         return contextApi.with(contextWithSpanSet, fn, undefined, span);
@@ -33150,11 +33158,11 @@ var ProxyTracerProvider = /** @class */ (function () {
      */
     ProxyTracerProvider.prototype.getTracer = function (name, version, options) {
         var _a;
-        return ((_a = this.getDelegateTracer(name, version, options)) !== null && _a !== void 0 ? _a : new ProxyTracer(this, name, version, options));
+        return ((_a = this.getDelegateTracer(name, version, options)) !== null && _a !== undefined ? _a : new ProxyTracer(this, name, version, options));
     };
     ProxyTracerProvider.prototype.getDelegate = function () {
         var _a;
-        return (_a = this._delegate) !== null && _a !== void 0 ? _a : NOOP_TRACER_PROVIDER;
+        return (_a = this._delegate) !== null && _a !== undefined ? _a : NOOP_TRACER_PROVIDER;
     };
     /**
      * Set the delegate tracer provider
@@ -33164,7 +33172,7 @@ var ProxyTracerProvider = /** @class */ (function () {
     };
     ProxyTracerProvider.prototype.getDelegateTracer = function (name, version, options) {
         var _a;
-        return (_a = this._delegate) === null || _a === void 0 ? void 0 : _a.getTracer(name, version, options);
+        return (_a = this._delegate) === null || _a === undefined ? undefined : _a.getTracer(name, version, options);
     };
     return ProxyTracerProvider;
 }());
@@ -33286,12 +33294,12 @@ var SpanStatusCode;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var VALID_KEY_CHAR_RANGE$2 = '[_0-9a-z-*/]';
-var VALID_KEY$2 = "[a-z]" + VALID_KEY_CHAR_RANGE$2 + "{0,255}";
-var VALID_VENDOR_KEY$2 = "[a-z0-9]" + VALID_KEY_CHAR_RANGE$2 + "{0,240}@[a-z]" + VALID_KEY_CHAR_RANGE$2 + "{0,13}";
-var VALID_KEY_REGEX$2 = new RegExp("^(?:" + VALID_KEY$2 + "|" + VALID_VENDOR_KEY$2 + ")$");
-var VALID_VALUE_BASE_REGEX$2 = /^[ -~]{0,255}[!-~]$/;
-var INVALID_VALUE_COMMA_EQUAL_REGEX$2 = /,|=/;
+var VALID_KEY_CHAR_RANGE$1 = '[_0-9a-z-*/]';
+var VALID_KEY$1 = "[a-z]" + VALID_KEY_CHAR_RANGE$1 + "{0,255}";
+var VALID_VENDOR_KEY$1 = "[a-z0-9]" + VALID_KEY_CHAR_RANGE$1 + "{0,240}@[a-z]" + VALID_KEY_CHAR_RANGE$1 + "{0,13}";
+var VALID_KEY_REGEX$1 = new RegExp("^(?:" + VALID_KEY$1 + "|" + VALID_VENDOR_KEY$1 + ")$");
+var VALID_VALUE_BASE_REGEX$1 = /^[ -~]{0,255}[!-~]$/;
+var INVALID_VALUE_COMMA_EQUAL_REGEX$1 = /,|=/;
 /**
  * Key is opaque string up to 256 characters printable. It MUST begin with a
  * lowercase letter, and can only contain lowercase letters a-z, digits 0-9,
@@ -33300,16 +33308,16 @@ var INVALID_VALUE_COMMA_EQUAL_REGEX$2 = /,|=/;
  * vendor name. Vendors SHOULD set the tenant ID at the beginning of the key.
  * see https://www.w3.org/TR/trace-context/#key
  */
-function validateKey$2(key) {
-    return VALID_KEY_REGEX$2.test(key);
+function validateKey$1(key) {
+    return VALID_KEY_REGEX$1.test(key);
 }
 /**
  * Value is opaque string up to 256 characters printable ASCII RFC0020
  * characters (i.e., the range 0x20 to 0x7E) except comma , and =.
  */
-function validateValue$2(value) {
-    return (VALID_VALUE_BASE_REGEX$2.test(value) &&
-        !INVALID_VALUE_COMMA_EQUAL_REGEX$2.test(value));
+function validateValue$1(value) {
+    return (VALID_VALUE_BASE_REGEX$1.test(value) &&
+        !INVALID_VALUE_COMMA_EQUAL_REGEX$1.test(value));
 }
 
 /*
@@ -33327,10 +33335,10 @@ function validateValue$2(value) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var MAX_TRACE_STATE_ITEMS$2 = 32;
-var MAX_TRACE_STATE_LEN$2 = 512;
-var LIST_MEMBERS_SEPARATOR$2 = ',';
-var LIST_MEMBER_KEY_VALUE_SPLITTER$2 = '=';
+var MAX_TRACE_STATE_ITEMS$1 = 32;
+var MAX_TRACE_STATE_LEN$1 = 512;
+var LIST_MEMBERS_SEPARATOR$1 = ',';
+var LIST_MEMBER_KEY_VALUE_SPLITTER$1 = '=';
 /**
  * TraceState must be a class and not a simple object type because of the spec
  * requirement (https://www.w3.org/TR/trace-context/#tracestate-field).
@@ -33368,34 +33376,34 @@ var TraceStateImpl = /** @class */ (function () {
         var _this = this;
         return this._keys()
             .reduce(function (agg, key) {
-            agg.push(key + LIST_MEMBER_KEY_VALUE_SPLITTER$2 + _this.get(key));
+            agg.push(key + LIST_MEMBER_KEY_VALUE_SPLITTER$1 + _this.get(key));
             return agg;
         }, [])
-            .join(LIST_MEMBERS_SEPARATOR$2);
+            .join(LIST_MEMBERS_SEPARATOR$1);
     };
     TraceStateImpl.prototype._parse = function (rawTraceState) {
-        if (rawTraceState.length > MAX_TRACE_STATE_LEN$2)
+        if (rawTraceState.length > MAX_TRACE_STATE_LEN$1)
             return;
         this._internalState = rawTraceState
-            .split(LIST_MEMBERS_SEPARATOR$2)
+            .split(LIST_MEMBERS_SEPARATOR$1)
             .reverse() // Store in reverse so new keys (.set(...)) will be placed at the beginning
             .reduce(function (agg, part) {
             var listMember = part.trim(); // Optional Whitespace (OWS) handling
-            var i = listMember.indexOf(LIST_MEMBER_KEY_VALUE_SPLITTER$2);
+            var i = listMember.indexOf(LIST_MEMBER_KEY_VALUE_SPLITTER$1);
             if (i !== -1) {
                 var key = listMember.slice(0, i);
                 var value = listMember.slice(i + 1, part.length);
-                if (validateKey$2(key) && validateValue$2(value)) {
+                if (validateKey$1(key) && validateValue$1(value)) {
                     agg.set(key, value);
                 }
             }
             return agg;
         }, new Map());
         // Because of the reverse() requirement, trunc must be done after map is created
-        if (this._internalState.size > MAX_TRACE_STATE_ITEMS$2) {
+        if (this._internalState.size > MAX_TRACE_STATE_ITEMS$1) {
             this._internalState = new Map(Array.from(this._internalState.entries())
                 .reverse() // Use reverse same as original tracestate parse chain
-                .slice(0, MAX_TRACE_STATE_ITEMS$2));
+                .slice(0, MAX_TRACE_STATE_ITEMS$1));
         }
     };
     TraceStateImpl.prototype._keys = function () {
@@ -33717,7 +33725,7 @@ var PropagationAPI = /** @class */ (function () {
      * @param setter Function used to set values on the carrier
      */
     PropagationAPI.prototype.inject = function (context, carrier, setter) {
-        if (setter === void 0) { setter = defaultTextMapSetter; }
+        if (setter === undefined) { setter = defaultTextMapSetter; }
         return this._getGlobalPropagator().inject(context, carrier, setter);
     };
     /**
@@ -33728,7 +33736,7 @@ var PropagationAPI = /** @class */ (function () {
      * @param getter Function used to extract keys from a carrier
      */
     PropagationAPI.prototype.extract = function (context, carrier, getter) {
-        if (getter === void 0) { getter = defaultTextMapGetter; }
+        if (getter === undefined) { getter = defaultTextMapGetter; }
         return this._getGlobalPropagator().extract(context, carrier, getter);
     };
     /**
@@ -34166,7 +34174,7 @@ function requireConstants () {
 	 *
 	 */
 	Object.defineProperty(constants, "__esModule", { value: true });
-	constants.DEFAULT_MAX_RECEIVE_MESSAGE_LENGTH = constants.DEFAULT_MAX_SEND_MESSAGE_LENGTH = constants.Propagate = constants.LogVerbosity = constants.Status = void 0;
+	constants.DEFAULT_MAX_RECEIVE_MESSAGE_LENGTH = constants.DEFAULT_MAX_SEND_MESSAGE_LENGTH = constants.Propagate = constants.LogVerbosity = constants.Status = undefined;
 	var Status;
 	(function (Status) {
 	    Status[Status["OK"] = 0] = "OK";
@@ -34344,7 +34352,7 @@ function requireLogging () {
 		 */
 		var _a, _b, _c, _d;
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.isTracerEnabled = exports.trace = exports.log = exports.setLoggerVerbosity = exports.setLogger = exports.getLogger = void 0;
+		exports.isTracerEnabled = exports.trace = exports.log = exports.setLoggerVerbosity = exports.setLogger = exports.getLogger = undefined;
 		const constants_1 = requireConstants();
 		const process_1 = process$1;
 		const clientVersion = require$$12.version;
@@ -34361,7 +34369,7 @@ function requireLogging () {
 		};
 		let _logger = DEFAULT_LOGGER;
 		let _logVerbosity = constants_1.LogVerbosity.ERROR;
-		const verbosityString = (_b = (_a = process.env.GRPC_NODE_VERBOSITY) !== null && _a !== void 0 ? _a : process.env.GRPC_VERBOSITY) !== null && _b !== void 0 ? _b : '';
+		const verbosityString = (_b = (_a = process.env.GRPC_NODE_VERBOSITY) !== null && _a !== undefined ? _a : process.env.GRPC_VERBOSITY) !== null && _b !== undefined ? _b : '';
 		switch (verbosityString.toUpperCase()) {
 		    case 'DEBUG':
 		        _logVerbosity = constants_1.LogVerbosity.DEBUG;
@@ -34415,7 +34423,7 @@ function requireLogging () {
 		    }
 		};
 		exports.log = log;
-		const tracersString = (_d = (_c = process.env.GRPC_NODE_TRACE) !== null && _c !== void 0 ? _c : process.env.GRPC_TRACE) !== null && _d !== void 0 ? _d : '';
+		const tracersString = (_d = (_c = process.env.GRPC_NODE_TRACE) !== null && _c !== undefined ? _c : process.env.GRPC_TRACE) !== null && _d !== undefined ? _d : '';
 		const enabledTracers = new Set();
 		const disabledTracers = new Set();
 		for (const tracerName of tracersString.split(',')) {
@@ -34474,7 +34482,7 @@ function requireError () {
 	 *
 	 */
 	Object.defineProperty(error, "__esModule", { value: true });
-	error.getErrorCode = error.getErrorMessage = void 0;
+	error.getErrorCode = error.getErrorMessage = undefined;
 	function getErrorMessage(error) {
 	    if (error instanceof Error) {
 	        return error.message;
@@ -34522,7 +34530,7 @@ function requireMetadata () {
 	 *
 	 */
 	Object.defineProperty(metadata, "__esModule", { value: true });
-	metadata.Metadata = void 0;
+	metadata.Metadata = undefined;
 	const logging_1 = requireLogging();
 	const constants_1 = requireConstants();
 	const error_1 = requireError();
@@ -34778,7 +34786,7 @@ function requireCallCredentials () {
 	 *
 	 */
 	Object.defineProperty(callCredentials, "__esModule", { value: true });
-	callCredentials.CallCredentials = void 0;
+	callCredentials.CallCredentials = undefined;
 	const metadata_1 = requireMetadata();
 	function isCurrentOauth2Client(client) {
 	    return ('getRequestHeaders' in client &&
@@ -34944,7 +34952,7 @@ function requireTlsHelpers () {
 	 *
 	 */
 	Object.defineProperty(tlsHelpers, "__esModule", { value: true });
-	tlsHelpers.getDefaultRootsData = tlsHelpers.CIPHER_SUITES = void 0;
+	tlsHelpers.getDefaultRootsData = tlsHelpers.CIPHER_SUITES = undefined;
 	const fs = require$$0$5;
 	tlsHelpers.CIPHER_SUITES = process.env.GRPC_SSL_CIPHER_SUITES;
 	const DEFAULT_ROOTS_FILE_PATH = process.env.GRPC_DEFAULT_SSL_ROOTS_FILE_PATH;
@@ -34985,7 +34993,7 @@ function requireChannelCredentials () {
 	 *
 	 */
 	Object.defineProperty(channelCredentials, "__esModule", { value: true });
-	channelCredentials.createCertificateProviderChannelCredentials = channelCredentials.ChannelCredentials = void 0;
+	channelCredentials.createCertificateProviderChannelCredentials = channelCredentials.ChannelCredentials = undefined;
 	const tls_1 = require$$4$2;
 	const call_credentials_1 = requireCallCredentials();
 	const tls_helpers_1 = requireTlsHelpers();
@@ -35037,12 +35045,12 @@ function requireChannelCredentials () {
 	            throw new Error('Certificate chain must be given with accompanying private key');
 	        }
 	        const secureContext = (0, tls_1.createSecureContext)({
-	            ca: (_a = rootCerts !== null && rootCerts !== void 0 ? rootCerts : (0, tls_helpers_1.getDefaultRootsData)()) !== null && _a !== void 0 ? _a : undefined,
-	            key: privateKey !== null && privateKey !== void 0 ? privateKey : undefined,
-	            cert: certChain !== null && certChain !== void 0 ? certChain : undefined,
+	            ca: (_a = rootCerts !== null && rootCerts !== undefined ? rootCerts : (0, tls_helpers_1.getDefaultRootsData)()) !== null && _a !== undefined ? _a : undefined,
+	            key: privateKey !== null && privateKey !== undefined ? privateKey : undefined,
+	            cert: certChain !== null && certChain !== undefined ? certChain : undefined,
 	            ciphers: tls_helpers_1.CIPHER_SUITES,
 	        });
-	        return new SecureChannelCredentialsImpl(secureContext, verifyOptions !== null && verifyOptions !== void 0 ? verifyOptions : {});
+	        return new SecureChannelCredentialsImpl(secureContext, verifyOptions !== null && verifyOptions !== undefined ? verifyOptions : {});
 	    }
 	    /**
 	     * Return a new ChannelCredentials instance with credentials created using
@@ -35055,7 +35063,7 @@ function requireChannelCredentials () {
 	     * @param verifyOptions Additional options to modify certificate verification
 	     */
 	    static createFromSecureContext(secureContext, verifyOptions) {
-	        return new SecureChannelCredentialsImpl(secureContext, verifyOptions !== null && verifyOptions !== void 0 ? verifyOptions : {});
+	        return new SecureChannelCredentialsImpl(secureContext, verifyOptions !== null && verifyOptions !== undefined ? verifyOptions : {});
 	    }
 	    /**
 	     * Return a new ChannelCredentials instance with no credentials.
@@ -35091,11 +35099,11 @@ function requireChannelCredentials () {
 	            secureContext,
 	        };
 	        // Node asserts that this option is a function, so we cannot pass undefined
-	        if (verifyOptions === null || verifyOptions === void 0 ? void 0 : verifyOptions.checkServerIdentity) {
+	        if (verifyOptions === null || verifyOptions === undefined ? undefined : verifyOptions.checkServerIdentity) {
 	            this.connectionOptions.checkServerIdentity =
 	                verifyOptions.checkServerIdentity;
 	        }
-	        if ((verifyOptions === null || verifyOptions === void 0 ? void 0 : verifyOptions.rejectUnauthorized) !== undefined) {
+	        if ((verifyOptions === null || verifyOptions === undefined ? undefined : verifyOptions.rejectUnauthorized) !== undefined) {
 	            this.connectionOptions.rejectUnauthorized =
 	                verifyOptions.rejectUnauthorized;
 	        }
@@ -35151,14 +35159,14 @@ function requireChannelCredentials () {
 	        }
 	        const secureContext = (0, tls_1.createSecureContext)({
 	            ca: this.latestCaUpdate.caCertificate,
-	            key: (_a = this.latestIdentityUpdate) === null || _a === void 0 ? void 0 : _a.privateKey,
-	            cert: (_b = this.latestIdentityUpdate) === null || _b === void 0 ? void 0 : _b.certificate,
+	            key: (_a = this.latestIdentityUpdate) === null || _a === undefined ? undefined : _a.privateKey,
+	            cert: (_b = this.latestIdentityUpdate) === null || _b === undefined ? undefined : _b.certificate,
 	            ciphers: tls_helpers_1.CIPHER_SUITES
 	        });
 	        const options = {
 	            secureContext: secureContext
 	        };
-	        if ((_c = this.verifyOptions) === null || _c === void 0 ? void 0 : _c.checkServerIdentity) {
+	        if ((_c = this.verifyOptions) === null || _c === undefined ? undefined : _c.checkServerIdentity) {
 	            options.checkServerIdentity = this.verifyOptions.checkServerIdentity;
 	        }
 	        return options;
@@ -35174,7 +35182,7 @@ function requireChannelCredentials () {
 	        if (other instanceof CertificateProviderChannelCredentialsImpl) {
 	            return this.caCertificateProvider === other.caCertificateProvider &&
 	                this.identityCertificateProvider === other.identityCertificateProvider &&
-	                ((_a = this.verifyOptions) === null || _a === void 0 ? void 0 : _a.checkServerIdentity) === ((_b = other.verifyOptions) === null || _b === void 0 ? void 0 : _b.checkServerIdentity);
+	                ((_a = this.verifyOptions) === null || _a === undefined ? undefined : _a.checkServerIdentity) === ((_b = other.verifyOptions) === null || _b === undefined ? undefined : _b.checkServerIdentity);
 	        }
 	        else {
 	            return false;
@@ -35184,7 +35192,7 @@ function requireChannelCredentials () {
 	        var _a;
 	        if (this.refcount === 0) {
 	            this.caCertificateProvider.addCaCertificateListener(this.caCertificateUpdateListener);
-	            (_a = this.identityCertificateProvider) === null || _a === void 0 ? void 0 : _a.addIdentityCertificateListener(this.identityCertificateUpdateListener);
+	            (_a = this.identityCertificateProvider) === null || _a === undefined ? undefined : _a.addIdentityCertificateListener(this.identityCertificateUpdateListener);
 	        }
 	        this.refcount += 1;
 	    }
@@ -35193,7 +35201,7 @@ function requireChannelCredentials () {
 	        this.refcount -= 1;
 	        if (this.refcount === 0) {
 	            this.caCertificateProvider.removeCaCertificateListener(this.caCertificateUpdateListener);
-	            (_a = this.identityCertificateProvider) === null || _a === void 0 ? void 0 : _a.removeIdentityCertificateListener(this.identityCertificateUpdateListener);
+	            (_a = this.identityCertificateProvider) === null || _a === undefined ? undefined : _a.removeIdentityCertificateListener(this.identityCertificateUpdateListener);
 	        }
 	    }
 	    handleCaCertificateUpdate(update) {
@@ -35204,7 +35212,7 @@ function requireChannelCredentials () {
 	    }
 	}
 	function createCertificateProviderChannelCredentials(caCertificateProvider, identityCertificateProvider, verifyOptions) {
-	    return new CertificateProviderChannelCredentialsImpl(caCertificateProvider, identityCertificateProvider, verifyOptions !== null && verifyOptions !== void 0 ? verifyOptions : null);
+	    return new CertificateProviderChannelCredentialsImpl(caCertificateProvider, identityCertificateProvider, verifyOptions !== null && verifyOptions !== undefined ? verifyOptions : null);
 	}
 	channelCredentials.createCertificateProviderChannelCredentials = createCertificateProviderChannelCredentials;
 	class ComposedChannelCredentialsImpl extends ChannelCredentials {
@@ -35270,7 +35278,7 @@ function requireLoadBalancer () {
 	 *
 	 */
 	Object.defineProperty(loadBalancer, "__esModule", { value: true });
-	loadBalancer.selectLbConfigFromList = loadBalancer.getDefaultConfig = loadBalancer.parseLoadBalancingConfig = loadBalancer.isLoadBalancerNameRegistered = loadBalancer.createLoadBalancer = loadBalancer.registerDefaultLoadBalancerType = loadBalancer.registerLoadBalancerType = loadBalancer.createChildChannelControlHelper = void 0;
+	loadBalancer.selectLbConfigFromList = loadBalancer.getDefaultConfig = loadBalancer.parseLoadBalancingConfig = loadBalancer.isLoadBalancerNameRegistered = loadBalancer.createLoadBalancer = loadBalancer.registerDefaultLoadBalancerType = loadBalancer.registerLoadBalancerType = loadBalancer.createChildChannelControlHelper = undefined;
 	const logging_1 = requireLogging();
 	const constants_1 = requireConstants();
 	/**
@@ -35284,11 +35292,11 @@ function requireLoadBalancer () {
 	function createChildChannelControlHelper(parent, overrides) {
 	    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 	    return {
-	        createSubchannel: (_b = (_a = overrides.createSubchannel) === null || _a === void 0 ? void 0 : _a.bind(overrides)) !== null && _b !== void 0 ? _b : parent.createSubchannel.bind(parent),
-	        updateState: (_d = (_c = overrides.updateState) === null || _c === void 0 ? void 0 : _c.bind(overrides)) !== null && _d !== void 0 ? _d : parent.updateState.bind(parent),
-	        requestReresolution: (_f = (_e = overrides.requestReresolution) === null || _e === void 0 ? void 0 : _e.bind(overrides)) !== null && _f !== void 0 ? _f : parent.requestReresolution.bind(parent),
-	        addChannelzChild: (_h = (_g = overrides.addChannelzChild) === null || _g === void 0 ? void 0 : _g.bind(overrides)) !== null && _h !== void 0 ? _h : parent.addChannelzChild.bind(parent),
-	        removeChannelzChild: (_k = (_j = overrides.removeChannelzChild) === null || _j === void 0 ? void 0 : _j.bind(overrides)) !== null && _k !== void 0 ? _k : parent.removeChannelzChild.bind(parent),
+	        createSubchannel: (_b = (_a = overrides.createSubchannel) === null || _a === undefined ? undefined : _a.bind(overrides)) !== null && _b !== undefined ? _b : parent.createSubchannel.bind(parent),
+	        updateState: (_d = (_c = overrides.updateState) === null || _c === undefined ? undefined : _c.bind(overrides)) !== null && _d !== undefined ? _d : parent.updateState.bind(parent),
+	        requestReresolution: (_f = (_e = overrides.requestReresolution) === null || _e === undefined ? undefined : _e.bind(overrides)) !== null && _f !== undefined ? _f : parent.requestReresolution.bind(parent),
+	        addChannelzChild: (_h = (_g = overrides.addChannelzChild) === null || _g === undefined ? undefined : _g.bind(overrides)) !== null && _h !== undefined ? _h : parent.addChannelzChild.bind(parent),
+	        removeChannelzChild: (_k = (_j = overrides.removeChannelzChild) === null || _j === undefined ? undefined : _j.bind(overrides)) !== null && _k !== undefined ? _k : parent.removeChannelzChild.bind(parent),
 	    };
 	}
 	loadBalancer.createChildChannelControlHelper = createChildChannelControlHelper;
@@ -35396,7 +35404,7 @@ function requireServiceConfig () {
 	 *
 	 */
 	Object.defineProperty(serviceConfig, "__esModule", { value: true });
-	serviceConfig.extractAndSelectServiceConfig = serviceConfig.validateServiceConfig = serviceConfig.validateRetryThrottling = void 0;
+	serviceConfig.extractAndSelectServiceConfig = serviceConfig.validateServiceConfig = serviceConfig.validateRetryThrottling = undefined;
 	/* This file implements gRFC A2 and the service config spec:
 	 * https://github.com/grpc/proposal/blob/master/A2-service-configs-in-dns.md
 	 * https://github.com/grpc/grpc/blob/master/doc/service_config.md. Each
@@ -35571,7 +35579,7 @@ function requireServiceConfig () {
 	                .split('.');
 	            result.timeout = {
 	                seconds: timeoutParts[0] | 0,
-	                nanos: ((_a = timeoutParts[1]) !== null && _a !== void 0 ? _a : 0) | 0,
+	                nanos: ((_a = timeoutParts[1]) !== null && _a !== undefined ? _a : 0) | 0,
 	            };
 	        }
 	        else {
@@ -35836,7 +35844,7 @@ function requireConnectivityState () {
 	 *
 	 */
 	Object.defineProperty(connectivityState, "__esModule", { value: true });
-	connectivityState.ConnectivityState = void 0;
+	connectivityState.ConnectivityState = undefined;
 	var ConnectivityState;
 	(function (ConnectivityState) {
 	    ConnectivityState[ConnectivityState["IDLE"] = 0] = "IDLE";
@@ -35875,7 +35883,7 @@ function requireUriParser () {
 	 *
 	 */
 	Object.defineProperty(uriParser, "__esModule", { value: true });
-	uriParser.uriToString = uriParser.combineHostPort = uriParser.splitHostPort = uriParser.parseUri = void 0;
+	uriParser.uriToString = uriParser.combineHostPort = uriParser.splitHostPort = uriParser.parseUri = undefined;
 	/*
 	 * The groups correspond to URI parts as follows:
 	 * 1. scheme
@@ -36008,7 +36016,7 @@ function requireResolver () {
 	 *
 	 */
 	Object.defineProperty(resolver, "__esModule", { value: true });
-	resolver.mapUriDefaultScheme = resolver.getDefaultAuthority = resolver.createResolver = resolver.registerDefaultScheme = resolver.registerResolver = void 0;
+	resolver.mapUriDefaultScheme = resolver.getDefaultAuthority = resolver.createResolver = resolver.registerDefaultScheme = resolver.registerResolver = undefined;
 	const uri_parser_1 = requireUriParser();
 	const registeredResolvers = {};
 	let defaultScheme = null;
@@ -36105,7 +36113,7 @@ function requirePicker () {
 	 *
 	 */
 	Object.defineProperty(picker, "__esModule", { value: true });
-	picker.QueuePicker = picker.UnavailablePicker = picker.PickResultType = void 0;
+	picker.QueuePicker = picker.UnavailablePicker = picker.PickResultType = undefined;
 	const metadata_1 = requireMetadata();
 	const constants_1 = requireConstants();
 	var PickResultType;
@@ -36200,7 +36208,7 @@ function requireBackoffTimeout () {
 	 *
 	 */
 	Object.defineProperty(backoffTimeout, "__esModule", { value: true });
-	backoffTimeout.BackoffTimeout = void 0;
+	backoffTimeout.BackoffTimeout = undefined;
 	const INITIAL_BACKOFF_MS = 1000;
 	const BACKOFF_MULTIPLIER = 1.6;
 	const MAX_BACKOFF_MS = 120000;
@@ -36280,7 +36288,7 @@ function requireBackoffTimeout () {
 	            this.running = false;
 	        }, delay);
 	        if (!this.hasRef) {
-	            (_b = (_a = this.timerId).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	            (_b = (_a = this.timerId).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	        }
 	    }
 	    /**
@@ -36335,7 +36343,7 @@ function requireBackoffTimeout () {
 	    ref() {
 	        var _a, _b;
 	        this.hasRef = true;
-	        (_b = (_a = this.timerId).ref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.timerId).ref) === null || _b === undefined ? undefined : _b.call(_a);
 	    }
 	    /**
 	     * Set that while the timer is running, it should not keep the Node process
@@ -36344,7 +36352,7 @@ function requireBackoffTimeout () {
 	    unref() {
 	        var _a, _b;
 	        this.hasRef = false;
-	        (_b = (_a = this.timerId).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.timerId).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	    }
 	    /**
 	     * Get the approximate timestamp of when the timer will fire. Only valid if
@@ -36383,7 +36391,7 @@ function requireLoadBalancerChildHandler () {
 	 *
 	 */
 	Object.defineProperty(loadBalancerChildHandler, "__esModule", { value: true });
-	loadBalancerChildHandler.ChildLoadBalancerHandler = void 0;
+	loadBalancerChildHandler.ChildLoadBalancerHandler = undefined;
 	const load_balancer_1 = requireLoadBalancer();
 	const connectivity_state_1 = requireConnectivityState();
 	const TYPE_NAME = 'child_load_balancer_helper';
@@ -36409,7 +36417,7 @@ function requireLoadBalancerChildHandler () {
 	                    if (connectivityState === connectivity_state_1.ConnectivityState.CONNECTING) {
 	                        return;
 	                    }
-	                    (_a = this.parent.currentChild) === null || _a === void 0 ? void 0 : _a.destroy();
+	                    (_a = this.parent.currentChild) === null || _a === undefined ? undefined : _a.destroy();
 	                    this.parent.currentChild = this.parent.pendingChild;
 	                    this.parent.pendingChild = null;
 	                }
@@ -36420,7 +36428,7 @@ function requireLoadBalancerChildHandler () {
 	            }
 	            requestReresolution() {
 	                var _a;
-	                const latestChild = (_a = this.parent.pendingChild) !== null && _a !== void 0 ? _a : this.parent.currentChild;
+	                const latestChild = (_a = this.parent.pendingChild) !== null && _a !== undefined ? _a : this.parent.currentChild;
 	                if (this.child === latestChild) {
 	                    this.parent.channelControlHelper.requestReresolution();
 	                }
@@ -36543,7 +36551,7 @@ function requireResolvingLoadBalancer () {
 	 *
 	 */
 	Object.defineProperty(resolvingLoadBalancer, "__esModule", { value: true });
-	resolvingLoadBalancer.ResolvingLoadBalancer = void 0;
+	resolvingLoadBalancer.ResolvingLoadBalancer = undefined;
 	const load_balancer_1 = requireLoadBalancer();
 	const service_config_1 = requireServiceConfig();
 	const connectivity_state_1 = requireConnectivityState();
@@ -36602,8 +36610,8 @@ function requireResolvingLoadBalancer () {
 	    return function defaultConfigSelector(methodName, metadata) {
 	        var _a, _b;
 	        const splitName = methodName.split('/').filter(x => x.length > 0);
-	        const service = (_a = splitName[0]) !== null && _a !== void 0 ? _a : '';
-	        const method = (_b = splitName[1]) !== null && _b !== void 0 ? _b : '';
+	        const service = (_a = splitName[0]) !== null && _a !== undefined ? _a : '';
+	        const method = (_b = splitName[1]) !== null && _b !== undefined ? _b : '';
 	        if (serviceConfig && serviceConfig.methodConfig) {
 	            /* Check for the following in order, and return the first method
 	             * config that matches:
@@ -36734,7 +36742,7 @@ function requireResolvingLoadBalancer () {
 	                    workingServiceConfig = serviceConfig;
 	                    this.previousServiceConfig = serviceConfig;
 	                }
-	                const workingConfigList = (_a = workingServiceConfig === null || workingServiceConfig === void 0 ? void 0 : workingServiceConfig.loadBalancingConfig) !== null && _a !== void 0 ? _a : [];
+	                const workingConfigList = (_a = workingServiceConfig === null || workingServiceConfig === undefined ? undefined : workingServiceConfig.loadBalancingConfig) !== null && _a !== undefined ? _a : [];
 	                const loadBalancingConfig = (0, load_balancer_1.selectLbConfigFromList)(workingConfigList, true);
 	                if (loadBalancingConfig === null) {
 	                    // There were load balancing configs but none are supported. This counts as a resolution failure
@@ -36746,8 +36754,8 @@ function requireResolvingLoadBalancer () {
 	                    return;
 	                }
 	                this.childLoadBalancer.updateAddressList(endpointList, loadBalancingConfig, attributes);
-	                const finalServiceConfig = workingServiceConfig !== null && workingServiceConfig !== void 0 ? workingServiceConfig : this.defaultServiceConfig;
-	                this.onSuccessfulResolution(finalServiceConfig, configSelector !== null && configSelector !== void 0 ? configSelector : getDefaultConfigSelector(finalServiceConfig));
+	                const finalServiceConfig = workingServiceConfig !== null && workingServiceConfig !== undefined ? workingServiceConfig : this.defaultServiceConfig;
+	                this.onSuccessfulResolution(finalServiceConfig, configSelector !== null && configSelector !== undefined ? configSelector : getDefaultConfigSelector(finalServiceConfig));
 	            },
 	            onError: (error) => {
 	                this.handleResolutionFailure(error);
@@ -36863,7 +36871,7 @@ function requireChannelOptions () {
 	 *
 	 */
 	Object.defineProperty(channelOptions, "__esModule", { value: true });
-	channelOptions.channelOptionsEqual = channelOptions.recognizedOptions = void 0;
+	channelOptions.channelOptionsEqual = channelOptions.recognizedOptions = undefined;
 	/**
 	 * This is for checking provided options at runtime. This is an object for
 	 * easier membership checking.
@@ -36945,7 +36953,7 @@ function requireSubchannelAddress () {
 	 *
 	 */
 	Object.defineProperty(subchannelAddress, "__esModule", { value: true });
-	subchannelAddress.EndpointMap = subchannelAddress.endpointHasAddress = subchannelAddress.endpointToString = subchannelAddress.endpointEqual = subchannelAddress.stringToSubchannelAddress = subchannelAddress.subchannelAddressToString = subchannelAddress.subchannelAddressEqual = subchannelAddress.isTcpSubchannelAddress = void 0;
+	subchannelAddress.EndpointMap = subchannelAddress.endpointHasAddress = subchannelAddress.endpointToString = subchannelAddress.endpointEqual = subchannelAddress.stringToSubchannelAddress = subchannelAddress.subchannelAddressToString = subchannelAddress.subchannelAddressEqual = subchannelAddress.isTcpSubchannelAddress = undefined;
 	const net_1 = require$$0$a;
 	function isTcpSubchannelAddress(address) {
 	    return 'port' in address;
@@ -36987,7 +36995,7 @@ function requireSubchannelAddress () {
 	    if ((0, net_1.isIP)(addressString)) {
 	        return {
 	            host: addressString,
-	            port: port !== null && port !== void 0 ? port : DEFAULT_PORT,
+	            port: port !== null && port !== undefined ? port : DEFAULT_PORT,
 	        };
 	    }
 	    else {
@@ -37238,7 +37246,7 @@ function __generator$5(e, r) {
         }
         if (a[0] & 5) throw a[1];
         return {
-            value: a[0] ? a[1] : void 0,
+            value: a[0] ? a[1] : undefined,
             done: true
         };
     }
@@ -37251,7 +37259,7 @@ typeof SuppressedError === "function" ? SuppressedError : function(e, r, t) {
 
 var TreeNode = function() {
     function TreeNode(e, r, t) {
-        if (t === void 0) {
+        if (t === undefined) {
             t = 1;
         }
         this.t = undefined;
@@ -37363,7 +37371,7 @@ var TreeNodeEnableIndex = function(e) {
 
 var ContainerIterator = function() {
     function ContainerIterator(e) {
-        if (e === void 0) {
+        if (e === undefined) {
             e = 0;
         }
         this.iteratorType = e;
@@ -37409,14 +37417,14 @@ function throwIteratorAccessError() {
 var TreeContainer = function(e) {
     __extends$4(TreeContainer, e);
     function TreeContainer(r, t) {
-        if (r === void 0) {
+        if (r === undefined) {
             r = function(e, r) {
                 if (e < r) return -1;
                 if (e > r) return 1;
                 return 0;
             };
         }
-        if (t === void 0) {
+        if (t === undefined) {
             t = false;
         }
         var i = e.call(this) || this;
@@ -37998,7 +38006,7 @@ var OrderedMapIterator = function(e) {
 var OrderedMap = function(e) {
     __extends$4(OrderedMap, e);
     function OrderedMap(r, t, i) {
-        if (r === void 0) {
+        if (r === undefined) {
             r = [];
         }
         var n = e.call(this, t, i) || this;
@@ -38138,7 +38146,7 @@ function requireAdmin () {
 	 *
 	 */
 	Object.defineProperty(admin, "__esModule", { value: true });
-	admin.addAdminServicesToServer = admin.registerAdminService = void 0;
+	admin.addAdminServicesToServer = admin.registerAdminService = undefined;
 	const registeredAdminServices = [];
 	function registerAdminService(getServiceDefinition, getHandlers) {
 	    registeredAdminServices.push({ getServiceDefinition, getHandlers });
@@ -38182,7 +38190,7 @@ function requireCall () {
 	 *
 	 */
 	Object.defineProperty(call, "__esModule", { value: true });
-	call.ClientDuplexStreamImpl = call.ClientWritableStreamImpl = call.ClientReadableStreamImpl = call.ClientUnaryCallImpl = call.callErrorFromStatus = void 0;
+	call.ClientDuplexStreamImpl = call.ClientWritableStreamImpl = call.ClientReadableStreamImpl = call.ClientUnaryCallImpl = call.callErrorFromStatus = undefined;
 	const events_1 = require$$0$6;
 	const stream_1 = require$$0$9;
 	const constants_1 = requireConstants();
@@ -38205,11 +38213,11 @@ function requireCall () {
 	    }
 	    cancel() {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
 	    }
 	    getPeer() {
 	        var _a, _b;
-	        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : 'unknown';
+	        return (_b = (_a = this.call) === null || _a === undefined ? undefined : _a.getPeer()) !== null && _b !== undefined ? _b : 'unknown';
 	    }
 	}
 	call.ClientUnaryCallImpl = ClientUnaryCallImpl;
@@ -38220,15 +38228,15 @@ function requireCall () {
 	    }
 	    cancel() {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
 	    }
 	    getPeer() {
 	        var _a, _b;
-	        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : 'unknown';
+	        return (_b = (_a = this.call) === null || _a === undefined ? undefined : _a.getPeer()) !== null && _b !== undefined ? _b : 'unknown';
 	    }
 	    _read(_size) {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.startRead();
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.startRead();
 	    }
 	}
 	call.ClientReadableStreamImpl = ClientReadableStreamImpl;
@@ -38239,11 +38247,11 @@ function requireCall () {
 	    }
 	    cancel() {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
 	    }
 	    getPeer() {
 	        var _a, _b;
-	        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : 'unknown';
+	        return (_b = (_a = this.call) === null || _a === undefined ? undefined : _a.getPeer()) !== null && _b !== undefined ? _b : 'unknown';
 	    }
 	    _write(chunk, encoding, cb) {
 	        var _a;
@@ -38254,11 +38262,11 @@ function requireCall () {
 	        if (!Number.isNaN(flags)) {
 	            context.flags = flags;
 	        }
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context, chunk);
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.sendMessageWithContext(context, chunk);
 	    }
 	    _final(cb) {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.halfClose();
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.halfClose();
 	        cb();
 	    }
 	}
@@ -38271,15 +38279,15 @@ function requireCall () {
 	    }
 	    cancel() {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.cancelWithStatus(constants_1.Status.CANCELLED, 'Cancelled on client');
 	    }
 	    getPeer() {
 	        var _a, _b;
-	        return (_b = (_a = this.call) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : 'unknown';
+	        return (_b = (_a = this.call) === null || _a === undefined ? undefined : _a.getPeer()) !== null && _b !== undefined ? _b : 'unknown';
 	    }
 	    _read(_size) {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.startRead();
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.startRead();
 	    }
 	    _write(chunk, encoding, cb) {
 	        var _a;
@@ -38290,11 +38298,11 @@ function requireCall () {
 	        if (!Number.isNaN(flags)) {
 	            context.flags = flags;
 	        }
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context, chunk);
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.sendMessageWithContext(context, chunk);
 	    }
 	    _final(cb) {
 	        var _a;
-	        (_a = this.call) === null || _a === void 0 ? void 0 : _a.halfClose();
+	        (_a = this.call) === null || _a === undefined ? undefined : _a.halfClose();
 	        cb();
 	    }
 	}
@@ -38329,7 +38337,7 @@ function requireCallInterface () {
 	 *
 	 */
 	Object.defineProperty(callInterface, "__esModule", { value: true });
-	callInterface.InterceptingListenerImpl = callInterface.isInterceptingListener = void 0;
+	callInterface.InterceptingListenerImpl = callInterface.isInterceptingListener = undefined;
 	function isInterceptingListener(listener) {
 	    return (listener.onReceiveMetadata !== undefined &&
 	        listener.onReceiveMetadata.length === 1);
@@ -38420,7 +38428,7 @@ function requireClientInterceptors () {
 	 *
 	 */
 	Object.defineProperty(clientInterceptors, "__esModule", { value: true });
-	clientInterceptors.getInterceptingCall = clientInterceptors.InterceptingCall = clientInterceptors.RequesterBuilder = clientInterceptors.ListenerBuilder = clientInterceptors.InterceptorConfigurationError = void 0;
+	clientInterceptors.getInterceptingCall = clientInterceptors.InterceptingCall = clientInterceptors.RequesterBuilder = clientInterceptors.ListenerBuilder = clientInterceptors.InterceptorConfigurationError = undefined;
 	const metadata_1 = requireMetadata();
 	const call_interface_1 = requireCallInterface();
 	const constants_1 = requireConstants();
@@ -38555,10 +38563,10 @@ function requireClientInterceptors () {
 	        this.pendingHalfClose = false;
 	        if (requester) {
 	            this.requester = {
-	                start: (_a = requester.start) !== null && _a !== void 0 ? _a : defaultRequester.start,
-	                sendMessage: (_b = requester.sendMessage) !== null && _b !== void 0 ? _b : defaultRequester.sendMessage,
-	                halfClose: (_c = requester.halfClose) !== null && _c !== void 0 ? _c : defaultRequester.halfClose,
-	                cancel: (_d = requester.cancel) !== null && _d !== void 0 ? _d : defaultRequester.cancel,
+	                start: (_a = requester.start) !== null && _a !== undefined ? _a : defaultRequester.start,
+	                sendMessage: (_b = requester.sendMessage) !== null && _b !== undefined ? _b : defaultRequester.sendMessage,
+	                halfClose: (_c = requester.halfClose) !== null && _c !== undefined ? _c : defaultRequester.halfClose,
+	                cancel: (_d = requester.cancel) !== null && _d !== undefined ? _d : defaultRequester.cancel,
 	            };
 	        }
 	        else {
@@ -38588,9 +38596,9 @@ function requireClientInterceptors () {
 	    start(metadata, interceptingListener) {
 	        var _a, _b, _c, _d, _e, _f;
 	        const fullInterceptingListener = {
-	            onReceiveMetadata: (_b = (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.bind(interceptingListener)) !== null && _b !== void 0 ? _b : (metadata => { }),
-	            onReceiveMessage: (_d = (_c = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMessage) === null || _c === void 0 ? void 0 : _c.bind(interceptingListener)) !== null && _d !== void 0 ? _d : (message => { }),
-	            onReceiveStatus: (_f = (_e = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveStatus) === null || _e === void 0 ? void 0 : _e.bind(interceptingListener)) !== null && _f !== void 0 ? _f : (status => { }),
+	            onReceiveMetadata: (_b = (_a = interceptingListener === null || interceptingListener === undefined ? undefined : interceptingListener.onReceiveMetadata) === null || _a === undefined ? undefined : _a.bind(interceptingListener)) !== null && _b !== undefined ? _b : (metadata => { }),
+	            onReceiveMessage: (_d = (_c = interceptingListener === null || interceptingListener === undefined ? undefined : interceptingListener.onReceiveMessage) === null || _c === undefined ? undefined : _c.bind(interceptingListener)) !== null && _d !== undefined ? _d : (message => { }),
+	            onReceiveStatus: (_f = (_e = interceptingListener === null || interceptingListener === undefined ? undefined : interceptingListener.onReceiveStatus) === null || _e === undefined ? undefined : _e.bind(interceptingListener)) !== null && _f !== undefined ? _f : (status => { }),
 	        };
 	        this.processingMetadata = true;
 	        this.requester.start(metadata, fullInterceptingListener, (md, listener) => {
@@ -38602,9 +38610,9 @@ function requireClientInterceptors () {
 	            }
 	            else {
 	                const fullListener = {
-	                    onReceiveMetadata: (_a = listener.onReceiveMetadata) !== null && _a !== void 0 ? _a : defaultListener.onReceiveMetadata,
-	                    onReceiveMessage: (_b = listener.onReceiveMessage) !== null && _b !== void 0 ? _b : defaultListener.onReceiveMessage,
-	                    onReceiveStatus: (_c = listener.onReceiveStatus) !== null && _c !== void 0 ? _c : defaultListener.onReceiveStatus,
+	                    onReceiveMetadata: (_a = listener.onReceiveMetadata) !== null && _a !== undefined ? _a : defaultListener.onReceiveMetadata,
+	                    onReceiveMessage: (_b = listener.onReceiveMessage) !== null && _b !== undefined ? _b : defaultListener.onReceiveMessage,
+	                    onReceiveStatus: (_c = listener.onReceiveStatus) !== null && _c !== undefined ? _c : defaultListener.onReceiveStatus,
 	                };
 	                finalInterceptingListener = new call_interface_1.InterceptingListenerImpl(fullListener, fullInterceptingListener);
 	            }
@@ -38649,9 +38657,9 @@ function requireClientInterceptors () {
 	clientInterceptors.InterceptingCall = InterceptingCall;
 	function getCall(channel, path, options) {
 	    var _a, _b;
-	    const deadline = (_a = options.deadline) !== null && _a !== void 0 ? _a : Infinity;
+	    const deadline = (_a = options.deadline) !== null && _a !== undefined ? _a : Infinity;
 	    const host = options.host;
-	    const parent = (_b = options.parent) !== null && _b !== void 0 ? _b : null;
+	    const parent = (_b = options.parent) !== null && _b !== undefined ? _b : null;
 	    const propagateFlags = options.propagate_flags;
 	    const credentials = options.credentials;
 	    const call = channel.createCall(path, deadline, host, parent, propagateFlags);
@@ -38698,7 +38706,7 @@ function requireClientInterceptors () {
 	        this.call.start(metadata, {
 	            onReceiveMetadata: metadata => {
 	                var _a;
-	                (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.call(interceptingListener, metadata);
+	                (_a = interceptingListener === null || interceptingListener === undefined ? undefined : interceptingListener.onReceiveMetadata) === null || _a === undefined ? undefined : _a.call(interceptingListener, metadata);
 	            },
 	            onReceiveMessage: message => {
 	                var _a;
@@ -38716,15 +38724,15 @@ function requireClientInterceptors () {
 	                    this.call.cancelWithStatus(readError.code, readError.details);
 	                    return;
 	                }
-	                (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMessage) === null || _a === void 0 ? void 0 : _a.call(interceptingListener, deserialized);
+	                (_a = interceptingListener === null || interceptingListener === undefined ? undefined : interceptingListener.onReceiveMessage) === null || _a === undefined ? undefined : _a.call(interceptingListener, deserialized);
 	            },
 	            onReceiveStatus: status => {
 	                var _a, _b;
 	                if (readError) {
-	                    (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveStatus) === null || _a === void 0 ? void 0 : _a.call(interceptingListener, readError);
+	                    (_a = interceptingListener === null || interceptingListener === undefined ? undefined : interceptingListener.onReceiveStatus) === null || _a === undefined ? undefined : _a.call(interceptingListener, readError);
 	                }
 	                else {
-	                    (_b = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveStatus) === null || _b === void 0 ? void 0 : _b.call(interceptingListener, status);
+	                    (_b = interceptingListener === null || interceptingListener === undefined ? undefined : interceptingListener.onReceiveStatus) === null || _b === undefined ? undefined : _b.call(interceptingListener, status);
 	                }
 	            },
 	        });
@@ -38749,19 +38757,19 @@ function requireClientInterceptors () {
 	        var _a, _b;
 	        let receivedMessage = false;
 	        const wrapperListener = {
-	            onReceiveMetadata: (_b = (_a = listener === null || listener === void 0 ? void 0 : listener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.bind(listener)) !== null && _b !== void 0 ? _b : (metadata => { }),
+	            onReceiveMetadata: (_b = (_a = listener === null || listener === undefined ? undefined : listener.onReceiveMetadata) === null || _a === undefined ? undefined : _a.bind(listener)) !== null && _b !== undefined ? _b : (metadata => { }),
 	            // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	            onReceiveMessage: (message) => {
 	                var _a;
 	                receivedMessage = true;
-	                (_a = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a === void 0 ? void 0 : _a.call(listener, message);
+	                (_a = listener === null || listener === undefined ? undefined : listener.onReceiveMessage) === null || _a === undefined ? undefined : _a.call(listener, message);
 	            },
 	            onReceiveStatus: (status) => {
 	                var _a, _b;
 	                if (!receivedMessage) {
-	                    (_a = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a === void 0 ? void 0 : _a.call(listener, null);
+	                    (_a = listener === null || listener === undefined ? undefined : listener.onReceiveMessage) === null || _a === undefined ? undefined : _a.call(listener, null);
 	                }
-	                (_b = listener === null || listener === void 0 ? void 0 : listener.onReceiveStatus) === null || _b === void 0 ? void 0 : _b.call(listener, status);
+	                (_b = listener === null || listener === undefined ? undefined : listener.onReceiveStatus) === null || _b === undefined ? undefined : _b.call(listener, status);
 	            },
 	        };
 	        super.start(metadata, wrapperListener);
@@ -38855,7 +38863,7 @@ function requireClient () {
 	 *
 	 */
 	Object.defineProperty(client, "__esModule", { value: true });
-	client.Client = void 0;
+	client.Client = undefined;
 	const call_1 = requireCall();
 	const channel_1 = requireChannel();
 	const connectivity_state_1 = requireConnectivityState();
@@ -38871,7 +38879,7 @@ function requireClient () {
 	}
 	function getErrorStackString(error) {
 	    var _a;
-	    return ((_a = error.stack) === null || _a === void 0 ? void 0 : _a.split('\n').slice(1).join('\n')) || 'no stack trace available';
+	    return ((_a = error.stack) === null || _a === undefined ? undefined : _a.split('\n').slice(1).join('\n')) || 'no stack trace available';
 	}
 	/**
 	 * A generic gRPC client. Primarily useful as a base class for all generated
@@ -38881,9 +38889,9 @@ function requireClient () {
 	    constructor(address, credentials, options = {}) {
 	        var _a, _b;
 	        options = Object.assign({}, options);
-	        this[INTERCEPTOR_SYMBOL] = (_a = options.interceptors) !== null && _a !== void 0 ? _a : [];
+	        this[INTERCEPTOR_SYMBOL] = (_a = options.interceptors) !== null && _a !== undefined ? _a : [];
 	        delete options.interceptors;
-	        this[INTERCEPTOR_PROVIDER_SYMBOL] = (_b = options.interceptor_providers) !== null && _b !== void 0 ? _b : [];
+	        this[INTERCEPTOR_PROVIDER_SYMBOL] = (_b = options.interceptor_providers) !== null && _b !== undefined ? _b : [];
 	        delete options.interceptor_providers;
 	        if (this[INTERCEPTOR_SYMBOL].length > 0 &&
 	            this[INTERCEPTOR_PROVIDER_SYMBOL].length > 0) {
@@ -38986,8 +38994,8 @@ function requireClient () {
 	        const interceptorArgs = {
 	            clientInterceptors: this[INTERCEPTOR_SYMBOL],
 	            clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
-	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : [],
+	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== undefined ? _a : [],
+	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== undefined ? _b : [],
 	        };
 	        const call = (0, client_interceptors_1.getInterceptingCall)(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
 	        /* This needs to happen before the emitter is used. Unfortunately we can't
@@ -39066,8 +39074,8 @@ function requireClient () {
 	        const interceptorArgs = {
 	            clientInterceptors: this[INTERCEPTOR_SYMBOL],
 	            clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
-	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : [],
+	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== undefined ? _a : [],
+	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== undefined ? _b : [],
 	        };
 	        const call = (0, client_interceptors_1.getInterceptingCall)(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
 	        /* This needs to happen before the emitter is used. Unfortunately we can't
@@ -39168,8 +39176,8 @@ function requireClient () {
 	        const interceptorArgs = {
 	            clientInterceptors: this[INTERCEPTOR_SYMBOL],
 	            clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
-	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : [],
+	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== undefined ? _a : [],
+	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== undefined ? _b : [],
 	        };
 	        const call = (0, client_interceptors_1.getInterceptingCall)(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
 	        /* This needs to happen before the emitter is used. Unfortunately we can't
@@ -39231,8 +39239,8 @@ function requireClient () {
 	        const interceptorArgs = {
 	            clientInterceptors: this[INTERCEPTOR_SYMBOL],
 	            clientInterceptorProviders: this[INTERCEPTOR_PROVIDER_SYMBOL],
-	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== void 0 ? _a : [],
-	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== void 0 ? _b : [],
+	            callInterceptors: (_a = callProperties.callOptions.interceptors) !== null && _a !== undefined ? _a : [],
+	            callInterceptorProviders: (_b = callProperties.callOptions.interceptor_providers) !== null && _b !== undefined ? _b : [],
 	        };
 	        const call = (0, client_interceptors_1.getInterceptingCall)(interceptorArgs, callProperties.methodDefinition, callProperties.callOptions, callProperties.channel);
 	        /* This needs to happen before the emitter is used. Unfortunately we can't
@@ -39295,7 +39303,7 @@ function requireMakeClient () {
 	 *
 	 */
 	Object.defineProperty(makeClient, "__esModule", { value: true });
-	makeClient.loadPackageDefinition = makeClient.makeClientConstructor = void 0;
+	makeClient.loadPackageDefinition = makeClient.makeClientConstructor = undefined;
 	const client_1 = requireClient();
 	/**
 	 * Map with short names for each of the requester maker functions. Used in
@@ -39438,8 +39446,6 @@ var hasRequiredLodash_camelcase;
 function requireLodash_camelcase () {
 	if (hasRequiredLodash_camelcase) return lodash_camelcase;
 	hasRequiredLodash_camelcase = 1;
-	/** Used as references for various `Number` constants. */
-	var INFINITY = 1 / 0;
 
 	/** `Object#toString` result references. */
 	var symbolTag = '[object Symbol]';
@@ -39775,7 +39781,7 @@ function requireLodash_camelcase () {
 	    return symbolToString ? symbolToString.call(value) : '';
 	  }
 	  var result = (value + '');
-	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+	  return (result == '0' && (1 / value) == -Infinity) ? '-0' : result;
 	}
 
 	/**
@@ -51568,7 +51574,7 @@ function requireUtil () {
 	 *
 	 */
 	Object.defineProperty(util, "__esModule", { value: true });
-	util.addCommonProtos = util.loadProtosWithOptionsSync = util.loadProtosWithOptions = void 0;
+	util.addCommonProtos = util.loadProtosWithOptionsSync = util.loadProtosWithOptions = undefined;
 	const fs = require$$0$5;
 	const path = require$$1$6;
 	const Protobuf = requireProtobufjs();
@@ -51655,7 +51661,7 @@ function requireUmd () {
 		  Object.defineProperty(exports, "__esModule", {
 		    value: true
 		  });
-		  exports.default = void 0;
+		  exports.default = undefined;
 		  
 		  /**
 		   * @license
@@ -51845,7 +51851,7 @@ function requireUmd () {
 		      if (value < 0) return UZERO;
 		      if (value >= TWO_PWR_64_DBL) return MAX_UNSIGNED_VALUE;
 		    } else {
-		      if (value <= -TWO_PWR_63_DBL) return MIN_VALUE;
+		      if (value <= -9223372036854776e3) return MIN_VALUE;
 		      if (value + 1 >= TWO_PWR_63_DBL) return MAX_VALUE;
 		    }
 		  
@@ -52642,7 +52648,7 @@ function requireUmd () {
 		      // guard against signed division overflow: the largest
 		      // negative number / -1 would be 1 larger than the largest
 		      // positive number, due to two's complement.
-		      if (!this.unsigned && this.high === -0x80000000 && divisor.low === -1 && divisor.high === -1) {
+		      if (!this.unsigned && this.high === -2147483648 && divisor.low === -1 && divisor.high === -1) {
 		        // be consistent with non-wasm code path
 		        return this;
 		      }
@@ -53107,7 +53113,7 @@ function requireSrc$4 () {
 		 *
 		 */
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.loadFileDescriptorSetFromObject = exports.loadFileDescriptorSetFromBuffer = exports.fromJSON = exports.loadSync = exports.load = exports.IdempotencyLevel = exports.isAnyExtension = exports.Long = void 0;
+		exports.loadFileDescriptorSetFromObject = exports.loadFileDescriptorSetFromBuffer = exports.fromJSON = exports.loadSync = exports.load = exports.IdempotencyLevel = exports.isAnyExtension = exports.Long = undefined;
 		const camelCase = requireLodash_camelcase();
 		const Protobuf = requireProtobufjs();
 		const descriptor = requireDescriptor();
@@ -53358,7 +53364,7 @@ function requireChannelz () {
 	 *
 	 */
 	Object.defineProperty(channelz, "__esModule", { value: true });
-	channelz.setup = channelz.getChannelzServiceDefinition = channelz.getChannelzHandlers = channelz.unregisterChannelzRef = channelz.registerChannelzSocket = channelz.registerChannelzServer = channelz.registerChannelzSubchannel = channelz.registerChannelzChannel = channelz.ChannelzCallTrackerStub = channelz.ChannelzCallTracker = channelz.ChannelzChildrenTrackerStub = channelz.ChannelzChildrenTracker = channelz.ChannelzTrace = channelz.ChannelzTraceStub = void 0;
+	channelz.setup = channelz.getChannelzServiceDefinition = channelz.getChannelzHandlers = channelz.unregisterChannelzRef = channelz.registerChannelzSocket = channelz.registerChannelzServer = channelz.registerChannelzSubchannel = channelz.registerChannelzChannel = channelz.ChannelzCallTrackerStub = channelz.ChannelzCallTracker = channelz.ChannelzChildrenTrackerStub = channelz.ChannelzChildrenTracker = channelz.ChannelzTrace = channelz.ChannelzTraceStub = undefined;
 	const net_1 = require$$0$a;
 	const ordered_map_1 = require$$1$1;
 	const connectivity_state_1 = requireConnectivityState();
@@ -53428,8 +53434,8 @@ function requireChannelz () {
 	            description: description,
 	            severity: severity,
 	            timestamp: timestamp,
-	            childChannel: (child === null || child === void 0 ? void 0 : child.kind) === 'channel' ? child : undefined,
-	            childSubchannel: (child === null || child === void 0 ? void 0 : child.kind) === 'subchannel' ? child : undefined,
+	            childChannel: (child === null || child === undefined ? undefined : child.kind) === 'channel' ? child : undefined,
+	            childSubchannel: (child === null || child === undefined ? undefined : child.kind) === 'subchannel' ? child : undefined,
 	        });
 	        // Whenever the trace array gets too large, discard the first half
 	        if (this.events.length >= TARGET_RETAINED_TRACES * 2) {
@@ -53786,7 +53792,7 @@ function requireChannelz () {
 	        return {
 	            address: 'tcpip_address',
 	            tcpip_address: {
-	                ip_address: (_a = ipAddressStringToBuffer(subchannelAddress.host)) !== null && _a !== void 0 ? _a : undefined,
+	                ip_address: (_a = ipAddressStringToBuffer(subchannelAddress.host)) !== null && _a !== undefined ? _a : undefined,
 	                port: subchannelAddress.port,
 	            },
 	        };
@@ -53819,10 +53825,10 @@ function requireChannelz () {
 	                cipher_suite: resolvedInfo.security.cipherSuiteStandardName
 	                    ? 'standard_name'
 	                    : 'other_name',
-	                standard_name: (_a = resolvedInfo.security.cipherSuiteStandardName) !== null && _a !== void 0 ? _a : undefined,
-	                other_name: (_b = resolvedInfo.security.cipherSuiteOtherName) !== null && _b !== void 0 ? _b : undefined,
-	                local_certificate: (_c = resolvedInfo.security.localCertificate) !== null && _c !== void 0 ? _c : undefined,
-	                remote_certificate: (_d = resolvedInfo.security.remoteCertificate) !== null && _d !== void 0 ? _d : undefined,
+	                standard_name: (_a = resolvedInfo.security.cipherSuiteStandardName) !== null && _a !== undefined ? _a : undefined,
+	                other_name: (_b = resolvedInfo.security.cipherSuiteOtherName) !== null && _b !== undefined ? _b : undefined,
+	                local_certificate: (_c = resolvedInfo.security.localCertificate) !== null && _c !== undefined ? _c : undefined,
+	                remote_certificate: (_d = resolvedInfo.security.remoteCertificate) !== null && _d !== undefined ? _d : undefined,
 	            },
 	        }
 	        : null;
@@ -53834,7 +53840,7 @@ function requireChannelz () {
 	        remote: resolvedInfo.remoteAddress
 	            ? subchannelAddressToAddressMessage(resolvedInfo.remoteAddress)
 	            : null,
-	        remote_name: (_e = resolvedInfo.remoteName) !== null && _e !== void 0 ? _e : undefined,
+	        remote_name: (_e = resolvedInfo.remoteName) !== null && _e !== undefined ? _e : undefined,
 	        security: securityMessage,
 	        data: {
 	            keep_alives_sent: resolvedInfo.keepAlivesSent,
@@ -53949,7 +53955,7 @@ function requireSubchannel () {
 	 *
 	 */
 	Object.defineProperty(subchannel, "__esModule", { value: true });
-	subchannel.Subchannel = void 0;
+	subchannel.Subchannel = undefined;
 	const connectivity_state_1 = requireConnectivityState();
 	const backoff_timeout_1 = requireBackoffTimeout();
 	const logging = requireLogging();
@@ -53961,7 +53967,7 @@ function requireSubchannel () {
 	/* setInterval and setTimeout only accept signed 32 bit integers. JS doesn't
 	 * have a constant for the max signed 32 bit integer, so this is a simple way
 	 * to calculate it */
-	const KEEPALIVE_MAX_TIME_MS = ~(1 << 31);
+	const KEEPALIVE_MAX_TIME_MS = 2147483647;
 	class Subchannel {
 	    /**
 	     * A class representing a connection to a single backend.
@@ -54015,7 +54021,7 @@ function requireSubchannel () {
 	        }, backoffOptions);
 	        this.backoffTimeout.unref();
 	        this.subchannelAddressString = (0, subchannel_address_1.subchannelAddressToString)(subchannelAddress);
-	        this.keepaliveTime = (_a = options['grpc.keepalive_time_ms']) !== null && _a !== void 0 ? _a : -1;
+	        this.keepaliveTime = (_a = options['grpc.keepalive_time_ms']) !== null && _a !== undefined ? _a : -1;
 	        if (options['grpc.enable_channelz'] === 0) {
 	            this.channelzEnabled = false;
 	            this.channelzTrace = new channelz_1.ChannelzTraceStub();
@@ -54150,7 +54156,7 @@ function requireSubchannel () {
 	                if (this.channelzEnabled && this.transport) {
 	                    this.childrenTracker.unrefChild(this.transport.getChannelzRef());
 	                }
-	                (_a = this.transport) === null || _a === void 0 ? void 0 : _a.shutdown();
+	                (_a = this.transport) === null || _a === undefined ? undefined : _a.shutdown();
 	                this.transport = null;
 	                /* If the backoff timer has already ended by the time we get to the
 	                 * TRANSIENT_FAILURE state, we want to immediately transition out of
@@ -54165,7 +54171,7 @@ function requireSubchannel () {
 	                if (this.channelzEnabled && this.transport) {
 	                    this.childrenTracker.unrefChild(this.transport.getChannelzRef());
 	                }
-	                (_b = this.transport) === null || _b === void 0 ? void 0 : _b.shutdown();
+	                (_b = this.transport) === null || _b === undefined ? undefined : _b.shutdown();
 	                this.transport = null;
 	                break;
 	            default:
@@ -54336,8 +54342,8 @@ function requireEnvironment () {
 	 */
 	var _a;
 	Object.defineProperty(environment, "__esModule", { value: true });
-	environment.GRPC_NODE_USE_ALTERNATIVE_RESOLVER = void 0;
-	environment.GRPC_NODE_USE_ALTERNATIVE_RESOLVER = ((_a = process.env.GRPC_NODE_USE_ALTERNATIVE_RESOLVER) !== null && _a !== void 0 ? _a : 'false') === 'true';
+	environment.GRPC_NODE_USE_ALTERNATIVE_RESOLVER = undefined;
+	environment.GRPC_NODE_USE_ALTERNATIVE_RESOLVER = ((_a = process.env.GRPC_NODE_USE_ALTERNATIVE_RESOLVER) !== null && _a !== undefined ? _a : 'false') === 'true';
 	
 	return environment;
 }
@@ -54364,9 +54370,9 @@ function requireResolverDns () {
 		 * limitations under the License.
 		 */
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.setup = exports.DEFAULT_PORT = void 0;
+		exports.setup = exports.DEFAULT_PORT = undefined;
 		const resolver_1 = requireResolver();
-		const dns_1 = require$$1$7;
+		const dns_1 = require$$1$8;
 		const service_config_1 = requireServiceConfig();
 		const constants_1 = requireConstants();
 		const metadata_1 = requireMetadata();
@@ -54420,7 +54426,7 @@ function requireResolverDns () {
 		                        addresses: [
 		                            {
 		                                host: hostPort.host,
-		                                port: (_a = hostPort.port) !== null && _a !== void 0 ? _a : exports.DEFAULT_PORT,
+		                                port: (_a = hostPort.port) !== null && _a !== undefined ? _a : exports.DEFAULT_PORT,
 		                            },
 		                        ],
 		                    },
@@ -54431,7 +54437,7 @@ function requireResolverDns () {
 		            else {
 		                this.ipResult = null;
 		                this.dnsHostname = hostPort.host;
-		                this.port = (_b = hostPort.port) !== null && _b !== void 0 ? _b : exports.DEFAULT_PORT;
+		                this.port = (_b = hostPort.port) !== null && _b !== undefined ? _b : exports.DEFAULT_PORT;
 		            }
 		        }
 		        this.percentage = Math.random() * 100;
@@ -54454,7 +54460,7 @@ function requireResolverDns () {
 		        }, backoffOptions);
 		        this.backoff.unref();
 		        this.minTimeBetweenResolutionsMs =
-		            (_c = channelOptions['grpc.dns_min_time_between_resolutions_ms']) !== null && _c !== void 0 ? _c : DEFAULT_MIN_TIME_BETWEEN_RESOLUTIONS_MS;
+		            (_c = channelOptions['grpc.dns_min_time_between_resolutions_ms']) !== null && _c !== undefined ? _c : DEFAULT_MIN_TIME_BETWEEN_RESOLUTIONS_MS;
 		        this.nextResolutionTimer = setTimeout(() => { }, 0);
 		        clearTimeout(this.nextResolutionTimer);
 		    }
@@ -54624,7 +54630,7 @@ function requireResolverDns () {
 		                this.startResolutionWithBackoff();
 		            }
 		        }, this.minTimeBetweenResolutionsMs);
-		        (_b = (_a = this.nextResolutionTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+		        (_b = (_a = this.nextResolutionTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 		        this.isNextResolutionTimerRunning = true;
 		    }
 		    stopNextResolutionTimer() {
@@ -54722,7 +54728,7 @@ function requireHttp_proxy () {
 	 *
 	 */
 	Object.defineProperty(http_proxy, "__esModule", { value: true });
-	http_proxy.getProxiedConnection = http_proxy.mapProxyName = void 0;
+	http_proxy.getProxiedConnection = http_proxy.mapProxyName = undefined;
 	const logging_1 = requireLogging();
 	const constants_1 = requireConstants();
 	const resolver_1 = requireResolver();
@@ -54820,7 +54826,7 @@ function requireHttp_proxy () {
 	        target: target,
 	        extraOptions: {},
 	    };
-	    if (((_a = options['grpc.enable_http_proxy']) !== null && _a !== void 0 ? _a : 1) === 0) {
+	    if (((_a = options['grpc.enable_http_proxy']) !== null && _a !== undefined ? _a : 1) === 0) {
 	        return noProxyResult;
 	    }
 	    if (target.scheme === 'unix') {
@@ -54870,7 +54876,7 @@ function requireHttp_proxy () {
 	    if (splitHostPost === null) {
 	        return Promise.resolve({});
 	    }
-	    const hostPort = `${splitHostPost.host}:${(_a = splitHostPost.port) !== null && _a !== void 0 ? _a : resolver_dns_1.DEFAULT_PORT}`;
+	    const hostPort = `${splitHostPost.host}:${(_a = splitHostPost.port) !== null && _a !== undefined ? _a : resolver_dns_1.DEFAULT_PORT}`;
 	    const options = {
 	        method: 'CONNECT',
 	        path: hostPort,
@@ -54918,7 +54924,7 @@ function requireHttp_proxy () {
 	                     * See https://github.com/grpc/grpc-node/pull/1369 for more info. */
 	                    const targetPath = (0, resolver_1.getDefaultAuthority)(parsedTarget);
 	                    const hostPort = (0, uri_parser_1.splitHostPort)(targetPath);
-	                    const remoteHost = (_a = hostPort === null || hostPort === void 0 ? void 0 : hostPort.host) !== null && _a !== void 0 ? _a : targetPath;
+	                    const remoteHost = (_a = hostPort === null || hostPort === undefined ? undefined : hostPort.host) !== null && _a !== undefined ? _a : targetPath;
 	                    const cts = tls.connect(Object.assign({ host: remoteHost, servername: remoteHost, socket: socket }, connectionOptions), () => {
 	                        trace('Successfully established a TLS connection to ' +
 	                            options.path +
@@ -54999,7 +55005,7 @@ function requireStreamDecoder () {
 	 *
 	 */
 	Object.defineProperty(streamDecoder, "__esModule", { value: true });
-	streamDecoder.StreamDecoder = void 0;
+	streamDecoder.StreamDecoder = undefined;
 	var ReadState;
 	(function (ReadState) {
 	    ReadState[ReadState["NO_DATA"] = 0] = "NO_DATA";
@@ -55106,7 +55112,7 @@ function requireSubchannelCall () {
 	 *
 	 */
 	Object.defineProperty(subchannelCall, "__esModule", { value: true });
-	subchannelCall.Http2SubchannelCall = void 0;
+	subchannelCall.Http2SubchannelCall = undefined;
 	const http2 = require$$0$f;
 	const os = require$$0$3;
 	const constants_1 = requireConstants();
@@ -55184,7 +55190,7 @@ function requireSubchannelCall () {
 	        this.internalError = null;
 	        this.serverEndedCall = false;
 	        this.connectionDropped = false;
-	        const maxReceiveMessageLength = (_a = transport.getOptions()['grpc.max_receive_message_length']) !== null && _a !== void 0 ? _a : constants_1.DEFAULT_MAX_RECEIVE_MESSAGE_LENGTH;
+	        const maxReceiveMessageLength = (_a = transport.getOptions()['grpc.max_receive_message_length']) !== null && _a !== undefined ? _a : constants_1.DEFAULT_MAX_RECEIVE_MESSAGE_LENGTH;
 	        this.decoder = new stream_decoder_1.StreamDecoder(maxReceiveMessageLength);
 	        http2Stream.on('response', (headers, flags) => {
 	            let headersString = '';
@@ -55268,7 +55274,7 @@ function requireSubchannelCall () {
 	                 * we have received all of the messages and we have processed the
 	                 * trailers and the call completed successfully, so it doesn't matter
 	                 * how the stream ends after that */
-	                if (((_a = this.finalStatus) === null || _a === void 0 ? void 0 : _a.code) === constants_1.Status.OK) {
+	                if (((_a = this.finalStatus) === null || _a === undefined ? undefined : _a.code) === constants_1.Status.OK) {
 	                    return;
 	                }
 	                let code;
@@ -55549,7 +55555,7 @@ function requireSubchannelCall () {
 	             * the stream, partly to avoid a situation in which we detect an error
 	             * RST_STREAM as a result after we have the status */
 	            let code;
-	            if (((_a = this.finalStatus) === null || _a === void 0 ? void 0 : _a.code) === constants_1.Status.OK) {
+	            if (((_a = this.finalStatus) === null || _a === undefined ? undefined : _a.code) === constants_1.Status.OK) {
 	                code = http2.constants.NGHTTP2_NO_ERROR;
 	            }
 	            else {
@@ -55599,14 +55605,14 @@ function requireSubchannelCall () {
 	            process.nextTick(() => {
 	                var _a;
 	                let code = constants_1.Status.UNAVAILABLE;
-	                if ((error === null || error === void 0 ? void 0 : error.code) ===
+	                if ((error === null || error === undefined ? undefined : error.code) ===
 	                    'ERR_STREAM_WRITE_AFTER_END') {
 	                    code = constants_1.Status.INTERNAL;
 	                }
 	                if (error) {
 	                    this.cancelWithStatus(code, `Write error: ${error.message}`);
 	                }
-	                (_a = context.callback) === null || _a === void 0 ? void 0 : _a.call(context);
+	                (_a = context.callback) === null || _a === undefined ? undefined : _a.call(context);
 	            });
 	        };
 	        this.trace('sending data chunk of length ' + message.length);
@@ -55657,7 +55663,7 @@ function requireCallNumber () {
 	 *
 	 */
 	Object.defineProperty(callNumber, "__esModule", { value: true });
-	callNumber.getNextCallNumber = void 0;
+	callNumber.getNextCallNumber = undefined;
 	let nextCallNumber = 0;
 	function getNextCallNumber() {
 	    return nextCallNumber++;
@@ -55689,7 +55695,7 @@ function requireTransport () {
 	 *
 	 */
 	Object.defineProperty(transport, "__esModule", { value: true });
-	transport.Http2SubchannelConnector = void 0;
+	transport.Http2SubchannelConnector = undefined;
 	const http2 = require$$0$f;
 	const tls_1 = require$$4$2;
 	const channelz_1 = requireChannelz();
@@ -55790,7 +55796,7 @@ function requireTransport () {
 	            this.trace('connection closed by GOAWAY with code ' +
 	                errorCode +
 	                ' and data ' +
-	                (opaqueData === null || opaqueData === void 0 ? void 0 : opaqueData.toString()));
+	                (opaqueData === null || opaqueData === undefined ? undefined : opaqueData.toString()));
 	            this.reportDisconnectToOwner(tooManyPings);
 	        });
 	        session.once('error', error => {
@@ -55837,7 +55843,7 @@ function requireTransport () {
 	            const certificate = tlsSocket.getCertificate();
 	            const peerCertificate = tlsSocket.getPeerCertificate();
 	            tlsInfo = {
-	                cipherSuiteStandardName: (_a = cipherInfo.standardName) !== null && _a !== void 0 ? _a : null,
+	                cipherSuiteStandardName: (_a = cipherInfo.standardName) !== null && _a !== undefined ? _a : null,
 	                cipherSuiteOtherName: cipherInfo.standardName ? null : cipherInfo.name,
 	                localCertificate: certificate && 'raw' in certificate ? certificate.raw : null,
 	                remoteCertificate: peerCertificate && 'raw' in peerCertificate
@@ -55863,8 +55869,8 @@ function requireTransport () {
 	            lastRemoteStreamCreatedTimestamp: null,
 	            lastMessageSentTimestamp: this.lastMessageSentTimestamp,
 	            lastMessageReceivedTimestamp: this.lastMessageReceivedTimestamp,
-	            localFlowControlWindow: (_b = this.session.state.localWindowSize) !== null && _b !== void 0 ? _b : null,
-	            remoteFlowControlWindow: (_c = this.session.state.remoteWindowSize) !== null && _c !== void 0 ? _c : null,
+	            localFlowControlWindow: (_b = this.session.state.localWindowSize) !== null && _b !== undefined ? _b : null,
+	            remoteFlowControlWindow: (_c = this.session.state.remoteWindowSize) !== null && _c !== undefined ? _c : null,
 	        };
 	        return socketInfo;
 	    }
@@ -55957,7 +55963,7 @@ function requireTransport () {
 	            this.keepaliveTrace('Ping timeout passed without response');
 	            this.handleDisconnect();
 	        }, this.keepaliveTimeoutMs);
-	        (_b = (_a = this.keepaliveTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.keepaliveTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	        let pingSendError = '';
 	        try {
 	            const pingSentSuccessfully = this.session.ping((err, duration, payload) => {
@@ -56005,7 +56011,7 @@ function requireTransport () {
 	                this.keepaliveTimer = null;
 	                this.maybeSendPing();
 	            }, this.keepaliveTimeMs);
-	            (_b = (_a = this.keepaliveTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	            (_b = (_a = this.keepaliveTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	        }
 	        /* Otherwise, there is already either a keepalive timer or a ping pending,
 	         * wait for those to resolve. */
@@ -56078,17 +56084,17 @@ function requireTransport () {
 	                    var _a;
 	                    this.messagesSent += 1;
 	                    this.lastMessageSentTimestamp = new Date();
-	                    (_a = subchannelCallStatsTracker.addMessageSent) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker);
+	                    (_a = subchannelCallStatsTracker.addMessageSent) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker);
 	                },
 	                addMessageReceived: () => {
 	                    var _a;
 	                    this.messagesReceived += 1;
 	                    this.lastMessageReceivedTimestamp = new Date();
-	                    (_a = subchannelCallStatsTracker.addMessageReceived) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker);
+	                    (_a = subchannelCallStatsTracker.addMessageReceived) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker);
 	                },
 	                onCallEnd: status => {
 	                    var _a;
-	                    (_a = subchannelCallStatsTracker.onCallEnd) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker, status);
+	                    (_a = subchannelCallStatsTracker.onCallEnd) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker, status);
 	                    this.removeActiveCall(call);
 	                },
 	                onStreamEnd: success => {
@@ -56099,7 +56105,7 @@ function requireTransport () {
 	                    else {
 	                        this.streamTracker.addCallFailed();
 	                    }
-	                    (_a = subchannelCallStatsTracker.onStreamEnd) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker, success);
+	                    (_a = subchannelCallStatsTracker.onStreamEnd) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker, success);
 	                },
 	            };
 	        }
@@ -56107,20 +56113,20 @@ function requireTransport () {
 	            eventTracker = {
 	                addMessageSent: () => {
 	                    var _a;
-	                    (_a = subchannelCallStatsTracker.addMessageSent) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker);
+	                    (_a = subchannelCallStatsTracker.addMessageSent) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker);
 	                },
 	                addMessageReceived: () => {
 	                    var _a;
-	                    (_a = subchannelCallStatsTracker.addMessageReceived) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker);
+	                    (_a = subchannelCallStatsTracker.addMessageReceived) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker);
 	                },
 	                onCallEnd: status => {
 	                    var _a;
-	                    (_a = subchannelCallStatsTracker.onCallEnd) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker, status);
+	                    (_a = subchannelCallStatsTracker.onCallEnd) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker, status);
 	                    this.removeActiveCall(call);
 	                },
 	                onStreamEnd: success => {
 	                    var _a;
-	                    (_a = subchannelCallStatsTracker.onStreamEnd) === null || _a === void 0 ? void 0 : _a.call(subchannelCallStatsTracker, success);
+	                    (_a = subchannelCallStatsTracker.onStreamEnd) === null || _a === undefined ? undefined : _a.call(subchannelCallStatsTracker, success);
 	                },
 	            };
 	        }
@@ -56167,7 +56173,7 @@ function requireTransport () {
 	                remoteName = null;
 	                this.trace('creating HTTP/2 session to ' + (0, subchannel_address_1.subchannelAddressToString)(address));
 	            }
-	            const targetAuthority = (0, resolver_1.getDefaultAuthority)((_a = proxyConnectionResult.realTarget) !== null && _a !== void 0 ? _a : this.channelTarget);
+	            const targetAuthority = (0, resolver_1.getDefaultAuthority)((_a = proxyConnectionResult.realTarget) !== null && _a !== undefined ? _a : this.channelTarget);
 	            let connectionOptions = credentials._getConnectionOptions();
 	            if (!connectionOptions) {
 	                reject('Credentials not loaded');
@@ -56193,14 +56199,14 @@ function requireTransport () {
 	                // This option is used for testing only.
 	                if (options['grpc.ssl_target_name_override']) {
 	                    const sslTargetNameOverride = options['grpc.ssl_target_name_override'];
-	                    const originalCheckServerIdentity = (_b = connectionOptions.checkServerIdentity) !== null && _b !== void 0 ? _b : tls_1.checkServerIdentity;
+	                    const originalCheckServerIdentity = (_b = connectionOptions.checkServerIdentity) !== null && _b !== undefined ? _b : tls_1.checkServerIdentity;
 	                    connectionOptions.checkServerIdentity = (host, cert) => {
 	                        return originalCheckServerIdentity(sslTargetNameOverride, cert);
 	                    };
 	                    connectionOptions.servername = sslTargetNameOverride;
 	                }
 	                else {
-	                    const authorityHostname = (_d = (_c = (0, uri_parser_1.splitHostPort)(targetAuthority)) === null || _c === void 0 ? void 0 : _c.host) !== null && _d !== void 0 ? _d : 'localhost';
+	                    const authorityHostname = (_d = (_c = (0, uri_parser_1.splitHostPort)(targetAuthority)) === null || _c === undefined ? undefined : _c.host) !== null && _d !== undefined ? _d : 'localhost';
 	                    // We want to always set servername to support SNI
 	                    connectionOptions.servername = authorityHostname;
 	                }
@@ -56299,7 +56305,7 @@ function requireTransport () {
 	            // This option is used for testing only.
 	            if (options['grpc.ssl_target_name_override']) {
 	                const sslTargetNameOverride = options['grpc.ssl_target_name_override'];
-	                const originalCheckServerIdentity = (_a = connectionOptions.checkServerIdentity) !== null && _a !== void 0 ? _a : tls_1.checkServerIdentity;
+	                const originalCheckServerIdentity = (_a = connectionOptions.checkServerIdentity) !== null && _a !== undefined ? _a : tls_1.checkServerIdentity;
 	                connectionOptions.checkServerIdentity = (host, cert) => {
 	                    return originalCheckServerIdentity(sslTargetNameOverride, cert);
 	                };
@@ -56311,11 +56317,11 @@ function requireTransport () {
 	                     * if a connection is successfully established through the proxy.
 	                     * If the proxy is not used, these connectionOptions are discarded
 	                     * anyway */
-	                    const targetPath = (0, resolver_1.getDefaultAuthority)((_b = (0, uri_parser_1.parseUri)(options['grpc.http_connect_target'])) !== null && _b !== void 0 ? _b : {
+	                    const targetPath = (0, resolver_1.getDefaultAuthority)((_b = (0, uri_parser_1.parseUri)(options['grpc.http_connect_target'])) !== null && _b !== undefined ? _b : {
 	                        path: 'localhost',
 	                    });
 	                    const hostPort = (0, uri_parser_1.splitHostPort)(targetPath);
-	                    connectionOptions.servername = (_c = hostPort === null || hostPort === void 0 ? void 0 : hostPort.host) !== null && _c !== void 0 ? _c : targetPath;
+	                    connectionOptions.servername = (_c = hostPort === null || hostPort === undefined ? undefined : hostPort.host) !== null && _c !== undefined ? _c : targetPath;
 	                }
 	            }
 	            if (options['grpc-node.tls_enable_trace']) {
@@ -56327,7 +56333,7 @@ function requireTransport () {
 	    shutdown() {
 	        var _a;
 	        this.isShutdown = true;
-	        (_a = this.session) === null || _a === void 0 ? void 0 : _a.close();
+	        (_a = this.session) === null || _a === undefined ? undefined : _a.close();
 	        this.session = null;
 	    }
 	}
@@ -56358,7 +56364,7 @@ function requireSubchannelPool () {
 	 *
 	 */
 	Object.defineProperty(subchannelPool, "__esModule", { value: true });
-	subchannelPool.getSubchannelPool = subchannelPool.SubchannelPool = void 0;
+	subchannelPool.getSubchannelPool = subchannelPool.SubchannelPool = undefined;
 	const channel_options_1 = requireChannelOptions();
 	const subchannel_1 = requireSubchannel();
 	const subchannel_address_1 = requireSubchannelAddress();
@@ -56422,7 +56428,7 @@ function requireSubchannelPool () {
 	            }, REF_CHECK_INTERVAL);
 	            // Unref because this timer should not keep the event loop running.
 	            // Call unref only if it exists to address electron/electron#21162
-	            (_b = (_a = this.cleanupTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	            (_b = (_a = this.cleanupTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	        }
 	    }
 	    /**
@@ -56504,7 +56510,7 @@ function requireFilterStack () {
 	 *
 	 */
 	Object.defineProperty(filterStack, "__esModule", { value: true });
-	filterStack.FilterStackFactory = filterStack.FilterStack = void 0;
+	filterStack.FilterStackFactory = filterStack.FilterStack = undefined;
 	class FilterStack {
 	    constructor(filters) {
 	        this.filters = filters;
@@ -56597,7 +56603,7 @@ function requireCompressionAlgorithms () {
 	 *
 	 */
 	Object.defineProperty(compressionAlgorithms, "__esModule", { value: true });
-	compressionAlgorithms.CompressionAlgorithms = void 0;
+	compressionAlgorithms.CompressionAlgorithms = undefined;
 	var CompressionAlgorithms;
 	(function (CompressionAlgorithms) {
 	    CompressionAlgorithms[CompressionAlgorithms["identity"] = 0] = "identity";
@@ -56632,7 +56638,7 @@ function requireFilter () {
 	 *
 	 */
 	Object.defineProperty(filter, "__esModule", { value: true });
-	filter.BaseFilter = void 0;
+	filter.BaseFilter = undefined;
 	class BaseFilter {
 	    async sendMetadata(metadata) {
 	        return metadata;
@@ -56677,7 +56683,7 @@ function requireCompressionFilter () {
 	 *
 	 */
 	Object.defineProperty(compressionFilter, "__esModule", { value: true });
-	compressionFilter.CompressionFilterFactory = compressionFilter.CompressionFilter = void 0;
+	compressionFilter.CompressionFilterFactory = compressionFilter.CompressionFilter = undefined;
 	const zlib = require$$3__default;
 	const compression_algorithms_1 = requireCompressionAlgorithms();
 	const constants_1 = requireConstants();
@@ -56849,12 +56855,12 @@ function requireCompressionFilter () {
 	        this.receiveCompression = new IdentityHandler();
 	        this.currentCompressionAlgorithm = 'identity';
 	        const compressionAlgorithmKey = channelOptions['grpc.default_compression_algorithm'];
-	        this.maxReceiveMessageLength = (_a = channelOptions['grpc.max_receive_message_length']) !== null && _a !== void 0 ? _a : constants_1.DEFAULT_MAX_RECEIVE_MESSAGE_LENGTH;
-	        this.maxSendMessageLength = (_b = channelOptions['grpc.max_send_message_length']) !== null && _b !== void 0 ? _b : constants_1.DEFAULT_MAX_SEND_MESSAGE_LENGTH;
+	        this.maxReceiveMessageLength = (_a = channelOptions['grpc.max_receive_message_length']) !== null && _a !== undefined ? _a : constants_1.DEFAULT_MAX_RECEIVE_MESSAGE_LENGTH;
+	        this.maxSendMessageLength = (_b = channelOptions['grpc.max_send_message_length']) !== null && _b !== undefined ? _b : constants_1.DEFAULT_MAX_SEND_MESSAGE_LENGTH;
 	        if (compressionAlgorithmKey !== undefined) {
 	            if (isCompressionAlgorithmKey(compressionAlgorithmKey)) {
 	                const clientSelectedEncoding = compression_algorithms_1.CompressionAlgorithms[compressionAlgorithmKey];
-	                const serverSupportedEncodings = (_c = sharedFilterConfig.serverSupportedEncodingHeader) === null || _c === void 0 ? void 0 : _c.split(',');
+	                const serverSupportedEncodings = (_c = sharedFilterConfig.serverSupportedEncodingHeader) === null || _c === undefined ? undefined : _c.split(',');
 	                /**
 	                 * There are two possible situations here:
 	                 * 1) We don't have any info yet from the server about what compression it supports
@@ -56927,7 +56933,7 @@ function requireCompressionFilter () {
 	            compress = false;
 	        }
 	        else {
-	            compress = (((_a = resolvedMessage.flags) !== null && _a !== void 0 ? _a : 0) & 2 /* WriteFlags.NoCompress */) === 0;
+	            compress = (((_a = resolvedMessage.flags) !== null && _a !== undefined ? _a : 0) & 2 /* WriteFlags.NoCompress */) === 0;
 	        }
 	        return {
 	            message: await this.sendCompression.writeMessage(resolvedMessage.message, compress),
@@ -56983,7 +56989,7 @@ function requireDeadline () {
 	 *
 	 */
 	Object.defineProperty(deadline, "__esModule", { value: true });
-	deadline.formatDateDifference = deadline.deadlineToString = deadline.getRelativeTimeout = deadline.getDeadlineTimeoutString = deadline.minDeadline = void 0;
+	deadline.formatDateDifference = deadline.deadlineToString = deadline.getRelativeTimeout = deadline.getDeadlineTimeoutString = deadline.minDeadline = undefined;
 	function minDeadline(...deadlineList) {
 	    let minValue = Infinity;
 	    for (const deadline of deadlineList) {
@@ -57101,7 +57107,7 @@ function requireControlPlaneStatus () {
 	 *
 	 */
 	Object.defineProperty(controlPlaneStatus, "__esModule", { value: true });
-	controlPlaneStatus.restrictControlPlaneStatusCode = void 0;
+	controlPlaneStatus.restrictControlPlaneStatusCode = undefined;
 	const constants_1 = requireConstants();
 	const INAPPROPRIATE_CONTROL_PLANE_CODES = [
 	    constants_1.Status.OK,
@@ -57151,7 +57157,7 @@ function requireLoadBalancingCall () {
 	 *
 	 */
 	Object.defineProperty(loadBalancingCall, "__esModule", { value: true });
-	loadBalancingCall.LoadBalancingCall = void 0;
+	loadBalancingCall.LoadBalancingCall = undefined;
 	const connectivity_state_1 = requireConnectivityState();
 	const constants_1 = requireConstants();
 	const deadline_1 = requireDeadline();
@@ -57189,7 +57195,7 @@ function requireLoadBalancingCall () {
 	        if (splitPath.length >= 2) {
 	            serviceName = splitPath[1];
 	        }
-	        const hostname = (_b = (_a = (0, uri_parser_1.splitHostPort)(this.host)) === null || _a === void 0 ? void 0 : _a.host) !== null && _b !== void 0 ? _b : 'localhost';
+	        const hostname = (_b = (_a = (0, uri_parser_1.splitHostPort)(this.host)) === null || _a === undefined ? undefined : _a.host) !== null && _b !== undefined ? _b : 'localhost';
 	        /* Currently, call credentials are only allowed on HTTPS connections, so we
 	         * can assume that the scheme is "https" */
 	        this.serviceUrl = `https://${hostname}/${serviceName}`;
@@ -57200,7 +57206,7 @@ function requireLoadBalancingCall () {
 	        const deadlineInfo = [];
 	        if (this.childStartTime) {
 	            if (this.childStartTime > this.startTime) {
-	                if ((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.getOptions().waitForReady) {
+	                if ((_a = this.metadata) === null || _a === undefined ? undefined : _a.getOptions().waitForReady) {
 	                    deadlineInfo.push('wait_for_ready');
 	                }
 	                deadlineInfo.push(`LB pick: ${(0, deadline_1.formatDateDifference)(this.startTime, this.childStartTime)}`);
@@ -57209,7 +57215,7 @@ function requireLoadBalancingCall () {
 	            return deadlineInfo;
 	        }
 	        else {
-	            if ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.getOptions().waitForReady) {
+	            if ((_b = this.metadata) === null || _b === undefined ? undefined : _b.getOptions().waitForReady) {
 	                deadlineInfo.push('wait_for_ready');
 	            }
 	            deadlineInfo.push('Waiting for LB pick');
@@ -57230,8 +57236,8 @@ function requireLoadBalancingCall () {
 	                '" start time=' +
 	                this.startTime.toISOString());
 	            const finalStatus = Object.assign(Object.assign({}, status), { progress });
-	            (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveStatus(finalStatus);
-	            (_b = this.onCallEnded) === null || _b === void 0 ? void 0 : _b.call(this, finalStatus.code);
+	            (_a = this.listener) === null || _a === undefined ? undefined : _a.onReceiveStatus(finalStatus);
+	            (_b = this.onCallEnded) === null || _b === undefined ? undefined : _b.call(this, finalStatus.code);
 	        }
 	    }
 	    doPick() {
@@ -57256,9 +57262,9 @@ function requireLoadBalancingCall () {
 	            ' subchannel: ' +
 	            subchannelString +
 	            ' status: ' +
-	            ((_a = pickResult.status) === null || _a === void 0 ? void 0 : _a.code) +
+	            ((_a = pickResult.status) === null || _a === undefined ? undefined : _a.code) +
 	            ' ' +
-	            ((_b = pickResult.status) === null || _b === void 0 ? void 0 : _b.details));
+	            ((_b = pickResult.status) === null || _b === undefined ? undefined : _b.details));
 	        switch (pickResult.pickResultType) {
 	            case picker_1.PickResultType.COMPLETE:
 	                this.credentials
@@ -57331,8 +57337,8 @@ function requireLoadBalancingCall () {
 	                        }, 'NOT_STARTED');
 	                        return;
 	                    }
-	                    (_b = (_a = this.callConfig).onCommitted) === null || _b === void 0 ? void 0 : _b.call(_a);
-	                    (_c = pickResult.onCallStarted) === null || _c === void 0 ? void 0 : _c.call(pickResult);
+	                    (_b = (_a = this.callConfig).onCommitted) === null || _b === undefined ? undefined : _b.call(_a);
+	                    (_c = pickResult.onCallStarted) === null || _c === undefined ? undefined : _c.call(pickResult);
 	                    this.onCallEnded = pickResult.onCallEnded;
 	                    this.trace('Created child call [' + this.child.getCallNumber() + ']');
 	                    if (this.readPending) {
@@ -57378,12 +57384,12 @@ function requireLoadBalancingCall () {
 	    cancelWithStatus(status, details) {
 	        var _a;
 	        this.trace('cancelWithStatus code: ' + status + ' details: "' + details + '"');
-	        (_a = this.child) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(status, details);
+	        (_a = this.child) === null || _a === undefined ? undefined : _a.cancelWithStatus(status, details);
 	        this.outputStatus({ code: status, details: details, metadata: new metadata_1.Metadata() }, 'PROCESSED');
 	    }
 	    getPeer() {
 	        var _a, _b;
-	        return (_b = (_a = this.child) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : this.channel.getTarget();
+	        return (_b = (_a = this.child) === null || _a === undefined ? undefined : _a.getPeer()) !== null && _b !== undefined ? _b : this.channel.getTarget();
 	    }
 	    start(metadata, listener) {
 	        this.trace('start called');
@@ -57454,7 +57460,7 @@ function requireResolvingCall () {
 	 *
 	 */
 	Object.defineProperty(resolvingCall, "__esModule", { value: true });
-	resolvingCall.ResolvingCall = void 0;
+	resolvingCall.ResolvingCall = undefined;
 	const constants_1 = requireConstants();
 	const deadline_1 = requireDeadline();
 	const metadata_1 = requireMetadata();
@@ -57564,7 +57570,7 @@ function requireResolvingCall () {
 	            this.statusWatchers.forEach(watcher => watcher(filteredStatus));
 	            process.nextTick(() => {
 	                var _a;
-	                (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveStatus(filteredStatus);
+	                (_a = this.listener) === null || _a === undefined ? undefined : _a.onReceiveStatus(filteredStatus);
 	            });
 	        }
 	    }
@@ -57675,7 +57681,7 @@ function requireResolvingCall () {
 	    }
 	    reportResolverError(status) {
 	        var _a;
-	        if ((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.getOptions().waitForReady) {
+	        if ((_a = this.metadata) === null || _a === undefined ? undefined : _a.getOptions().waitForReady) {
 	            this.channel.queueCallForConfig(this);
 	        }
 	        else {
@@ -57685,7 +57691,7 @@ function requireResolvingCall () {
 	    cancelWithStatus(status, details) {
 	        var _a;
 	        this.trace('cancelWithStatus code: ' + status + ' details: "' + details + '"');
-	        (_a = this.child) === null || _a === void 0 ? void 0 : _a.cancelWithStatus(status, details);
+	        (_a = this.child) === null || _a === undefined ? undefined : _a.cancelWithStatus(status, details);
 	        this.outputStatus({
 	            code: status,
 	            details: details,
@@ -57694,7 +57700,7 @@ function requireResolvingCall () {
 	    }
 	    getPeer() {
 	        var _a, _b;
-	        return (_b = (_a = this.child) === null || _a === void 0 ? void 0 : _a.getPeer()) !== null && _b !== void 0 ? _b : this.channel.getTarget();
+	        return (_b = (_a = this.child) === null || _a === undefined ? undefined : _a.getPeer()) !== null && _b !== undefined ? _b : this.channel.getTarget();
 	    }
 	    start(metadata, listener) {
 	        this.trace('start called');
@@ -57768,7 +57774,7 @@ function requireRetryingCall () {
 	 *
 	 */
 	Object.defineProperty(retryingCall, "__esModule", { value: true });
-	retryingCall.RetryingCall = retryingCall.MessageBufferTracker = retryingCall.RetryThrottler = void 0;
+	retryingCall.RetryingCall = retryingCall.MessageBufferTracker = retryingCall.RetryThrottler = undefined;
 	const constants_1 = requireConstants();
 	const deadline_1 = requireDeadline();
 	const metadata_1 = requireMetadata();
@@ -57809,7 +57815,7 @@ function requireRetryingCall () {
 	    }
 	    allocate(size, callId) {
 	        var _a;
-	        const currentPerCall = (_a = this.allocatedPerCall.get(callId)) !== null && _a !== void 0 ? _a : 0;
+	        const currentPerCall = (_a = this.allocatedPerCall.get(callId)) !== null && _a !== undefined ? _a : 0;
 	        if (this.limitPerCall - currentPerCall < size ||
 	            this.totalLimit - this.totalAllocated < size) {
 	            return false;
@@ -57824,7 +57830,7 @@ function requireRetryingCall () {
 	            throw new Error(`Invalid buffer allocation state: call ${callId} freed ${size} > total allocated ${this.totalAllocated}`);
 	        }
 	        this.totalAllocated -= size;
-	        const currentPerCall = (_a = this.allocatedPerCall.get(callId)) !== null && _a !== void 0 ? _a : 0;
+	        const currentPerCall = (_a = this.allocatedPerCall.get(callId)) !== null && _a !== undefined ? _a : 0;
 	        if (currentPerCall < size) {
 	            throw new Error(`Invalid buffer allocation state: call ${callId} freed ${size} > allocated for call ${currentPerCall}`);
 	        }
@@ -57832,7 +57838,7 @@ function requireRetryingCall () {
 	    }
 	    freeAll(callId) {
 	        var _a;
-	        const currentPerCall = (_a = this.allocatedPerCall.get(callId)) !== null && _a !== void 0 ? _a : 0;
+	        const currentPerCall = (_a = this.allocatedPerCall.get(callId)) !== null && _a !== undefined ? _a : 0;
 	        if (this.totalAllocated < currentPerCall) {
 	            throw new Error(`Invalid buffer allocation state: call ${callId} allocated ${currentPerCall} > total allocated ${this.totalAllocated}`);
 	        }
@@ -57881,7 +57887,7 @@ function requireRetryingCall () {
 	        this.committedCallIndex = null;
 	        this.initialRetryBackoffSec = 0;
 	        this.nextRetryBackoffSec = 0;
-	        const maxAttemptsLimit = (_a = channel.getOptions()['grpc-node.retry_max_attempts_limit']) !== null && _a !== void 0 ? _a : DEFAULT_MAX_ATTEMPTS_LIMIT;
+	        const maxAttemptsLimit = (_a = channel.getOptions()['grpc-node.retry_max_attempts_limit']) !== null && _a !== undefined ? _a : DEFAULT_MAX_ATTEMPTS_LIMIT;
 	        if (callConfig.methodConfig.retryPolicy) {
 	            this.state = 'RETRY';
 	            const retryPolicy = callConfig.methodConfig.retryPolicy;
@@ -57932,7 +57938,7 @@ function requireRetryingCall () {
 	        process.nextTick(() => {
 	            var _a;
 	            // Explicitly construct status object to remove progress field
-	            (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveStatus({
+	            (_a = this.listener) === null || _a === undefined ? undefined : _a.onReceiveStatus({
 	                code: statusObject.code,
 	                details: statusObject.details,
 	                metadata: statusObject.metadata,
@@ -57956,7 +57962,7 @@ function requireRetryingCall () {
 	    }
 	    getBufferEntry(messageIndex) {
 	        var _a;
-	        return ((_a = this.writeBuffer[messageIndex - this.writeBufferOffset]) !== null && _a !== void 0 ? _a : {
+	        return ((_a = this.writeBuffer[messageIndex - this.writeBufferOffset]) !== null && _a !== undefined ? _a : {
 	            entryType: 'FREED',
 	            allocated: false,
 	        });
@@ -58029,12 +58035,12 @@ function requireRetryingCall () {
 	        return list.some(value => {
 	            var _a;
 	            return value === code ||
-	                value.toString().toLowerCase() === ((_a = constants_1.Status[code]) === null || _a === void 0 ? void 0 : _a.toLowerCase());
+	                value.toString().toLowerCase() === ((_a = constants_1.Status[code]) === null || _a === undefined ? undefined : _a.toLowerCase());
 	        });
 	    }
 	    getNextRetryBackoffMs() {
 	        var _a;
-	        const retryPolicy = (_a = this.callConfig) === null || _a === void 0 ? void 0 : _a.methodConfig.retryPolicy;
+	        const retryPolicy = (_a = this.callConfig) === null || _a === undefined ? undefined : _a.methodConfig.retryPolicy;
 	        if (!retryPolicy) {
 	            return 0;
 	        }
@@ -58071,7 +58077,7 @@ function requireRetryingCall () {
 	                callback(false);
 	                return;
 	            }
-	            if ((_b = (_a = this.retryThrottler) === null || _a === void 0 ? void 0 : _a.canRetryCall()) !== null && _b !== void 0 ? _b : true) {
+	            if ((_b = (_a = this.retryThrottler) === null || _a === undefined ? undefined : _a.canRetryCall()) !== null && _b !== undefined ? _b : true) {
 	                callback(true);
 	                this.attempts += 1;
 	                this.startNewAttempt();
@@ -58081,7 +58087,7 @@ function requireRetryingCall () {
 	    countActiveCalls() {
 	        let count = 0;
 	        for (const call of this.underlyingCalls) {
-	            if ((call === null || call === void 0 ? void 0 : call.state) === 'ACTIVE') {
+	            if ((call === null || call === undefined ? undefined : call.state) === 'ACTIVE') {
 	                count += 1;
 	            }
 	        }
@@ -58096,8 +58102,8 @@ function requireRetryingCall () {
 	                this.reportStatus(status);
 	                break;
 	            case 'HEDGING':
-	                if (this.isStatusCodeInList((_a = this.callConfig.methodConfig.hedgingPolicy.nonFatalStatusCodes) !== null && _a !== void 0 ? _a : [], status.code)) {
-	                    (_b = this.retryThrottler) === null || _b === void 0 ? void 0 : _b.addCallFailed();
+	                if (this.isStatusCodeInList((_a = this.callConfig.methodConfig.hedgingPolicy.nonFatalStatusCodes) !== null && _a !== undefined ? _a : [], status.code)) {
+	                    (_b = this.retryThrottler) === null || _b === undefined ? undefined : _b.addCallFailed();
 	                    let delayMs;
 	                    if (pushback === null) {
 	                        delayMs = 0;
@@ -58127,7 +58133,7 @@ function requireRetryingCall () {
 	                break;
 	            case 'RETRY':
 	                if (this.isStatusCodeInList(this.callConfig.methodConfig.retryPolicy.retryableStatusCodes, status.code)) {
-	                    (_c = this.retryThrottler) === null || _c === void 0 ? void 0 : _c.addCallFailed();
+	                    (_c = this.retryThrottler) === null || _c === undefined ? undefined : _c.addCallFailed();
 	                    this.maybeRetryCall(pushback, retried => {
 	                        if (!retried) {
 	                            this.commitCall(callIndex);
@@ -58169,7 +58175,7 @@ function requireRetryingCall () {
 	            this.underlyingCalls[callIndex].state);
 	        this.underlyingCalls[callIndex].state = 'COMPLETED';
 	        if (status.code === constants_1.Status.OK) {
-	            (_a = this.retryThrottler) === null || _a === void 0 ? void 0 : _a.addCallSucceeded();
+	            (_a = this.retryThrottler) === null || _a === undefined ? undefined : _a.addCallSucceeded();
 	            this.commitCall(callIndex);
 	            this.reportStatus(status);
 	            return;
@@ -58232,12 +58238,12 @@ function requireRetryingCall () {
 	        if (this.attempts >= this.maxAttempts) {
 	            return;
 	        }
-	        const hedgingDelayString = (_a = hedgingPolicy.hedgingDelay) !== null && _a !== void 0 ? _a : '0s';
+	        const hedgingDelayString = (_a = hedgingPolicy.hedgingDelay) !== null && _a !== undefined ? _a : '0s';
 	        const hedgingDelaySec = Number(hedgingDelayString.substring(0, hedgingDelayString.length - 1));
 	        this.hedgingTimer = setTimeout(() => {
 	            this.maybeStartHedgingAttempt();
 	        }, hedgingDelaySec * 1000);
-	        (_c = (_b = this.hedgingTimer).unref) === null || _c === void 0 ? void 0 : _c.call(_b);
+	        (_c = (_b = this.hedgingTimer).unref) === null || _c === undefined ? undefined : _c.call(_b);
 	    }
 	    startNewAttempt() {
 	        const child = this.channel.createLoadBalancingCall(this.callConfig, this.methodName, this.host, this.credentials, this.deadline);
@@ -58302,7 +58308,7 @@ function requireRetryingCall () {
 	        var _a, _b;
 	        const childCall = this.underlyingCalls[childIndex];
 	        const messageIndex = childCall.nextMessageToSend;
-	        (_b = (_a = this.getBufferEntry(messageIndex)).callback) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.getBufferEntry(messageIndex)).callback) === null || _b === undefined ? undefined : _b.call(_a);
 	        this.clearSentMessages();
 	        childCall.nextMessageToSend += 1;
 	        this.sendNextChildMessage(childIndex);
@@ -58345,7 +58351,7 @@ function requireRetryingCall () {
 	        };
 	        this.writeBuffer.push(bufferEntry);
 	        if (bufferEntry.allocated) {
-	            (_a = context.callback) === null || _a === void 0 ? void 0 : _a.call(context);
+	            (_a = context.callback) === null || _a === undefined ? undefined : _a.call(context);
 	            for (const [callIndex, call] of this.underlyingCalls.entries()) {
 	                if (call.state === 'ACTIVE' &&
 	                    call.nextMessageToSend === messageIndex) {
@@ -58380,7 +58386,7 @@ function requireRetryingCall () {
 	        this.trace('startRead called');
 	        this.readStarted = true;
 	        for (const underlyingCall of this.underlyingCalls) {
-	            if ((underlyingCall === null || underlyingCall === void 0 ? void 0 : underlyingCall.state) === 'ACTIVE') {
+	            if ((underlyingCall === null || underlyingCall === undefined ? undefined : underlyingCall.state) === 'ACTIVE') {
 	                underlyingCall.call.startRead();
 	            }
 	        }
@@ -58393,7 +58399,7 @@ function requireRetryingCall () {
 	            allocated: false,
 	        });
 	        for (const call of this.underlyingCalls) {
-	            if ((call === null || call === void 0 ? void 0 : call.state) === 'ACTIVE' &&
+	            if ((call === null || call === undefined ? undefined : call.state) === 'ACTIVE' &&
 	                call.nextMessageToSend === halfCloseIndex) {
 	                call.nextMessageToSend += 1;
 	                call.call.halfClose();
@@ -58439,7 +58445,7 @@ function requireSubchannelInterface () {
 	 *
 	 */
 	Object.defineProperty(subchannelInterface, "__esModule", { value: true });
-	subchannelInterface.BaseSubchannelWrapper = void 0;
+	subchannelInterface.BaseSubchannelWrapper = undefined;
 	class BaseSubchannelWrapper {
 	    constructor(child) {
 	        this.child = child;
@@ -58538,7 +58544,7 @@ function requireInternalChannel () {
 	 *
 	 */
 	Object.defineProperty(internalChannel, "__esModule", { value: true });
-	internalChannel.InternalChannel = void 0;
+	internalChannel.InternalChannel = undefined;
 	const channel_credentials_1 = requireChannelCredentials();
 	const resolving_load_balancer_1 = requireResolvingLoadBalancer();
 	const subchannel_pool_1 = requireSubchannelPool();
@@ -58667,7 +58673,7 @@ function requireInternalChannel () {
 	            throw new Error(`Could not find a default scheme for target name "${target}"`);
 	        }
 	        this.callRefTimer = setInterval(() => { }, MAX_TIMEOUT_TIME);
-	        (_b = (_a = this.callRefTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.callRefTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	        if (this.options['grpc.enable_channelz'] === 0) {
 	            this.channelzEnabled = false;
 	        }
@@ -58687,13 +58693,13 @@ function requireInternalChannel () {
 	        this.options = Object.assign({}, this.options, proxyMapResult.extraOptions);
 	        /* The global boolean parameter to getSubchannelPool has the inverse meaning to what
 	         * the grpc.use_local_subchannel_pool channel option means. */
-	        this.subchannelPool = (0, subchannel_pool_1.getSubchannelPool)(((_c = options['grpc.use_local_subchannel_pool']) !== null && _c !== void 0 ? _c : 0) === 0);
-	        this.retryBufferTracker = new retrying_call_1.MessageBufferTracker((_d = options['grpc.retry_buffer_size']) !== null && _d !== void 0 ? _d : DEFAULT_RETRY_BUFFER_SIZE_BYTES, (_e = options['grpc.per_rpc_retry_buffer_size']) !== null && _e !== void 0 ? _e : DEFAULT_PER_RPC_RETRY_BUFFER_SIZE_BYTES);
-	        this.keepaliveTime = (_f = options['grpc.keepalive_time_ms']) !== null && _f !== void 0 ? _f : -1;
-	        this.idleTimeoutMs = Math.max((_g = options['grpc.client_idle_timeout_ms']) !== null && _g !== void 0 ? _g : DEFAULT_IDLE_TIMEOUT_MS, MIN_IDLE_TIMEOUT_MS);
+	        this.subchannelPool = (0, subchannel_pool_1.getSubchannelPool)(((_c = options['grpc.use_local_subchannel_pool']) !== null && _c !== undefined ? _c : 0) === 0);
+	        this.retryBufferTracker = new retrying_call_1.MessageBufferTracker((_d = options['grpc.retry_buffer_size']) !== null && _d !== undefined ? _d : DEFAULT_RETRY_BUFFER_SIZE_BYTES, (_e = options['grpc.per_rpc_retry_buffer_size']) !== null && _e !== undefined ? _e : DEFAULT_PER_RPC_RETRY_BUFFER_SIZE_BYTES);
+	        this.keepaliveTime = (_f = options['grpc.keepalive_time_ms']) !== null && _f !== undefined ? _f : -1;
+	        this.idleTimeoutMs = Math.max((_g = options['grpc.client_idle_timeout_ms']) !== null && _g !== undefined ? _g : DEFAULT_IDLE_TIMEOUT_MS, MIN_IDLE_TIMEOUT_MS);
 	        const channelControlHelper = {
 	            createSubchannel: (subchannelAddress, subchannelArgs, credentialsOverride) => {
-	                const subchannel = this.subchannelPool.getOrCreateSubchannel(this.target, subchannelAddress, Object.assign({}, this.options, subchannelArgs), credentialsOverride !== null && credentialsOverride !== void 0 ? credentialsOverride : this.credentials);
+	                const subchannel = this.subchannelPool.getOrCreateSubchannel(this.target, subchannelAddress, Object.assign({}, this.options, subchannelArgs), credentialsOverride !== null && credentialsOverride !== undefined ? credentialsOverride : this.credentials);
 	                subchannel.throttleKeepalive(this.keepaliveTime);
 	                if (this.channelzEnabled) {
 	                    this.channelzTrace.addTrace('CT_INFO', 'Created subchannel or used existing subchannel', subchannel.getChannelzRef());
@@ -58787,7 +58793,7 @@ function requireInternalChannel () {
 	                this.channelzRef.id +
 	                ') ' +
 	                'Channel constructed \n' +
-	                ((_h = error.stack) === null || _h === void 0 ? void 0 : _h.substring(error.stack.indexOf('\n') + 1)));
+	                ((_h = error.stack) === null || _h === undefined ? undefined : _h.substring(error.stack.indexOf('\n') + 1)));
 	        }
 	        this.lastActivityTimestamp = new Date();
 	    }
@@ -58801,17 +58807,17 @@ function requireInternalChannel () {
 	        };
 	    }
 	    trace(text, verbosityOverride) {
-	        (0, logging_1.trace)(verbosityOverride !== null && verbosityOverride !== void 0 ? verbosityOverride : constants_1.LogVerbosity.DEBUG, 'channel', '(' + this.channelzRef.id + ') ' + (0, uri_parser_1.uriToString)(this.target) + ' ' + text);
+	        (0, logging_1.trace)(verbosityOverride !== null && verbosityOverride !== undefined ? verbosityOverride : constants_1.LogVerbosity.DEBUG, 'channel', '(' + this.channelzRef.id + ') ' + (0, uri_parser_1.uriToString)(this.target) + ' ' + text);
 	    }
 	    callRefTimerRef() {
 	        var _a, _b, _c, _d;
 	        // If the hasRef function does not exist, always run the code
-	        if (!((_b = (_a = this.callRefTimer).hasRef) === null || _b === void 0 ? void 0 : _b.call(_a))) {
+	        if (!((_b = (_a = this.callRefTimer).hasRef) === null || _b === undefined ? undefined : _b.call(_a))) {
 	            this.trace('callRefTimer.ref | configSelectionQueue.length=' +
 	                this.configSelectionQueue.length +
 	                ' pickQueue.length=' +
 	                this.pickQueue.length);
-	            (_d = (_c = this.callRefTimer).ref) === null || _d === void 0 ? void 0 : _d.call(_c);
+	            (_d = (_c = this.callRefTimer).ref) === null || _d === undefined ? undefined : _d.call(_c);
 	        }
 	    }
 	    callRefTimerUnref() {
@@ -58822,7 +58828,7 @@ function requireInternalChannel () {
 	                this.configSelectionQueue.length +
 	                ' pickQueue.length=' +
 	                this.pickQueue.length);
-	            (_b = (_a = this.callRefTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	            (_b = (_a = this.callRefTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	        }
 	    }
 	    removeConnectivityStateWatcher(watcherObject) {
@@ -58942,7 +58948,7 @@ function requireInternalChannel () {
 	                this.startIdleTimeout(this.idleTimeoutMs - timeSinceLastActivity);
 	            }
 	        }, timeoutMs);
-	        (_b = (_a = this.idleTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.idleTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	    }
 	    maybeStartIdleTimer() {
 	        if (this.connectivityState !== connectivity_state_1.ConnectivityState.SHUTDOWN &&
@@ -58998,8 +59004,8 @@ function requireInternalChannel () {
 	            (0, deadline_1.deadlineToString)(deadline));
 	        const finalOptions = {
 	            deadline: deadline,
-	            flags: propagateFlags !== null && propagateFlags !== void 0 ? propagateFlags : constants_1.Propagate.DEFAULTS,
-	            host: host !== null && host !== void 0 ? host : this.defaultAuthority,
+	            flags: propagateFlags !== null && propagateFlags !== undefined ? propagateFlags : constants_1.Propagate.DEFAULTS,
+	            host: host !== null && host !== undefined ? host : this.defaultAuthority,
 	            parentCall: parentCall,
 	        };
 	        const call = new resolving_call_1.ResolvingCall(this, method, finalOptions, this.filterStackFactory.clone(), this.credentials._getCallCredentials(), callNumber);
@@ -59117,7 +59123,7 @@ function requireChannel () {
 	 *
 	 */
 	Object.defineProperty(channel, "__esModule", { value: true });
-	channel.ChannelImplementation = void 0;
+	channel.ChannelImplementation = undefined;
 	const channel_credentials_1 = requireChannelCredentials();
 	const internal_channel_1 = requireInternalChannel();
 	class ChannelImplementation {
@@ -59196,7 +59202,7 @@ function requireServerCall () {
 	 *
 	 */
 	Object.defineProperty(serverCall, "__esModule", { value: true });
-	serverCall.ServerDuplexStreamImpl = serverCall.ServerWritableStreamImpl = serverCall.ServerReadableStreamImpl = serverCall.ServerUnaryCallImpl = serverCall.serverErrorToStatus = void 0;
+	serverCall.ServerDuplexStreamImpl = serverCall.ServerWritableStreamImpl = serverCall.ServerReadableStreamImpl = serverCall.ServerUnaryCallImpl = serverCall.serverErrorToStatus = undefined;
 	const events_1 = require$$0$6;
 	const stream_1 = require$$0$9;
 	const constants_1 = requireConstants();
@@ -59206,7 +59212,7 @@ function requireServerCall () {
 	    const status = {
 	        code: constants_1.Status.UNKNOWN,
 	        details: 'message' in error ? error.message : 'Unknown Error',
-	        metadata: (_a = overrideTrailers !== null && overrideTrailers !== void 0 ? overrideTrailers : error.metadata) !== null && _a !== void 0 ? _a : null,
+	        metadata: (_a = overrideTrailers !== null && overrideTrailers !== undefined ? overrideTrailers : error.metadata) !== null && _a !== undefined ? _a : null,
 	    };
 	    if ('code' in error &&
 	        typeof error.code === 'number' &&
@@ -59314,7 +59320,7 @@ function requireServerCall () {
 	    _final(callback) {
 	        var _a;
 	        callback(null);
-	        this.call.sendStatus(Object.assign(Object.assign({}, this.pendingStatus), { metadata: (_a = this.pendingStatus.metadata) !== null && _a !== void 0 ? _a : this.trailingMetadata }));
+	        this.call.sendStatus(Object.assign(Object.assign({}, this.pendingStatus), { metadata: (_a = this.pendingStatus.metadata) !== null && _a !== undefined ? _a : this.trailingMetadata }));
 	    }
 	    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	    end(metadata) {
@@ -59368,7 +59374,7 @@ function requireServerCall () {
 	    _final(callback) {
 	        var _a;
 	        callback(null);
-	        this.call.sendStatus(Object.assign(Object.assign({}, this.pendingStatus), { metadata: (_a = this.pendingStatus.metadata) !== null && _a !== void 0 ? _a : this.trailingMetadata }));
+	        this.call.sendStatus(Object.assign(Object.assign({}, this.pendingStatus), { metadata: (_a = this.pendingStatus.metadata) !== null && _a !== undefined ? _a : this.trailingMetadata }));
 	    }
 	    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	    end(metadata) {
@@ -59407,7 +59413,7 @@ function requireServerCredentials () {
 	 *
 	 */
 	Object.defineProperty(serverCredentials, "__esModule", { value: true });
-	serverCredentials.createServerCredentialsWithInterceptors = serverCredentials.createCertificateProviderServerCredentials = serverCredentials.ServerCredentials = void 0;
+	serverCredentials.createServerCredentialsWithInterceptors = serverCredentials.createCertificateProviderServerCredentials = serverCredentials.ServerCredentials = undefined;
 	const tls_helpers_1 = requireTlsHelpers();
 	class ServerCredentials {
 	    constructor() {
@@ -59466,7 +59472,7 @@ function requireServerCredentials () {
 	            key.push(pair.private_key);
 	        }
 	        return new SecureServerCredentials({
-	            ca: (_a = rootCerts !== null && rootCerts !== void 0 ? rootCerts : (0, tls_helpers_1.getDefaultRootsData)()) !== null && _a !== void 0 ? _a : undefined,
+	            ca: (_a = rootCerts !== null && rootCerts !== undefined ? rootCerts : (0, tls_helpers_1.getDefaultRootsData)()) !== null && _a !== undefined ? _a : undefined,
 	            cert,
 	            key,
 	            requestCert: checkClientCertificate,
@@ -59594,7 +59600,7 @@ function requireServerCredentials () {
 	    _addWatcher(watcher) {
 	        var _a;
 	        if (this.getWatcherCount() === 0) {
-	            (_a = this.caCertificateProvider) === null || _a === void 0 ? void 0 : _a.addCaCertificateListener(this.caCertificateUpdateListener);
+	            (_a = this.caCertificateProvider) === null || _a === undefined ? undefined : _a.addCaCertificateListener(this.caCertificateUpdateListener);
 	            this.identityCertificateProvider.addIdentityCertificateListener(this.identityCertificateUpdateListener);
 	        }
 	        super._addWatcher(watcher);
@@ -59603,7 +59609,7 @@ function requireServerCredentials () {
 	        var _a;
 	        super._removeWatcher(watcher);
 	        if (this.getWatcherCount() === 0) {
-	            (_a = this.caCertificateProvider) === null || _a === void 0 ? void 0 : _a.removeCaCertificateListener(this.caCertificateUpdateListener);
+	            (_a = this.caCertificateProvider) === null || _a === undefined ? undefined : _a.removeCaCertificateListener(this.caCertificateUpdateListener);
 	            this.identityCertificateProvider.removeIdentityCertificateListener(this.identityCertificateUpdateListener);
 	        }
 	    }
@@ -59630,7 +59636,7 @@ function requireServerCredentials () {
 	            return null;
 	        }
 	        return {
-	            ca: (_a = this.latestCaUpdate) === null || _a === void 0 ? void 0 : _a.caCertificate,
+	            ca: (_a = this.latestCaUpdate) === null || _a === undefined ? undefined : _a.caCertificate,
 	            cert: this.latestIdentityUpdate.certificate,
 	            key: this.latestIdentityUpdate.privateKey,
 	            requestCert: this.latestIdentityUpdate !== null,
@@ -59721,7 +59727,7 @@ function requireServerInterceptors () {
 	 *
 	 */
 	Object.defineProperty(serverInterceptors, "__esModule", { value: true });
-	serverInterceptors.getServerInterceptingCall = serverInterceptors.BaseServerInterceptingCall = serverInterceptors.ServerInterceptingCall = serverInterceptors.ResponderBuilder = serverInterceptors.isInterceptingServerListener = serverInterceptors.ServerListenerBuilder = void 0;
+	serverInterceptors.getServerInterceptingCall = serverInterceptors.BaseServerInterceptingCall = serverInterceptors.ServerInterceptingCall = serverInterceptors.ResponderBuilder = serverInterceptors.isInterceptingServerListener = serverInterceptors.ServerListenerBuilder = undefined;
 	const metadata_1 = requireMetadata();
 	const constants_1 = requireConstants();
 	const http2 = require$$0$f;
@@ -59924,10 +59930,10 @@ function requireServerInterceptors () {
 	        this.pendingMessageCallback = null;
 	        this.pendingStatus = null;
 	        this.responder = {
-	            start: (_a = responder === null || responder === void 0 ? void 0 : responder.start) !== null && _a !== void 0 ? _a : defaultResponder.start,
-	            sendMetadata: (_b = responder === null || responder === void 0 ? void 0 : responder.sendMetadata) !== null && _b !== void 0 ? _b : defaultResponder.sendMetadata,
-	            sendMessage: (_c = responder === null || responder === void 0 ? void 0 : responder.sendMessage) !== null && _c !== void 0 ? _c : defaultResponder.sendMessage,
-	            sendStatus: (_d = responder === null || responder === void 0 ? void 0 : responder.sendStatus) !== null && _d !== void 0 ? _d : defaultResponder.sendStatus,
+	            start: (_a = responder === null || responder === undefined ? undefined : responder.start) !== null && _a !== undefined ? _a : defaultResponder.start,
+	            sendMetadata: (_b = responder === null || responder === undefined ? undefined : responder.sendMetadata) !== null && _b !== undefined ? _b : defaultResponder.sendMetadata,
+	            sendMessage: (_c = responder === null || responder === undefined ? undefined : responder.sendMessage) !== null && _c !== undefined ? _c : defaultResponder.sendMessage,
+	            sendStatus: (_d = responder === null || responder === undefined ? undefined : responder.sendStatus) !== null && _d !== undefined ? _d : defaultResponder.sendStatus,
 	        };
 	    }
 	    processPendingMessage() {
@@ -59947,10 +59953,10 @@ function requireServerInterceptors () {
 	        this.responder.start(interceptedListener => {
 	            var _a, _b, _c, _d;
 	            const fullInterceptedListener = {
-	                onReceiveMetadata: (_a = interceptedListener === null || interceptedListener === void 0 ? void 0 : interceptedListener.onReceiveMetadata) !== null && _a !== void 0 ? _a : defaultServerListener.onReceiveMetadata,
-	                onReceiveMessage: (_b = interceptedListener === null || interceptedListener === void 0 ? void 0 : interceptedListener.onReceiveMessage) !== null && _b !== void 0 ? _b : defaultServerListener.onReceiveMessage,
-	                onReceiveHalfClose: (_c = interceptedListener === null || interceptedListener === void 0 ? void 0 : interceptedListener.onReceiveHalfClose) !== null && _c !== void 0 ? _c : defaultServerListener.onReceiveHalfClose,
-	                onCancel: (_d = interceptedListener === null || interceptedListener === void 0 ? void 0 : interceptedListener.onCancel) !== null && _d !== void 0 ? _d : defaultServerListener.onCancel,
+	                onReceiveMetadata: (_a = interceptedListener === null || interceptedListener === undefined ? undefined : interceptedListener.onReceiveMetadata) !== null && _a !== undefined ? _a : defaultServerListener.onReceiveMetadata,
+	                onReceiveMessage: (_b = interceptedListener === null || interceptedListener === undefined ? undefined : interceptedListener.onReceiveMessage) !== null && _b !== undefined ? _b : defaultServerListener.onReceiveMessage,
+	                onReceiveHalfClose: (_c = interceptedListener === null || interceptedListener === undefined ? undefined : interceptedListener.onReceiveHalfClose) !== null && _c !== undefined ? _c : defaultServerListener.onReceiveHalfClose,
+	                onCancel: (_d = interceptedListener === null || interceptedListener === undefined ? undefined : interceptedListener.onCancel) !== null && _d !== undefined ? _d : defaultServerListener.onCancel,
 	            };
 	            const finalInterceptingListener = new InterceptingServerListenerImpl(fullInterceptedListener, listener);
 	            this.nextCall.start(finalInterceptingListener);
@@ -60059,7 +60065,7 @@ function requireServerInterceptors () {
 	        this.stream.once('close', () => {
 	            var _a;
 	            trace('Request to method ' +
-	                ((_a = this.handler) === null || _a === void 0 ? void 0 : _a.path) +
+	                ((_a = this.handler) === null || _a === undefined ? undefined : _a.path) +
 	                ' stream closed with rstCode ' +
 	                this.stream.rstCode);
 	            if (this.callEventTracker && !this.streamEnded) {
@@ -60086,7 +60092,7 @@ function requireServerInterceptors () {
 	        if ('grpc.max_receive_message_length' in options) {
 	            this.maxReceiveMessageSize = options['grpc.max_receive_message_length'];
 	        }
-	        this.host = (_a = headers[':authority']) !== null && _a !== void 0 ? _a : headers.host;
+	        this.host = (_a = headers[':authority']) !== null && _a !== undefined ? _a : headers.host;
 	        this.decoder = new stream_decoder_1.StreamDecoder(this.maxReceiveMessageSize);
 	        const metadata = metadata_1.Metadata.fromHttp2Headers(headers);
 	        if (logging.isTracerEnabled(TRACER_NAME)) {
@@ -60155,7 +60161,7 @@ function requireServerInterceptors () {
 	        this.cancelled = true;
 	        process.nextTick(() => {
 	            var _a;
-	            (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onCancel();
+	            (_a = this.listener) === null || _a === undefined ? undefined : _a.onCancel();
 	        });
 	        if (this.deadlineTimer) {
 	            clearTimeout(this.deadlineTimer);
@@ -60301,7 +60307,7 @@ function requireServerInterceptors () {
 	            };
 	            this.readQueue.push(queueEntry);
 	            this.decompressAndMaybePush(queueEntry);
-	            (_a = this.callEventTracker) === null || _a === void 0 ? void 0 : _a.addMessageReceived();
+	            (_a = this.callEventTracker) === null || _a === undefined ? undefined : _a.addMessageReceived();
 	        }
 	    }
 	    handleEndEvent() {
@@ -60373,7 +60379,7 @@ function requireServerInterceptors () {
 	                });
 	                return;
 	            }
-	            (_a = this.callEventTracker) === null || _a === void 0 ? void 0 : _a.addMessageSent();
+	            (_a = this.callEventTracker) === null || _a === undefined ? undefined : _a.addMessageSent();
 	            callback();
 	        });
 	    }
@@ -60383,7 +60389,7 @@ function requireServerInterceptors () {
 	            return;
 	        }
 	        trace('Request to method ' +
-	            ((_a = this.handler) === null || _a === void 0 ? void 0 : _a.path) +
+	            ((_a = this.handler) === null || _a === undefined ? undefined : _a.path) +
 	            ' ended with status code: ' +
 	            constants_1.Status[status.code] +
 	            ' details: ' +
@@ -60398,7 +60404,7 @@ function requireServerInterceptors () {
 	                        this.callEventTracker.onStreamEnd(true);
 	                        this.callEventTracker.onCallEnd(status);
 	                    }
-	                    const trailersToSend = Object.assign({ [GRPC_STATUS_HEADER]: status.code, [GRPC_MESSAGE_HEADER]: encodeURI(status.details) }, (_a = status.metadata) === null || _a === void 0 ? void 0 : _a.toHttp2Headers());
+	                    const trailersToSend = Object.assign({ [GRPC_STATUS_HEADER]: status.code, [GRPC_MESSAGE_HEADER]: encodeURI(status.details) }, (_a = status.metadata) === null || _a === undefined ? undefined : _a.toHttp2Headers());
 	                    this.stream.sendTrailers(trailersToSend);
 	                    this.notifyOnCancel();
 	                });
@@ -60415,7 +60421,7 @@ function requireServerInterceptors () {
 	                this.callEventTracker.onCallEnd(status);
 	            }
 	            // Trailers-only response
-	            const trailersToSend = Object.assign(Object.assign({ [GRPC_STATUS_HEADER]: status.code, [GRPC_MESSAGE_HEADER]: encodeURI(status.details) }, defaultResponseHeaders), (_b = status.metadata) === null || _b === void 0 ? void 0 : _b.toHttp2Headers());
+	            const trailersToSend = Object.assign(Object.assign({ [GRPC_STATUS_HEADER]: status.code, [GRPC_MESSAGE_HEADER]: encodeURI(status.details) }, defaultResponseHeaders), (_b = status.metadata) === null || _b === undefined ? undefined : _b.toHttp2Headers());
 	            this.stream.respond(trailersToSend, { endStream: true });
 	            this.notifyOnCancel();
 	        }
@@ -60437,8 +60443,8 @@ function requireServerInterceptors () {
 	    }
 	    getPeer() {
 	        var _a;
-	        const socket = (_a = this.stream.session) === null || _a === void 0 ? void 0 : _a.socket;
-	        if (socket === null || socket === void 0 ? void 0 : socket.remoteAddress) {
+	        const socket = (_a = this.stream.session) === null || _a === undefined ? undefined : _a.socket;
+	        if (socket === null || socket === undefined ? undefined : socket.remoteAddress) {
 	            if (socket.remotePort) {
 	                return `${socket.remoteAddress}:${socket.remotePort}`;
 	            }
@@ -60502,10 +60508,10 @@ function requireServer () {
 	    for (var i = 0; i < initializers.length; i++) {
 	        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
 	    }
-	    return useValue ? value : void 0;
+	    return useValue ? value : undefined;
 	};
 	var __esDecorate = (server.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
-	    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+	    function accept(f) { if (f !== undefined && typeof f !== "function") throw new TypeError("Function expected"); return f; }
 	    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
 	    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
 	    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
@@ -60517,7 +60523,7 @@ function requireServer () {
 	        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
 	        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
 	        if (kind === "accessor") {
-	            if (result === void 0) continue;
+	            if (result === undefined) continue;
 	            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
 	            if (_ = accept(result.get)) descriptor.get = _;
 	            if (_ = accept(result.set)) descriptor.set = _;
@@ -60532,7 +60538,7 @@ function requireServer () {
 	    done = true;
 	};
 	Object.defineProperty(server, "__esModule", { value: true });
-	server.Server = void 0;
+	server.Server = undefined;
 	const http2 = require$$0$f;
 	const util = require$$0$7;
 	const constants_1 = requireConstants();
@@ -60544,10 +60550,10 @@ function requireServer () {
 	const uri_parser_1 = requireUriParser();
 	const channelz_1 = requireChannelz();
 	const server_interceptors_1 = requireServerInterceptors();
-	const UNLIMITED_CONNECTION_AGE_MS = ~(1 << 31);
-	const KEEPALIVE_MAX_TIME_MS = ~(1 << 31);
+	const UNLIMITED_CONNECTION_AGE_MS = 2147483647;
+	const KEEPALIVE_MAX_TIME_MS = 2147483647;
 	const KEEPALIVE_TIMEOUT_MS = 20000;
-	const MAX_CONNECTION_IDLE_MS = ~(1 << 31);
+	const MAX_CONNECTION_IDLE_MS = 2147483647;
 	const { HTTP2_HEADER_PATH } = http2.constants;
 	const TRACER_NAME = 'server';
 	const kMaxAge = Buffer.from('max_age');
@@ -60612,7 +60618,7 @@ function requireServer () {
 	                this.serverAddressString = 'null';
 	                // Channelz Info
 	                this.channelzEnabled = true;
-	                this.options = options !== null && options !== void 0 ? options : {};
+	                this.options = options !== null && options !== undefined ? options : {};
 	                if (this.options['grpc.enable_channelz'] === 0) {
 	                    this.channelzEnabled = false;
 	                    this.channelzTrace = new channelz_1.ChannelzTraceStub();
@@ -60629,15 +60635,15 @@ function requireServer () {
 	                this.channelzRef = (0, channelz_1.registerChannelzServer)('server', () => this.getChannelzInfo(), this.channelzEnabled);
 	                this.channelzTrace.addTrace('CT_INFO', 'Server created');
 	                this.maxConnectionAgeMs =
-	                    (_b = this.options['grpc.max_connection_age_ms']) !== null && _b !== void 0 ? _b : UNLIMITED_CONNECTION_AGE_MS;
+	                    (_b = this.options['grpc.max_connection_age_ms']) !== null && _b !== undefined ? _b : UNLIMITED_CONNECTION_AGE_MS;
 	                this.maxConnectionAgeGraceMs =
-	                    (_c = this.options['grpc.max_connection_age_grace_ms']) !== null && _c !== void 0 ? _c : UNLIMITED_CONNECTION_AGE_MS;
+	                    (_c = this.options['grpc.max_connection_age_grace_ms']) !== null && _c !== undefined ? _c : UNLIMITED_CONNECTION_AGE_MS;
 	                this.keepaliveTimeMs =
-	                    (_d = this.options['grpc.keepalive_time_ms']) !== null && _d !== void 0 ? _d : KEEPALIVE_MAX_TIME_MS;
+	                    (_d = this.options['grpc.keepalive_time_ms']) !== null && _d !== undefined ? _d : KEEPALIVE_MAX_TIME_MS;
 	                this.keepaliveTimeoutMs =
-	                    (_e = this.options['grpc.keepalive_timeout_ms']) !== null && _e !== void 0 ? _e : KEEPALIVE_TIMEOUT_MS;
+	                    (_e = this.options['grpc.keepalive_timeout_ms']) !== null && _e !== undefined ? _e : KEEPALIVE_TIMEOUT_MS;
 	                this.sessionIdleTimeout =
-	                    (_f = this.options['grpc.max_connection_idle_ms']) !== null && _f !== void 0 ? _f : MAX_CONNECTION_IDLE_MS;
+	                    (_f = this.options['grpc.max_connection_idle_ms']) !== null && _f !== undefined ? _f : MAX_CONNECTION_IDLE_MS;
 	                this.commonServerOptions = {
 	                    maxSendHeaderBlockLength: Number.MAX_SAFE_INTEGER,
 	                };
@@ -60657,7 +60663,7 @@ function requireServer () {
 	                        maxConcurrentStreams: this.options['grpc.max_concurrent_streams'],
 	                    };
 	                }
-	                this.interceptors = (_g = this.options.interceptors) !== null && _g !== void 0 ? _g : [];
+	                this.interceptors = (_g = this.options.interceptors) !== null && _g !== undefined ? _g : [];
 	                this.trace('Server constructed');
 	            }
 	            getChannelzInfo() {
@@ -60685,7 +60691,7 @@ function requireServer () {
 	                    const certificate = tlsSocket.getCertificate();
 	                    const peerCertificate = tlsSocket.getPeerCertificate();
 	                    tlsInfo = {
-	                        cipherSuiteStandardName: (_b = cipherInfo.standardName) !== null && _b !== void 0 ? _b : null,
+	                        cipherSuiteStandardName: (_b = cipherInfo.standardName) !== null && _b !== undefined ? _b : null,
 	                        cipherSuiteOtherName: cipherInfo.standardName ? null : cipherInfo.name,
 	                        localCertificate: certificate && 'raw' in certificate ? certificate.raw : null,
 	                        remoteCertificate: peerCertificate && 'raw' in peerCertificate
@@ -60711,8 +60717,8 @@ function requireServer () {
 	                    lastRemoteStreamCreatedTimestamp: sessionInfo.streamTracker.lastCallStartedTimestamp,
 	                    lastMessageSentTimestamp: sessionInfo.lastMessageSentTimestamp,
 	                    lastMessageReceivedTimestamp: sessionInfo.lastMessageReceivedTimestamp,
-	                    localFlowControlWindow: (_c = session.state.localWindowSize) !== null && _c !== void 0 ? _c : null,
-	                    remoteFlowControlWindow: (_d = session.state.remoteWindowSize) !== null && _d !== void 0 ? _d : null,
+	                    localFlowControlWindow: (_c = session.state.localWindowSize) !== null && _c !== undefined ? _c : null,
+	                    remoteFlowControlWindow: (_d = session.state.remoteWindowSize) !== null && _d !== undefined ? _d : null,
 	                };
 	                return socketInfo;
 	            }
@@ -61046,7 +61052,7 @@ function requireServer () {
 	                /* If the port number is 0, defer populating the map entry until after the
 	                 * bind operation completes and we have a specific port number. Otherwise,
 	                 * populate it immediately. */
-	                if ((splitPort === null || splitPort === void 0 ? void 0 : splitPort.port) === 0) {
+	                if ((splitPort === null || splitPort === undefined ? undefined : splitPort.port) === 0) {
 	                    completionPromise.then(portNum => {
 	                        const finalUri = {
 	                            scheme: portUri.scheme,
@@ -61122,7 +61128,7 @@ function requireServer () {
 	                            for (const session of sessionsSet) {
 	                                session.destroy(http2.constants.NGHTTP2_CANCEL);
 	                            }
-	                        }, graceTimeMs)).unref) === null || _c === void 0 ? void 0 : _c.call(_b);
+	                        }, graceTimeMs)).unref) === null || _c === undefined ? undefined : _c.call(_b);
 	                    },
 	                    destroy: () => {
 	                        this.closeServer(server);
@@ -61141,19 +61147,19 @@ function requireServer () {
 	                        (0, channelz_1.unregisterChannelzRef)(serverInfo.channelzRef);
 	                    }
 	                    this.http2Servers.delete(server);
-	                    callback === null || callback === void 0 ? void 0 : callback();
+	                    callback === null || callback === undefined ? undefined : callback();
 	                });
 	            }
 	            closeSession(session, callback) {
 	                var _b;
-	                this.trace('Closing session initiated by ' + ((_b = session.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress));
+	                this.trace('Closing session initiated by ' + ((_b = session.socket) === null || _b === undefined ? undefined : _b.remoteAddress));
 	                const sessionInfo = this.sessions.get(session);
 	                const closeCallback = () => {
 	                    if (sessionInfo) {
 	                        this.sessionChildrenTracker.unrefChild(sessionInfo.ref);
 	                        (0, channelz_1.unregisterChannelzRef)(sessionInfo.ref);
 	                    }
-	                    callback === null || callback === void 0 ? void 0 : callback();
+	                    callback === null || callback === undefined ? undefined : callback();
 	                };
 	                if (session.closed) {
 	                    queueMicrotask(closeCallback);
@@ -61187,7 +61193,7 @@ function requireServer () {
 	                this.trace('unbind port=' + port);
 	                const portUri = this.normalizePort(port);
 	                const splitPort = (0, uri_parser_1.splitHostPort)(portUri.path);
-	                if ((splitPort === null || splitPort === void 0 ? void 0 : splitPort.port) === 0) {
+	                if ((splitPort === null || splitPort === undefined ? undefined : splitPort.port) === 0) {
 	                    throw new Error('Cannot unbind port 0');
 	                }
 	                const boundPortObject = this.boundPorts.get((0, uri_parser_1.uriToString)(portUri));
@@ -61222,7 +61228,7 @@ function requireServer () {
 	                this.trace('drain port=' + port + ' graceTimeMs=' + graceTimeMs);
 	                const portUri = this.normalizePort(port);
 	                const splitPort = (0, uri_parser_1.splitHostPort)(portUri.path);
-	                if ((splitPort === null || splitPort === void 0 ? void 0 : splitPort.port) === 0) {
+	                if ((splitPort === null || splitPort === undefined ? undefined : splitPort.port) === 0) {
 	                    throw new Error('Cannot drain port 0');
 	                }
 	                const boundPortObject = this.boundPorts.get((0, uri_parser_1.uriToString)(portUri));
@@ -61247,7 +61253,7 @@ function requireServer () {
 	                    for (const session of allSessions) {
 	                        session.destroy(http2.constants.NGHTTP2_CANCEL);
 	                    }
-	                }, graceTimeMs)).unref) === null || _c === void 0 ? void 0 : _c.call(_b);
+	                }, graceTimeMs)).unref) === null || _c === undefined ? undefined : _c.call(_b);
 	            }
 	            forceShutdown() {
 	                for (const boundPortObject of this.boundPorts.values()) {
@@ -61324,7 +61330,7 @@ function requireServer () {
 	                    });
 	                    for (const session of server.sessions.keys()) {
 	                        pendingChecks++;
-	                        const sessionString = (_b = session.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress;
+	                        const sessionString = (_b = session.socket) === null || _b === undefined ? undefined : _b.remoteAddress;
 	                        this.trace('Waiting for session ' + sessionString + ' to close');
 	                        this.closeSession(session, () => {
 	                            this.trace('Session ' + sessionString + ' finished closing');
@@ -61374,20 +61380,20 @@ function requireServer () {
 	            }
 	            _respondWithError(err, stream, channelzSessionInfo = null) {
 	                var _b, _c;
-	                const trailersToSend = Object.assign({ 'grpc-status': (_b = err.code) !== null && _b !== void 0 ? _b : constants_1.Status.INTERNAL, 'grpc-message': err.details, [http2.constants.HTTP2_HEADER_STATUS]: http2.constants.HTTP_STATUS_OK, [http2.constants.HTTP2_HEADER_CONTENT_TYPE]: 'application/grpc+proto' }, (_c = err.metadata) === null || _c === void 0 ? void 0 : _c.toHttp2Headers());
+	                const trailersToSend = Object.assign({ 'grpc-status': (_b = err.code) !== null && _b !== undefined ? _b : constants_1.Status.INTERNAL, 'grpc-message': err.details, [http2.constants.HTTP2_HEADER_STATUS]: http2.constants.HTTP_STATUS_OK, [http2.constants.HTTP2_HEADER_CONTENT_TYPE]: 'application/grpc+proto' }, (_c = err.metadata) === null || _c === undefined ? undefined : _c.toHttp2Headers());
 	                stream.respond(trailersToSend, { endStream: true });
 	                this.callTracker.addCallFailed();
-	                channelzSessionInfo === null || channelzSessionInfo === void 0 ? void 0 : channelzSessionInfo.streamTracker.addCallFailed();
+	                channelzSessionInfo === null || channelzSessionInfo === undefined ? undefined : channelzSessionInfo.streamTracker.addCallFailed();
 	            }
 	            _channelzHandler(extraInterceptors, stream, headers) {
 	                // for handling idle timeout
 	                this.onStreamOpened(stream);
 	                const channelzSessionInfo = this.sessions.get(stream.session);
 	                this.callTracker.addCallStarted();
-	                channelzSessionInfo === null || channelzSessionInfo === void 0 ? void 0 : channelzSessionInfo.streamTracker.addCallStarted();
+	                channelzSessionInfo === null || channelzSessionInfo === undefined ? undefined : channelzSessionInfo.streamTracker.addCallStarted();
 	                if (!this._verifyContentType(stream, headers)) {
 	                    this.callTracker.addCallFailed();
-	                    channelzSessionInfo === null || channelzSessionInfo === void 0 ? void 0 : channelzSessionInfo.streamTracker.addCallFailed();
+	                    channelzSessionInfo === null || channelzSessionInfo === undefined ? undefined : channelzSessionInfo.streamTracker.addCallFailed();
 	                    return;
 	                }
 	                const path = headers[HTTP2_HEADER_PATH];
@@ -61431,7 +61437,7 @@ function requireServer () {
 	                const call = (0, server_interceptors_1.getServerInterceptingCall)([...extraInterceptors, ...this.interceptors], stream, headers, callEventTracker, handler, this.options);
 	                if (!this._runHandlerForCall(call, handler)) {
 	                    this.callTracker.addCallFailed();
-	                    channelzSessionInfo === null || channelzSessionInfo === void 0 ? void 0 : channelzSessionInfo.streamTracker.addCallFailed();
+	                    channelzSessionInfo === null || channelzSessionInfo === undefined ? undefined : channelzSessionInfo.streamTracker.addCallFailed();
 	                    call.sendStatus({
 	                        code: constants_1.Status.INTERNAL,
 	                        details: `Unknown handler type: ${handler.type}`,
@@ -61504,7 +61510,7 @@ function requireServer () {
 	            _sessionHandler(http2Server) {
 	                return (session) => {
 	                    var _b, _c;
-	                    (_b = this.http2Servers.get(http2Server)) === null || _b === void 0 ? void 0 : _b.sessions.add(session);
+	                    (_b = this.http2Servers.get(http2Server)) === null || _b === undefined ? undefined : _b.sessions.add(session);
 	                    let connectionAgeTimer = null;
 	                    let connectionAgeGraceTimer = null;
 	                    let keepaliveTimer = null;
@@ -61518,7 +61524,7 @@ function requireServer () {
 	                            var _b, _c;
 	                            sessionClosedByServer = true;
 	                            this.trace('Connection dropped by max connection age: ' +
-	                                ((_b = session.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress));
+	                                ((_b = session.socket) === null || _b === undefined ? undefined : _b.remoteAddress));
 	                            try {
 	                                session.goaway(http2.constants.NGHTTP2_NO_ERROR, ~(1 << 31), kMaxAge);
 	                            }
@@ -61534,10 +61540,10 @@ function requireServer () {
 	                                connectionAgeGraceTimer = setTimeout(() => {
 	                                    session.destroy();
 	                                }, this.maxConnectionAgeGraceMs);
-	                                (_c = connectionAgeGraceTimer.unref) === null || _c === void 0 ? void 0 : _c.call(connectionAgeGraceTimer);
+	                                (_c = connectionAgeGraceTimer.unref) === null || _c === undefined ? undefined : _c.call(connectionAgeGraceTimer);
 	                            }
 	                        }, this.maxConnectionAgeMs + jitter);
-	                        (_c = connectionAgeTimer.unref) === null || _c === void 0 ? void 0 : _c.call(connectionAgeTimer);
+	                        (_c = connectionAgeTimer.unref) === null || _c === undefined ? undefined : _c.call(connectionAgeTimer);
 	                    }
 	                    const clearKeepaliveTimeout = () => {
 	                        if (keepaliveTimer) {
@@ -61562,7 +61568,7 @@ function requireServer () {
 	                            clearKeepaliveTimeout();
 	                            sendPing();
 	                        }, this.keepaliveTimeMs);
-	                        (_b = keepaliveTimer.unref) === null || _b === void 0 ? void 0 : _b.call(keepaliveTimer);
+	                        (_b = keepaliveTimer.unref) === null || _b === undefined ? undefined : _b.call(keepaliveTimer);
 	                    };
 	                    sendPing = () => {
 	                        var _b;
@@ -61607,13 +61613,13 @@ function requireServer () {
 	                            sessionClosedByServer = true;
 	                            session.close();
 	                        }, this.keepaliveTimeoutMs);
-	                        (_b = keepaliveTimer.unref) === null || _b === void 0 ? void 0 : _b.call(keepaliveTimer);
+	                        (_b = keepaliveTimer.unref) === null || _b === undefined ? undefined : _b.call(keepaliveTimer);
 	                    };
 	                    maybeStartKeepalivePingTimer();
 	                    session.on('close', () => {
 	                        var _b, _c;
 	                        if (!sessionClosedByServer) {
-	                            this.trace(`Connection dropped by client ${(_b = session.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress}`);
+	                            this.trace(`Connection dropped by client ${(_b = session.socket) === null || _b === undefined ? undefined : _b.remoteAddress}`);
 	                        }
 	                        if (connectionAgeTimer) {
 	                            clearTimeout(connectionAgeTimer);
@@ -61626,14 +61632,14 @@ function requireServer () {
 	                            clearTimeout(idleTimeoutObj.timeout);
 	                            this.sessionIdleTimeouts.delete(session);
 	                        }
-	                        (_c = this.http2Servers.get(http2Server)) === null || _c === void 0 ? void 0 : _c.sessions.delete(session);
+	                        (_c = this.http2Servers.get(http2Server)) === null || _c === undefined ? undefined : _c.sessions.delete(session);
 	                    });
 	                };
 	            }
 	            _channelzSessionHandler(http2Server) {
 	                return (session) => {
 	                    var _b, _c, _d, _e;
-	                    const channelzRef = (0, channelz_1.registerChannelzSocket)((_c = (_b = session.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress) !== null && _c !== void 0 ? _c : 'unknown', this.getChannelzSessionInfo.bind(this, session), this.channelzEnabled);
+	                    const channelzRef = (0, channelz_1.registerChannelzSocket)((_c = (_b = session.socket) === null || _b === undefined ? undefined : _b.remoteAddress) !== null && _c !== undefined ? _c : 'unknown', this.getChannelzSessionInfo.bind(this, session), this.channelzEnabled);
 	                    const channelzSessionInfo = {
 	                        ref: channelzRef,
 	                        streamTracker: new channelz_1.ChannelzCallTracker(),
@@ -61643,7 +61649,7 @@ function requireServer () {
 	                        lastMessageSentTimestamp: null,
 	                        lastMessageReceivedTimestamp: null,
 	                    };
-	                    (_d = this.http2Servers.get(http2Server)) === null || _d === void 0 ? void 0 : _d.sessions.add(session);
+	                    (_d = this.http2Servers.get(http2Server)) === null || _d === undefined ? undefined : _d.sessions.add(session);
 	                    this.sessions.set(session, channelzSessionInfo);
 	                    const clientAddress = `${session.socket.remoteAddress}:${session.socket.remotePort}`;
 	                    this.channelzTrace.addTrace('CT_INFO', 'Connection established by client ' + clientAddress);
@@ -61677,10 +61683,10 @@ function requireServer () {
 	                                connectionAgeGraceTimer = setTimeout(() => {
 	                                    session.destroy();
 	                                }, this.maxConnectionAgeGraceMs);
-	                                (_b = connectionAgeGraceTimer.unref) === null || _b === void 0 ? void 0 : _b.call(connectionAgeGraceTimer);
+	                                (_b = connectionAgeGraceTimer.unref) === null || _b === undefined ? undefined : _b.call(connectionAgeGraceTimer);
 	                            }
 	                        }, this.maxConnectionAgeMs + jitter);
-	                        (_e = connectionAgeTimer.unref) === null || _e === void 0 ? void 0 : _e.call(connectionAgeTimer);
+	                        (_e = connectionAgeTimer.unref) === null || _e === undefined ? undefined : _e.call(connectionAgeTimer);
 	                    }
 	                    const clearKeepaliveTimeout = () => {
 	                        if (keepaliveTimeout) {
@@ -61705,7 +61711,7 @@ function requireServer () {
 	                            clearKeepaliveTimeout();
 	                            sendPing();
 	                        }, this.keepaliveTimeMs);
-	                        (_b = keepaliveTimeout.unref) === null || _b === void 0 ? void 0 : _b.call(keepaliveTimeout);
+	                        (_b = keepaliveTimeout.unref) === null || _b === undefined ? undefined : _b.call(keepaliveTimeout);
 	                    };
 	                    sendPing = () => {
 	                        var _b;
@@ -61755,7 +61761,7 @@ function requireServer () {
 	                            sessionClosedByServer = true;
 	                            session.close();
 	                        }, this.keepaliveTimeoutMs);
-	                        (_b = keepaliveTimeout.unref) === null || _b === void 0 ? void 0 : _b.call(keepaliveTimeout);
+	                        (_b = keepaliveTimeout.unref) === null || _b === undefined ? undefined : _b.call(keepaliveTimeout);
 	                    };
 	                    maybeStartKeepalivePingTimer();
 	                    session.on('close', () => {
@@ -61776,7 +61782,7 @@ function requireServer () {
 	                            clearTimeout(idleTimeoutObj.timeout);
 	                            this.sessionIdleTimeouts.delete(session);
 	                        }
-	                        (_b = this.http2Servers.get(http2Server)) === null || _b === void 0 ? void 0 : _b.sessions.delete(session);
+	                        (_b = this.http2Servers.get(http2Server)) === null || _b === undefined ? undefined : _b.sessions.delete(session);
 	                        this.sessions.delete(session);
 	                    });
 	                };
@@ -61792,7 +61798,7 @@ function requireServer () {
 	                    onClose: this.onStreamClose.bind(this, session),
 	                    timeout: setTimeout(this.onIdleTimeout, this.sessionIdleTimeout, this, session),
 	                };
-	                (_c = (_b = idleTimeoutObj.timeout).unref) === null || _c === void 0 ? void 0 : _c.call(_b);
+	                (_c = (_b = idleTimeoutObj.timeout).unref) === null || _c === undefined ? undefined : _c.call(_b);
 	                this.sessionIdleTimeouts.set(session, idleTimeoutObj);
 	                const { socket } = session;
 	                this.trace('Enable idle timeout for ' +
@@ -61812,9 +61818,9 @@ function requireServer () {
 	                    sessionInfo.activeStreams === 0) {
 	                    if (Date.now() - sessionInfo.lastIdle >= ctx.sessionIdleTimeout) {
 	                        ctx.trace('Session idle timeout triggered for ' +
-	                            (socket === null || socket === void 0 ? void 0 : socket.remoteAddress) +
+	                            (socket === null || socket === undefined ? undefined : socket.remoteAddress) +
 	                            ':' +
-	                            (socket === null || socket === void 0 ? void 0 : socket.remotePort) +
+	                            (socket === null || socket === undefined ? undefined : socket.remotePort) +
 	                            ' last idle at ' +
 	                            sessionInfo.lastIdle);
 	                        ctx.closeSession(session);
@@ -61841,9 +61847,9 @@ function requireServer () {
 	                        idleTimeoutObj.lastIdle = Date.now();
 	                        idleTimeoutObj.timeout.refresh();
 	                        this.trace('Session onStreamClose' +
-	                            ((_b = session.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress) +
+	                            ((_b = session.socket) === null || _b === undefined ? undefined : _b.remoteAddress) +
 	                            ':' +
-	                            ((_c = session.socket) === null || _c === void 0 ? void 0 : _c.remotePort) +
+	                            ((_c = session.socket) === null || _c === undefined ? undefined : _c.remotePort) +
 	                            ' at ' +
 	                            idleTimeoutObj.lastIdle);
 	                    }
@@ -61851,7 +61857,7 @@ function requireServer () {
 	            }
 	        },
 	        (() => {
-	            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+	            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : undefined;
 	            _start_decorators = [deprecate('Calling start() is no longer necessary. It can be safely omitted.')];
 	            __esDecorate(_a, null, _start_decorators, { kind: "method", name: "start", static: false, private: false, access: { has: obj => "start" in obj, get: obj => obj.start }, metadata: _metadata }, null, _instanceExtraInitializers);
 	            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
@@ -61870,7 +61876,7 @@ function requireServer () {
 	            call.sendStatus({
 	                code: constants_1.Status.OK,
 	                details: 'OK',
-	                metadata: trailer !== null && trailer !== void 0 ? trailer : null,
+	                metadata: trailer !== null && trailer !== undefined ? trailer : null,
 	            });
 	        });
 	    }
@@ -61933,7 +61939,7 @@ function requireServer () {
 	            call.sendStatus({
 	                code: constants_1.Status.OK,
 	                details: 'OK',
-	                metadata: trailer !== null && trailer !== void 0 ? trailer : null,
+	                metadata: trailer !== null && trailer !== undefined ? trailer : null,
 	            });
 	        });
 	    }
@@ -62076,7 +62082,7 @@ function requireStatusBuilder () {
 	 *
 	 */
 	Object.defineProperty(statusBuilder, "__esModule", { value: true });
-	statusBuilder.StatusBuilder = void 0;
+	statusBuilder.StatusBuilder = undefined;
 	/**
 	 * A builder for gRPC status objects.
 	 */
@@ -62155,7 +62161,7 @@ function requireDuration () {
 	 *
 	 */
 	Object.defineProperty(duration, "__esModule", { value: true });
-	duration.parseDuration = duration.isDuration = duration.durationToMs = duration.msToDuration = void 0;
+	duration.parseDuration = duration.isDuration = duration.durationToMs = duration.msToDuration = undefined;
 	function msToDuration(millis) {
 	    return {
 	        seconds: (millis / 1000) | 0,
@@ -62211,7 +62217,7 @@ function requireLoadBalancerPickFirst () {
 	 *
 	 */
 	Object.defineProperty(loadBalancerPickFirst, "__esModule", { value: true });
-	loadBalancerPickFirst.setup = loadBalancerPickFirst.LeafLoadBalancer = loadBalancerPickFirst.PickFirstLoadBalancer = loadBalancerPickFirst.shuffled = loadBalancerPickFirst.PickFirstLoadBalancingConfig = void 0;
+	loadBalancerPickFirst.setup = loadBalancerPickFirst.LeafLoadBalancer = loadBalancerPickFirst.PickFirstLoadBalancer = loadBalancerPickFirst.shuffled = loadBalancerPickFirst.PickFirstLoadBalancingConfig = undefined;
 	const load_balancer_1 = requireLoadBalancer();
 	const connectivity_state_1 = requireConnectivityState();
 	const picker_1 = requirePicker();
@@ -62439,7 +62445,7 @@ function requireLoadBalancerPickFirst () {
 	    }
 	    onSubchannelStateUpdate(subchannel, previousState, newState, errorMessage) {
 	        var _a;
-	        if ((_a = this.currentPick) === null || _a === void 0 ? void 0 : _a.realSubchannelEquals(subchannel)) {
+	        if ((_a = this.currentPick) === null || _a === undefined ? undefined : _a.realSubchannelEquals(subchannel)) {
 	            if (newState !== connectivity_state_1.ConnectivityState.READY) {
 	                this.removeCurrentPick();
 	                this.calculateAndReportNewState();
@@ -62494,13 +62500,13 @@ function requireLoadBalancerPickFirst () {
 	                this.children[subchannelIndex].subchannel.getAddress());
 	            process.nextTick(() => {
 	                var _a;
-	                (_a = this.children[subchannelIndex]) === null || _a === void 0 ? void 0 : _a.subchannel.startConnecting();
+	                (_a = this.children[subchannelIndex]) === null || _a === undefined ? undefined : _a.subchannel.startConnecting();
 	            });
 	        }
 	        this.connectionDelayTimeout = setTimeout(() => {
 	            this.startNextSubchannelConnecting(subchannelIndex + 1);
 	        }, CONNECTION_DELAY_INTERVAL_MS);
-	        (_b = (_a = this.connectionDelayTimeout).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.connectionDelayTimeout).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	    }
 	    /**
 	     * Declare that the specified subchannel should be used to make requests.
@@ -62702,7 +62708,7 @@ function requireCertificateProvider () {
 	 *
 	 */
 	Object.defineProperty(certificateProvider, "__esModule", { value: true });
-	certificateProvider.FileWatcherCertificateProvider = void 0;
+	certificateProvider.FileWatcherCertificateProvider = undefined;
 	const fs = require$$0$5;
 	const logging = requireLogging();
 	const constants_1 = requireConstants();
@@ -62828,7 +62834,7 @@ function requireExperimental () {
 	hasRequiredExperimental = 1;
 	(function (exports) {
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.createCertificateProviderChannelCredentials = exports.FileWatcherCertificateProvider = exports.createCertificateProviderServerCredentials = exports.createServerCredentialsWithInterceptors = exports.BaseSubchannelWrapper = exports.registerAdminService = exports.FilterStackFactory = exports.BaseFilter = exports.PickResultType = exports.QueuePicker = exports.UnavailablePicker = exports.ChildLoadBalancerHandler = exports.EndpointMap = exports.endpointHasAddress = exports.endpointToString = exports.subchannelAddressToString = exports.LeafLoadBalancer = exports.isLoadBalancerNameRegistered = exports.parseLoadBalancingConfig = exports.selectLbConfigFromList = exports.registerLoadBalancerType = exports.createChildChannelControlHelper = exports.BackoffTimeout = exports.parseDuration = exports.durationToMs = exports.splitHostPort = exports.uriToString = exports.createResolver = exports.registerResolver = exports.log = exports.trace = void 0;
+		exports.createCertificateProviderChannelCredentials = exports.FileWatcherCertificateProvider = exports.createCertificateProviderServerCredentials = exports.createServerCredentialsWithInterceptors = exports.BaseSubchannelWrapper = exports.registerAdminService = exports.FilterStackFactory = exports.BaseFilter = exports.PickResultType = exports.QueuePicker = exports.UnavailablePicker = exports.ChildLoadBalancerHandler = exports.EndpointMap = exports.endpointHasAddress = exports.endpointToString = exports.subchannelAddressToString = exports.LeafLoadBalancer = exports.isLoadBalancerNameRegistered = exports.parseLoadBalancingConfig = exports.selectLbConfigFromList = exports.registerLoadBalancerType = exports.createChildChannelControlHelper = exports.BackoffTimeout = exports.parseDuration = exports.durationToMs = exports.splitHostPort = exports.uriToString = exports.createResolver = exports.registerResolver = exports.log = exports.trace = undefined;
 		var logging_1 = requireLogging();
 		Object.defineProperty(exports, "trace", { enumerable: true, get: function () { return logging_1.trace; } });
 		Object.defineProperty(exports, "log", { enumerable: true, get: function () { return logging_1.log; } });
@@ -62905,7 +62911,7 @@ function requireResolverUds () {
 	 * limitations under the License.
 	 */
 	Object.defineProperty(resolverUds, "__esModule", { value: true });
-	resolverUds.setup = void 0;
+	resolverUds.setup = undefined;
 	const resolver_1 = requireResolver();
 	class UdsResolver {
 	    constructor(target, listener, channelOptions) {
@@ -62965,7 +62971,7 @@ function requireResolverIp () {
 	 * limitations under the License.
 	 */
 	Object.defineProperty(resolverIp, "__esModule", { value: true });
-	resolverIp.setup = void 0;
+	resolverIp.setup = undefined;
 	const net_1 = require$$0$a;
 	const constants_1 = requireConstants();
 	const metadata_1 = requireMetadata();
@@ -63021,7 +63027,7 @@ function requireResolverIp () {
 	            }
 	            addresses.push({
 	                host: hostPort.host,
-	                port: (_a = hostPort.port) !== null && _a !== void 0 ? _a : DEFAULT_PORT,
+	                port: (_a = hostPort.port) !== null && _a !== undefined ? _a : DEFAULT_PORT,
 	            });
 	        }
 	        this.endpoints = addresses.map(address => ({ addresses: [address] }));
@@ -63080,7 +63086,7 @@ function requireLoadBalancerRoundRobin () {
 	 *
 	 */
 	Object.defineProperty(loadBalancerRoundRobin, "__esModule", { value: true });
-	loadBalancerRoundRobin.setup = loadBalancerRoundRobin.RoundRobinLoadBalancer = void 0;
+	loadBalancerRoundRobin.setup = loadBalancerRoundRobin.RoundRobinLoadBalancer = undefined;
 	const load_balancer_1 = requireLoadBalancer();
 	const connectivity_state_1 = requireConnectivityState();
 	const picker_1 = requirePicker();
@@ -63272,7 +63278,7 @@ function requireLoadBalancerOutlierDetection () {
 	 */
 	var _a;
 	Object.defineProperty(loadBalancerOutlierDetection, "__esModule", { value: true });
-	loadBalancerOutlierDetection.setup = loadBalancerOutlierDetection.OutlierDetectionLoadBalancer = loadBalancerOutlierDetection.OutlierDetectionLoadBalancingConfig = void 0;
+	loadBalancerOutlierDetection.setup = loadBalancerOutlierDetection.OutlierDetectionLoadBalancer = loadBalancerOutlierDetection.OutlierDetectionLoadBalancingConfig = undefined;
 	const connectivity_state_1 = requireConnectivityState();
 	const constants_1 = requireConstants();
 	const duration_1 = requireDuration();
@@ -63288,7 +63294,7 @@ function requireLoadBalancerOutlierDetection () {
 	    logging.trace(constants_1.LogVerbosity.DEBUG, TRACER_NAME, text);
 	}
 	const TYPE_NAME = 'outlier_detection';
-	const OUTLIER_DETECTION_ENABLED = ((_a = process.env.GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION) !== null && _a !== void 0 ? _a : 'true') === 'true';
+	const OUTLIER_DETECTION_ENABLED = ((_a = process.env.GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION) !== null && _a !== undefined ? _a : 'true') === 'true';
 	const defaultSuccessRateEjectionConfig = {
 	    stdev_factor: 1900,
 	    enforcement_percentage: 100,
@@ -63338,10 +63344,10 @@ function requireLoadBalancerOutlierDetection () {
 	        if (childPolicy.getLoadBalancerName() === 'pick_first') {
 	            throw new Error('outlier_detection LB policy cannot have a pick_first child policy');
 	        }
-	        this.intervalMs = intervalMs !== null && intervalMs !== void 0 ? intervalMs : 10000;
-	        this.baseEjectionTimeMs = baseEjectionTimeMs !== null && baseEjectionTimeMs !== void 0 ? baseEjectionTimeMs : 30000;
-	        this.maxEjectionTimeMs = maxEjectionTimeMs !== null && maxEjectionTimeMs !== void 0 ? maxEjectionTimeMs : 300000;
-	        this.maxEjectionPercent = maxEjectionPercent !== null && maxEjectionPercent !== void 0 ? maxEjectionPercent : 10;
+	        this.intervalMs = intervalMs !== null && intervalMs !== undefined ? intervalMs : 10000;
+	        this.baseEjectionTimeMs = baseEjectionTimeMs !== null && baseEjectionTimeMs !== undefined ? baseEjectionTimeMs : 30000;
+	        this.maxEjectionTimeMs = maxEjectionTimeMs !== null && maxEjectionTimeMs !== undefined ? maxEjectionTimeMs : 300000;
+	        this.maxEjectionPercent = maxEjectionPercent !== null && maxEjectionPercent !== undefined ? maxEjectionPercent : 10;
 	        this.successRateEjection = successRateEjection
 	            ? Object.assign(Object.assign({}, defaultSuccessRateEjectionConfig), successRateEjection) : null;
 	        this.failurePercentageEjection = failurePercentageEjection
@@ -63358,8 +63364,8 @@ function requireLoadBalancerOutlierDetection () {
 	                base_ejection_time: (0, duration_1.msToDuration)(this.baseEjectionTimeMs),
 	                max_ejection_time: (0, duration_1.msToDuration)(this.maxEjectionTimeMs),
 	                max_ejection_percent: this.maxEjectionPercent,
-	                success_rate_ejection: (_a = this.successRateEjection) !== null && _a !== void 0 ? _a : undefined,
-	                failure_percentage_ejection: (_b = this.failurePercentageEjection) !== null && _b !== void 0 ? _b : undefined,
+	                success_rate_ejection: (_a = this.successRateEjection) !== null && _a !== undefined ? _a : undefined,
+	                failure_percentage_ejection: (_b = this.failurePercentageEjection) !== null && _b !== undefined ? _b : undefined,
 	                child_policy: [this.childPolicy.toJsonObject()],
 	            },
 	        };
@@ -63418,7 +63424,7 @@ function requireLoadBalancerOutlierDetection () {
 	        if (!childPolicy) {
 	            throw new Error('outlier detection config child_policy: no valid recognized policy found');
 	        }
-	        return new OutlierDetectionLoadBalancingConfig(obj.interval ? (0, duration_1.durationToMs)(obj.interval) : null, obj.base_ejection_time ? (0, duration_1.durationToMs)(obj.base_ejection_time) : null, obj.max_ejection_time ? (0, duration_1.durationToMs)(obj.max_ejection_time) : null, (_a = obj.max_ejection_percent) !== null && _a !== void 0 ? _a : null, obj.success_rate_ejection, obj.failure_percentage_ejection, childPolicy);
+	        return new OutlierDetectionLoadBalancingConfig(obj.interval ? (0, duration_1.durationToMs)(obj.interval) : null, obj.base_ejection_time ? (0, duration_1.durationToMs)(obj.base_ejection_time) : null, obj.max_ejection_time ? (0, duration_1.durationToMs)(obj.max_ejection_time) : null, (_a = obj.max_ejection_percent) !== null && _a !== undefined ? _a : null, obj.success_rate_ejection, obj.failure_percentage_ejection, childPolicy);
 	    }
 	}
 	loadBalancerOutlierDetection.OutlierDetectionLoadBalancingConfig = OutlierDetectionLoadBalancingConfig;
@@ -63506,7 +63512,7 @@ function requireLoadBalancerOutlierDetection () {
 	                        else {
 	                            mapEntry.counter.addFailure();
 	                        }
-	                        (_a = wrappedPick.onCallEnded) === null || _a === void 0 ? void 0 : _a.call(wrappedPick, statusCode);
+	                        (_a = wrappedPick.onCallEnded) === null || _a === undefined ? undefined : _a.call(wrappedPick, statusCode);
 	                    };
 	                }
 	                return Object.assign(Object.assign({}, wrappedPick), { subchannel: subchannelWrapper.getWrappedSubchannel(), onCallEnded: onCallEnded });
@@ -63530,11 +63536,11 @@ function requireLoadBalancerOutlierDetection () {
 	                const originalSubchannel = channelControlHelper.createSubchannel(subchannelAddress, subchannelArgs, credentialsOverride);
 	                const mapEntry = this.entryMap.getForSubchannelAddress(subchannelAddress);
 	                const subchannelWrapper = new OutlierDetectionSubchannelWrapper(originalSubchannel, mapEntry);
-	                if ((mapEntry === null || mapEntry === void 0 ? void 0 : mapEntry.currentEjectionTimestamp) !== null) {
+	                if ((mapEntry === null || mapEntry === undefined ? undefined : mapEntry.currentEjectionTimestamp) !== null) {
 	                    // If the address is ejected, propagate that to the new subchannel wrapper
 	                    subchannelWrapper.eject();
 	                }
-	                mapEntry === null || mapEntry === void 0 ? void 0 : mapEntry.subchannelWrappers.push(subchannelWrapper);
+	                mapEntry === null || mapEntry === undefined ? undefined : mapEntry.subchannelWrappers.push(subchannelWrapper);
 	                return subchannelWrapper;
 	            },
 	            updateState: (connectivityState, picker) => {
@@ -63721,7 +63727,7 @@ function requireLoadBalancerOutlierDetection () {
 	    startTimer(delayMs) {
 	        var _a, _b;
 	        this.ejectionTimer = setTimeout(() => this.runChecks(), delayMs);
-	        (_b = (_a = this.ejectionTimer).unref) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        (_b = (_a = this.ejectionTimer).unref) === null || _b === undefined ? undefined : _b.call(_a);
 	    }
 	    runChecks() {
 	        const ejectionTimestamp = new Date();
@@ -63846,7 +63852,7 @@ function requireSrc$3 () {
 		 *
 		 */
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.experimental = exports.ServerInterceptingCall = exports.ResponderBuilder = exports.ServerListenerBuilder = exports.addAdminServicesToServer = exports.getChannelzHandlers = exports.getChannelzServiceDefinition = exports.InterceptorConfigurationError = exports.InterceptingCall = exports.RequesterBuilder = exports.ListenerBuilder = exports.StatusBuilder = exports.getClientChannel = exports.ServerCredentials = exports.Server = exports.setLogVerbosity = exports.setLogger = exports.load = exports.loadObject = exports.CallCredentials = exports.ChannelCredentials = exports.waitForClientReady = exports.closeClient = exports.Channel = exports.makeGenericClientConstructor = exports.makeClientConstructor = exports.loadPackageDefinition = exports.Client = exports.compressionAlgorithms = exports.propagate = exports.connectivityState = exports.status = exports.logVerbosity = exports.Metadata = exports.credentials = void 0;
+		exports.experimental = exports.ServerInterceptingCall = exports.ResponderBuilder = exports.ServerListenerBuilder = exports.addAdminServicesToServer = exports.getChannelzHandlers = exports.getChannelzServiceDefinition = exports.InterceptorConfigurationError = exports.InterceptingCall = exports.RequesterBuilder = exports.ListenerBuilder = exports.StatusBuilder = exports.getClientChannel = exports.ServerCredentials = exports.Server = exports.setLogVerbosity = exports.setLogger = exports.load = exports.loadObject = exports.CallCredentials = exports.ChannelCredentials = exports.waitForClientReady = exports.closeClient = exports.Channel = exports.makeGenericClientConstructor = exports.makeClientConstructor = exports.loadPackageDefinition = exports.Client = exports.compressionAlgorithms = exports.propagate = exports.connectivityState = exports.status = exports.logVerbosity = exports.Metadata = exports.credentials = undefined;
 		const call_credentials_1 = requireCallCredentials();
 		Object.defineProperty(exports, "CallCredentials", { enumerable: true, get: function () { return call_credentials_1.CallCredentials; } });
 		const channel_1 = requireChannel();
@@ -64007,7 +64013,7 @@ function requireAbstractAsyncHooksContextManager () {
 	 * limitations under the License.
 	 */
 	Object.defineProperty(AbstractAsyncHooksContextManager, "__esModule", { value: true });
-	AbstractAsyncHooksContextManager.AbstractAsyncHooksContextManager = void 0;
+	AbstractAsyncHooksContextManager.AbstractAsyncHooksContextManager = undefined;
 	const events_1 = require$$0$6;
 	const ADD_LISTENER_METHODS = [
 	    'addListener',
@@ -64095,7 +64101,7 @@ function requireAbstractAsyncHooksContextManager () {
 	        const contextManager = this;
 	        return function (event, listener) {
 	            var _a;
-	            const events = (_a = contextManager._getPatchMap(ee)) === null || _a === void 0 ? void 0 : _a[event];
+	            const events = (_a = contextManager._getPatchMap(ee)) === null || _a === undefined ? undefined : _a[event];
 	            if (events === undefined) {
 	                return original.call(this, event, listener);
 	            }
@@ -64205,7 +64211,7 @@ function requireAsyncHooksContextManager () {
 	 * limitations under the License.
 	 */
 	Object.defineProperty(AsyncHooksContextManager, "__esModule", { value: true });
-	AsyncHooksContextManager.AsyncHooksContextManager = void 0;
+	AsyncHooksContextManager.AsyncHooksContextManager = undefined;
 	const api_1 = require$$0$2;
 	const asyncHooks = require$$1$3;
 	const AbstractAsyncHooksContextManager_1 = /*@__PURE__*/ requireAbstractAsyncHooksContextManager();
@@ -64224,7 +64230,7 @@ function requireAsyncHooksContextManager () {
 	    }
 	    active() {
 	        var _a;
-	        return (_a = this._stack[this._stack.length - 1]) !== null && _a !== void 0 ? _a : api_1.ROOT_CONTEXT;
+	        return (_a = this._stack[this._stack.length - 1]) !== null && _a !== undefined ? _a : api_1.ROOT_CONTEXT;
 	    }
 	    with(context, fn, thisArg, ...args) {
 	        this._enterContext(context);
@@ -64328,7 +64334,7 @@ function requireAsyncLocalStorageContextManager () {
 	 * limitations under the License.
 	 */
 	Object.defineProperty(AsyncLocalStorageContextManager, "__esModule", { value: true });
-	AsyncLocalStorageContextManager.AsyncLocalStorageContextManager = void 0;
+	AsyncLocalStorageContextManager.AsyncLocalStorageContextManager = undefined;
 	const api_1 = require$$0$2;
 	const async_hooks_1 = require$$1$3;
 	const AbstractAsyncHooksContextManager_1 = /*@__PURE__*/ requireAbstractAsyncHooksContextManager();
@@ -64339,7 +64345,7 @@ function requireAsyncLocalStorageContextManager () {
 	    }
 	    active() {
 	        var _a;
-	        return (_a = this._asyncLocalStorage.getStore()) !== null && _a !== void 0 ? _a : api_1.ROOT_CONTEXT;
+	        return (_a = this._asyncLocalStorage.getStore()) !== null && _a !== undefined ? _a : api_1.ROOT_CONTEXT;
 	    }
 	    with(context, fn, thisArg, ...args) {
 	        const cb = thisArg == null ? fn : fn.bind(thisArg);
@@ -64380,7 +64386,7 @@ function requireSrc$2 () {
 		 * limitations under the License.
 		 */
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.AsyncLocalStorageContextManager = exports.AsyncHooksContextManager = void 0;
+		exports.AsyncLocalStorageContextManager = exports.AsyncHooksContextManager = undefined;
 		var AsyncHooksContextManager_1 = /*@__PURE__*/ requireAsyncHooksContextManager();
 		Object.defineProperty(exports, "AsyncHooksContextManager", { enumerable: true, get: function () { return AsyncHooksContextManager_1.AsyncHooksContextManager; } });
 		var AsyncLocalStorageContextManager_1 = /*@__PURE__*/ requireAsyncLocalStorageContextManager();
@@ -64520,9 +64526,9 @@ function wrapStaticHeadersInFunction(headers) {
 function mergeOtlpSharedConfigurationWithDefaults(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration) {
     var _a, _b, _c, _d, _e, _f;
     return {
-        timeoutMillis: validateTimeoutMillis((_b = (_a = userProvidedConfiguration.timeoutMillis) !== null && _a !== void 0 ? _a : fallbackConfiguration.timeoutMillis) !== null && _b !== void 0 ? _b : defaultConfiguration.timeoutMillis),
-        concurrencyLimit: (_d = (_c = userProvidedConfiguration.concurrencyLimit) !== null && _c !== void 0 ? _c : fallbackConfiguration.concurrencyLimit) !== null && _d !== void 0 ? _d : defaultConfiguration.concurrencyLimit,
-        compression: (_f = (_e = userProvidedConfiguration.compression) !== null && _e !== void 0 ? _e : fallbackConfiguration.compression) !== null && _f !== void 0 ? _f : defaultConfiguration.compression,
+        timeoutMillis: validateTimeoutMillis((_b = (_a = userProvidedConfiguration.timeoutMillis) !== null && _a !== undefined ? _a : fallbackConfiguration.timeoutMillis) !== null && _b !== undefined ? _b : defaultConfiguration.timeoutMillis),
+        concurrencyLimit: (_d = (_c = userProvidedConfiguration.concurrencyLimit) !== null && _c !== undefined ? _c : fallbackConfiguration.concurrencyLimit) !== null && _d !== undefined ? _d : defaultConfiguration.concurrencyLimit,
+        compression: (_f = (_e = userProvidedConfiguration.compression) !== null && _e !== undefined ? _e : fallbackConfiguration.compression) !== null && _f !== undefined ? _f : defaultConfiguration.compression,
     };
 }
 function getSharedConfigurationDefaults() {
@@ -64602,7 +64608,7 @@ var __generator$4 = (undefined && undefined.__generator) || function (thisArg, b
             }
             op = body.call(thisArg, _);
         } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : undefined, done: true };
     }
 };
 var BoundedQueueExportPromiseHandler = /** @class */ (function () {
@@ -64629,7 +64635,7 @@ var BoundedQueueExportPromiseHandler = /** @class */ (function () {
         return this._sendingPromises.length >= this._concurrencyLimit;
     };
     BoundedQueueExportPromiseHandler.prototype.awaitAll = function () {
-        return __awaiter$4(this, void 0, void 0, function () {
+        return __awaiter$4(this, undefined, undefined, function () {
             return __generator$4(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, Promise.all(this._sendingPromises)];
@@ -64665,699 +64671,15 @@ function createBoundedQueueExportPromiseHandler(options) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var BAGGAGE_KEY_PAIR_SEPARATOR$2 = '=';
-var BAGGAGE_PROPERTIES_SEPARATOR$2 = ';';
-var BAGGAGE_ITEMS_SEPARATOR$2 = ',';
-// Maximum total length of all name-value pairs allowed by w3c spec
-var BAGGAGE_MAX_TOTAL_LENGTH$2 = 8192;
-
-var __read$d = (undefined && undefined.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-function serializeKeyPairs$2(keyPairs) {
-    return keyPairs.reduce(function (hValue, current) {
-        var value = "" + hValue + (hValue !== '' ? BAGGAGE_ITEMS_SEPARATOR$2 : '') + current;
-        return value.length > BAGGAGE_MAX_TOTAL_LENGTH$2 ? hValue : value;
-    }, '');
-}
-function getKeyPairs$2(baggage) {
-    return baggage.getAllEntries().map(function (_a) {
-        var _b = __read$d(_a, 2), key = _b[0], value = _b[1];
-        var entry = encodeURIComponent(key) + "=" + encodeURIComponent(value.value);
-        // include opaque metadata if provided
-        // NOTE: we intentionally don't URI-encode the metadata - that responsibility falls on the metadata implementation
-        if (value.metadata !== undefined) {
-            entry += BAGGAGE_PROPERTIES_SEPARATOR$2 + value.metadata.toString();
-        }
-        return entry;
-    });
-}
-function parsePairKeyValue$2(entry) {
-    var valueProps = entry.split(BAGGAGE_PROPERTIES_SEPARATOR$2);
-    if (valueProps.length <= 0)
-        return;
-    var keyPairPart = valueProps.shift();
-    if (!keyPairPart)
-        return;
-    var separatorIndex = keyPairPart.indexOf(BAGGAGE_KEY_PAIR_SEPARATOR$2);
-    if (separatorIndex <= 0)
-        return;
-    var key = decodeURIComponent(keyPairPart.substring(0, separatorIndex).trim());
-    var value = decodeURIComponent(keyPairPart.substring(separatorIndex + 1).trim());
-    var metadata;
-    if (valueProps.length > 0) {
-        metadata = baggageEntryMetadataFromString(valueProps.join(BAGGAGE_PROPERTIES_SEPARATOR$2));
-    }
-    return { key: key, value: value, metadata: metadata };
-}
-/**
- * Parse a string serialized in the baggage HTTP Format (without metadata):
- * https://github.com/w3c/baggage/blob/master/baggage/HTTP_HEADER_FORMAT.md
- */
-function parseKeyPairsIntoRecord$1(value) {
-    if (typeof value !== 'string' || value.length === 0)
-        return {};
-    return value
-        .split(BAGGAGE_ITEMS_SEPARATOR$2)
-        .map(function (entry) {
-        return parsePairKeyValue$2(entry);
-    })
-        .filter(function (keyPair) { return keyPair !== undefined && keyPair.value.length > 0; })
-        .reduce(function (headers, keyPair) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        headers[keyPair.key] = keyPair.value;
-        return headers;
-    }, {});
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var ExportResultCode$2;
-(function (ExportResultCode) {
-    ExportResultCode[ExportResultCode["SUCCESS"] = 0] = "SUCCESS";
-    ExportResultCode[ExportResultCode["FAILED"] = 1] = "FAILED";
-})(ExportResultCode$2 || (ExportResultCode$2 = {}));
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var baggageUtils$1 = {
-    getKeyPairs: getKeyPairs$2,
-    serializeKeyPairs: serializeKeyPairs$2,
-    parseKeyPairsIntoRecord: parseKeyPairsIntoRecord$1,
-    parsePairKeyValue: parsePairKeyValue$2,
-};
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function isPartialSuccessResponse(response) {
-    return Object.prototype.hasOwnProperty.call(response, 'partialSuccess');
-}
-/**
- * Default response handler that logs a partial success to the console.
- */
-function createLoggingPartialSuccessResponseHandler() {
-    return {
-        handleResponse: function (response) {
-            // Partial success MUST never be an empty object according the specification
-            // see https://opentelemetry.io/docs/specs/otlp/#partial-success
-            if (response == null ||
-                !isPartialSuccessResponse(response) ||
-                response.partialSuccess == null ||
-                Object.keys(response.partialSuccess).length === 0) {
-                return;
-            }
-            diag.warn('Received Partial Success response:', JSON.stringify(response.partialSuccess));
-        },
-    };
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var __awaiter$3 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator$3 = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var OTLPExportDelegate = /** @class */ (function () {
-    function OTLPExportDelegate(_transport, _serializer, _responseHandler, _promiseQueue, _timeout) {
-        this._transport = _transport;
-        this._serializer = _serializer;
-        this._responseHandler = _responseHandler;
-        this._promiseQueue = _promiseQueue;
-        this._timeout = _timeout;
-        this._diagLogger = diag.createComponentLogger({
-            namespace: 'OTLPExportDelegate',
-        });
-    }
-    OTLPExportDelegate.prototype.export = function (internalRepresentation, resultCallback) {
-        var _this = this;
-        this._diagLogger.debug('items to be sent', internalRepresentation);
-        // don't do any work if too many exports are in progress.
-        if (this._promiseQueue.hasReachedLimit()) {
-            resultCallback({
-                code: ExportResultCode$2.FAILED,
-                error: new Error('Concurrent export limit reached'),
-            });
-            return;
-        }
-        var serializedRequest = this._serializer.serializeRequest(internalRepresentation);
-        if (serializedRequest == null) {
-            resultCallback({
-                code: ExportResultCode$2.FAILED,
-                error: new Error('Nothing to send'),
-            });
-            return;
-        }
-        this._promiseQueue.pushPromise(this._transport.send(serializedRequest, this._timeout).then(function (response) {
-            if (response.status === 'success') {
-                if (response.data != null) {
-                    try {
-                        _this._responseHandler.handleResponse(_this._serializer.deserializeResponse(response.data));
-                    }
-                    catch (e) {
-                        _this._diagLogger.warn('Export succeeded but could not deserialize response - is the response specification compliant?', e, response.data);
-                    }
-                }
-                // No matter the response, we can consider the export still successful.
-                resultCallback({
-                    code: ExportResultCode$2.SUCCESS,
-                });
-                return;
-            }
-            else if (response.status === 'failure' && response.error) {
-                resultCallback({
-                    code: ExportResultCode$2.FAILED,
-                    error: response.error,
-                });
-                return;
-            }
-            else if (response.status === 'retryable') {
-                resultCallback({
-                    code: ExportResultCode$2.FAILED,
-                    error: new OTLPExporterError('Export failed with retryable status'),
-                });
-            }
-            else {
-                resultCallback({
-                    code: ExportResultCode$2.FAILED,
-                    error: new OTLPExporterError('Export failed with unknown error'),
-                });
-            }
-        }, function (reason) {
-            return resultCallback({
-                code: ExportResultCode$2.FAILED,
-                error: reason,
-            });
-        }));
-    };
-    OTLPExportDelegate.prototype.forceFlush = function () {
-        return this._promiseQueue.awaitAll();
-    };
-    OTLPExportDelegate.prototype.shutdown = function () {
-        return __awaiter$3(this, void 0, void 0, function () {
-            return __generator$3(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this._diagLogger.debug('shutdown started');
-                        return [4 /*yield*/, this.forceFlush()];
-                    case 1:
-                        _a.sent();
-                        this._transport.shutdown();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return OTLPExportDelegate;
-}());
-/**
- * Creates a generic delegate for OTLP exports which only contains parts of the OTLP export that are shared across all
- * signals.
- */
-function createOtlpExportDelegate(components, settings) {
-    return new OTLPExportDelegate(components.transport, components.serializer, createLoggingPartialSuccessResponseHandler(), components.promiseHandler, settings.timeout);
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function createOtlpNetworkExportDelegate(options, serializer, transport) {
-    return createOtlpExportDelegate({
-        transport: transport,
-        serializer: serializer,
-        promiseHandler: createBoundedQueueExportPromiseHandler(options),
-    }, { timeout: options.timeoutMillis });
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-var esm$2 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	get CompressionAlgorithm () { return CompressionAlgorithm; },
-	OTLPExporterBase: OTLPExporterBase,
-	OTLPExporterError: OTLPExporterError,
-	createOtlpNetworkExportDelegate: createOtlpNetworkExportDelegate,
-	getSharedConfigurationDefaults: getSharedConfigurationDefaults,
-	mergeOtlpSharedConfigurationWithDefaults: mergeOtlpSharedConfigurationWithDefaults
-});
-
-var require$$2$1 = /*@__PURE__*/getAugmentedNamespace(esm$2);
-
-var grpcExporterTransport = {};
-
-var createServiceClientConstructor = {};
-
-var hasRequiredCreateServiceClientConstructor;
-
-function requireCreateServiceClientConstructor () {
-	if (hasRequiredCreateServiceClientConstructor) return createServiceClientConstructor;
-	hasRequiredCreateServiceClientConstructor = 1;
-	/*
-	 * Copyright The OpenTelemetry Authors
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 *      https://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 */
-	Object.defineProperty(createServiceClientConstructor, "__esModule", { value: true });
-	createServiceClientConstructor.createServiceClientConstructor = void 0;
-	const grpc = requireSrc$3();
-	/**
-	 * Creates a unary service client constructor that, when instantiated, does not serialize/deserialize anything.
-	 * Allows for passing in {@link Buffer} directly, serialization can be handled via protobufjs or custom implementations.
-	 *
-	 * @param path service path
-	 * @param name service name
-	 */
-	function createServiceClientConstructor$1(path, name) {
-	    const serviceDefinition = {
-	        export: {
-	            path: path,
-	            requestStream: false,
-	            responseStream: false,
-	            requestSerialize: (arg) => {
-	                return arg;
-	            },
-	            requestDeserialize: (arg) => {
-	                return arg;
-	            },
-	            responseSerialize: (arg) => {
-	                return arg;
-	            },
-	            responseDeserialize: (arg) => {
-	                return arg;
-	            },
-	        },
-	    };
-	    return grpc.makeGenericClientConstructor(serviceDefinition, name);
-	}
-	createServiceClientConstructor.createServiceClientConstructor = createServiceClientConstructor$1;
-	
-	return createServiceClientConstructor;
-}
-
-var hasRequiredGrpcExporterTransport;
-
-function requireGrpcExporterTransport () {
-	if (hasRequiredGrpcExporterTransport) return grpcExporterTransport;
-	hasRequiredGrpcExporterTransport = 1;
-	/*
-	 * Copyright The OpenTelemetry Authors
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 *      https://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 */
-	Object.defineProperty(grpcExporterTransport, "__esModule", { value: true });
-	grpcExporterTransport.createOtlpGrpcExporterTransport = grpcExporterTransport.GrpcExporterTransport = grpcExporterTransport.createEmptyMetadata = grpcExporterTransport.createSslCredentials = grpcExporterTransport.createInsecureCredentials = void 0;
-	// values taken from '@grpc/grpc-js` so that we don't need to require/import it.
-	const GRPC_COMPRESSION_NONE = 0;
-	const GRPC_COMPRESSION_GZIP = 2;
-	function toGrpcCompression(compression) {
-	    return compression === 'gzip' ? GRPC_COMPRESSION_GZIP : GRPC_COMPRESSION_NONE;
-	}
-	function createInsecureCredentials() {
-	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
-	    const { credentials,
-	    // eslint-disable-next-line @typescript-eslint/no-var-requires
-	     } = requireSrc$3();
-	    return credentials.createInsecure();
-	}
-	grpcExporterTransport.createInsecureCredentials = createInsecureCredentials;
-	function createSslCredentials(rootCert, privateKey, certChain) {
-	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
-	    const { credentials,
-	    // eslint-disable-next-line @typescript-eslint/no-var-requires
-	     } = requireSrc$3();
-	    return credentials.createSsl(rootCert, privateKey, certChain);
-	}
-	grpcExporterTransport.createSslCredentials = createSslCredentials;
-	function createEmptyMetadata() {
-	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
-	    const { Metadata,
-	    // eslint-disable-next-line @typescript-eslint/no-var-requires
-	     } = requireSrc$3();
-	    return new Metadata();
-	}
-	grpcExporterTransport.createEmptyMetadata = createEmptyMetadata;
-	class GrpcExporterTransport {
-	    constructor(_parameters) {
-	        this._parameters = _parameters;
-	    }
-	    shutdown() {
-	        var _a;
-	        (_a = this._client) === null || _a === void 0 ? void 0 : _a.close();
-	    }
-	    send(data, timeoutMillis) {
-	        // We need to make a for gRPC
-	        const buffer = Buffer.from(data);
-	        if (this._client == null) {
-	            // Lazy require to ensure that grpc is not loaded before instrumentations can wrap it
-	            const { createServiceClientConstructor,
-	            // eslint-disable-next-line @typescript-eslint/no-var-requires
-	             } = /*@__PURE__*/ requireCreateServiceClientConstructor();
-	            try {
-	                this._metadata = this._parameters.metadata();
-	            }
-	            catch (error) {
-	                return Promise.resolve({
-	                    status: 'failure',
-	                    error: error,
-	                });
-	            }
-	            const clientConstructor = createServiceClientConstructor(this._parameters.grpcPath, this._parameters.grpcName);
-	            try {
-	                this._client = new clientConstructor(this._parameters.address, this._parameters.credentials(), {
-	                    'grpc.default_compression_algorithm': toGrpcCompression(this._parameters.compression),
-	                });
-	            }
-	            catch (error) {
-	                return Promise.resolve({
-	                    status: 'failure',
-	                    error: error,
-	                });
-	            }
-	        }
-	        return new Promise(resolve => {
-	            const deadline = Date.now() + timeoutMillis;
-	            // this should never happen
-	            if (this._metadata == null) {
-	                return resolve({
-	                    error: new Error('metadata was null'),
-	                    status: 'failure',
-	                });
-	            }
-	            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	            // @ts-ignore The gRPC client constructor is created on runtime, so we don't have any types for the resulting client.
-	            this._client.export(buffer, this._metadata, { deadline: deadline }, (err, response) => {
-	                if (err) {
-	                    resolve({
-	                        status: 'failure',
-	                        error: err,
-	                    });
-	                }
-	                else {
-	                    resolve({
-	                        data: response,
-	                        status: 'success',
-	                    });
-	                }
-	            });
-	        });
-	    }
-	}
-	grpcExporterTransport.GrpcExporterTransport = GrpcExporterTransport;
-	function createOtlpGrpcExporterTransport(options) {
-	    return new GrpcExporterTransport(options);
-	}
-	grpcExporterTransport.createOtlpGrpcExporterTransport = createOtlpGrpcExporterTransport;
-	
-	return grpcExporterTransport;
-}
-
-var version = {};
-
-var hasRequiredVersion;
-
-function requireVersion () {
-	if (hasRequiredVersion) return version;
-	hasRequiredVersion = 1;
-	/*
-	 * Copyright The OpenTelemetry Authors
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 *      https://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 */
-	Object.defineProperty(version, "__esModule", { value: true });
-	version.VERSION = void 0;
-	// this is autogenerated file, see scripts/version-update.js
-	version.VERSION = '0.56.0';
-	
-	return version;
-}
-
-var hasRequiredOtlpGrpcConfiguration;
-
-function requireOtlpGrpcConfiguration () {
-	if (hasRequiredOtlpGrpcConfiguration) return otlpGrpcConfiguration;
-	hasRequiredOtlpGrpcConfiguration = 1;
-	/*
-	 * Copyright The OpenTelemetry Authors
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 *      https://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 */
-	Object.defineProperty(otlpGrpcConfiguration, "__esModule", { value: true });
-	otlpGrpcConfiguration.getOtlpGrpcDefaultConfiguration = otlpGrpcConfiguration.mergeOtlpGrpcConfigurationWithDefaults = otlpGrpcConfiguration.validateAndNormalizeUrl = void 0;
-	const otlp_exporter_base_1 = require$$2$1;
-	const grpc_exporter_transport_1 = /*@__PURE__*/ requireGrpcExporterTransport();
-	const version_1 = /*@__PURE__*/ requireVersion();
-	const url_1 = require$$1$5;
-	const api_1 = require$$0$2;
-	function validateAndNormalizeUrl(url) {
-	    var _a;
-	    url = url.trim();
-	    const hasProtocol = url.match(/^([\w]{1,8}):\/\//);
-	    if (!hasProtocol) {
-	        url = `https://${url}`;
-	    }
-	    const target = new url_1.URL(url);
-	    if (target.protocol === 'unix:') {
-	        return url;
-	    }
-	    if (target.pathname && target.pathname !== '/') {
-	        api_1.diag.warn('URL path should not be set when using grpc, the path part of the URL will be ignored.');
-	    }
-	    if (target.protocol !== '' && !((_a = target.protocol) === null || _a === void 0 ? void 0 : _a.match(/^(http)s?:$/))) {
-	        api_1.diag.warn('URL protocol should be http(s)://. Using http://.');
-	    }
-	    return target.host;
-	}
-	otlpGrpcConfiguration.validateAndNormalizeUrl = validateAndNormalizeUrl;
-	function overrideMetadataEntriesIfNotPresent(metadata, additionalMetadata) {
-	    for (const [key, value] of Object.entries(additionalMetadata.getMap())) {
-	        // only override with env var data if the key has no values.
-	        // not using Metadata.merge() as it will keep both values.
-	        if (metadata.get(key).length < 1) {
-	            metadata.set(key, value);
-	        }
-	    }
-	}
-	function mergeOtlpGrpcConfigurationWithDefaults(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration) {
-	    var _a, _b, _c, _d, _e;
-	    const rawUrl = (_b = (_a = userProvidedConfiguration.url) !== null && _a !== void 0 ? _a : fallbackConfiguration.url) !== null && _b !== void 0 ? _b : defaultConfiguration.url;
-	    return Object.assign(Object.assign({}, (0, otlp_exporter_base_1.mergeOtlpSharedConfigurationWithDefaults)(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration)), { metadata: () => {
-	            var _a, _b, _c, _d;
-	            const metadata = defaultConfiguration.metadata();
-	            overrideMetadataEntriesIfNotPresent(metadata, 
-	            // clone to ensure we don't modify what the user gave us in case they hold on to the returned reference
-	            (_b = (_a = userProvidedConfiguration.metadata) === null || _a === void 0 ? void 0 : _a.call(userProvidedConfiguration).clone()) !== null && _b !== void 0 ? _b : (0, grpc_exporter_transport_1.createEmptyMetadata)());
-	            overrideMetadataEntriesIfNotPresent(metadata, (_d = (_c = fallbackConfiguration.metadata) === null || _c === void 0 ? void 0 : _c.call(fallbackConfiguration)) !== null && _d !== void 0 ? _d : (0, grpc_exporter_transport_1.createEmptyMetadata)());
-	            return metadata;
-	        }, url: validateAndNormalizeUrl(rawUrl), credentials: (_e = (_c = userProvidedConfiguration.credentials) !== null && _c !== void 0 ? _c : (_d = fallbackConfiguration.credentials) === null || _d === void 0 ? void 0 : _d.call(fallbackConfiguration, rawUrl)) !== null && _e !== void 0 ? _e : defaultConfiguration.credentials(rawUrl) });
-	}
-	otlpGrpcConfiguration.mergeOtlpGrpcConfigurationWithDefaults = mergeOtlpGrpcConfigurationWithDefaults;
-	function getOtlpGrpcDefaultConfiguration() {
-	    return Object.assign(Object.assign({}, (0, otlp_exporter_base_1.getSharedConfigurationDefaults)()), { metadata: () => {
-	            const metadata = (0, grpc_exporter_transport_1.createEmptyMetadata)();
-	            metadata.set('User-Agent', `OTel-OTLP-Exporter-JavaScript/${version_1.VERSION}`);
-	            return metadata;
-	        }, url: 'http://localhost:4317', credentials: (url) => {
-	            if (url.startsWith('http://')) {
-	                return () => (0, grpc_exporter_transport_1.createInsecureCredentials)();
-	            }
-	            else {
-	                return () => (0, grpc_exporter_transport_1.createSslCredentials)();
-	            }
-	        } });
-	}
-	otlpGrpcConfiguration.getOtlpGrpcDefaultConfiguration = getOtlpGrpcDefaultConfiguration;
-	
-	return otlpGrpcConfiguration;
-}
-
-var otlpGrpcEnvConfiguration = {};
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var SUPPRESS_TRACING_KEY$1 = createContextKey('OpenTelemetry SDK Context Key SUPPRESS_TRACING');
-function suppressTracing$1(context) {
-    return context.setValue(SUPPRESS_TRACING_KEY$1, true);
+var SUPPRESS_TRACING_KEY = createContextKey('OpenTelemetry SDK Context Key SUPPRESS_TRACING');
+function suppressTracing(context) {
+    return context.setValue(SUPPRESS_TRACING_KEY, true);
 }
 function unsuppressTracing(context) {
-    return context.deleteValue(SUPPRESS_TRACING_KEY$1);
+    return context.deleteValue(SUPPRESS_TRACING_KEY);
 }
-function isTracingSuppressed$1(context) {
-    return context.getValue(SUPPRESS_TRACING_KEY$1) === true;
+function isTracingSuppressed(context) {
+    return context.getValue(SUPPRESS_TRACING_KEY) === true;
 }
 
 /*
@@ -65375,19 +64697,19 @@ function isTracingSuppressed$1(context) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var BAGGAGE_KEY_PAIR_SEPARATOR$1 = '=';
-var BAGGAGE_PROPERTIES_SEPARATOR$1 = ';';
-var BAGGAGE_ITEMS_SEPARATOR$1 = ',';
+var BAGGAGE_KEY_PAIR_SEPARATOR = '=';
+var BAGGAGE_PROPERTIES_SEPARATOR = ';';
+var BAGGAGE_ITEMS_SEPARATOR = ',';
 // Name of the http header used to propagate the baggage
-var BAGGAGE_HEADER$1 = 'baggage';
+var BAGGAGE_HEADER = 'baggage';
 // Maximum number of name-value pairs allowed by w3c spec
-var BAGGAGE_MAX_NAME_VALUE_PAIRS$1 = 180;
+var BAGGAGE_MAX_NAME_VALUE_PAIRS = 180;
 // Maximum number of bytes per a single name-value pair allowed by w3c spec
-var BAGGAGE_MAX_PER_NAME_VALUE_PAIRS$1 = 4096;
+var BAGGAGE_MAX_PER_NAME_VALUE_PAIRS = 4096;
 // Maximum total length of all name-value pairs allowed by w3c spec
-var BAGGAGE_MAX_TOTAL_LENGTH$1 = 8192;
+var BAGGAGE_MAX_TOTAL_LENGTH = 8192;
 
-var __read$c = (undefined && undefined.__read) || function (o, n) {
+var __read$9 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -65403,39 +64725,39 @@ var __read$c = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-function serializeKeyPairs$1(keyPairs) {
+function serializeKeyPairs(keyPairs) {
     return keyPairs.reduce(function (hValue, current) {
-        var value = "" + hValue + (hValue !== '' ? BAGGAGE_ITEMS_SEPARATOR$1 : '') + current;
-        return value.length > BAGGAGE_MAX_TOTAL_LENGTH$1 ? hValue : value;
+        var value = "" + hValue + (hValue !== '' ? BAGGAGE_ITEMS_SEPARATOR : '') + current;
+        return value.length > BAGGAGE_MAX_TOTAL_LENGTH ? hValue : value;
     }, '');
 }
-function getKeyPairs$1(baggage) {
+function getKeyPairs(baggage) {
     return baggage.getAllEntries().map(function (_a) {
-        var _b = __read$c(_a, 2), key = _b[0], value = _b[1];
+        var _b = __read$9(_a, 2), key = _b[0], value = _b[1];
         var entry = encodeURIComponent(key) + "=" + encodeURIComponent(value.value);
         // include opaque metadata if provided
         // NOTE: we intentionally don't URI-encode the metadata - that responsibility falls on the metadata implementation
         if (value.metadata !== undefined) {
-            entry += BAGGAGE_PROPERTIES_SEPARATOR$1 + value.metadata.toString();
+            entry += BAGGAGE_PROPERTIES_SEPARATOR + value.metadata.toString();
         }
         return entry;
     });
 }
-function parsePairKeyValue$1(entry) {
-    var valueProps = entry.split(BAGGAGE_PROPERTIES_SEPARATOR$1);
+function parsePairKeyValue(entry) {
+    var valueProps = entry.split(BAGGAGE_PROPERTIES_SEPARATOR);
     if (valueProps.length <= 0)
         return;
     var keyPairPart = valueProps.shift();
     if (!keyPairPart)
         return;
-    var separatorIndex = keyPairPart.indexOf(BAGGAGE_KEY_PAIR_SEPARATOR$1);
+    var separatorIndex = keyPairPart.indexOf(BAGGAGE_KEY_PAIR_SEPARATOR);
     if (separatorIndex <= 0)
         return;
     var key = decodeURIComponent(keyPairPart.substring(0, separatorIndex).trim());
     var value = decodeURIComponent(keyPairPart.substring(separatorIndex + 1).trim());
     var metadata;
     if (valueProps.length > 0) {
-        metadata = baggageEntryMetadataFromString(valueProps.join(BAGGAGE_PROPERTIES_SEPARATOR$1));
+        metadata = baggageEntryMetadataFromString(valueProps.join(BAGGAGE_PROPERTIES_SEPARATOR));
     }
     return { key: key, value: value, metadata: metadata };
 }
@@ -65447,9 +64769,9 @@ function parseKeyPairsIntoRecord(value) {
     if (typeof value !== 'string' || value.length === 0)
         return {};
     return value
-        .split(BAGGAGE_ITEMS_SEPARATOR$1)
+        .split(BAGGAGE_ITEMS_SEPARATOR)
         .map(function (entry) {
-        return parsePairKeyValue$1(entry);
+        return parsePairKeyValue(entry);
     })
         .filter(function (keyPair) { return keyPair !== undefined && keyPair.value.length > 0; })
         .reduce(function (headers, keyPair) {
@@ -65480,27 +64802,27 @@ function parseKeyPairsIntoRecord(value) {
  * Based on the Baggage specification:
  * https://w3c.github.io/baggage/
  */
-var W3CBaggagePropagator$1 = /** @class */ (function () {
+var W3CBaggagePropagator = /** @class */ (function () {
     function W3CBaggagePropagator() {
     }
     W3CBaggagePropagator.prototype.inject = function (context, carrier, setter) {
         var baggage = propagation.getBaggage(context);
-        if (!baggage || isTracingSuppressed$1(context))
+        if (!baggage || isTracingSuppressed(context))
             return;
-        var keyPairs = getKeyPairs$1(baggage)
+        var keyPairs = getKeyPairs(baggage)
             .filter(function (pair) {
-            return pair.length <= BAGGAGE_MAX_PER_NAME_VALUE_PAIRS$1;
+            return pair.length <= BAGGAGE_MAX_PER_NAME_VALUE_PAIRS;
         })
-            .slice(0, BAGGAGE_MAX_NAME_VALUE_PAIRS$1);
-        var headerValue = serializeKeyPairs$1(keyPairs);
+            .slice(0, BAGGAGE_MAX_NAME_VALUE_PAIRS);
+        var headerValue = serializeKeyPairs(keyPairs);
         if (headerValue.length > 0) {
-            setter.set(carrier, BAGGAGE_HEADER$1, headerValue);
+            setter.set(carrier, BAGGAGE_HEADER, headerValue);
         }
     };
     W3CBaggagePropagator.prototype.extract = function (context, carrier, getter) {
-        var headerValue = getter.get(carrier, BAGGAGE_HEADER$1);
+        var headerValue = getter.get(carrier, BAGGAGE_HEADER);
         var baggageString = Array.isArray(headerValue)
-            ? headerValue.join(BAGGAGE_ITEMS_SEPARATOR$1)
+            ? headerValue.join(BAGGAGE_ITEMS_SEPARATOR)
             : headerValue;
         if (!baggageString)
             return context;
@@ -65508,9 +64830,9 @@ var W3CBaggagePropagator$1 = /** @class */ (function () {
         if (baggageString.length === 0) {
             return context;
         }
-        var pairs = baggageString.split(BAGGAGE_ITEMS_SEPARATOR$1);
+        var pairs = baggageString.split(BAGGAGE_ITEMS_SEPARATOR);
         pairs.forEach(function (entry) {
-            var keyPair = parsePairKeyValue$1(entry);
+            var keyPair = parsePairKeyValue(entry);
             if (keyPair) {
                 var baggageEntry = { value: keyPair.value };
                 if (keyPair.metadata) {
@@ -65525,7 +64847,7 @@ var W3CBaggagePropagator$1 = /** @class */ (function () {
         return propagation.setBaggage(context, propagation.createBaggage(baggage));
     };
     W3CBaggagePropagator.prototype.fields = function () {
-        return [BAGGAGE_HEADER$1];
+        return [BAGGAGE_HEADER];
     };
     return W3CBaggagePropagator;
 }());
@@ -65600,18 +64922,18 @@ var AnchoredClock = /** @class */ (function () {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __values$9 = (undefined && undefined.__values) || function(o) {
+var __values$7 = (undefined && undefined.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-var __read$b = (undefined && undefined.__read) || function (o, n) {
+var __read$8 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -65627,20 +64949,20 @@ var __read$b = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-function sanitizeAttributes$1(attributes) {
+function sanitizeAttributes(attributes) {
     var e_1, _a;
     var out = {};
     if (typeof attributes !== 'object' || attributes == null) {
         return out;
     }
     try {
-        for (var _b = __values$9(Object.entries(attributes)), _c = _b.next(); !_c.done; _c = _b.next()) {
-            var _d = __read$b(_c.value, 2), key = _d[0], val = _d[1];
-            if (!isAttributeKey$1(key)) {
+        for (var _b = __values$7(Object.entries(attributes)), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var _d = __read$8(_c.value, 2), key = _d[0], val = _d[1];
+            if (!isAttributeKey(key)) {
                 diag.warn("Invalid attribute key: " + key);
                 continue;
             }
-            if (!isAttributeValue$1(val)) {
+            if (!isAttributeValue(val)) {
                 diag.warn("Invalid attribute value set for key: " + key);
                 continue;
             }
@@ -65661,29 +64983,29 @@ function sanitizeAttributes$1(attributes) {
     }
     return out;
 }
-function isAttributeKey$1(key) {
+function isAttributeKey(key) {
     return typeof key === 'string' && key.length > 0;
 }
-function isAttributeValue$1(val) {
+function isAttributeValue(val) {
     if (val == null) {
         return true;
     }
     if (Array.isArray(val)) {
-        return isHomogeneousAttributeValueArray$1(val);
+        return isHomogeneousAttributeValueArray(val);
     }
-    return isValidPrimitiveAttributeValue$1(val);
+    return isValidPrimitiveAttributeValue(val);
 }
-function isHomogeneousAttributeValueArray$1(arr) {
+function isHomogeneousAttributeValueArray(arr) {
     var e_2, _a;
     var type;
     try {
-        for (var arr_1 = __values$9(arr), arr_1_1 = arr_1.next(); !arr_1_1.done; arr_1_1 = arr_1.next()) {
+        for (var arr_1 = __values$7(arr), arr_1_1 = arr_1.next(); !arr_1_1.done; arr_1_1 = arr_1.next()) {
             var element = arr_1_1.value;
             // null/undefined elements are allowed
             if (element == null)
                 continue;
             if (!type) {
-                if (isValidPrimitiveAttributeValue$1(element)) {
+                if (isValidPrimitiveAttributeValue(element)) {
                     type = typeof element;
                     continue;
                 }
@@ -65705,7 +65027,7 @@ function isHomogeneousAttributeValueArray$1(arr) {
     }
     return true;
 }
-function isValidPrimitiveAttributeValue$1(val) {
+function isValidPrimitiveAttributeValue(val) {
     switch (typeof val) {
         case 'number':
         case 'boolean':
@@ -65734,21 +65056,21 @@ function isValidPrimitiveAttributeValue$1(val) {
  * Returns a function that logs an error using the provided logger, or a
  * console logger if one was not provided.
  */
-function loggingErrorHandler$1() {
+function loggingErrorHandler() {
     return function (ex) {
-        diag.error(stringifyException$1(ex));
+        diag.error(stringifyException(ex));
     };
 }
 /**
  * Converts an exception into a string representation
  * @param {Exception} ex
  */
-function stringifyException$1(ex) {
+function stringifyException(ex) {
     if (typeof ex === 'string') {
         return ex;
     }
     else {
-        return JSON.stringify(flattenException$1(ex));
+        return JSON.stringify(flattenException(ex));
     }
 }
 /**
@@ -65756,7 +65078,7 @@ function stringifyException$1(ex) {
  * and coercing values to strings. Duplicate properties will not be overwritten;
  * the first insert wins.
  */
-function flattenException$1(ex) {
+function flattenException(ex) {
     var result = {};
     var current = ex;
     while (current !== null) {
@@ -65789,21 +65111,21 @@ function flattenException$1(ex) {
  * limitations under the License.
  */
 /** The global error handler delegate */
-var delegateHandler$1 = loggingErrorHandler$1();
+var delegateHandler = loggingErrorHandler();
 /**
  * Set the global error handler
  * @param {ErrorHandler} handler
  */
 function setGlobalErrorHandler(handler) {
-    delegateHandler$1 = handler;
+    delegateHandler = handler;
 }
 /**
  * Return the global error handler
  * @param {Exception} ex
  */
-function globalErrorHandler$1(ex) {
+function globalErrorHandler(ex) {
     try {
-        delegateHandler$1(ex);
+        delegateHandler(ex);
     }
     catch (_a) { } // eslint-disable-line no-empty
 }
@@ -65823,7 +65145,7 @@ function globalErrorHandler$1(ex) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var TracesSamplerValues$1;
+var TracesSamplerValues;
 (function (TracesSamplerValues) {
     TracesSamplerValues["AlwaysOff"] = "always_off";
     TracesSamplerValues["AlwaysOn"] = "always_on";
@@ -65831,7 +65153,7 @@ var TracesSamplerValues$1;
     TracesSamplerValues["ParentBasedAlwaysOn"] = "parentbased_always_on";
     TracesSamplerValues["ParentBasedTraceIdRatio"] = "parentbased_traceidratio";
     TracesSamplerValues["TraceIdRatio"] = "traceidratio";
-})(TracesSamplerValues$1 || (TracesSamplerValues$1 = {}));
+})(TracesSamplerValues || (TracesSamplerValues = {}));
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -65848,15 +65170,15 @@ var TracesSamplerValues$1;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var DEFAULT_LIST_SEPARATOR$1 = ',';
+var DEFAULT_LIST_SEPARATOR = ',';
 /**
  * Environment interface to define all names
  */
-var ENVIRONMENT_BOOLEAN_KEYS$1 = ['OTEL_SDK_DISABLED'];
-function isEnvVarABoolean$1(key) {
-    return (ENVIRONMENT_BOOLEAN_KEYS$1.indexOf(key) > -1);
+var ENVIRONMENT_BOOLEAN_KEYS = ['OTEL_SDK_DISABLED'];
+function isEnvVarABoolean(key) {
+    return (ENVIRONMENT_BOOLEAN_KEYS.indexOf(key) > -1);
 }
-var ENVIRONMENT_NUMBERS_KEYS$1 = [
+var ENVIRONMENT_NUMBERS_KEYS = [
     'OTEL_BSP_EXPORT_TIMEOUT',
     'OTEL_BSP_MAX_EXPORT_BATCH_SIZE',
     'OTEL_BSP_MAX_QUEUE_SIZE',
@@ -65881,25 +65203,25 @@ var ENVIRONMENT_NUMBERS_KEYS$1 = [
     'OTEL_EXPORTER_OTLP_LOGS_TIMEOUT',
     'OTEL_EXPORTER_JAEGER_AGENT_PORT',
 ];
-function isEnvVarANumber$1(key) {
-    return (ENVIRONMENT_NUMBERS_KEYS$1.indexOf(key) > -1);
+function isEnvVarANumber(key) {
+    return (ENVIRONMENT_NUMBERS_KEYS.indexOf(key) > -1);
 }
-var ENVIRONMENT_LISTS_KEYS$1 = [
+var ENVIRONMENT_LISTS_KEYS = [
     'OTEL_NO_PATCH_MODULES',
     'OTEL_PROPAGATORS',
     'OTEL_SEMCONV_STABILITY_OPT_IN',
 ];
-function isEnvVarAList$1(key) {
-    return ENVIRONMENT_LISTS_KEYS$1.indexOf(key) > -1;
+function isEnvVarAList(key) {
+    return ENVIRONMENT_LISTS_KEYS.indexOf(key) > -1;
 }
-var DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT$1 = Infinity;
-var DEFAULT_ATTRIBUTE_COUNT_LIMIT$1 = 128;
-var DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT$1 = 128;
-var DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT$1 = 128;
+var DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT = Infinity;
+var DEFAULT_ATTRIBUTE_COUNT_LIMIT = 128;
+var DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT = 128;
+var DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT = 128;
 /**
  * Default environment variables
  */
-var DEFAULT_ENVIRONMENT$1 = {
+var DEFAULT_ENVIRONMENT = {
     OTEL_SDK_DISABLED: false,
     CONTAINER_NAME: '',
     ECS_CONTAINER_METADATA_URI_V4: '',
@@ -65938,18 +65260,18 @@ var DEFAULT_ENVIRONMENT$1 = {
     OTEL_PROPAGATORS: ['tracecontext', 'baggage'],
     OTEL_RESOURCE_ATTRIBUTES: '',
     OTEL_SERVICE_NAME: '',
-    OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT$1,
-    OTEL_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT$1,
-    OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT$1,
-    OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT$1,
-    OTEL_LOGRECORD_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT$1,
-    OTEL_LOGRECORD_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT$1,
+    OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT,
+    OTEL_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT,
+    OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT,
+    OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT,
+    OTEL_LOGRECORD_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT,
+    OTEL_LOGRECORD_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT,
     OTEL_SPAN_EVENT_COUNT_LIMIT: 128,
     OTEL_SPAN_LINK_COUNT_LIMIT: 128,
-    OTEL_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT$1,
-    OTEL_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT$1,
+    OTEL_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT,
+    OTEL_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT,
     OTEL_TRACES_EXPORTER: '',
-    OTEL_TRACES_SAMPLER: TracesSamplerValues$1.ParentBasedAlwaysOn,
+    OTEL_TRACES_SAMPLER: TracesSamplerValues.ParentBasedAlwaysOn,
     OTEL_TRACES_SAMPLER_ARG: '',
     OTEL_LOGS_EXPORTER: '',
     OTEL_EXPORTER_OTLP_INSECURE: '',
@@ -65984,7 +65306,7 @@ var DEFAULT_ENVIRONMENT$1 = {
  * @param environment
  * @param values
  */
-function parseBoolean$1(key, environment, values) {
+function parseBoolean(key, environment, values) {
     if (typeof values[key] === 'undefined') {
         return;
     }
@@ -66000,9 +65322,9 @@ function parseBoolean$1(key, environment, values) {
  * @param min
  * @param max
  */
-function parseNumber$1(name, environment, values, min, max) {
-    if (min === void 0) { min = -Infinity; }
-    if (max === void 0) { max = Infinity; }
+function parseNumber(name, environment, values, min, max) {
+    if (min === undefined) { min = -Infinity; }
+    if (max === undefined) { max = Infinity; }
     if (typeof values[name] !== 'undefined') {
         var value = Number(values[name]);
         if (!isNaN(value)) {
@@ -66025,15 +65347,15 @@ function parseNumber$1(name, environment, values, min, max) {
  * @param values
  * @param separator
  */
-function parseStringList$1(name, output, input, separator) {
-    if (separator === void 0) { separator = DEFAULT_LIST_SEPARATOR$1; }
+function parseStringList(name, output, input, separator) {
+    if (separator === undefined) { separator = DEFAULT_LIST_SEPARATOR; }
     var givenValue = input[name];
     if (typeof givenValue === 'string') {
         output[name] = givenValue.split(separator).map(function (v) { return v.trim(); });
     }
 }
 // The support string -> DiagLogLevel mappings
-var logLevelMap$1 = {
+var logLevelMap = {
     ALL: DiagLogLevel.ALL,
     VERBOSE: DiagLogLevel.VERBOSE,
     DEBUG: DiagLogLevel.DEBUG,
@@ -66048,10 +65370,10 @@ var logLevelMap$1 = {
  * @param environment
  * @param values
  */
-function setLogLevelFromEnv$1(key, environment, values) {
+function setLogLevelFromEnv(key, environment, values) {
     var value = values[key];
     if (typeof value === 'string') {
-        var theLevel = logLevelMap$1[value.toUpperCase()];
+        var theLevel = logLevelMap[value.toUpperCase()];
         if (theLevel != null) {
             environment[key] = theLevel;
         }
@@ -66061,23 +65383,23 @@ function setLogLevelFromEnv$1(key, environment, values) {
  * Parses environment values
  * @param values
  */
-function parseEnvironment$1(values) {
+function parseEnvironment(values) {
     var environment = {};
-    for (var env in DEFAULT_ENVIRONMENT$1) {
+    for (var env in DEFAULT_ENVIRONMENT) {
         var key = env;
         switch (key) {
             case 'OTEL_LOG_LEVEL':
-                setLogLevelFromEnv$1(key, environment, values);
+                setLogLevelFromEnv(key, environment, values);
                 break;
             default:
-                if (isEnvVarABoolean$1(key)) {
-                    parseBoolean$1(key, environment, values);
+                if (isEnvVarABoolean(key)) {
+                    parseBoolean(key, environment, values);
                 }
-                else if (isEnvVarANumber$1(key)) {
-                    parseNumber$1(key, environment, values);
+                else if (isEnvVarANumber(key)) {
+                    parseNumber(key, environment, values);
                 }
-                else if (isEnvVarAList$1(key)) {
-                    parseStringList$1(key, environment, values);
+                else if (isEnvVarAList(key)) {
+                    parseStringList(key, environment, values);
                 }
                 else {
                     var value = values[key];
@@ -66108,12 +65430,12 @@ function parseEnvironment$1(values) {
 /**
  * Gets the environment variables
  */
-function getEnv$1() {
-    var processEnv = parseEnvironment$1(process.env);
-    return Object.assign({}, DEFAULT_ENVIRONMENT$1, processEnv);
+function getEnv() {
+    var processEnv = parseEnvironment(process.env);
+    return Object.assign({}, DEFAULT_ENVIRONMENT, processEnv);
 }
-function getEnvWithoutDefaults$1() {
-    return parseEnvironment$1(process.env);
+function getEnvWithoutDefaults() {
+    return parseEnvironment(process.env);
 }
 
 /*
@@ -66150,7 +65472,7 @@ var _globalThis = typeof globalThis === 'object' ? globalThis : global;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function intValue$1(charCode) {
+function intValue(charCode) {
     // 0-9
     if (charCode >= 48 && charCode <= 57) {
         return charCode - 48;
@@ -66162,12 +65484,12 @@ function intValue$1(charCode) {
     // A-F
     return charCode - 55;
 }
-function hexToBinary$1(hexStr) {
+function hexToBinary(hexStr) {
     var buf = new Uint8Array(hexStr.length / 2);
     var offset = 0;
     for (var i = 0; i < hexStr.length; i += 2) {
-        var hi = intValue$1(hexStr.charCodeAt(i));
-        var lo = intValue$1(hexStr.charCodeAt(i + 1));
+        var hi = intValue(hexStr.charCodeAt(i));
+        var lo = intValue(hexStr.charCodeAt(i + 1));
         buf[offset++] = (hi << 4) | lo;
     }
     return buf;
@@ -66189,7 +65511,7 @@ function hexToBinary$1(hexStr) {
  * limitations under the License.
  */
 function hexToBase64(hexStr) {
-    return Buffer.from(hexToBinary$1(hexStr)).toString('base64');
+    return Buffer.from(hexToBinary(hexStr)).toString('base64');
 }
 
 /*
@@ -66263,7 +65585,7 @@ function getIdGenerator$1(bytes) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var otperformance$1 = performance$1;
+var otperformance = performance$1;
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -66281,7 +65603,7 @@ var otperformance$1 = performance$1;
  * limitations under the License.
  */
 // this is autogenerated file, see scripts/version-update.js
-var VERSION$4 = '1.29.0';
+var VERSION$2 = '1.30.1';
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -66298,14 +65620,14 @@ var VERSION$4 = '1.29.0';
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var _a$1;
+var _a;
 /** Constants describing the SDK in use */
-var SDK_INFO$1 = (_a$1 = {},
-    _a$1[SEMRESATTRS_TELEMETRY_SDK_NAME] = 'opentelemetry',
-    _a$1[SEMRESATTRS_PROCESS_RUNTIME_NAME] = 'node',
-    _a$1[SEMRESATTRS_TELEMETRY_SDK_LANGUAGE] = TELEMETRYSDKLANGUAGEVALUES_NODEJS,
-    _a$1[SEMRESATTRS_TELEMETRY_SDK_VERSION] = VERSION$4,
-    _a$1);
+var SDK_INFO = (_a = {},
+    _a[SEMRESATTRS_TELEMETRY_SDK_NAME] = 'opentelemetry',
+    _a[SEMRESATTRS_PROCESS_RUNTIME_NAME] = 'node',
+    _a[SEMRESATTRS_TELEMETRY_SDK_LANGUAGE] = TELEMETRYSDKLANGUAGEVALUES_NODEJS,
+    _a[SEMRESATTRS_TELEMETRY_SDK_VERSION] = VERSION$2,
+    _a);
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -66322,7 +65644,7 @@ var SDK_INFO$1 = (_a$1 = {},
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function unrefTimer$1(timer) {
+function unrefTimer(timer) {
     timer.unref();
 }
 
@@ -66341,26 +65663,26 @@ function unrefTimer$1(timer) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var NANOSECOND_DIGITS$2 = 9;
-var NANOSECOND_DIGITS_IN_MILLIS$1 = 6;
-var MILLISECONDS_TO_NANOSECONDS$1 = Math.pow(10, NANOSECOND_DIGITS_IN_MILLIS$1);
-var SECOND_TO_NANOSECONDS$2 = Math.pow(10, NANOSECOND_DIGITS$2);
+var NANOSECOND_DIGITS = 9;
+var NANOSECOND_DIGITS_IN_MILLIS = 6;
+var MILLISECONDS_TO_NANOSECONDS = Math.pow(10, NANOSECOND_DIGITS_IN_MILLIS);
+var SECOND_TO_NANOSECONDS = Math.pow(10, NANOSECOND_DIGITS);
 /**
  * Converts a number of milliseconds from epoch to HrTime([seconds, remainder in nanoseconds]).
  * @param epochMillis
  */
-function millisToHrTime$1(epochMillis) {
+function millisToHrTime(epochMillis) {
     var epochSeconds = epochMillis / 1000;
     // Decimals only.
     var seconds = Math.trunc(epochSeconds);
     // Round sub-nanosecond accuracy to nanosecond.
-    var nanos = Math.round((epochMillis % 1000) * MILLISECONDS_TO_NANOSECONDS$1);
+    var nanos = Math.round((epochMillis % 1000) * MILLISECONDS_TO_NANOSECONDS);
     return [seconds, nanos];
 }
-function getTimeOrigin$1() {
-    var timeOrigin = otperformance$1.timeOrigin;
+function getTimeOrigin() {
+    var timeOrigin = otperformance.timeOrigin;
     if (typeof timeOrigin !== 'number') {
-        var perf = otperformance$1;
+        var perf = otperformance;
         timeOrigin = perf.timing && perf.timing.fetchStart;
     }
     return timeOrigin;
@@ -66369,10 +65691,10 @@ function getTimeOrigin$1() {
  * Returns an hrtime calculated via performance component.
  * @param performanceNow
  */
-function hrTime$1(performanceNow) {
-    var timeOrigin = millisToHrTime$1(getTimeOrigin$1());
-    var now = millisToHrTime$1(typeof performanceNow === 'number' ? performanceNow : otperformance$1.now());
-    return addHrTimes$1(timeOrigin, now);
+function hrTime(performanceNow) {
+    var timeOrigin = millisToHrTime(getTimeOrigin());
+    var now = millisToHrTime(typeof performanceNow === 'number' ? performanceNow : otperformance.now());
+    return addHrTimes(timeOrigin, now);
 }
 /**
  *
@@ -66381,21 +65703,21 @@ function hrTime$1(performanceNow) {
  */
 function timeInputToHrTime(time) {
     // process.hrtime
-    if (isTimeInputHrTime$1(time)) {
+    if (isTimeInputHrTime(time)) {
         return time;
     }
     else if (typeof time === 'number') {
         // Must be a performance.now() if it's smaller than process start time.
-        if (time < getTimeOrigin$1()) {
-            return hrTime$1(time);
+        if (time < getTimeOrigin()) {
+            return hrTime(time);
         }
         else {
             // epoch milliseconds or performance.timeOrigin
-            return millisToHrTime$1(time);
+            return millisToHrTime(time);
         }
     }
     else if (time instanceof Date) {
-        return millisToHrTime$1(time.getTime());
+        return millisToHrTime(time.getTime());
     }
     else {
         throw TypeError('Invalid input type');
@@ -66406,14 +65728,14 @@ function timeInputToHrTime(time) {
  * @param startTime
  * @param endTime
  */
-function hrTimeDuration$1(startTime, endTime) {
+function hrTimeDuration(startTime, endTime) {
     var seconds = endTime[0] - startTime[0];
     var nanos = endTime[1] - startTime[1];
     // overflow
     if (nanos < 0) {
         seconds -= 1;
         // negate
-        nanos += SECOND_TO_NANOSECONDS$2;
+        nanos += SECOND_TO_NANOSECONDS;
     }
     return [seconds, nanos];
 }
@@ -66422,7 +65744,7 @@ function hrTimeDuration$1(startTime, endTime) {
  * @param time
  */
 function hrTimeToTimeStamp(time) {
-    var precision = NANOSECOND_DIGITS$2;
+    var precision = NANOSECOND_DIGITS;
     var tmp = "" + '0'.repeat(precision) + time[1] + "Z";
     var nanoString = tmp.substring(tmp.length - precision - 1);
     var date = new Date(time[0] * 1000).toISOString();
@@ -66432,8 +65754,8 @@ function hrTimeToTimeStamp(time) {
  * Convert hrTime to nanoseconds.
  * @param time
  */
-function hrTimeToNanoseconds$1(time) {
-    return time[0] * SECOND_TO_NANOSECONDS$2 + time[1];
+function hrTimeToNanoseconds(time) {
+    return time[0] * SECOND_TO_NANOSECONDS + time[1];
 }
 /**
  * Convert hrTime to milliseconds.
@@ -66446,14 +65768,14 @@ function hrTimeToMilliseconds(time) {
  * Convert hrTime to microseconds.
  * @param time
  */
-function hrTimeToMicroseconds$1(time) {
+function hrTimeToMicroseconds(time) {
     return time[0] * 1e6 + time[1] / 1e3;
 }
 /**
  * check if time is HrTime
  * @param value
  */
-function isTimeInputHrTime$1(value) {
+function isTimeInputHrTime(value) {
     return (Array.isArray(value) &&
         value.length === 2 &&
         typeof value[0] === 'number' &&
@@ -66463,19 +65785,19 @@ function isTimeInputHrTime$1(value) {
  * check if input value is a correct types.TimeInput
  * @param value
  */
-function isTimeInput$1(value) {
-    return (isTimeInputHrTime$1(value) ||
+function isTimeInput(value) {
+    return (isTimeInputHrTime(value) ||
         typeof value === 'number' ||
         value instanceof Date);
 }
 /**
  * Given 2 HrTime formatted times, return their sum as an HrTime.
  */
-function addHrTimes$1(time1, time2) {
+function addHrTimes(time1, time2) {
     var out = [time1[0] + time2[0], time1[1] + time2[1]];
     // Nanoseconds
-    if (out[1] >= SECOND_TO_NANOSECONDS$2) {
-        out[1] -= SECOND_TO_NANOSECONDS$2;
+    if (out[1] >= SECOND_TO_NANOSECONDS) {
+        out[1] -= SECOND_TO_NANOSECONDS;
         out[0] += 1;
     }
     return out;
@@ -66496,11 +65818,11 @@ function addHrTimes$1(time1, time2) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var ExportResultCode$1;
+var ExportResultCode;
 (function (ExportResultCode) {
     ExportResultCode[ExportResultCode["SUCCESS"] = 0] = "SUCCESS";
     ExportResultCode[ExportResultCode["FAILED"] = 1] = "FAILED";
-})(ExportResultCode$1 || (ExportResultCode$1 = {}));
+})(ExportResultCode || (ExportResultCode = {}));
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -66517,28 +65839,28 @@ var ExportResultCode$1;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __values$8 = (undefined && undefined.__values) || function(o) {
+var __values$6 = (undefined && undefined.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 /** Combines multiple propagators into a single propagator. */
-var CompositePropagator$1 = /** @class */ (function () {
+var CompositePropagator = /** @class */ (function () {
     /**
      * Construct a composite propagator from a list of propagators.
      *
      * @param [config] Configuration object for composite propagator
      */
     function CompositePropagator(config) {
-        if (config === void 0) { config = {}; }
+        if (config === undefined) { config = {}; }
         var _a;
-        this._propagators = (_a = config.propagators) !== null && _a !== void 0 ? _a : [];
+        this._propagators = (_a = config.propagators) !== null && _a !== undefined ? _a : [];
         this._fields = Array.from(new Set(this._propagators
             // older propagators may not have fields function, null check to be sure
             .map(function (p) { return (typeof p.fields === 'function' ? p.fields() : []); })
@@ -66556,7 +65878,7 @@ var CompositePropagator$1 = /** @class */ (function () {
     CompositePropagator.prototype.inject = function (context, carrier, setter) {
         var e_1, _a;
         try {
-            for (var _b = __values$8(this._propagators), _c = _b.next(); !_c.done; _c = _b.next()) {
+            for (var _b = __values$6(this._propagators), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var propagator = _c.value;
                 try {
                     propagator.inject(context, carrier, setter);
@@ -66616,12 +65938,12 @@ var CompositePropagator$1 = /** @class */ (function () {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var VALID_KEY_CHAR_RANGE$1 = '[_0-9a-z-*/]';
-var VALID_KEY$1 = "[a-z]" + VALID_KEY_CHAR_RANGE$1 + "{0,255}";
-var VALID_VENDOR_KEY$1 = "[a-z0-9]" + VALID_KEY_CHAR_RANGE$1 + "{0,240}@[a-z]" + VALID_KEY_CHAR_RANGE$1 + "{0,13}";
-var VALID_KEY_REGEX$1 = new RegExp("^(?:" + VALID_KEY$1 + "|" + VALID_VENDOR_KEY$1 + ")$");
-var VALID_VALUE_BASE_REGEX$1 = /^[ -~]{0,255}[!-~]$/;
-var INVALID_VALUE_COMMA_EQUAL_REGEX$1 = /,|=/;
+var VALID_KEY_CHAR_RANGE = '[_0-9a-z-*/]';
+var VALID_KEY = "[a-z]" + VALID_KEY_CHAR_RANGE + "{0,255}";
+var VALID_VENDOR_KEY = "[a-z0-9]" + VALID_KEY_CHAR_RANGE + "{0,240}@[a-z]" + VALID_KEY_CHAR_RANGE + "{0,13}";
+var VALID_KEY_REGEX = new RegExp("^(?:" + VALID_KEY + "|" + VALID_VENDOR_KEY + ")$");
+var VALID_VALUE_BASE_REGEX = /^[ -~]{0,255}[!-~]$/;
+var INVALID_VALUE_COMMA_EQUAL_REGEX = /,|=/;
 /**
  * Key is opaque string up to 256 characters printable. It MUST begin with a
  * lowercase letter, and can only contain lowercase letters a-z, digits 0-9,
@@ -66630,16 +65952,16 @@ var INVALID_VALUE_COMMA_EQUAL_REGEX$1 = /,|=/;
  * vendor name. Vendors SHOULD set the tenant ID at the beginning of the key.
  * see https://www.w3.org/TR/trace-context/#key
  */
-function validateKey$1(key) {
-    return VALID_KEY_REGEX$1.test(key);
+function validateKey(key) {
+    return VALID_KEY_REGEX.test(key);
 }
 /**
  * Value is opaque string up to 256 characters printable ASCII RFC0020
  * characters (i.e., the range 0x20 to 0x7E) except comma , and =.
  */
-function validateValue$1(value) {
-    return (VALID_VALUE_BASE_REGEX$1.test(value) &&
-        !INVALID_VALUE_COMMA_EQUAL_REGEX$1.test(value));
+function validateValue(value) {
+    return (VALID_VALUE_BASE_REGEX.test(value) &&
+        !INVALID_VALUE_COMMA_EQUAL_REGEX.test(value));
 }
 
 /*
@@ -66657,10 +65979,10 @@ function validateValue$1(value) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var MAX_TRACE_STATE_ITEMS$1 = 32;
-var MAX_TRACE_STATE_LEN$1 = 512;
-var LIST_MEMBERS_SEPARATOR$1 = ',';
-var LIST_MEMBER_KEY_VALUE_SPLITTER$1 = '=';
+var MAX_TRACE_STATE_ITEMS = 32;
+var MAX_TRACE_STATE_LEN = 512;
+var LIST_MEMBERS_SEPARATOR = ',';
+var LIST_MEMBER_KEY_VALUE_SPLITTER = '=';
 /**
  * TraceState must be a class and not a simple object type because of the spec
  * requirement (https://www.w3.org/TR/trace-context/#tracestate-field).
@@ -66670,7 +65992,7 @@ var LIST_MEMBER_KEY_VALUE_SPLITTER$1 = '=';
  * - The value of any key can be updated. Modified keys MUST be moved to the
  * beginning of the list.
  */
-var TraceState$1 = /** @class */ (function () {
+var TraceState = /** @class */ (function () {
     function TraceState(rawTraceState) {
         this._internalState = new Map();
         if (rawTraceState)
@@ -66698,34 +66020,34 @@ var TraceState$1 = /** @class */ (function () {
         var _this = this;
         return this._keys()
             .reduce(function (agg, key) {
-            agg.push(key + LIST_MEMBER_KEY_VALUE_SPLITTER$1 + _this.get(key));
+            agg.push(key + LIST_MEMBER_KEY_VALUE_SPLITTER + _this.get(key));
             return agg;
         }, [])
-            .join(LIST_MEMBERS_SEPARATOR$1);
+            .join(LIST_MEMBERS_SEPARATOR);
     };
     TraceState.prototype._parse = function (rawTraceState) {
-        if (rawTraceState.length > MAX_TRACE_STATE_LEN$1)
+        if (rawTraceState.length > MAX_TRACE_STATE_LEN)
             return;
         this._internalState = rawTraceState
-            .split(LIST_MEMBERS_SEPARATOR$1)
+            .split(LIST_MEMBERS_SEPARATOR)
             .reverse() // Store in reverse so new keys (.set(...)) will be placed at the beginning
             .reduce(function (agg, part) {
             var listMember = part.trim(); // Optional Whitespace (OWS) handling
-            var i = listMember.indexOf(LIST_MEMBER_KEY_VALUE_SPLITTER$1);
+            var i = listMember.indexOf(LIST_MEMBER_KEY_VALUE_SPLITTER);
             if (i !== -1) {
                 var key = listMember.slice(0, i);
                 var value = listMember.slice(i + 1, part.length);
-                if (validateKey$1(key) && validateValue$1(value)) {
+                if (validateKey(key) && validateValue(value)) {
                     agg.set(key, value);
                 }
             }
             return agg;
         }, new Map());
         // Because of the reverse() requirement, trunc must be done after map is created
-        if (this._internalState.size > MAX_TRACE_STATE_ITEMS$1) {
+        if (this._internalState.size > MAX_TRACE_STATE_ITEMS) {
             this._internalState = new Map(Array.from(this._internalState.entries())
                 .reverse() // Use reverse same as original tracestate parse chain
-                .slice(0, MAX_TRACE_STATE_ITEMS$1));
+                .slice(0, MAX_TRACE_STATE_ITEMS));
         }
     };
     TraceState.prototype._keys = function () {
@@ -66754,14 +66076,14 @@ var TraceState$1 = /** @class */ (function () {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var TRACE_PARENT_HEADER$1 = 'traceparent';
-var TRACE_STATE_HEADER$1 = 'tracestate';
-var VERSION$3 = '00';
-var VERSION_PART$1 = '(?!ff)[\\da-f]{2}';
-var TRACE_ID_PART$1 = '(?![0]{32})[\\da-f]{32}';
-var PARENT_ID_PART$1 = '(?![0]{16})[\\da-f]{16}';
-var FLAGS_PART$1 = '[\\da-f]{2}';
-var TRACE_PARENT_REGEX$1 = new RegExp("^\\s?(" + VERSION_PART$1 + ")-(" + TRACE_ID_PART$1 + ")-(" + PARENT_ID_PART$1 + ")-(" + FLAGS_PART$1 + ")(-.*)?\\s?$");
+var TRACE_PARENT_HEADER = 'traceparent';
+var TRACE_STATE_HEADER = 'tracestate';
+var VERSION$1 = '00';
+var VERSION_PART = '(?!ff)[\\da-f]{2}';
+var TRACE_ID_PART = '(?![0]{32})[\\da-f]{32}';
+var PARENT_ID_PART = '(?![0]{16})[\\da-f]{16}';
+var FLAGS_PART = '[\\da-f]{2}';
+var TRACE_PARENT_REGEX = new RegExp("^\\s?(" + VERSION_PART + ")-(" + TRACE_ID_PART + ")-(" + PARENT_ID_PART + ")-(" + FLAGS_PART + ")(-.*)?\\s?$");
 /**
  * Parses information from the [traceparent] span tag and converts it into {@link SpanContext}
  * @param traceParent - A meta property that comes from server.
@@ -66772,8 +66094,8 @@ var TRACE_PARENT_REGEX$1 = new RegExp("^\\s?(" + VERSION_PART$1 + ")-(" + TRACE_
  *     for example: '{version}-{traceId}-{spanId}-{sampleDecision}'
  *     For more information see {@link https://www.w3.org/TR/trace-context/}
  */
-function parseTraceParent$1(traceParent) {
-    var match = TRACE_PARENT_REGEX$1.exec(traceParent);
+function parseTraceParent(traceParent) {
+    var match = TRACE_PARENT_REGEX.exec(traceParent);
     if (!match)
         return null;
     // According to the specification the implementation should be compatible
@@ -66793,23 +66115,23 @@ function parseTraceParent$1(traceParent) {
  * Based on the Trace Context specification:
  * https://www.w3.org/TR/trace-context/
  */
-var W3CTraceContextPropagator$1 = /** @class */ (function () {
+var W3CTraceContextPropagator = /** @class */ (function () {
     function W3CTraceContextPropagator() {
     }
     W3CTraceContextPropagator.prototype.inject = function (context, carrier, setter) {
         var spanContext = trace.getSpanContext(context);
         if (!spanContext ||
-            isTracingSuppressed$1(context) ||
+            isTracingSuppressed(context) ||
             !isSpanContextValid(spanContext))
             return;
-        var traceParent = VERSION$3 + "-" + spanContext.traceId + "-" + spanContext.spanId + "-0" + Number(spanContext.traceFlags || TraceFlags.NONE).toString(16);
-        setter.set(carrier, TRACE_PARENT_HEADER$1, traceParent);
+        var traceParent = VERSION$1 + "-" + spanContext.traceId + "-" + spanContext.spanId + "-0" + Number(spanContext.traceFlags || TraceFlags.NONE).toString(16);
+        setter.set(carrier, TRACE_PARENT_HEADER, traceParent);
         if (spanContext.traceState) {
-            setter.set(carrier, TRACE_STATE_HEADER$1, spanContext.traceState.serialize());
+            setter.set(carrier, TRACE_STATE_HEADER, spanContext.traceState.serialize());
         }
     };
     W3CTraceContextPropagator.prototype.extract = function (context, carrier, getter) {
-        var traceParentHeader = getter.get(carrier, TRACE_PARENT_HEADER$1);
+        var traceParentHeader = getter.get(carrier, TRACE_PARENT_HEADER);
         if (!traceParentHeader)
             return context;
         var traceParent = Array.isArray(traceParentHeader)
@@ -66817,23 +66139,23 @@ var W3CTraceContextPropagator$1 = /** @class */ (function () {
             : traceParentHeader;
         if (typeof traceParent !== 'string')
             return context;
-        var spanContext = parseTraceParent$1(traceParent);
+        var spanContext = parseTraceParent(traceParent);
         if (!spanContext)
             return context;
         spanContext.isRemote = true;
-        var traceStateHeader = getter.get(carrier, TRACE_STATE_HEADER$1);
+        var traceStateHeader = getter.get(carrier, TRACE_STATE_HEADER);
         if (traceStateHeader) {
             // If more than one `tracestate` header is found, we merge them into a
             // single header.
             var state = Array.isArray(traceStateHeader)
                 ? traceStateHeader.join(',')
                 : traceStateHeader;
-            spanContext.traceState = new TraceState$1(typeof state === 'string' ? state : undefined);
+            spanContext.traceState = new TraceState(typeof state === 'string' ? state : undefined);
         }
         return trace.setSpanContext(context, spanContext);
     };
     W3CTraceContextPropagator.prototype.fields = function () {
-        return [TRACE_PARENT_HEADER$1, TRACE_STATE_HEADER$1];
+        return [TRACE_PARENT_HEADER, TRACE_STATE_HEADER];
     };
     return W3CTraceContextPropagator;
 }());
@@ -66959,17 +66281,17 @@ var ParentBasedSampler$1 = /** @class */ (function () {
         var _a, _b, _c, _d;
         this._root = config.root;
         if (!this._root) {
-            globalErrorHandler$1(new Error('ParentBasedSampler must have a root sampler configured'));
+            globalErrorHandler(new Error('ParentBasedSampler must have a root sampler configured'));
             this._root = new AlwaysOnSampler$1();
         }
         this._remoteParentSampled =
-            (_a = config.remoteParentSampled) !== null && _a !== void 0 ? _a : new AlwaysOnSampler$1();
+            (_a = config.remoteParentSampled) !== null && _a !== undefined ? _a : new AlwaysOnSampler$1();
         this._remoteParentNotSampled =
-            (_b = config.remoteParentNotSampled) !== null && _b !== void 0 ? _b : new AlwaysOffSampler$1();
+            (_b = config.remoteParentNotSampled) !== null && _b !== undefined ? _b : new AlwaysOffSampler$1();
         this._localParentSampled =
-            (_c = config.localParentSampled) !== null && _c !== void 0 ? _c : new AlwaysOnSampler$1();
+            (_c = config.localParentSampled) !== null && _c !== undefined ? _c : new AlwaysOnSampler$1();
         this._localParentNotSampled =
-            (_d = config.localParentNotSampled) !== null && _d !== void 0 ? _d : new AlwaysOffSampler$1();
+            (_d = config.localParentNotSampled) !== null && _d !== undefined ? _d : new AlwaysOffSampler$1();
     }
     ParentBasedSampler.prototype.shouldSample = function (context, traceId, spanName, spanKind, attributes, links) {
         var parentContext = trace.getSpanContext(context);
@@ -67014,7 +66336,7 @@ var ParentBasedSampler$1 = /** @class */ (function () {
  */
 var TraceIdRatioBasedSampler$1 = /** @class */ (function () {
     function TraceIdRatioBasedSampler(_ratio) {
-        if (_ratio === void 0) { _ratio = 0; }
+        if (_ratio === undefined) { _ratio = 0; }
         this._ratio = _ratio;
         this._ratio = this._normalize(_ratio);
         this._upperBound = Math.floor(this._ratio * 0xffffffff);
@@ -67066,17 +66388,17 @@ var TraceIdRatioBasedSampler$1 = /** @class */ (function () {
  * based on lodash in order to support esm builds without esModuleInterop.
  * lodash is using MIT License.
  **/
-var objectTag$1 = '[object Object]';
-var nullTag$1 = '[object Null]';
-var undefinedTag$1 = '[object Undefined]';
-var funcProto$1 = Function.prototype;
-var funcToString$1 = funcProto$1.toString;
-var objectCtorString$1 = funcToString$1.call(Object);
-var getPrototype$1 = overArg$1(Object.getPrototypeOf, Object);
-var objectProto$1 = Object.prototype;
-var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
-var symToStringTag$1 = Symbol ? Symbol.toStringTag : undefined;
-var nativeObjectToString$1 = objectProto$1.toString;
+var objectTag = '[object Object]';
+var nullTag = '[object Null]';
+var undefinedTag = '[object Undefined]';
+var funcProto = Function.prototype;
+var funcToString = funcProto.toString;
+var objectCtorString = funcToString.call(Object);
+var getPrototype = overArg(Object.getPrototypeOf, Object);
+var objectProto = Object.prototype;
+var hasOwnProperty = objectProto.hasOwnProperty;
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+var nativeObjectToString = objectProto.toString;
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -67085,7 +66407,7 @@ var nativeObjectToString$1 = objectProto$1.toString;
  * @param {Function} transform The argument transform.
  * @returns {Function} Returns the new function.
  */
-function overArg$1(func, transform) {
+function overArg(func, transform) {
     return function (arg) {
         return func(transform(arg));
     };
@@ -67118,18 +66440,18 @@ function overArg$1(func, transform) {
  * _.isPlainObject(Object.create(null));
  * // => true
  */
-function isPlainObject$1(value) {
-    if (!isObjectLike$1(value) || baseGetTag$1(value) !== objectTag$1) {
+function isPlainObject(value) {
+    if (!isObjectLike(value) || baseGetTag(value) !== objectTag) {
         return false;
     }
-    var proto = getPrototype$1(value);
+    var proto = getPrototype(value);
     if (proto === null) {
         return true;
     }
-    var Ctor = hasOwnProperty$1.call(proto, 'constructor') && proto.constructor;
+    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
     return (typeof Ctor == 'function' &&
         Ctor instanceof Ctor &&
-        funcToString$1.call(Ctor) === objectCtorString$1);
+        funcToString.call(Ctor) === objectCtorString);
 }
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
@@ -67155,7 +66477,7 @@ function isPlainObject$1(value) {
  * _.isObjectLike(null);
  * // => false
  */
-function isObjectLike$1(value) {
+function isObjectLike(value) {
     return value != null && typeof value == 'object';
 }
 /**
@@ -67165,13 +66487,13 @@ function isObjectLike$1(value) {
  * @param {*} value The value to query.
  * @returns {string} Returns the `toStringTag`.
  */
-function baseGetTag$1(value) {
+function baseGetTag(value) {
     if (value == null) {
-        return value === undefined ? undefinedTag$1 : nullTag$1;
+        return value === undefined ? undefinedTag : nullTag;
     }
-    return symToStringTag$1 && symToStringTag$1 in Object(value)
-        ? getRawTag$1(value)
-        : objectToString$1(value);
+    return symToStringTag && symToStringTag in Object(value)
+        ? getRawTag(value)
+        : objectToString(value);
 }
 /**
  * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
@@ -67180,23 +66502,23 @@ function baseGetTag$1(value) {
  * @param {*} value The value to query.
  * @returns {string} Returns the raw `toStringTag`.
  */
-function getRawTag$1(value) {
-    var isOwn = hasOwnProperty$1.call(value, symToStringTag$1), tag = value[symToStringTag$1];
+function getRawTag(value) {
+    var isOwn = hasOwnProperty.call(value, symToStringTag), tag = value[symToStringTag];
     var unmasked = false;
     try {
-        value[symToStringTag$1] = undefined;
+        value[symToStringTag] = undefined;
         unmasked = true;
     }
     catch (e) {
         // silence
     }
-    var result = nativeObjectToString$1.call(value);
+    var result = nativeObjectToString.call(value);
     if (unmasked) {
         if (isOwn) {
-            value[symToStringTag$1] = tag;
+            value[symToStringTag] = tag;
         }
         else {
-            delete value[symToStringTag$1];
+            delete value[symToStringTag];
         }
     }
     return result;
@@ -67208,8 +66530,8 @@ function getRawTag$1(value) {
  * @param {*} value The value to convert.
  * @returns {string} Returns the converted string.
  */
-function objectToString$1(value) {
-    return nativeObjectToString$1.call(value);
+function objectToString(value) {
+    return nativeObjectToString.call(value);
 }
 
 /*
@@ -67228,12 +66550,12 @@ function objectToString$1(value) {
  * limitations under the License.
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-var MAX_LEVEL$1 = 20;
+var MAX_LEVEL = 20;
 /**
  * Merges objects together
  * @param args - objects / values to be merged
  */
-function merge$1() {
+function merge() {
     var args = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         args[_i] = arguments[_i];
@@ -67241,12 +66563,12 @@ function merge$1() {
     var result = args.shift();
     var objects = new WeakMap();
     while (args.length > 0) {
-        result = mergeTwoObjects$1(result, args.shift(), 0, objects);
+        result = mergeTwoObjects(result, args.shift(), 0, objects);
     }
     return result;
 }
-function takeValue$1(value) {
-    if (isArray$1(value)) {
+function takeValue(value) {
+    if (isArray(value)) {
         return value.slice();
     }
     return value;
@@ -67259,34 +66581,34 @@ function takeValue$1(value) {
  * @param objects - objects holder that has been already referenced - to prevent
  * cyclic dependency
  */
-function mergeTwoObjects$1(one, two, level, objects) {
-    if (level === void 0) { level = 0; }
+function mergeTwoObjects(one, two, level, objects) {
+    if (level === undefined) { level = 0; }
     var result;
-    if (level > MAX_LEVEL$1) {
+    if (level > MAX_LEVEL) {
         return undefined;
     }
     level++;
-    if (isPrimitive$1(one) || isPrimitive$1(two) || isFunction$1(two)) {
-        result = takeValue$1(two);
+    if (isPrimitive(one) || isPrimitive(two) || isFunction(two)) {
+        result = takeValue(two);
     }
-    else if (isArray$1(one)) {
+    else if (isArray(one)) {
         result = one.slice();
-        if (isArray$1(two)) {
+        if (isArray(two)) {
             for (var i = 0, j = two.length; i < j; i++) {
-                result.push(takeValue$1(two[i]));
+                result.push(takeValue(two[i]));
             }
         }
-        else if (isObject$1(two)) {
+        else if (isObject(two)) {
             var keys = Object.keys(two);
             for (var i = 0, j = keys.length; i < j; i++) {
                 var key = keys[i];
-                result[key] = takeValue$1(two[key]);
+                result[key] = takeValue(two[key]);
             }
         }
     }
-    else if (isObject$1(one)) {
-        if (isObject$1(two)) {
-            if (!shouldMerge$1(one, two)) {
+    else if (isObject(one)) {
+        if (isObject(two)) {
+            if (!shouldMerge(one, two)) {
                 return two;
             }
             result = Object.assign({}, one);
@@ -67294,7 +66616,7 @@ function mergeTwoObjects$1(one, two, level, objects) {
             for (var i = 0, j = keys.length; i < j; i++) {
                 var key = keys[i];
                 var twoValue = two[key];
-                if (isPrimitive$1(twoValue)) {
+                if (isPrimitive(twoValue)) {
                     if (typeof twoValue === 'undefined') {
                         delete result[key];
                     }
@@ -67306,12 +66628,12 @@ function mergeTwoObjects$1(one, two, level, objects) {
                 else {
                     var obj1 = result[key];
                     var obj2 = twoValue;
-                    if (wasObjectReferenced$1(one, key, objects) ||
-                        wasObjectReferenced$1(two, key, objects)) {
+                    if (wasObjectReferenced(one, key, objects) ||
+                        wasObjectReferenced(two, key, objects)) {
                         delete result[key];
                     }
                     else {
-                        if (isObject$1(obj1) && isObject$1(obj2)) {
+                        if (isObject(obj1) && isObject(obj2)) {
                             var arr1 = objects.get(obj1) || [];
                             var arr2 = objects.get(obj2) || [];
                             arr1.push({ obj: one, key: key });
@@ -67319,7 +66641,7 @@ function mergeTwoObjects$1(one, two, level, objects) {
                             objects.set(obj1, arr1);
                             objects.set(obj2, arr2);
                         }
-                        result[key] = mergeTwoObjects$1(result[key], twoValue, level, objects);
+                        result[key] = mergeTwoObjects(result[key], twoValue, level, objects);
                     }
                 }
             }
@@ -67336,7 +66658,7 @@ function mergeTwoObjects$1(one, two, level, objects) {
  * @param key
  * @param objects
  */
-function wasObjectReferenced$1(obj, key, objects) {
+function wasObjectReferenced(obj, key, objects) {
     var arr = objects.get(obj[key]) || [];
     for (var i = 0, j = arr.length; i < j; i++) {
         var info = arr[i];
@@ -67346,19 +66668,19 @@ function wasObjectReferenced$1(obj, key, objects) {
     }
     return false;
 }
-function isArray$1(value) {
+function isArray(value) {
     return Array.isArray(value);
 }
-function isFunction$1(value) {
+function isFunction(value) {
     return typeof value === 'function';
 }
-function isObject$1(value) {
-    return (!isPrimitive$1(value) &&
-        !isArray$1(value) &&
-        !isFunction$1(value) &&
+function isObject(value) {
+    return (!isPrimitive(value) &&
+        !isArray(value) &&
+        !isFunction(value) &&
         typeof value === 'object');
 }
-function isPrimitive$1(value) {
+function isPrimitive(value) {
     return (typeof value === 'string' ||
         typeof value === 'number' ||
         typeof value === 'boolean' ||
@@ -67367,8 +66689,8 @@ function isPrimitive$1(value) {
         value instanceof RegExp ||
         value === null);
 }
-function shouldMerge$1(one, two) {
-    if (!isPlainObject$1(one) || !isPlainObject$1(two)) {
+function shouldMerge(one, two) {
+    if (!isPlainObject(one) || !isPlainObject(two)) {
         return false;
     }
     return true;
@@ -67443,12 +66765,12 @@ function callWithTimeout(promise, timeout) {
     });
 }
 
-var __values$7 = (undefined && undefined.__values) || function(o) {
+var __values$5 = (undefined && undefined.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
@@ -67488,7 +66810,7 @@ function isUrlIgnored(url, ignoredUrls) {
         return false;
     }
     try {
-        for (var ignoredUrls_1 = __values$7(ignoredUrls), ignoredUrls_1_1 = ignoredUrls_1.next(); !ignoredUrls_1_1.done; ignoredUrls_1_1 = ignoredUrls_1.next()) {
+        for (var ignoredUrls_1 = __values$5(ignoredUrls), ignoredUrls_1_1 = ignoredUrls_1.next(); !ignoredUrls_1_1.done; ignoredUrls_1_1 = ignoredUrls_1.next()) {
             var ignoreUrl = ignoredUrls_1_1.value;
             if (urlMatches(url, ignoreUrl)) {
                 return true;
@@ -67546,7 +66868,7 @@ function isWrapped(func) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var Deferred$1 = /** @class */ (function () {
+var Deferred = /** @class */ (function () {
     function Deferred() {
         var _this = this;
         this._promise = new Promise(function (resolve, reject) {
@@ -67585,7 +66907,7 @@ var Deferred$1 = /** @class */ (function () {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __read$a = (undefined && undefined.__read) || function (o, n) {
+var __read$7 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -67601,7 +66923,7 @@ var __read$a = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray$3 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+var __spreadArray$2 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
             if (!ar) ar = Array.prototype.slice.call(from, 0, i);
@@ -67613,12 +66935,12 @@ var __spreadArray$3 = (undefined && undefined.__spreadArray) || function (to, fr
 /**
  * Bind the callback and only invoke the callback once regardless how many times `BindOnceFuture.call` is invoked.
  */
-var BindOnceFuture$1 = /** @class */ (function () {
+var BindOnceFuture = /** @class */ (function () {
     function BindOnceFuture(_callback, _that) {
         this._callback = _callback;
         this._that = _that;
         this._isCalled = false;
-        this._deferred = new Deferred$1();
+        this._deferred = new Deferred();
     }
     Object.defineProperty(BindOnceFuture.prototype, "isCalled", {
         get: function () {
@@ -67644,7 +66966,7 @@ var BindOnceFuture$1 = /** @class */ (function () {
         if (!this._isCalled) {
             this._isCalled = true;
             try {
-                Promise.resolve((_a = this._callback).call.apply(_a, __spreadArray$3([this._that], __read$a(args), false))).then(function (val) { return _this._deferred.resolve(val); }, function (err) { return _this._deferred.reject(err); });
+                Promise.resolve((_a = this._callback).call.apply(_a, __spreadArray$2([this._that], __read$7(args), false))).then(function (val) { return _this._deferred.resolve(val); }, function (err) { return _this._deferred.reject(err); });
             }
             catch (err) {
                 this._deferred.reject(err);
@@ -67677,7 +66999,7 @@ var BindOnceFuture$1 = /** @class */ (function () {
 function _export(exporter, arg) {
     return new Promise(function (resolve) {
         // prevent downstream exporter calls from generating spans
-        context.with(suppressTracing$1(context.active()), function () {
+        context.with(suppressTracing(context.active()), function () {
             exporter.export(arg, function (result) {
                 resolve(result);
             });
@@ -67701,84 +67023,632 @@ function _export(exporter, arg) {
  * limitations under the License.
  */
 var baggageUtils = {
-    getKeyPairs: getKeyPairs$1,
-    serializeKeyPairs: serializeKeyPairs$1,
+    getKeyPairs: getKeyPairs,
+    serializeKeyPairs: serializeKeyPairs,
     parseKeyPairsIntoRecord: parseKeyPairsIntoRecord,
-    parsePairKeyValue: parsePairKeyValue$1,
+    parsePairKeyValue: parsePairKeyValue,
 };
 var internal = {
     _export: _export,
 };
 
-var esm$1 = /*#__PURE__*/Object.freeze({
+var esm$2 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	AlwaysOffSampler: AlwaysOffSampler$1,
 	AlwaysOnSampler: AlwaysOnSampler$1,
 	AnchoredClock: AnchoredClock,
-	BindOnceFuture: BindOnceFuture$1,
-	CompositePropagator: CompositePropagator$1,
-	DEFAULT_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT$1,
-	DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT$1,
-	DEFAULT_ENVIRONMENT: DEFAULT_ENVIRONMENT$1,
-	DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT$1,
-	DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT$1,
-	get ExportResultCode () { return ExportResultCode$1; },
+	BindOnceFuture: BindOnceFuture,
+	CompositePropagator: CompositePropagator,
+	DEFAULT_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT,
+	DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT,
+	DEFAULT_ENVIRONMENT: DEFAULT_ENVIRONMENT,
+	DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT,
+	DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT,
+	get ExportResultCode () { return ExportResultCode; },
 	ParentBasedSampler: ParentBasedSampler$1,
 	get RPCType () { return RPCType; },
 	RandomIdGenerator: RandomIdGenerator$1,
-	SDK_INFO: SDK_INFO$1,
-	TRACE_PARENT_HEADER: TRACE_PARENT_HEADER$1,
-	TRACE_STATE_HEADER: TRACE_STATE_HEADER$1,
+	SDK_INFO: SDK_INFO,
+	TRACE_PARENT_HEADER: TRACE_PARENT_HEADER,
+	TRACE_STATE_HEADER: TRACE_STATE_HEADER,
 	TimeoutError: TimeoutError,
 	TraceIdRatioBasedSampler: TraceIdRatioBasedSampler$1,
-	TraceState: TraceState$1,
-	get TracesSamplerValues () { return TracesSamplerValues$1; },
-	VERSION: VERSION$4,
-	W3CBaggagePropagator: W3CBaggagePropagator$1,
-	W3CTraceContextPropagator: W3CTraceContextPropagator$1,
+	TraceState: TraceState,
+	get TracesSamplerValues () { return TracesSamplerValues; },
+	VERSION: VERSION$2,
+	W3CBaggagePropagator: W3CBaggagePropagator,
+	W3CTraceContextPropagator: W3CTraceContextPropagator,
 	_globalThis: _globalThis,
-	addHrTimes: addHrTimes$1,
+	addHrTimes: addHrTimes,
 	baggageUtils: baggageUtils,
 	callWithTimeout: callWithTimeout,
 	deleteRPCMetadata: deleteRPCMetadata,
-	getEnv: getEnv$1,
-	getEnvWithoutDefaults: getEnvWithoutDefaults$1,
+	getEnv: getEnv,
+	getEnvWithoutDefaults: getEnvWithoutDefaults,
 	getRPCMetadata: getRPCMetadata,
-	getTimeOrigin: getTimeOrigin$1,
-	globalErrorHandler: globalErrorHandler$1,
+	getTimeOrigin: getTimeOrigin,
+	globalErrorHandler: globalErrorHandler,
 	hexToBase64: hexToBase64,
-	hexToBinary: hexToBinary$1,
-	hrTime: hrTime$1,
-	hrTimeDuration: hrTimeDuration$1,
-	hrTimeToMicroseconds: hrTimeToMicroseconds$1,
+	hexToBinary: hexToBinary,
+	hrTime: hrTime,
+	hrTimeDuration: hrTimeDuration,
+	hrTimeToMicroseconds: hrTimeToMicroseconds,
 	hrTimeToMilliseconds: hrTimeToMilliseconds,
-	hrTimeToNanoseconds: hrTimeToNanoseconds$1,
+	hrTimeToNanoseconds: hrTimeToNanoseconds,
 	hrTimeToTimeStamp: hrTimeToTimeStamp,
 	internal: internal,
-	isAttributeKey: isAttributeKey$1,
-	isAttributeValue: isAttributeValue$1,
-	isTimeInput: isTimeInput$1,
-	isTimeInputHrTime: isTimeInputHrTime$1,
-	isTracingSuppressed: isTracingSuppressed$1,
+	isAttributeKey: isAttributeKey,
+	isAttributeValue: isAttributeValue,
+	isTimeInput: isTimeInput,
+	isTimeInputHrTime: isTimeInputHrTime,
+	isTracingSuppressed: isTracingSuppressed,
 	isUrlIgnored: isUrlIgnored,
 	isWrapped: isWrapped,
-	loggingErrorHandler: loggingErrorHandler$1,
-	merge: merge$1,
-	millisToHrTime: millisToHrTime$1,
-	otperformance: otperformance$1,
-	parseEnvironment: parseEnvironment$1,
-	parseTraceParent: parseTraceParent$1,
-	sanitizeAttributes: sanitizeAttributes$1,
+	loggingErrorHandler: loggingErrorHandler,
+	merge: merge,
+	millisToHrTime: millisToHrTime,
+	otperformance: otperformance,
+	parseEnvironment: parseEnvironment,
+	parseTraceParent: parseTraceParent,
+	sanitizeAttributes: sanitizeAttributes,
 	setGlobalErrorHandler: setGlobalErrorHandler,
 	setRPCMetadata: setRPCMetadata,
-	suppressTracing: suppressTracing$1,
+	suppressTracing: suppressTracing,
 	timeInputToHrTime: timeInputToHrTime,
-	unrefTimer: unrefTimer$1,
+	unrefTimer: unrefTimer,
 	unsuppressTracing: unsuppressTracing,
 	urlMatches: urlMatches
 });
 
-var require$$0$1 = /*@__PURE__*/getAugmentedNamespace(esm$1);
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function isPartialSuccessResponse(response) {
+    return Object.prototype.hasOwnProperty.call(response, 'partialSuccess');
+}
+/**
+ * Default response handler that logs a partial success to the console.
+ */
+function createLoggingPartialSuccessResponseHandler() {
+    return {
+        handleResponse: function (response) {
+            // Partial success MUST never be an empty object according the specification
+            // see https://opentelemetry.io/docs/specs/otlp/#partial-success
+            if (response == null ||
+                !isPartialSuccessResponse(response) ||
+                response.partialSuccess == null ||
+                Object.keys(response.partialSuccess).length === 0) {
+                return;
+            }
+            diag.warn('Received Partial Success response:', JSON.stringify(response.partialSuccess));
+        },
+    };
+}
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var __awaiter$3 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator$3 = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : undefined, done: true };
+    }
+};
+var OTLPExportDelegate = /** @class */ (function () {
+    function OTLPExportDelegate(_transport, _serializer, _responseHandler, _promiseQueue, _timeout) {
+        this._transport = _transport;
+        this._serializer = _serializer;
+        this._responseHandler = _responseHandler;
+        this._promiseQueue = _promiseQueue;
+        this._timeout = _timeout;
+        this._diagLogger = diag.createComponentLogger({
+            namespace: 'OTLPExportDelegate',
+        });
+    }
+    OTLPExportDelegate.prototype.export = function (internalRepresentation, resultCallback) {
+        var _this = this;
+        this._diagLogger.debug('items to be sent', internalRepresentation);
+        // don't do any work if too many exports are in progress.
+        if (this._promiseQueue.hasReachedLimit()) {
+            resultCallback({
+                code: ExportResultCode.FAILED,
+                error: new Error('Concurrent export limit reached'),
+            });
+            return;
+        }
+        var serializedRequest = this._serializer.serializeRequest(internalRepresentation);
+        if (serializedRequest == null) {
+            resultCallback({
+                code: ExportResultCode.FAILED,
+                error: new Error('Nothing to send'),
+            });
+            return;
+        }
+        this._promiseQueue.pushPromise(this._transport.send(serializedRequest, this._timeout).then(function (response) {
+            if (response.status === 'success') {
+                if (response.data != null) {
+                    try {
+                        _this._responseHandler.handleResponse(_this._serializer.deserializeResponse(response.data));
+                    }
+                    catch (e) {
+                        _this._diagLogger.warn('Export succeeded but could not deserialize response - is the response specification compliant?', e, response.data);
+                    }
+                }
+                // No matter the response, we can consider the export still successful.
+                resultCallback({
+                    code: ExportResultCode.SUCCESS,
+                });
+                return;
+            }
+            else if (response.status === 'failure' && response.error) {
+                resultCallback({
+                    code: ExportResultCode.FAILED,
+                    error: response.error,
+                });
+                return;
+            }
+            else if (response.status === 'retryable') {
+                resultCallback({
+                    code: ExportResultCode.FAILED,
+                    error: new OTLPExporterError('Export failed with retryable status'),
+                });
+            }
+            else {
+                resultCallback({
+                    code: ExportResultCode.FAILED,
+                    error: new OTLPExporterError('Export failed with unknown error'),
+                });
+            }
+        }, function (reason) {
+            return resultCallback({
+                code: ExportResultCode.FAILED,
+                error: reason,
+            });
+        }));
+    };
+    OTLPExportDelegate.prototype.forceFlush = function () {
+        return this._promiseQueue.awaitAll();
+    };
+    OTLPExportDelegate.prototype.shutdown = function () {
+        return __awaiter$3(this, undefined, undefined, function () {
+            return __generator$3(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._diagLogger.debug('shutdown started');
+                        return [4 /*yield*/, this.forceFlush()];
+                    case 1:
+                        _a.sent();
+                        this._transport.shutdown();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return OTLPExportDelegate;
+}());
+/**
+ * Creates a generic delegate for OTLP exports which only contains parts of the OTLP export that are shared across all
+ * signals.
+ */
+function createOtlpExportDelegate(components, settings) {
+    return new OTLPExportDelegate(components.transport, components.serializer, createLoggingPartialSuccessResponseHandler(), components.promiseHandler, settings.timeout);
+}
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function createOtlpNetworkExportDelegate(options, serializer, transport) {
+    return createOtlpExportDelegate({
+        transport: transport,
+        serializer: serializer,
+        promiseHandler: createBoundedQueueExportPromiseHandler(options),
+    }, { timeout: options.timeoutMillis });
+}
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var esm$1 = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	get CompressionAlgorithm () { return CompressionAlgorithm; },
+	OTLPExporterBase: OTLPExporterBase,
+	OTLPExporterError: OTLPExporterError,
+	createOtlpNetworkExportDelegate: createOtlpNetworkExportDelegate,
+	getSharedConfigurationDefaults: getSharedConfigurationDefaults,
+	mergeOtlpSharedConfigurationWithDefaults: mergeOtlpSharedConfigurationWithDefaults
+});
+
+var require$$2$1 = /*@__PURE__*/getAugmentedNamespace(esm$1);
+
+var grpcExporterTransport = {};
+
+var createServiceClientConstructor = {};
+
+var hasRequiredCreateServiceClientConstructor;
+
+function requireCreateServiceClientConstructor () {
+	if (hasRequiredCreateServiceClientConstructor) return createServiceClientConstructor;
+	hasRequiredCreateServiceClientConstructor = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(createServiceClientConstructor, "__esModule", { value: true });
+	createServiceClientConstructor.createServiceClientConstructor = undefined;
+	const grpc = requireSrc$3();
+	/**
+	 * Creates a unary service client constructor that, when instantiated, does not serialize/deserialize anything.
+	 * Allows for passing in {@link Buffer} directly, serialization can be handled via protobufjs or custom implementations.
+	 *
+	 * @param path service path
+	 * @param name service name
+	 */
+	function createServiceClientConstructor$1(path, name) {
+	    const serviceDefinition = {
+	        export: {
+	            path: path,
+	            requestStream: false,
+	            responseStream: false,
+	            requestSerialize: (arg) => {
+	                return arg;
+	            },
+	            requestDeserialize: (arg) => {
+	                return arg;
+	            },
+	            responseSerialize: (arg) => {
+	                return arg;
+	            },
+	            responseDeserialize: (arg) => {
+	                return arg;
+	            },
+	        },
+	    };
+	    return grpc.makeGenericClientConstructor(serviceDefinition, name);
+	}
+	createServiceClientConstructor.createServiceClientConstructor = createServiceClientConstructor$1;
+	
+	return createServiceClientConstructor;
+}
+
+var hasRequiredGrpcExporterTransport;
+
+function requireGrpcExporterTransport () {
+	if (hasRequiredGrpcExporterTransport) return grpcExporterTransport;
+	hasRequiredGrpcExporterTransport = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(grpcExporterTransport, "__esModule", { value: true });
+	grpcExporterTransport.createOtlpGrpcExporterTransport = grpcExporterTransport.GrpcExporterTransport = grpcExporterTransport.createEmptyMetadata = grpcExporterTransport.createSslCredentials = grpcExporterTransport.createInsecureCredentials = undefined;
+	// values taken from '@grpc/grpc-js` so that we don't need to require/import it.
+	const GRPC_COMPRESSION_NONE = 0;
+	const GRPC_COMPRESSION_GZIP = 2;
+	function toGrpcCompression(compression) {
+	    return compression === 'gzip' ? GRPC_COMPRESSION_GZIP : GRPC_COMPRESSION_NONE;
+	}
+	function createInsecureCredentials() {
+	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
+	    const { credentials,
+	    // eslint-disable-next-line @typescript-eslint/no-var-requires
+	     } = requireSrc$3();
+	    return credentials.createInsecure();
+	}
+	grpcExporterTransport.createInsecureCredentials = createInsecureCredentials;
+	function createSslCredentials(rootCert, privateKey, certChain) {
+	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
+	    const { credentials,
+	    // eslint-disable-next-line @typescript-eslint/no-var-requires
+	     } = requireSrc$3();
+	    return credentials.createSsl(rootCert, privateKey, certChain);
+	}
+	grpcExporterTransport.createSslCredentials = createSslCredentials;
+	function createEmptyMetadata() {
+	    // Lazy-load so that we don't need to require/import '@grpc/grpc-js' before it can be wrapped by instrumentation.
+	    const { Metadata,
+	    // eslint-disable-next-line @typescript-eslint/no-var-requires
+	     } = requireSrc$3();
+	    return new Metadata();
+	}
+	grpcExporterTransport.createEmptyMetadata = createEmptyMetadata;
+	class GrpcExporterTransport {
+	    constructor(_parameters) {
+	        this._parameters = _parameters;
+	    }
+	    shutdown() {
+	        var _a;
+	        (_a = this._client) === null || _a === undefined ? undefined : _a.close();
+	    }
+	    send(data, timeoutMillis) {
+	        // We need to make a for gRPC
+	        const buffer = Buffer.from(data);
+	        if (this._client == null) {
+	            // Lazy require to ensure that grpc is not loaded before instrumentations can wrap it
+	            const { createServiceClientConstructor,
+	            // eslint-disable-next-line @typescript-eslint/no-var-requires
+	             } = /*@__PURE__*/ requireCreateServiceClientConstructor();
+	            try {
+	                this._metadata = this._parameters.metadata();
+	            }
+	            catch (error) {
+	                return Promise.resolve({
+	                    status: 'failure',
+	                    error: error,
+	                });
+	            }
+	            const clientConstructor = createServiceClientConstructor(this._parameters.grpcPath, this._parameters.grpcName);
+	            try {
+	                this._client = new clientConstructor(this._parameters.address, this._parameters.credentials(), {
+	                    'grpc.default_compression_algorithm': toGrpcCompression(this._parameters.compression),
+	                });
+	            }
+	            catch (error) {
+	                return Promise.resolve({
+	                    status: 'failure',
+	                    error: error,
+	                });
+	            }
+	        }
+	        return new Promise(resolve => {
+	            const deadline = Date.now() + timeoutMillis;
+	            // this should never happen
+	            if (this._metadata == null) {
+	                return resolve({
+	                    error: new Error('metadata was null'),
+	                    status: 'failure',
+	                });
+	            }
+	            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	            // @ts-ignore The gRPC client constructor is created on runtime, so we don't have any types for the resulting client.
+	            this._client.export(buffer, this._metadata, { deadline: deadline }, (err, response) => {
+	                if (err) {
+	                    resolve({
+	                        status: 'failure',
+	                        error: err,
+	                    });
+	                }
+	                else {
+	                    resolve({
+	                        data: response,
+	                        status: 'success',
+	                    });
+	                }
+	            });
+	        });
+	    }
+	}
+	grpcExporterTransport.GrpcExporterTransport = GrpcExporterTransport;
+	function createOtlpGrpcExporterTransport(options) {
+	    return new GrpcExporterTransport(options);
+	}
+	grpcExporterTransport.createOtlpGrpcExporterTransport = createOtlpGrpcExporterTransport;
+	
+	return grpcExporterTransport;
+}
+
+var version = {};
+
+var hasRequiredVersion;
+
+function requireVersion () {
+	if (hasRequiredVersion) return version;
+	hasRequiredVersion = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(version, "__esModule", { value: true });
+	version.VERSION = undefined;
+	// this is autogenerated file, see scripts/version-update.js
+	version.VERSION = '0.57.1';
+	
+	return version;
+}
+
+var hasRequiredOtlpGrpcConfiguration;
+
+function requireOtlpGrpcConfiguration () {
+	if (hasRequiredOtlpGrpcConfiguration) return otlpGrpcConfiguration;
+	hasRequiredOtlpGrpcConfiguration = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(otlpGrpcConfiguration, "__esModule", { value: true });
+	otlpGrpcConfiguration.getOtlpGrpcDefaultConfiguration = otlpGrpcConfiguration.mergeOtlpGrpcConfigurationWithDefaults = otlpGrpcConfiguration.validateAndNormalizeUrl = undefined;
+	const otlp_exporter_base_1 = require$$2$1;
+	const grpc_exporter_transport_1 = /*@__PURE__*/ requireGrpcExporterTransport();
+	const version_1 = /*@__PURE__*/ requireVersion();
+	const url_1 = require$$1$5;
+	const api_1 = require$$0$2;
+	function validateAndNormalizeUrl(url) {
+	    var _a;
+	    url = url.trim();
+	    const hasProtocol = url.match(/^([\w]{1,8}):\/\//);
+	    if (!hasProtocol) {
+	        url = `https://${url}`;
+	    }
+	    const target = new url_1.URL(url);
+	    if (target.protocol === 'unix:') {
+	        return url;
+	    }
+	    if (target.pathname && target.pathname !== '/') {
+	        api_1.diag.warn('URL path should not be set when using grpc, the path part of the URL will be ignored.');
+	    }
+	    if (target.protocol !== '' && !((_a = target.protocol) === null || _a === undefined ? undefined : _a.match(/^(http)s?:$/))) {
+	        api_1.diag.warn('URL protocol should be http(s)://. Using http://.');
+	    }
+	    return target.host;
+	}
+	otlpGrpcConfiguration.validateAndNormalizeUrl = validateAndNormalizeUrl;
+	function overrideMetadataEntriesIfNotPresent(metadata, additionalMetadata) {
+	    for (const [key, value] of Object.entries(additionalMetadata.getMap())) {
+	        // only override with env var data if the key has no values.
+	        // not using Metadata.merge() as it will keep both values.
+	        if (metadata.get(key).length < 1) {
+	            metadata.set(key, value);
+	        }
+	    }
+	}
+	function mergeOtlpGrpcConfigurationWithDefaults(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration) {
+	    var _a, _b, _c, _d, _e;
+	    const rawUrl = (_b = (_a = userProvidedConfiguration.url) !== null && _a !== undefined ? _a : fallbackConfiguration.url) !== null && _b !== undefined ? _b : defaultConfiguration.url;
+	    return Object.assign(Object.assign({}, (0, otlp_exporter_base_1.mergeOtlpSharedConfigurationWithDefaults)(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration)), { metadata: () => {
+	            var _a, _b, _c, _d;
+	            const metadata = defaultConfiguration.metadata();
+	            overrideMetadataEntriesIfNotPresent(metadata, 
+	            // clone to ensure we don't modify what the user gave us in case they hold on to the returned reference
+	            (_b = (_a = userProvidedConfiguration.metadata) === null || _a === undefined ? undefined : _a.call(userProvidedConfiguration).clone()) !== null && _b !== undefined ? _b : (0, grpc_exporter_transport_1.createEmptyMetadata)());
+	            overrideMetadataEntriesIfNotPresent(metadata, (_d = (_c = fallbackConfiguration.metadata) === null || _c === undefined ? undefined : _c.call(fallbackConfiguration)) !== null && _d !== undefined ? _d : (0, grpc_exporter_transport_1.createEmptyMetadata)());
+	            return metadata;
+	        }, url: validateAndNormalizeUrl(rawUrl), credentials: (_e = (_c = userProvidedConfiguration.credentials) !== null && _c !== undefined ? _c : (_d = fallbackConfiguration.credentials) === null || _d === undefined ? undefined : _d.call(fallbackConfiguration, rawUrl)) !== null && _e !== undefined ? _e : defaultConfiguration.credentials(rawUrl) });
+	}
+	otlpGrpcConfiguration.mergeOtlpGrpcConfigurationWithDefaults = mergeOtlpGrpcConfigurationWithDefaults;
+	function getOtlpGrpcDefaultConfiguration() {
+	    return Object.assign(Object.assign({}, (0, otlp_exporter_base_1.getSharedConfigurationDefaults)()), { metadata: () => {
+	            const metadata = (0, grpc_exporter_transport_1.createEmptyMetadata)();
+	            metadata.set('User-Agent', `OTel-OTLP-Exporter-JavaScript/${version_1.VERSION}`);
+	            return metadata;
+	        }, url: 'http://localhost:4317', credentials: (url) => {
+	            if (url.startsWith('http://')) {
+	                return () => (0, grpc_exporter_transport_1.createInsecureCredentials)();
+	            }
+	            else {
+	                return () => (0, grpc_exporter_transport_1.createSslCredentials)();
+	            }
+	        } });
+	}
+	otlpGrpcConfiguration.getOtlpGrpcDefaultConfiguration = getOtlpGrpcDefaultConfiguration;
+	
+	return otlpGrpcConfiguration;
+}
+
+var otlpGrpcEnvConfiguration = {};
+
+var require$$0$1 = /*@__PURE__*/getAugmentedNamespace(esm$2);
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -67979,7 +67849,7 @@ var __generator$2 = (undefined && undefined.__generator) || function (thisArg, b
             }
             op = body.call(thisArg, _);
         } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : undefined, done: true };
     }
 };
 var HttpExporterTransport = /** @class */ (function () {
@@ -67989,7 +67859,7 @@ var HttpExporterTransport = /** @class */ (function () {
         this._agent = null;
     }
     HttpExporterTransport.prototype.send = function (data, timeoutMillis) {
-        return __awaiter$2(this, void 0, void 0, function () {
+        return __awaiter$2(this, undefined, undefined, function () {
             var _a, sendWithHttp, createHttpAgent;
             var _this = this;
             return __generator$2(this, function (_b) {
@@ -68002,7 +67872,7 @@ var HttpExporterTransport = /** @class */ (function () {
                         var _a;
                         // this will always be defined
                         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        (_a = _this._send) === null || _a === void 0 ? void 0 : _a.call(_this, _this._parameters, _this._agent, data, function (result) {
+                        (_a = _this._send) === null || _a === undefined ? undefined : _a.call(_this, _this._parameters, _this._agent, data, function (result) {
                             resolve(result);
                         }, timeoutMillis);
                     })];
@@ -68066,7 +67936,7 @@ var __generator$1 = (undefined && undefined.__generator) || function (thisArg, b
             }
             op = body.call(thisArg, _);
         } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : undefined, done: true };
     }
 };
 var MAX_ATTEMPTS = 5;
@@ -68094,7 +67964,7 @@ var RetryingTransport = /** @class */ (function () {
     };
     RetryingTransport.prototype.send = function (data, timeoutMillis) {
         var _a;
-        return __awaiter$1(this, void 0, void 0, function () {
+        return __awaiter$1(this, undefined, undefined, function () {
             var deadline, result, attempts, nextBackoff, backoff, retryInMillis, remainingTimeoutMillis;
             return __generator$1(this, function (_b) {
                 switch (_b.label) {
@@ -68111,7 +67981,7 @@ var RetryingTransport = /** @class */ (function () {
                         attempts--;
                         backoff = Math.max(Math.min(nextBackoff, MAX_BACKOFF) + getJitter(), 0);
                         nextBackoff = nextBackoff * BACKOFF_MULTIPLIER;
-                        retryInMillis = (_a = result.retryInMillis) !== null && _a !== void 0 ? _a : backoff;
+                        retryInMillis = (_a = result.retryInMillis) !== null && _a !== undefined ? _a : backoff;
                         remainingTimeoutMillis = deadline - Date.now();
                         if (retryInMillis > remainingTimeoutMillis) {
                             return [2 /*return*/, result];
@@ -68164,7 +68034,7 @@ function createOtlpHttpExportDelegate(options, serializer) {
 
 function parseAndValidateTimeoutFromEnv(timeoutEnvVar) {
     var _a;
-    var envTimeout = (_a = process.env[timeoutEnvVar]) === null || _a === void 0 ? void 0 : _a.trim();
+    var envTimeout = (_a = process.env[timeoutEnvVar]) === null || _a === undefined ? undefined : _a.trim();
     if (envTimeout != null && envTimeout !== '') {
         var definedTimeout = Number(envTimeout);
         if (!Number.isNaN(definedTimeout) &&
@@ -68179,11 +68049,11 @@ function parseAndValidateTimeoutFromEnv(timeoutEnvVar) {
 function getTimeoutFromEnv(signalIdentifier) {
     var specificTimeout = parseAndValidateTimeoutFromEnv("OTEL_EXPORTER_OTLP_" + signalIdentifier + "_TIMEOUT");
     var nonSpecificTimeout = parseAndValidateTimeoutFromEnv('OTEL_EXPORTER_OTLP_TIMEOUT');
-    return specificTimeout !== null && specificTimeout !== void 0 ? specificTimeout : nonSpecificTimeout;
+    return specificTimeout !== null && specificTimeout !== undefined ? specificTimeout : nonSpecificTimeout;
 }
 function parseAndValidateCompressionFromEnv(compressionEnvVar) {
     var _a;
-    var compression = (_a = process.env[compressionEnvVar]) === null || _a === void 0 ? void 0 : _a.trim();
+    var compression = (_a = process.env[compressionEnvVar]) === null || _a === undefined ? undefined : _a.trim();
     if (compression === '') {
         return undefined;
     }
@@ -68196,7 +68066,7 @@ function parseAndValidateCompressionFromEnv(compressionEnvVar) {
 function getCompressionFromEnv(signalIdentifier) {
     var specificCompression = parseAndValidateCompressionFromEnv("OTEL_EXPORTER_OTLP_" + signalIdentifier + "_COMPRESSION");
     var nonSpecificCompression = parseAndValidateCompressionFromEnv('OTEL_EXPORTER_OTLP_COMPRESSION');
-    return specificCompression !== null && specificCompression !== void 0 ? specificCompression : nonSpecificCompression;
+    return specificCompression !== null && specificCompression !== undefined ? specificCompression : nonSpecificCompression;
 }
 function getSharedConfigurationFromEnvironment(signalIdentifier) {
     return {
@@ -68220,7 +68090,7 @@ function getSharedConfigurationFromEnvironment(signalIdentifier) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var __read$9 = (undefined && undefined.__read) || function (o, n) {
+var __read$6 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -68244,8 +68114,8 @@ function validateAndNormalizeHeaders(partialHeaders) {
     return function () {
         var _a;
         var headers = {};
-        Object.entries((_a = partialHeaders === null || partialHeaders === void 0 ? void 0 : partialHeaders()) !== null && _a !== void 0 ? _a : {}).forEach(function (_a) {
-            var _b = __read$9(_a, 2), key = _b[0], value = _b[1];
+        Object.entries((_a = partialHeaders === null || partialHeaders === undefined ? undefined : partialHeaders()) !== null && _a !== undefined ? _a : {}).forEach(function (_a) {
+            var _b = __read$6(_a, 2), key = _b[0], value = _b[1];
             if (typeof value !== 'undefined') {
                 headers[key] = String(value);
             }
@@ -68318,7 +68188,7 @@ function validateUserProvidedUrl(url) {
  */
 function mergeOtlpHttpConfigurationWithDefaults(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration) {
     var _a, _b, _c, _d;
-    return __assign$3(__assign$3({}, mergeOtlpSharedConfigurationWithDefaults(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration)), { headers: mergeHeaders(validateAndNormalizeHeaders(userProvidedConfiguration.headers), fallbackConfiguration.headers, defaultConfiguration.headers), url: (_b = (_a = validateUserProvidedUrl(userProvidedConfiguration.url)) !== null && _a !== void 0 ? _a : fallbackConfiguration.url) !== null && _b !== void 0 ? _b : defaultConfiguration.url, agentOptions: (_d = (_c = userProvidedConfiguration.agentOptions) !== null && _c !== void 0 ? _c : fallbackConfiguration.agentOptions) !== null && _d !== void 0 ? _d : defaultConfiguration.agentOptions });
+    return __assign$3(__assign$3({}, mergeOtlpSharedConfigurationWithDefaults(userProvidedConfiguration, fallbackConfiguration, defaultConfiguration)), { headers: mergeHeaders(validateAndNormalizeHeaders(userProvidedConfiguration.headers), fallbackConfiguration.headers, defaultConfiguration.headers), url: (_b = (_a = validateUserProvidedUrl(userProvidedConfiguration.url)) !== null && _a !== undefined ? _a : fallbackConfiguration.url) !== null && _b !== undefined ? _b : defaultConfiguration.url, agentOptions: (_d = (_c = userProvidedConfiguration.agentOptions) !== null && _c !== undefined ? _c : fallbackConfiguration.agentOptions) !== null && _d !== undefined ? _d : defaultConfiguration.agentOptions });
 }
 function getHttpConfigurationDefaults(requiredHeaders, signalResourcePath) {
     return __assign$3(__assign$3({}, getSharedConfigurationDefaults()), { headers: function () { return requiredHeaders; }, url: 'http://localhost:4318/' + signalResourcePath, agentOptions: { keepAlive: true } });
@@ -68337,17 +68207,17 @@ var __assign$2 = (undefined && undefined.__assign) || function () {
 };
 function getStaticHeadersFromEnv(signalIdentifier) {
     var _a, _b;
-    var signalSpecificRawHeaders = (_a = process.env["OTEL_EXPORTER_OTLP_" + signalIdentifier + "_HEADERS"]) === null || _a === void 0 ? void 0 : _a.trim();
-    var nonSignalSpecificRawHeaders = (_b = process.env['OTEL_EXPORTER_OTLP_HEADERS']) === null || _b === void 0 ? void 0 : _b.trim();
-    var signalSpecificHeaders = baggageUtils$1.parseKeyPairsIntoRecord(signalSpecificRawHeaders);
-    var nonSignalSpecificHeaders = baggageUtils$1.parseKeyPairsIntoRecord(nonSignalSpecificRawHeaders);
+    var signalSpecificRawHeaders = (_a = process.env["OTEL_EXPORTER_OTLP_" + signalIdentifier + "_HEADERS"]) === null || _a === undefined ? undefined : _a.trim();
+    var nonSignalSpecificRawHeaders = (_b = process.env['OTEL_EXPORTER_OTLP_HEADERS']) === null || _b === undefined ? undefined : _b.trim();
+    var signalSpecificHeaders = baggageUtils.parseKeyPairsIntoRecord(signalSpecificRawHeaders);
+    var nonSignalSpecificHeaders = baggageUtils.parseKeyPairsIntoRecord(nonSignalSpecificRawHeaders);
     if (Object.keys(signalSpecificHeaders).length === 0 &&
         Object.keys(nonSignalSpecificHeaders).length === 0) {
         return undefined;
     }
     // headers are combined instead of overwritten, with the specific headers taking precedence over
     // the non-specific ones.
-    return Object.assign({}, baggageUtils$1.parseKeyPairsIntoRecord(nonSignalSpecificRawHeaders), baggageUtils$1.parseKeyPairsIntoRecord(signalSpecificRawHeaders));
+    return Object.assign({}, baggageUtils.parseKeyPairsIntoRecord(nonSignalSpecificRawHeaders), baggageUtils.parseKeyPairsIntoRecord(signalSpecificRawHeaders));
 }
 function appendRootPathToUrlIfNeeded(url) {
     try {
@@ -68385,7 +68255,7 @@ function appendResourcePathToUrl(url, path) {
 }
 function getNonSpecificUrlFromEnv(signalResourcePath) {
     var _a;
-    var envUrl = (_a = process.env.OTEL_EXPORTER_OTLP_ENDPOINT) === null || _a === void 0 ? void 0 : _a.trim();
+    var envUrl = (_a = process.env.OTEL_EXPORTER_OTLP_ENDPOINT) === null || _a === undefined ? undefined : _a.trim();
     if (envUrl == null || envUrl === '') {
         return undefined;
     }
@@ -68393,7 +68263,7 @@ function getNonSpecificUrlFromEnv(signalResourcePath) {
 }
 function getSpecificUrlFromEnv(signalIdentifier) {
     var _a;
-    var envUrl = (_a = process.env["OTEL_EXPORTER_OTLP_" + signalIdentifier + "_ENDPOINT"]) === null || _a === void 0 ? void 0 : _a.trim();
+    var envUrl = (_a = process.env["OTEL_EXPORTER_OTLP_" + signalIdentifier + "_ENDPOINT"]) === null || _a === undefined ? undefined : _a.trim();
     if (envUrl == null || envUrl === '') {
         return undefined;
     }
@@ -68407,12 +68277,12 @@ function getSpecificUrlFromEnv(signalIdentifier) {
  */
 function getHttpConfigurationFromEnvironment(signalIdentifier, signalResourcePath) {
     var _a;
-    return __assign$2(__assign$2({}, getSharedConfigurationFromEnvironment(signalIdentifier)), { url: (_a = getSpecificUrlFromEnv(signalIdentifier)) !== null && _a !== void 0 ? _a : getNonSpecificUrlFromEnv(signalResourcePath), headers: wrapStaticHeadersInFunction(getStaticHeadersFromEnv(signalIdentifier)) });
+    return __assign$2(__assign$2({}, getSharedConfigurationFromEnvironment(signalIdentifier)), { url: (_a = getSpecificUrlFromEnv(signalIdentifier)) !== null && _a !== undefined ? _a : getNonSpecificUrlFromEnv(signalResourcePath), headers: wrapStaticHeadersInFunction(getStaticHeadersFromEnv(signalIdentifier)) });
 }
 
 function convertLegacyAgentOptions(config) {
     // populate keepAlive for use with new settings
-    if ((config === null || config === void 0 ? void 0 : config.keepAlive) != null) {
+    if ((config === null || config === undefined ? undefined : config.keepAlive) != null) {
         if (config.httpAgentOptions != null) {
             if (config.httpAgentOptions.keepAlive == null) {
                 // specific setting is not set, populate with non-specific setting.
@@ -68482,7 +68352,7 @@ function requireOtlpGrpcEnvConfiguration () {
 	if (hasRequiredOtlpGrpcEnvConfiguration) return otlpGrpcEnvConfiguration;
 	hasRequiredOtlpGrpcEnvConfiguration = 1;
 	Object.defineProperty(otlpGrpcEnvConfiguration, "__esModule", { value: true });
-	otlpGrpcEnvConfiguration.getOtlpGrpcConfigurationFromEnv = void 0;
+	otlpGrpcEnvConfiguration.getOtlpGrpcConfigurationFromEnv = undefined;
 	const core_1 = require$$0$1;
 	const grpc_exporter_transport_1 = /*@__PURE__*/ requireGrpcExporterTransport();
 	const node_http_1 = require$$2;
@@ -68500,8 +68370,8 @@ function requireOtlpGrpcEnvConfiguration () {
 	}
 	function getMetadataFromEnv(signalIdentifier) {
 	    var _a, _b;
-	    const signalSpecificRawHeaders = (_a = process.env[`OTEL_EXPORTER_OTLP_${signalIdentifier}_HEADERS`]) === null || _a === void 0 ? void 0 : _a.trim();
-	    const nonSignalSpecificRawHeaders = (_b = process.env['OTEL_EXPORTER_OTLP_HEADERS']) === null || _b === void 0 ? void 0 : _b.trim();
+	    const signalSpecificRawHeaders = (_a = process.env[`OTEL_EXPORTER_OTLP_${signalIdentifier}_HEADERS`]) === null || _a === undefined ? undefined : _a.trim();
+	    const nonSignalSpecificRawHeaders = (_b = process.env['OTEL_EXPORTER_OTLP_HEADERS']) === null || _b === undefined ? undefined : _b.trim();
 	    const signalSpecificHeaders = core_1.baggageUtils.parseKeyPairsIntoRecord(signalSpecificRawHeaders);
 	    const nonSignalSpecificHeaders = core_1.baggageUtils.parseKeyPairsIntoRecord(nonSignalSpecificRawHeaders);
 	    if (Object.keys(signalSpecificHeaders).length === 0 &&
@@ -68534,8 +68404,8 @@ function requireOtlpGrpcEnvConfiguration () {
 	    // - http://example.test:4317 -> use insecure credentials if nothing else is provided
 	    // - https://example.test:4317 -> use secure credentials from environment (or provided via code)
 	    var _a, _b;
-	    const specificEndpoint = (_a = process.env[`OTEL_EXPORTER_OTLP_${signalIdentifier}_ENDPOINT`]) === null || _a === void 0 ? void 0 : _a.trim();
-	    const nonSpecificEndpoint = (_b = process.env[`OTEL_EXPORTER_OTLP_ENDPOINT`]) === null || _b === void 0 ? void 0 : _b.trim();
+	    const specificEndpoint = (_a = process.env[`OTEL_EXPORTER_OTLP_${signalIdentifier}_ENDPOINT`]) === null || _a === undefined ? undefined : _a.trim();
+	    const nonSpecificEndpoint = (_b = process.env[`OTEL_EXPORTER_OTLP_ENDPOINT`]) === null || _b === undefined ? undefined : _b.trim();
 	    return fallbackIfNullishOrBlank(specificEndpoint, nonSpecificEndpoint);
 	}
 	/**
@@ -68560,14 +68430,14 @@ function requireOtlpGrpcEnvConfiguration () {
 	 */
 	function getInsecureSettingFromEnv(signalIdentifier) {
 	    var _a, _b;
-	    const signalSpecificInsecureValue = (_a = process.env[`OTEL_EXPORTER_OTLP_${signalIdentifier}_INSECURE`]) === null || _a === void 0 ? void 0 : _a.toLowerCase().trim();
-	    const nonSignalSpecificInsecureValue = (_b = process.env[`OTEL_EXPORTER_OTLP_INSECURE`]) === null || _b === void 0 ? void 0 : _b.toLowerCase().trim();
+	    const signalSpecificInsecureValue = (_a = process.env[`OTEL_EXPORTER_OTLP_${signalIdentifier}_INSECURE`]) === null || _a === undefined ? undefined : _a.toLowerCase().trim();
+	    const nonSignalSpecificInsecureValue = (_b = process.env[`OTEL_EXPORTER_OTLP_INSECURE`]) === null || _b === undefined ? undefined : _b.toLowerCase().trim();
 	    return (fallbackIfNullishOrBlank(signalSpecificInsecureValue, nonSignalSpecificInsecureValue) === 'true');
 	}
 	function readFileFromEnv(signalSpecificEnvVar, nonSignalSpecificEnvVar, warningMessage) {
 	    var _a, _b;
-	    const signalSpecificPath = (_a = process.env[signalSpecificEnvVar]) === null || _a === void 0 ? void 0 : _a.trim();
-	    const nonSignalSpecificPath = (_b = process.env[nonSignalSpecificEnvVar]) === null || _b === void 0 ? void 0 : _b.trim();
+	    const signalSpecificPath = (_a = process.env[signalSpecificEnvVar]) === null || _a === undefined ? undefined : _a.trim();
+	    const nonSignalSpecificPath = (_b = process.env[nonSignalSpecificEnvVar]) === null || _b === undefined ? undefined : _b.trim();
 	    const filePath = fallbackIfNullishOrBlank(signalSpecificPath, nonSignalSpecificPath);
 	    if (filePath != null) {
 	        try {
@@ -68643,7 +68513,7 @@ function requireConvertLegacyOtlpGrpcOptions () {
 	if (hasRequiredConvertLegacyOtlpGrpcOptions) return convertLegacyOtlpGrpcOptions;
 	hasRequiredConvertLegacyOtlpGrpcOptions = 1;
 	Object.defineProperty(convertLegacyOtlpGrpcOptions, "__esModule", { value: true });
-	convertLegacyOtlpGrpcOptions.convertLegacyOtlpGrpcOptions = void 0;
+	convertLegacyOtlpGrpcOptions.convertLegacyOtlpGrpcOptions = undefined;
 	const api_1 = require$$0$2;
 	const otlp_grpc_configuration_1 = /*@__PURE__*/ requireOtlpGrpcConfiguration();
 	const grpc_exporter_transport_1 = /*@__PURE__*/ requireGrpcExporterTransport();
@@ -68664,7 +68534,7 @@ function requireConvertLegacyOtlpGrpcOptions () {
 	        metadata: () => {
 	            var _a;
 	            // metadata resolution strategy is merge, so we can return empty here, and it will not override the rest of the settings.
-	            return (_a = config.metadata) !== null && _a !== void 0 ? _a : (0, grpc_exporter_transport_1.createEmptyMetadata)();
+	            return (_a = config.metadata) !== null && _a !== undefined ? _a : (0, grpc_exporter_transport_1.createEmptyMetadata)();
 	        },
 	        compression: config.compression,
 	        timeoutMillis: config.timeoutMillis,
@@ -68702,7 +68572,7 @@ function requireOtlpGrpcExportDelegate () {
 	 * limitations under the License.
 	 */
 	Object.defineProperty(otlpGrpcExportDelegate, "__esModule", { value: true });
-	otlpGrpcExportDelegate.createOtlpGrpcExportDelegate = void 0;
+	otlpGrpcExportDelegate.createOtlpGrpcExportDelegate = undefined;
 	const otlp_exporter_base_1 = require$$2$1;
 	const grpc_exporter_transport_1 = /*@__PURE__*/ requireGrpcExporterTransport();
 	function createOtlpGrpcExportDelegate(options, serializer, grpcName, grpcPath) {
@@ -68742,7 +68612,7 @@ function requireSrc$1 () {
 		 * limitations under the License.
 		 */
 		Object.defineProperty(exports, "__esModule", { value: true });
-		exports.createOtlpGrpcExportDelegate = exports.convertLegacyOtlpGrpcOptions = void 0;
+		exports.createOtlpGrpcExportDelegate = exports.convertLegacyOtlpGrpcOptions = undefined;
 		var convert_legacy_otlp_grpc_options_1 = /*@__PURE__*/ requireConvertLegacyOtlpGrpcOptions();
 		Object.defineProperty(exports, "convertLegacyOtlpGrpcOptions", { enumerable: true, get: function () { return convert_legacy_otlp_grpc_options_1.convertLegacyOtlpGrpcOptions; } });
 		var otlp_grpc_export_delegate_1 = /*@__PURE__*/ requireOtlpGrpcExportDelegate();
@@ -68750,702 +68620,6 @@ function requireSrc$1 () {
 		
 	} (src));
 	return src;
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function intValue(charCode) {
-    // 0-9
-    if (charCode >= 48 && charCode <= 57) {
-        return charCode - 48;
-    }
-    // a-f
-    if (charCode >= 97 && charCode <= 102) {
-        return charCode - 87;
-    }
-    // A-F
-    return charCode - 55;
-}
-function hexToBinary(hexStr) {
-    var buf = new Uint8Array(hexStr.length / 2);
-    var offset = 0;
-    for (var i = 0; i < hexStr.length; i += 2) {
-        var hi = intValue(hexStr.charCodeAt(i));
-        var lo = intValue(hexStr.charCodeAt(i + 1));
-        buf[offset++] = (hi << 4) | lo;
-    }
-    return buf;
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var NANOSECOND_DIGITS$1 = 9;
-var SECOND_TO_NANOSECONDS$1 = Math.pow(10, NANOSECOND_DIGITS$1);
-/**
- * Convert hrTime to nanoseconds.
- * @param time
- */
-function hrTimeToNanoseconds(time) {
-    return time[0] * SECOND_TO_NANOSECONDS$1 + time[1];
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function hrTimeToNanos(hrTime) {
-    var NANOSECONDS = BigInt(1000000000);
-    return BigInt(hrTime[0]) * NANOSECONDS + BigInt(hrTime[1]);
-}
-function toLongBits(value) {
-    var low = Number(BigInt.asUintN(32, value));
-    var high = Number(BigInt.asUintN(32, value >> BigInt(32)));
-    return { low: low, high: high };
-}
-function encodeAsLongBits(hrTime) {
-    var nanos = hrTimeToNanos(hrTime);
-    return toLongBits(nanos);
-}
-function encodeAsString(hrTime) {
-    var nanos = hrTimeToNanos(hrTime);
-    return nanos.toString();
-}
-var encodeTimestamp = typeof BigInt !== 'undefined' ? encodeAsString : hrTimeToNanoseconds;
-function identity(value) {
-    return value;
-}
-function optionalHexToBinary(str) {
-    if (str === undefined)
-        return undefined;
-    return hexToBinary(str);
-}
-var DEFAULT_ENCODER = {
-    encodeHrTime: encodeAsLongBits,
-    encodeSpanContext: hexToBinary,
-    encodeOptionalSpanContext: optionalHexToBinary,
-};
-function getOtlpEncoder(options) {
-    var _a, _b;
-    if (options === undefined) {
-        return DEFAULT_ENCODER;
-    }
-    var useLongBits = (_a = options.useLongBits) !== null && _a !== void 0 ? _a : true;
-    var useHex = (_b = options.useHex) !== null && _b !== void 0 ? _b : false;
-    return {
-        encodeHrTime: useLongBits ? encodeAsLongBits : encodeTimestamp,
-        encodeSpanContext: useHex ? identity : hexToBinary,
-        encodeOptionalSpanContext: useHex ? identity : optionalHexToBinary,
-    };
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * SpanKind is the type of span. Can be used to specify additional relationships between spans
- * in addition to a parent/child relationship.
- */
-var ESpanKind;
-(function (ESpanKind) {
-    /** Unspecified. Do NOT use as default. Implementations MAY assume SpanKind to be INTERNAL when receiving UNSPECIFIED. */
-    ESpanKind[ESpanKind["SPAN_KIND_UNSPECIFIED"] = 0] = "SPAN_KIND_UNSPECIFIED";
-    /** Indicates that the span represents an internal operation within an application,
-     * as opposed to an operation happening at the boundaries. Default value.
-     */
-    ESpanKind[ESpanKind["SPAN_KIND_INTERNAL"] = 1] = "SPAN_KIND_INTERNAL";
-    /** Indicates that the span covers server-side handling of an RPC or other
-     * remote network request.
-     */
-    ESpanKind[ESpanKind["SPAN_KIND_SERVER"] = 2] = "SPAN_KIND_SERVER";
-    /** Indicates that the span describes a request to some remote service.
-     */
-    ESpanKind[ESpanKind["SPAN_KIND_CLIENT"] = 3] = "SPAN_KIND_CLIENT";
-    /** Indicates that the span describes a producer sending a message to a broker.
-     * Unlike CLIENT and SERVER, there is often no direct critical path latency relationship
-     * between producer and consumer spans. A PRODUCER span ends when the message was accepted
-     * by the broker while the logical processing of the message might span a much longer time.
-     */
-    ESpanKind[ESpanKind["SPAN_KIND_PRODUCER"] = 4] = "SPAN_KIND_PRODUCER";
-    /** Indicates that the span describes consumer receiving a message from a broker.
-     * Like the PRODUCER kind, there is often no direct critical path latency relationship
-     * between producer and consumer spans.
-     */
-    ESpanKind[ESpanKind["SPAN_KIND_CONSUMER"] = 5] = "SPAN_KIND_CONSUMER";
-})(ESpanKind || (ESpanKind = {}));
-
-var __read$8 = (undefined && undefined.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-function createInstrumentationScope(scope) {
-    return {
-        name: scope.name,
-        version: scope.version,
-    };
-}
-function toAttributes(attributes) {
-    return Object.keys(attributes).map(function (key) { return toKeyValue(key, attributes[key]); });
-}
-function toKeyValue(key, value) {
-    return {
-        key: key,
-        value: toAnyValue(value),
-    };
-}
-function toAnyValue(value) {
-    var t = typeof value;
-    if (t === 'string')
-        return { stringValue: value };
-    if (t === 'number') {
-        if (!Number.isInteger(value))
-            return { doubleValue: value };
-        return { intValue: value };
-    }
-    if (t === 'boolean')
-        return { boolValue: value };
-    if (value instanceof Uint8Array)
-        return { bytesValue: value };
-    if (Array.isArray(value))
-        return { arrayValue: { values: value.map(toAnyValue) } };
-    if (t === 'object' && value != null)
-        return {
-            kvlistValue: {
-                values: Object.entries(value).map(function (_a) {
-                    var _b = __read$8(_a, 2), k = _b[0], v = _b[1];
-                    return toKeyValue(k, v);
-                }),
-            },
-        };
-    return {};
-}
-
-function sdkSpanToOtlpSpan(span, encoder) {
-    var _a;
-    var ctx = span.spanContext();
-    var status = span.status;
-    return {
-        traceId: encoder.encodeSpanContext(ctx.traceId),
-        spanId: encoder.encodeSpanContext(ctx.spanId),
-        parentSpanId: encoder.encodeOptionalSpanContext(span.parentSpanId),
-        traceState: (_a = ctx.traceState) === null || _a === void 0 ? void 0 : _a.serialize(),
-        name: span.name,
-        // Span kind is offset by 1 because the API does not define a value for unset
-        kind: span.kind == null ? 0 : span.kind + 1,
-        startTimeUnixNano: encoder.encodeHrTime(span.startTime),
-        endTimeUnixNano: encoder.encodeHrTime(span.endTime),
-        attributes: toAttributes(span.attributes),
-        droppedAttributesCount: span.droppedAttributesCount,
-        events: span.events.map(function (event) { return toOtlpSpanEvent(event, encoder); }),
-        droppedEventsCount: span.droppedEventsCount,
-        status: {
-            // API and proto enums share the same values
-            code: status.code,
-            message: status.message,
-        },
-        links: span.links.map(function (link) { return toOtlpLink(link, encoder); }),
-        droppedLinksCount: span.droppedLinksCount,
-    };
-}
-function toOtlpLink(link, encoder) {
-    var _a;
-    return {
-        attributes: link.attributes ? toAttributes(link.attributes) : [],
-        spanId: encoder.encodeSpanContext(link.context.spanId),
-        traceId: encoder.encodeSpanContext(link.context.traceId),
-        traceState: (_a = link.context.traceState) === null || _a === void 0 ? void 0 : _a.serialize(),
-        droppedAttributesCount: link.droppedAttributesCount || 0,
-    };
-}
-function toOtlpSpanEvent(timedEvent, encoder) {
-    return {
-        attributes: timedEvent.attributes
-            ? toAttributes(timedEvent.attributes)
-            : [],
-        name: timedEvent.name,
-        timeUnixNano: encoder.encodeHrTime(timedEvent.time),
-        droppedAttributesCount: timedEvent.droppedAttributesCount || 0,
-    };
-}
-
-function createResource(resource) {
-    return {
-        attributes: toAttributes(resource.attributes),
-        droppedAttributesCount: 0,
-    };
-}
-
-var __values$6 = (undefined && undefined.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
-var __read$7 = (undefined && undefined.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-function createExportTraceServiceRequest(spans, options) {
-    var encoder = getOtlpEncoder(options);
-    return {
-        resourceSpans: spanRecordsToResourceSpans(spans, encoder),
-    };
-}
-function createResourceMap$1(readableSpans) {
-    var e_1, _a;
-    var resourceMap = new Map();
-    try {
-        for (var readableSpans_1 = __values$6(readableSpans), readableSpans_1_1 = readableSpans_1.next(); !readableSpans_1_1.done; readableSpans_1_1 = readableSpans_1.next()) {
-            var record = readableSpans_1_1.value;
-            var ilmMap = resourceMap.get(record.resource);
-            if (!ilmMap) {
-                ilmMap = new Map();
-                resourceMap.set(record.resource, ilmMap);
-            }
-            // TODO this is duplicated in basic tracer. Consolidate on a common helper in core
-            var instrumentationLibraryKey = record.instrumentationLibrary.name + "@" + (record.instrumentationLibrary.version || '') + ":" + (record.instrumentationLibrary.schemaUrl || '');
-            var records = ilmMap.get(instrumentationLibraryKey);
-            if (!records) {
-                records = [];
-                ilmMap.set(instrumentationLibraryKey, records);
-            }
-            records.push(record);
-        }
-    }
-    catch (e_1_1) { e_1 = { error: e_1_1 }; }
-    finally {
-        try {
-            if (readableSpans_1_1 && !readableSpans_1_1.done && (_a = readableSpans_1.return)) _a.call(readableSpans_1);
-        }
-        finally { if (e_1) throw e_1.error; }
-    }
-    return resourceMap;
-}
-function spanRecordsToResourceSpans(readableSpans, encoder) {
-    var resourceMap = createResourceMap$1(readableSpans);
-    var out = [];
-    var entryIterator = resourceMap.entries();
-    var entry = entryIterator.next();
-    while (!entry.done) {
-        var _a = __read$7(entry.value, 2), resource = _a[0], ilmMap = _a[1];
-        var scopeResourceSpans = [];
-        var ilmIterator = ilmMap.values();
-        var ilmEntry = ilmIterator.next();
-        while (!ilmEntry.done) {
-            var scopeSpans = ilmEntry.value;
-            if (scopeSpans.length > 0) {
-                var spans = scopeSpans.map(function (readableSpan) {
-                    return sdkSpanToOtlpSpan(readableSpan, encoder);
-                });
-                scopeResourceSpans.push({
-                    scope: createInstrumentationScope(scopeSpans[0].instrumentationLibrary),
-                    spans: spans,
-                    schemaUrl: scopeSpans[0].instrumentationLibrary.schemaUrl,
-                });
-            }
-            ilmEntry = ilmIterator.next();
-        }
-        // TODO SDK types don't provide resource schema URL at this time
-        var transformedSpans = {
-            resource: createResource(resource),
-            scopeSpans: scopeResourceSpans,
-            schemaUrl: undefined,
-        };
-        out.push(transformedSpans);
-        entry = entryIterator.next();
-    }
-    return out;
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * AggregationTemporality indicates the way additive quantities are expressed.
- */
-var AggregationTemporality;
-(function (AggregationTemporality) {
-    AggregationTemporality[AggregationTemporality["DELTA"] = 0] = "DELTA";
-    AggregationTemporality[AggregationTemporality["CUMULATIVE"] = 1] = "CUMULATIVE";
-})(AggregationTemporality || (AggregationTemporality = {}));
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * The aggregated point data type.
- */
-var DataPointType;
-(function (DataPointType) {
-    /**
-     * A histogram data point contains a histogram statistics of collected
-     * values with a list of explicit bucket boundaries and statistics such
-     * as min, max, count, and sum of all collected values.
-     */
-    DataPointType[DataPointType["HISTOGRAM"] = 0] = "HISTOGRAM";
-    /**
-     * An exponential histogram data point contains a histogram statistics of
-     * collected values where bucket boundaries are automatically calculated
-     * using an exponential function, and statistics such as min, max, count,
-     * and sum of all collected values.
-     */
-    DataPointType[DataPointType["EXPONENTIAL_HISTOGRAM"] = 1] = "EXPONENTIAL_HISTOGRAM";
-    /**
-     * A gauge metric data point has only a single numeric value.
-     */
-    DataPointType[DataPointType["GAUGE"] = 2] = "GAUGE";
-    /**
-     * A sum metric data point has a single numeric value and a
-     * monotonicity-indicator.
-     */
-    DataPointType[DataPointType["SUM"] = 3] = "SUM";
-})(DataPointType || (DataPointType = {}));
-
-function toResourceMetrics(resourceMetrics, options) {
-    var encoder = getOtlpEncoder(options);
-    return {
-        resource: createResource(resourceMetrics.resource),
-        schemaUrl: undefined,
-        scopeMetrics: toScopeMetrics(resourceMetrics.scopeMetrics, encoder),
-    };
-}
-function toScopeMetrics(scopeMetrics, encoder) {
-    return Array.from(scopeMetrics.map(function (metrics) { return ({
-        scope: createInstrumentationScope(metrics.scope),
-        metrics: metrics.metrics.map(function (metricData) { return toMetric(metricData, encoder); }),
-        schemaUrl: metrics.scope.schemaUrl,
-    }); }));
-}
-function toMetric(metricData, encoder) {
-    var out = {
-        name: metricData.descriptor.name,
-        description: metricData.descriptor.description,
-        unit: metricData.descriptor.unit,
-    };
-    var aggregationTemporality = toAggregationTemporality(metricData.aggregationTemporality);
-    switch (metricData.dataPointType) {
-        case DataPointType.SUM:
-            out.sum = {
-                aggregationTemporality: aggregationTemporality,
-                isMonotonic: metricData.isMonotonic,
-                dataPoints: toSingularDataPoints(metricData, encoder),
-            };
-            break;
-        case DataPointType.GAUGE:
-            out.gauge = {
-                dataPoints: toSingularDataPoints(metricData, encoder),
-            };
-            break;
-        case DataPointType.HISTOGRAM:
-            out.histogram = {
-                aggregationTemporality: aggregationTemporality,
-                dataPoints: toHistogramDataPoints(metricData, encoder),
-            };
-            break;
-        case DataPointType.EXPONENTIAL_HISTOGRAM:
-            out.exponentialHistogram = {
-                aggregationTemporality: aggregationTemporality,
-                dataPoints: toExponentialHistogramDataPoints(metricData, encoder),
-            };
-            break;
-    }
-    return out;
-}
-function toSingularDataPoint(dataPoint, valueType, encoder) {
-    var out = {
-        attributes: toAttributes(dataPoint.attributes),
-        startTimeUnixNano: encoder.encodeHrTime(dataPoint.startTime),
-        timeUnixNano: encoder.encodeHrTime(dataPoint.endTime),
-    };
-    switch (valueType) {
-        case ValueType.INT:
-            out.asInt = dataPoint.value;
-            break;
-        case ValueType.DOUBLE:
-            out.asDouble = dataPoint.value;
-            break;
-    }
-    return out;
-}
-function toSingularDataPoints(metricData, encoder) {
-    return metricData.dataPoints.map(function (dataPoint) {
-        return toSingularDataPoint(dataPoint, metricData.descriptor.valueType, encoder);
-    });
-}
-function toHistogramDataPoints(metricData, encoder) {
-    return metricData.dataPoints.map(function (dataPoint) {
-        var histogram = dataPoint.value;
-        return {
-            attributes: toAttributes(dataPoint.attributes),
-            bucketCounts: histogram.buckets.counts,
-            explicitBounds: histogram.buckets.boundaries,
-            count: histogram.count,
-            sum: histogram.sum,
-            min: histogram.min,
-            max: histogram.max,
-            startTimeUnixNano: encoder.encodeHrTime(dataPoint.startTime),
-            timeUnixNano: encoder.encodeHrTime(dataPoint.endTime),
-        };
-    });
-}
-function toExponentialHistogramDataPoints(metricData, encoder) {
-    return metricData.dataPoints.map(function (dataPoint) {
-        var histogram = dataPoint.value;
-        return {
-            attributes: toAttributes(dataPoint.attributes),
-            count: histogram.count,
-            min: histogram.min,
-            max: histogram.max,
-            sum: histogram.sum,
-            positive: {
-                offset: histogram.positive.offset,
-                bucketCounts: histogram.positive.bucketCounts,
-            },
-            negative: {
-                offset: histogram.negative.offset,
-                bucketCounts: histogram.negative.bucketCounts,
-            },
-            scale: histogram.scale,
-            zeroCount: histogram.zeroCount,
-            startTimeUnixNano: encoder.encodeHrTime(dataPoint.startTime),
-            timeUnixNano: encoder.encodeHrTime(dataPoint.endTime),
-        };
-    });
-}
-function toAggregationTemporality(temporality) {
-    switch (temporality) {
-        case AggregationTemporality.DELTA:
-            return 1 /* AGGREGATION_TEMPORALITY_DELTA */;
-        case AggregationTemporality.CUMULATIVE:
-            return 2 /* AGGREGATION_TEMPORALITY_CUMULATIVE */;
-    }
-}
-
-function createExportMetricsServiceRequest(resourceMetrics, options) {
-    return {
-        resourceMetrics: resourceMetrics.map(function (metrics) {
-            return toResourceMetrics(metrics, options);
-        }),
-    };
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var __values$5 = (undefined && undefined.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
-var __read$6 = (undefined && undefined.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-function createExportLogsServiceRequest(logRecords, options) {
-    var encoder = getOtlpEncoder(options);
-    return {
-        resourceLogs: logRecordsToResourceLogs(logRecords, encoder),
-    };
-}
-function createResourceMap(logRecords) {
-    var e_1, _a;
-    var resourceMap = new Map();
-    try {
-        for (var logRecords_1 = __values$5(logRecords), logRecords_1_1 = logRecords_1.next(); !logRecords_1_1.done; logRecords_1_1 = logRecords_1.next()) {
-            var record = logRecords_1_1.value;
-            var resource = record.resource, _b = record.instrumentationScope, name_1 = _b.name, _c = _b.version, version = _c === void 0 ? '' : _c, _d = _b.schemaUrl, schemaUrl = _d === void 0 ? '' : _d;
-            var ismMap = resourceMap.get(resource);
-            if (!ismMap) {
-                ismMap = new Map();
-                resourceMap.set(resource, ismMap);
-            }
-            var ismKey = name_1 + "@" + version + ":" + schemaUrl;
-            var records = ismMap.get(ismKey);
-            if (!records) {
-                records = [];
-                ismMap.set(ismKey, records);
-            }
-            records.push(record);
-        }
-    }
-    catch (e_1_1) { e_1 = { error: e_1_1 }; }
-    finally {
-        try {
-            if (logRecords_1_1 && !logRecords_1_1.done && (_a = logRecords_1.return)) _a.call(logRecords_1);
-        }
-        finally { if (e_1) throw e_1.error; }
-    }
-    return resourceMap;
-}
-function logRecordsToResourceLogs(logRecords, encoder) {
-    var resourceMap = createResourceMap(logRecords);
-    return Array.from(resourceMap, function (_a) {
-        var _b = __read$6(_a, 2), resource = _b[0], ismMap = _b[1];
-        return ({
-            resource: createResource(resource),
-            scopeLogs: Array.from(ismMap, function (_a) {
-                var _b = __read$6(_a, 2), scopeLogs = _b[1];
-                return {
-                    scope: createInstrumentationScope(scopeLogs[0].instrumentationScope),
-                    logRecords: scopeLogs.map(function (log) { return toLogRecord(log, encoder); }),
-                    schemaUrl: scopeLogs[0].instrumentationScope.schemaUrl,
-                };
-            }),
-            schemaUrl: undefined,
-        });
-    });
-}
-function toLogRecord(log, encoder) {
-    var _a, _b, _c;
-    return {
-        timeUnixNano: encoder.encodeHrTime(log.hrTime),
-        observedTimeUnixNano: encoder.encodeHrTime(log.hrTimeObserved),
-        severityNumber: toSeverityNumber(log.severityNumber),
-        severityText: log.severityText,
-        body: toAnyValue(log.body),
-        attributes: toLogAttributes(log.attributes),
-        droppedAttributesCount: log.droppedAttributesCount,
-        flags: (_a = log.spanContext) === null || _a === void 0 ? void 0 : _a.traceFlags,
-        traceId: encoder.encodeOptionalSpanContext((_b = log.spanContext) === null || _b === void 0 ? void 0 : _b.traceId),
-        spanId: encoder.encodeOptionalSpanContext((_c = log.spanContext) === null || _c === void 0 ? void 0 : _c.spanId),
-    };
-}
-function toSeverityNumber(severityNumber) {
-    return severityNumber;
-}
-function toLogAttributes(attributes) {
-    return Object.keys(attributes).map(function (key) { return toKeyValue(key, attributes[key]); });
 }
 
 var minimal;
@@ -82198,318 +81372,50 @@ var rootExports = /*@__PURE__*/ requireRoot();
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var logsResponseType = rootExports.opentelemetry.proto.collector.logs.v1
-    .ExportLogsServiceResponse;
-var logsRequestType = rootExports.opentelemetry.proto.collector.logs.v1
-    .ExportLogsServiceRequest;
-var metricsResponseType = rootExports.opentelemetry.proto.collector.metrics.v1
-    .ExportMetricsServiceResponse;
-var metricsRequestType = rootExports.opentelemetry.proto.collector.metrics.v1
-    .ExportMetricsServiceRequest;
-var traceResponseType = rootExports.opentelemetry.proto.collector.trace.v1
-    .ExportTraceServiceResponse;
-var traceRequestType = rootExports.opentelemetry.proto.collector.trace.v1
-    .ExportTraceServiceRequest;
-var ProtobufLogsSerializer = {
-    serializeRequest: function (arg) {
-        var request = createExportLogsServiceRequest(arg);
-        return logsRequestType.encode(request).finish();
-    },
-    deserializeResponse: function (arg) {
-        return logsResponseType.decode(arg);
-    },
-};
-var ProtobufMetricsSerializer = {
-    serializeRequest: function (arg) {
-        var request = createExportMetricsServiceRequest([arg]);
-        return metricsRequestType.encode(request).finish();
-    },
-    deserializeResponse: function (arg) {
-        return metricsResponseType.decode(arg);
-    },
-};
-var ProtobufTraceSerializer = {
-    serializeRequest: function (arg) {
-        var request = createExportTraceServiceRequest(arg);
-        return traceRequestType.encode(request).finish();
-    },
-    deserializeResponse: function (arg) {
-        return traceResponseType.decode(arg);
-    },
-};
-
-var JsonTraceSerializer = {
-    serializeRequest: function (arg) {
-        var request = createExportTraceServiceRequest(arg, {
-            useHex: true,
-            useLongBits: false,
-        });
-        var encoder = new TextEncoder();
-        return encoder.encode(JSON.stringify(request));
-    },
-    deserializeResponse: function (arg) {
-        var decoder = new TextDecoder();
-        return JSON.parse(decoder.decode(arg));
-    },
-};
-var JsonMetricsSerializer = {
-    serializeRequest: function (arg) {
-        var request = createExportMetricsServiceRequest([arg], {
-            useLongBits: false,
-        });
-        var encoder = new TextEncoder();
-        return encoder.encode(JSON.stringify(request));
-    },
-    deserializeResponse: function (arg) {
-        var decoder = new TextDecoder();
-        return JSON.parse(decoder.decode(arg));
-    },
-};
-var JsonLogsSerializer = {
-    serializeRequest: function (arg) {
-        var request = createExportLogsServiceRequest(arg, {
-            useHex: true,
-            useLongBits: false,
-        });
-        var encoder = new TextEncoder();
-        return encoder.encode(JSON.stringify(request));
-    },
-    deserializeResponse: function (arg) {
-        var decoder = new TextDecoder();
-        return JSON.parse(decoder.decode(arg));
-    },
-};
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-var esm = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	get ESpanKind () { return ESpanKind; },
-	JsonLogsSerializer: JsonLogsSerializer,
-	JsonMetricsSerializer: JsonMetricsSerializer,
-	JsonTraceSerializer: JsonTraceSerializer,
-	ProtobufLogsSerializer: ProtobufLogsSerializer,
-	ProtobufMetricsSerializer: ProtobufMetricsSerializer,
-	ProtobufTraceSerializer: ProtobufTraceSerializer,
-	createExportLogsServiceRequest: createExportLogsServiceRequest,
-	createExportMetricsServiceRequest: createExportMetricsServiceRequest,
-	createExportTraceServiceRequest: createExportTraceServiceRequest,
-	encodeAsLongBits: encodeAsLongBits,
-	encodeAsString: encodeAsString,
-	getOtlpEncoder: getOtlpEncoder,
-	hrTimeToNanos: hrTimeToNanos,
-	toLongBits: toLongBits
-});
-
-var require$$1 = /*@__PURE__*/getAugmentedNamespace(esm);
-
-var hasRequiredOTLPTraceExporter;
-
-function requireOTLPTraceExporter () {
-	if (hasRequiredOTLPTraceExporter) return OTLPTraceExporter$1;
-	hasRequiredOTLPTraceExporter = 1;
-	/*
-	 * Copyright The OpenTelemetry Authors
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 *      https://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 */
-	Object.defineProperty(OTLPTraceExporter$1, "__esModule", { value: true });
-	OTLPTraceExporter$1.OTLPTraceExporter = void 0;
-	const otlp_grpc_exporter_base_1 = /*@__PURE__*/ requireSrc$1();
-	const otlp_transformer_1 = require$$1;
-	const otlp_exporter_base_1 = require$$2$1;
-	/**
-	 * OTLP Trace Exporter for Node
-	 */
-	class OTLPTraceExporter extends otlp_exporter_base_1.OTLPExporterBase {
-	    constructor(config = {}) {
-	        super((0, otlp_grpc_exporter_base_1.createOtlpGrpcExportDelegate)((0, otlp_grpc_exporter_base_1.convertLegacyOtlpGrpcOptions)(config, 'TRACES'), otlp_transformer_1.ProtobufTraceSerializer, 'TraceExportService', '/opentelemetry.proto.collector.trace.v1.TraceService/Export'));
-	    }
-	}
-	OTLPTraceExporter$1.OTLPTraceExporter = OTLPTraceExporter;
-	
-	return OTLPTraceExporter$1;
+function hrTimeToNanos(hrTime) {
+    var NANOSECONDS = BigInt(1000000000);
+    return BigInt(hrTime[0]) * NANOSECONDS + BigInt(hrTime[1]);
 }
-
-var hasRequiredSrc;
-
-function requireSrc () {
-	if (hasRequiredSrc) return src$1;
-	hasRequiredSrc = 1;
-	(function (exports) {
-		/*
-		 * Copyright The OpenTelemetry Authors
-		 *
-		 * Licensed under the Apache License, Version 2.0 (the "License");
-		 * you may not use this file except in compliance with the License.
-		 * You may obtain a copy of the License at
-		 *
-		 *      https://www.apache.org/licenses/LICENSE-2.0
-		 *
-		 * Unless required by applicable law or agreed to in writing, software
-		 * distributed under the License is distributed on an "AS IS" BASIS,
-		 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-		 * See the License for the specific language governing permissions and
-		 * limitations under the License.
-		 */
-		var __createBinding = (src$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-		    if (k2 === undefined) k2 = k;
-		    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-		}) : (function(o, m, k, k2) {
-		    if (k2 === undefined) k2 = k;
-		    o[k2] = m[k];
-		}));
-		var __exportStar = (src$1.__exportStar) || function(m, exports) {
-		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-		};
-		Object.defineProperty(exports, "__esModule", { value: true });
-		/* eslint no-restricted-syntax: ["warn", "ExportAllDeclaration"] --
-		 * TODO: Replace wildcard export with named exports before next major version
-		 */
-		__exportStar(/*@__PURE__*/ requireOTLPTraceExporter(), exports);
-		
-	} (src$1));
-	return src$1;
+function toLongBits(value) {
+    var low = Number(BigInt.asUintN(32, value));
+    var high = Number(BigInt.asUintN(32, value >> BigInt(32)));
+    return { low: low, high: high };
 }
-
-var srcExports = /*@__PURE__*/ requireSrc();
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-// this is autogenerated file, see scripts/version-update.js
-var VERSION$2 = '0.56.0';
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var __extends$1 = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-/**
- * Collector Trace Exporter for Node with protobuf
- */
-var OTLPTraceExporter = /** @class */ (function (_super) {
-    __extends$1(OTLPTraceExporter, _super);
-    function OTLPTraceExporter(config) {
-        if (config === void 0) { config = {}; }
-        return _super.call(this, createOtlpHttpExportDelegate(convertLegacyHttpOptions(config, 'TRACES', 'v1/traces', {
-            'User-Agent': "OTel-OTLP-Exporter-JavaScript/" + VERSION$2,
-            'Content-Type': 'application/x-protobuf',
-        }), ProtobufTraceSerializer)) || this;
+function encodeAsLongBits(hrTime) {
+    var nanos = hrTimeToNanos(hrTime);
+    return toLongBits(nanos);
+}
+function encodeAsString(hrTime) {
+    var nanos = hrTimeToNanos(hrTime);
+    return nanos.toString();
+}
+var encodeTimestamp = typeof BigInt !== 'undefined' ? encodeAsString : hrTimeToNanoseconds;
+function identity(value) {
+    return value;
+}
+function optionalHexToBinary(str) {
+    if (str === undefined)
+        return undefined;
+    return hexToBinary(str);
+}
+var DEFAULT_ENCODER = {
+    encodeHrTime: encodeAsLongBits,
+    encodeSpanContext: hexToBinary,
+    encodeOptionalSpanContext: optionalHexToBinary,
+};
+function getOtlpEncoder(options) {
+    var _a, _b;
+    if (options === undefined) {
+        return DEFAULT_ENCODER;
     }
-    return OTLPTraceExporter;
-}(OTLPExporterBase));
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var SUPPRESS_TRACING_KEY = createContextKey('OpenTelemetry SDK Context Key SUPPRESS_TRACING');
-function suppressTracing(context) {
-    return context.setValue(SUPPRESS_TRACING_KEY, true);
+    var useLongBits = (_a = options.useLongBits) !== null && _a !== undefined ? _a : true;
+    var useHex = (_b = options.useHex) !== null && _b !== undefined ? _b : false;
+    return {
+        encodeHrTime: useLongBits ? encodeAsLongBits : encodeTimestamp,
+        encodeSpanContext: useHex ? identity : hexToBinary,
+        encodeOptionalSpanContext: useHex ? identity : optionalHexToBinary,
+    };
 }
-function isTracingSuppressed(context) {
-    return context.getValue(SUPPRESS_TRACING_KEY) === true;
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var BAGGAGE_KEY_PAIR_SEPARATOR = '=';
-var BAGGAGE_PROPERTIES_SEPARATOR = ';';
-var BAGGAGE_ITEMS_SEPARATOR = ',';
-// Name of the http header used to propagate the baggage
-var BAGGAGE_HEADER = 'baggage';
-// Maximum number of name-value pairs allowed by w3c spec
-var BAGGAGE_MAX_NAME_VALUE_PAIRS = 180;
-// Maximum number of bytes per a single name-value pair allowed by w3c spec
-var BAGGAGE_MAX_PER_NAME_VALUE_PAIRS = 4096;
-// Maximum total length of all name-value pairs allowed by w3c spec
-var BAGGAGE_MAX_TOTAL_LENGTH = 8192;
 
 var __read$5 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
@@ -82527,113 +81433,53 @@ var __read$5 = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-function serializeKeyPairs(keyPairs) {
-    return keyPairs.reduce(function (hValue, current) {
-        var value = "" + hValue + (hValue !== '' ? BAGGAGE_ITEMS_SEPARATOR : '') + current;
-        return value.length > BAGGAGE_MAX_TOTAL_LENGTH ? hValue : value;
-    }, '');
+function createResource(resource) {
+    return {
+        attributes: toAttributes(resource.attributes),
+        droppedAttributesCount: 0,
+    };
 }
-function getKeyPairs(baggage) {
-    return baggage.getAllEntries().map(function (_a) {
-        var _b = __read$5(_a, 2), key = _b[0], value = _b[1];
-        var entry = encodeURIComponent(key) + "=" + encodeURIComponent(value.value);
-        // include opaque metadata if provided
-        // NOTE: we intentionally don't URI-encode the metadata - that responsibility falls on the metadata implementation
-        if (value.metadata !== undefined) {
-            entry += BAGGAGE_PROPERTIES_SEPARATOR + value.metadata.toString();
-        }
-        return entry;
-    });
+function createInstrumentationScope(scope) {
+    return {
+        name: scope.name,
+        version: scope.version,
+    };
 }
-function parsePairKeyValue(entry) {
-    var valueProps = entry.split(BAGGAGE_PROPERTIES_SEPARATOR);
-    if (valueProps.length <= 0)
-        return;
-    var keyPairPart = valueProps.shift();
-    if (!keyPairPart)
-        return;
-    var separatorIndex = keyPairPart.indexOf(BAGGAGE_KEY_PAIR_SEPARATOR);
-    if (separatorIndex <= 0)
-        return;
-    var key = decodeURIComponent(keyPairPart.substring(0, separatorIndex).trim());
-    var value = decodeURIComponent(keyPairPart.substring(separatorIndex + 1).trim());
-    var metadata;
-    if (valueProps.length > 0) {
-        metadata = baggageEntryMetadataFromString(valueProps.join(BAGGAGE_PROPERTIES_SEPARATOR));
+function toAttributes(attributes) {
+    return Object.keys(attributes).map(function (key) { return toKeyValue(key, attributes[key]); });
+}
+function toKeyValue(key, value) {
+    return {
+        key: key,
+        value: toAnyValue(value),
+    };
+}
+function toAnyValue(value) {
+    var t = typeof value;
+    if (t === 'string')
+        return { stringValue: value };
+    if (t === 'number') {
+        if (!Number.isInteger(value))
+            return { doubleValue: value };
+        return { intValue: value };
     }
-    return { key: key, value: value, metadata: metadata };
+    if (t === 'boolean')
+        return { boolValue: value };
+    if (value instanceof Uint8Array)
+        return { bytesValue: value };
+    if (Array.isArray(value))
+        return { arrayValue: { values: value.map(toAnyValue) } };
+    if (t === 'object' && value != null)
+        return {
+            kvlistValue: {
+                values: Object.entries(value).map(function (_a) {
+                    var _b = __read$5(_a, 2), k = _b[0], v = _b[1];
+                    return toKeyValue(k, v);
+                }),
+            },
+        };
+    return {};
 }
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Propagates {@link Baggage} through Context format propagation.
- *
- * Based on the Baggage specification:
- * https://w3c.github.io/baggage/
- */
-var W3CBaggagePropagator = /** @class */ (function () {
-    function W3CBaggagePropagator() {
-    }
-    W3CBaggagePropagator.prototype.inject = function (context, carrier, setter) {
-        var baggage = propagation.getBaggage(context);
-        if (!baggage || isTracingSuppressed(context))
-            return;
-        var keyPairs = getKeyPairs(baggage)
-            .filter(function (pair) {
-            return pair.length <= BAGGAGE_MAX_PER_NAME_VALUE_PAIRS;
-        })
-            .slice(0, BAGGAGE_MAX_NAME_VALUE_PAIRS);
-        var headerValue = serializeKeyPairs(keyPairs);
-        if (headerValue.length > 0) {
-            setter.set(carrier, BAGGAGE_HEADER, headerValue);
-        }
-    };
-    W3CBaggagePropagator.prototype.extract = function (context, carrier, getter) {
-        var headerValue = getter.get(carrier, BAGGAGE_HEADER);
-        var baggageString = Array.isArray(headerValue)
-            ? headerValue.join(BAGGAGE_ITEMS_SEPARATOR)
-            : headerValue;
-        if (!baggageString)
-            return context;
-        var baggage = {};
-        if (baggageString.length === 0) {
-            return context;
-        }
-        var pairs = baggageString.split(BAGGAGE_ITEMS_SEPARATOR);
-        pairs.forEach(function (entry) {
-            var keyPair = parsePairKeyValue(entry);
-            if (keyPair) {
-                var baggageEntry = { value: keyPair.value };
-                if (keyPair.metadata) {
-                    baggageEntry.metadata = keyPair.metadata;
-                }
-                baggage[keyPair.key] = baggageEntry;
-            }
-        });
-        if (Object.entries(baggage).length === 0) {
-            return context;
-        }
-        return propagation.setBaggage(context, propagation.createBaggage(baggage));
-    };
-    W3CBaggagePropagator.prototype.fields = function () {
-        return [BAGGAGE_HEADER];
-    };
-    return W3CBaggagePropagator;
-}());
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -82655,7 +81501,7 @@ var __values$4 = (undefined && undefined.__values) || function(o) {
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
@@ -82677,1190 +81523,80 @@ var __read$4 = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-function sanitizeAttributes(attributes) {
+function createExportLogsServiceRequest(logRecords, options) {
+    var encoder = getOtlpEncoder(options);
+    return {
+        resourceLogs: logRecordsToResourceLogs(logRecords, encoder),
+    };
+}
+function createResourceMap$1(logRecords) {
     var e_1, _a;
-    var out = {};
-    if (typeof attributes !== 'object' || attributes == null) {
-        return out;
-    }
+    var resourceMap = new Map();
     try {
-        for (var _b = __values$4(Object.entries(attributes)), _c = _b.next(); !_c.done; _c = _b.next()) {
-            var _d = __read$4(_c.value, 2), key = _d[0], val = _d[1];
-            if (!isAttributeKey(key)) {
-                diag.warn("Invalid attribute key: " + key);
-                continue;
+        for (var logRecords_1 = __values$4(logRecords), logRecords_1_1 = logRecords_1.next(); !logRecords_1_1.done; logRecords_1_1 = logRecords_1.next()) {
+            var record = logRecords_1_1.value;
+            var resource = record.resource, _b = record.instrumentationScope, name_1 = _b.name, _c = _b.version, version = _c === void 0 ? '' : _c, _d = _b.schemaUrl, schemaUrl = _d === void 0 ? '' : _d;
+            var ismMap = resourceMap.get(resource);
+            if (!ismMap) {
+                ismMap = new Map();
+                resourceMap.set(resource, ismMap);
             }
-            if (!isAttributeValue(val)) {
-                diag.warn("Invalid attribute value set for key: " + key);
-                continue;
+            var ismKey = name_1 + "@" + version + ":" + schemaUrl;
+            var records = ismMap.get(ismKey);
+            if (!records) {
+                records = [];
+                ismMap.set(ismKey, records);
             }
-            if (Array.isArray(val)) {
-                out[key] = val.slice();
-            }
-            else {
-                out[key] = val;
-            }
+            records.push(record);
         }
     }
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            if (logRecords_1_1 && !logRecords_1_1.done && (_a = logRecords_1.return)) _a.call(logRecords_1);
         }
         finally { if (e_1) throw e_1.error; }
     }
-    return out;
+    return resourceMap;
 }
-function isAttributeKey(key) {
-    return typeof key === 'string' && key.length > 0;
-}
-function isAttributeValue(val) {
-    if (val == null) {
-        return true;
-    }
-    if (Array.isArray(val)) {
-        return isHomogeneousAttributeValueArray(val);
-    }
-    return isValidPrimitiveAttributeValue(val);
-}
-function isHomogeneousAttributeValueArray(arr) {
-    var e_2, _a;
-    var type;
-    try {
-        for (var arr_1 = __values$4(arr), arr_1_1 = arr_1.next(); !arr_1_1.done; arr_1_1 = arr_1.next()) {
-            var element = arr_1_1.value;
-            // null/undefined elements are allowed
-            if (element == null)
-                continue;
-            if (!type) {
-                if (isValidPrimitiveAttributeValue(element)) {
-                    type = typeof element;
-                    continue;
-                }
-                // encountered an invalid primitive
-                return false;
-            }
-            if (typeof element === type) {
-                continue;
-            }
-            return false;
-        }
-    }
-    catch (e_2_1) { e_2 = { error: e_2_1 }; }
-    finally {
-        try {
-            if (arr_1_1 && !arr_1_1.done && (_a = arr_1.return)) _a.call(arr_1);
-        }
-        finally { if (e_2) throw e_2.error; }
-    }
-    return true;
-}
-function isValidPrimitiveAttributeValue(val) {
-    switch (typeof val) {
-        case 'number':
-        case 'boolean':
-        case 'string':
-            return true;
-    }
-    return false;
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Returns a function that logs an error using the provided logger, or a
- * console logger if one was not provided.
- */
-function loggingErrorHandler() {
-    return function (ex) {
-        diag.error(stringifyException(ex));
-    };
-}
-/**
- * Converts an exception into a string representation
- * @param {Exception} ex
- */
-function stringifyException(ex) {
-    if (typeof ex === 'string') {
-        return ex;
-    }
-    else {
-        return JSON.stringify(flattenException(ex));
-    }
-}
-/**
- * Flattens an exception into key-value pairs by traversing the prototype chain
- * and coercing values to strings. Duplicate properties will not be overwritten;
- * the first insert wins.
- */
-function flattenException(ex) {
-    var result = {};
-    var current = ex;
-    while (current !== null) {
-        Object.getOwnPropertyNames(current).forEach(function (propertyName) {
-            if (result[propertyName])
-                return;
-            var value = current[propertyName];
-            if (value) {
-                result[propertyName] = String(value);
-            }
+function logRecordsToResourceLogs(logRecords, encoder) {
+    var resourceMap = createResourceMap$1(logRecords);
+    return Array.from(resourceMap, function (_a) {
+        var _b = __read$4(_a, 2), resource = _b[0], ismMap = _b[1];
+        return ({
+            resource: createResource(resource),
+            scopeLogs: Array.from(ismMap, function (_a) {
+                var _b = __read$4(_a, 2), scopeLogs = _b[1];
+                return {
+                    scope: createInstrumentationScope(scopeLogs[0].instrumentationScope),
+                    logRecords: scopeLogs.map(function (log) { return toLogRecord(log, encoder); }),
+                    schemaUrl: scopeLogs[0].instrumentationScope.schemaUrl,
+                };
+            }),
+            schemaUrl: undefined,
         });
-        current = Object.getPrototypeOf(current);
-    }
-    return result;
+    });
 }
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/** The global error handler delegate */
-var delegateHandler = loggingErrorHandler();
-/**
- * Return the global error handler
- * @param {Exception} ex
- */
-function globalErrorHandler(ex) {
-    try {
-        delegateHandler(ex);
-    }
-    catch (_a) { } // eslint-disable-line no-empty
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var TracesSamplerValues;
-(function (TracesSamplerValues) {
-    TracesSamplerValues["AlwaysOff"] = "always_off";
-    TracesSamplerValues["AlwaysOn"] = "always_on";
-    TracesSamplerValues["ParentBasedAlwaysOff"] = "parentbased_always_off";
-    TracesSamplerValues["ParentBasedAlwaysOn"] = "parentbased_always_on";
-    TracesSamplerValues["ParentBasedTraceIdRatio"] = "parentbased_traceidratio";
-    TracesSamplerValues["TraceIdRatio"] = "traceidratio";
-})(TracesSamplerValues || (TracesSamplerValues = {}));
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var DEFAULT_LIST_SEPARATOR = ',';
-/**
- * Environment interface to define all names
- */
-var ENVIRONMENT_BOOLEAN_KEYS = ['OTEL_SDK_DISABLED'];
-function isEnvVarABoolean(key) {
-    return (ENVIRONMENT_BOOLEAN_KEYS.indexOf(key) > -1);
-}
-var ENVIRONMENT_NUMBERS_KEYS = [
-    'OTEL_BSP_EXPORT_TIMEOUT',
-    'OTEL_BSP_MAX_EXPORT_BATCH_SIZE',
-    'OTEL_BSP_MAX_QUEUE_SIZE',
-    'OTEL_BSP_SCHEDULE_DELAY',
-    'OTEL_BLRP_EXPORT_TIMEOUT',
-    'OTEL_BLRP_MAX_EXPORT_BATCH_SIZE',
-    'OTEL_BLRP_MAX_QUEUE_SIZE',
-    'OTEL_BLRP_SCHEDULE_DELAY',
-    'OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT',
-    'OTEL_ATTRIBUTE_COUNT_LIMIT',
-    'OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT',
-    'OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT',
-    'OTEL_LOGRECORD_ATTRIBUTE_VALUE_LENGTH_LIMIT',
-    'OTEL_LOGRECORD_ATTRIBUTE_COUNT_LIMIT',
-    'OTEL_SPAN_EVENT_COUNT_LIMIT',
-    'OTEL_SPAN_LINK_COUNT_LIMIT',
-    'OTEL_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT',
-    'OTEL_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT',
-    'OTEL_EXPORTER_OTLP_TIMEOUT',
-    'OTEL_EXPORTER_OTLP_TRACES_TIMEOUT',
-    'OTEL_EXPORTER_OTLP_METRICS_TIMEOUT',
-    'OTEL_EXPORTER_OTLP_LOGS_TIMEOUT',
-    'OTEL_EXPORTER_JAEGER_AGENT_PORT',
-];
-function isEnvVarANumber(key) {
-    return (ENVIRONMENT_NUMBERS_KEYS.indexOf(key) > -1);
-}
-var ENVIRONMENT_LISTS_KEYS = [
-    'OTEL_NO_PATCH_MODULES',
-    'OTEL_PROPAGATORS',
-    'OTEL_SEMCONV_STABILITY_OPT_IN',
-];
-function isEnvVarAList(key) {
-    return ENVIRONMENT_LISTS_KEYS.indexOf(key) > -1;
-}
-var DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT = Infinity;
-var DEFAULT_ATTRIBUTE_COUNT_LIMIT = 128;
-var DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT = 128;
-var DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT = 128;
-/**
- * Default environment variables
- */
-var DEFAULT_ENVIRONMENT = {
-    OTEL_SDK_DISABLED: false,
-    CONTAINER_NAME: '',
-    ECS_CONTAINER_METADATA_URI_V4: '',
-    ECS_CONTAINER_METADATA_URI: '',
-    HOSTNAME: '',
-    KUBERNETES_SERVICE_HOST: '',
-    NAMESPACE: '',
-    OTEL_BSP_EXPORT_TIMEOUT: 30000,
-    OTEL_BSP_MAX_EXPORT_BATCH_SIZE: 512,
-    OTEL_BSP_MAX_QUEUE_SIZE: 2048,
-    OTEL_BSP_SCHEDULE_DELAY: 5000,
-    OTEL_BLRP_EXPORT_TIMEOUT: 30000,
-    OTEL_BLRP_MAX_EXPORT_BATCH_SIZE: 512,
-    OTEL_BLRP_MAX_QUEUE_SIZE: 2048,
-    OTEL_BLRP_SCHEDULE_DELAY: 5000,
-    OTEL_EXPORTER_JAEGER_AGENT_HOST: '',
-    OTEL_EXPORTER_JAEGER_AGENT_PORT: 6832,
-    OTEL_EXPORTER_JAEGER_ENDPOINT: '',
-    OTEL_EXPORTER_JAEGER_PASSWORD: '',
-    OTEL_EXPORTER_JAEGER_USER: '',
-    OTEL_EXPORTER_OTLP_ENDPOINT: '',
-    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: '',
-    OTEL_EXPORTER_OTLP_METRICS_ENDPOINT: '',
-    OTEL_EXPORTER_OTLP_LOGS_ENDPOINT: '',
-    OTEL_EXPORTER_OTLP_HEADERS: '',
-    OTEL_EXPORTER_OTLP_TRACES_HEADERS: '',
-    OTEL_EXPORTER_OTLP_METRICS_HEADERS: '',
-    OTEL_EXPORTER_OTLP_LOGS_HEADERS: '',
-    OTEL_EXPORTER_OTLP_TIMEOUT: 10000,
-    OTEL_EXPORTER_OTLP_TRACES_TIMEOUT: 10000,
-    OTEL_EXPORTER_OTLP_METRICS_TIMEOUT: 10000,
-    OTEL_EXPORTER_OTLP_LOGS_TIMEOUT: 10000,
-    OTEL_EXPORTER_ZIPKIN_ENDPOINT: 'http://localhost:9411/api/v2/spans',
-    OTEL_LOG_LEVEL: DiagLogLevel.INFO,
-    OTEL_NO_PATCH_MODULES: [],
-    OTEL_PROPAGATORS: ['tracecontext', 'baggage'],
-    OTEL_RESOURCE_ATTRIBUTES: '',
-    OTEL_SERVICE_NAME: '',
-    OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT,
-    OTEL_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT,
-    OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT,
-    OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT,
-    OTEL_LOGRECORD_ATTRIBUTE_VALUE_LENGTH_LIMIT: DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT,
-    OTEL_LOGRECORD_ATTRIBUTE_COUNT_LIMIT: DEFAULT_ATTRIBUTE_COUNT_LIMIT,
-    OTEL_SPAN_EVENT_COUNT_LIMIT: 128,
-    OTEL_SPAN_LINK_COUNT_LIMIT: 128,
-    OTEL_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_EVENT_COUNT_LIMIT,
-    OTEL_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT: DEFAULT_SPAN_ATTRIBUTE_PER_LINK_COUNT_LIMIT,
-    OTEL_TRACES_EXPORTER: '',
-    OTEL_TRACES_SAMPLER: TracesSamplerValues.ParentBasedAlwaysOn,
-    OTEL_TRACES_SAMPLER_ARG: '',
-    OTEL_LOGS_EXPORTER: '',
-    OTEL_EXPORTER_OTLP_INSECURE: '',
-    OTEL_EXPORTER_OTLP_TRACES_INSECURE: '',
-    OTEL_EXPORTER_OTLP_METRICS_INSECURE: '',
-    OTEL_EXPORTER_OTLP_LOGS_INSECURE: '',
-    OTEL_EXPORTER_OTLP_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_TRACES_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_METRICS_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_LOGS_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_COMPRESSION: '',
-    OTEL_EXPORTER_OTLP_TRACES_COMPRESSION: '',
-    OTEL_EXPORTER_OTLP_METRICS_COMPRESSION: '',
-    OTEL_EXPORTER_OTLP_LOGS_COMPRESSION: '',
-    OTEL_EXPORTER_OTLP_CLIENT_KEY: '',
-    OTEL_EXPORTER_OTLP_TRACES_CLIENT_KEY: '',
-    OTEL_EXPORTER_OTLP_METRICS_CLIENT_KEY: '',
-    OTEL_EXPORTER_OTLP_LOGS_CLIENT_KEY: '',
-    OTEL_EXPORTER_OTLP_CLIENT_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_TRACES_CLIENT_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_METRICS_CLIENT_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_LOGS_CLIENT_CERTIFICATE: '',
-    OTEL_EXPORTER_OTLP_PROTOCOL: 'http/protobuf',
-    OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: 'http/protobuf',
-    OTEL_EXPORTER_OTLP_METRICS_PROTOCOL: 'http/protobuf',
-    OTEL_EXPORTER_OTLP_LOGS_PROTOCOL: 'http/protobuf',
-    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: 'cumulative',
-    OTEL_SEMCONV_STABILITY_OPT_IN: [],
-};
-/**
- * @param key
- * @param environment
- * @param values
- */
-function parseBoolean(key, environment, values) {
-    if (typeof values[key] === 'undefined') {
-        return;
-    }
-    var value = String(values[key]);
-    // support case-insensitive "true"
-    environment[key] = value.toLowerCase() === 'true';
-}
-/**
- * Parses a variable as number with number validation
- * @param name
- * @param environment
- * @param values
- * @param min
- * @param max
- */
-function parseNumber(name, environment, values, min, max) {
-    if (min === void 0) { min = -Infinity; }
-    if (max === void 0) { max = Infinity; }
-    if (typeof values[name] !== 'undefined') {
-        var value = Number(values[name]);
-        if (!isNaN(value)) {
-            if (value < min) {
-                environment[name] = min;
-            }
-            else if (value > max) {
-                environment[name] = max;
-            }
-            else {
-                environment[name] = value;
-            }
-        }
-    }
-}
-/**
- * Parses list-like strings from input into output.
- * @param name
- * @param environment
- * @param values
- * @param separator
- */
-function parseStringList(name, output, input, separator) {
-    if (separator === void 0) { separator = DEFAULT_LIST_SEPARATOR; }
-    var givenValue = input[name];
-    if (typeof givenValue === 'string') {
-        output[name] = givenValue.split(separator).map(function (v) { return v.trim(); });
-    }
-}
-// The support string -> DiagLogLevel mappings
-var logLevelMap = {
-    ALL: DiagLogLevel.ALL,
-    VERBOSE: DiagLogLevel.VERBOSE,
-    DEBUG: DiagLogLevel.DEBUG,
-    INFO: DiagLogLevel.INFO,
-    WARN: DiagLogLevel.WARN,
-    ERROR: DiagLogLevel.ERROR,
-    NONE: DiagLogLevel.NONE,
-};
-/**
- * Environmentally sets log level if valid log level string is provided
- * @param key
- * @param environment
- * @param values
- */
-function setLogLevelFromEnv(key, environment, values) {
-    var value = values[key];
-    if (typeof value === 'string') {
-        var theLevel = logLevelMap[value.toUpperCase()];
-        if (theLevel != null) {
-            environment[key] = theLevel;
-        }
-    }
-}
-/**
- * Parses environment values
- * @param values
- */
-function parseEnvironment(values) {
-    var environment = {};
-    for (var env in DEFAULT_ENVIRONMENT) {
-        var key = env;
-        switch (key) {
-            case 'OTEL_LOG_LEVEL':
-                setLogLevelFromEnv(key, environment, values);
-                break;
-            default:
-                if (isEnvVarABoolean(key)) {
-                    parseBoolean(key, environment, values);
-                }
-                else if (isEnvVarANumber(key)) {
-                    parseNumber(key, environment, values);
-                }
-                else if (isEnvVarAList(key)) {
-                    parseStringList(key, environment, values);
-                }
-                else {
-                    var value = values[key];
-                    if (typeof value !== 'undefined' && value !== null) {
-                        environment[key] = String(value);
-                    }
-                }
-        }
-    }
-    return environment;
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Gets the environment variables
- */
-function getEnv() {
-    var processEnv = parseEnvironment(process.env);
-    return Object.assign({}, DEFAULT_ENVIRONMENT, processEnv);
-}
-function getEnvWithoutDefaults() {
-    return parseEnvironment(process.env);
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var otperformance = performance$1;
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-// this is autogenerated file, see scripts/version-update.js
-var VERSION$1 = '1.30.0';
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var _a;
-/** Constants describing the SDK in use */
-var SDK_INFO = (_a = {},
-    _a[SEMRESATTRS_TELEMETRY_SDK_NAME] = 'opentelemetry',
-    _a[SEMRESATTRS_PROCESS_RUNTIME_NAME] = 'node',
-    _a[SEMRESATTRS_TELEMETRY_SDK_LANGUAGE] = TELEMETRYSDKLANGUAGEVALUES_NODEJS,
-    _a[SEMRESATTRS_TELEMETRY_SDK_VERSION] = VERSION$1,
-    _a);
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function unrefTimer(timer) {
-    timer.unref();
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var NANOSECOND_DIGITS = 9;
-var NANOSECOND_DIGITS_IN_MILLIS = 6;
-var MILLISECONDS_TO_NANOSECONDS = Math.pow(10, NANOSECOND_DIGITS_IN_MILLIS);
-var SECOND_TO_NANOSECONDS = Math.pow(10, NANOSECOND_DIGITS);
-/**
- * Converts a number of milliseconds from epoch to HrTime([seconds, remainder in nanoseconds]).
- * @param epochMillis
- */
-function millisToHrTime(epochMillis) {
-    var epochSeconds = epochMillis / 1000;
-    // Decimals only.
-    var seconds = Math.trunc(epochSeconds);
-    // Round sub-nanosecond accuracy to nanosecond.
-    var nanos = Math.round((epochMillis % 1000) * MILLISECONDS_TO_NANOSECONDS);
-    return [seconds, nanos];
-}
-function getTimeOrigin() {
-    var timeOrigin = otperformance.timeOrigin;
-    if (typeof timeOrigin !== 'number') {
-        var perf = otperformance;
-        timeOrigin = perf.timing && perf.timing.fetchStart;
-    }
-    return timeOrigin;
-}
-/**
- * Returns an hrtime calculated via performance component.
- * @param performanceNow
- */
-function hrTime(performanceNow) {
-    var timeOrigin = millisToHrTime(getTimeOrigin());
-    var now = millisToHrTime(typeof performanceNow === 'number' ? performanceNow : otperformance.now());
-    return addHrTimes(timeOrigin, now);
-}
-/**
- * Returns a duration of two hrTime.
- * @param startTime
- * @param endTime
- */
-function hrTimeDuration(startTime, endTime) {
-    var seconds = endTime[0] - startTime[0];
-    var nanos = endTime[1] - startTime[1];
-    // overflow
-    if (nanos < 0) {
-        seconds -= 1;
-        // negate
-        nanos += SECOND_TO_NANOSECONDS;
-    }
-    return [seconds, nanos];
-}
-/**
- * Convert hrTime to microseconds.
- * @param time
- */
-function hrTimeToMicroseconds(time) {
-    return time[0] * 1e6 + time[1] / 1e3;
-}
-/**
- * check if time is HrTime
- * @param value
- */
-function isTimeInputHrTime(value) {
-    return (Array.isArray(value) &&
-        value.length === 2 &&
-        typeof value[0] === 'number' &&
-        typeof value[1] === 'number');
-}
-/**
- * check if input value is a correct types.TimeInput
- * @param value
- */
-function isTimeInput(value) {
-    return (isTimeInputHrTime(value) ||
-        typeof value === 'number' ||
-        value instanceof Date);
-}
-/**
- * Given 2 HrTime formatted times, return their sum as an HrTime.
- */
-function addHrTimes(time1, time2) {
-    var out = [time1[0] + time2[0], time1[1] + time2[1]];
-    // Nanoseconds
-    if (out[1] >= SECOND_TO_NANOSECONDS) {
-        out[1] -= SECOND_TO_NANOSECONDS;
-        out[0] += 1;
-    }
-    return out;
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var ExportResultCode;
-(function (ExportResultCode) {
-    ExportResultCode[ExportResultCode["SUCCESS"] = 0] = "SUCCESS";
-    ExportResultCode[ExportResultCode["FAILED"] = 1] = "FAILED";
-})(ExportResultCode || (ExportResultCode = {}));
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var __values$3 = (undefined && undefined.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
-/** Combines multiple propagators into a single propagator. */
-var CompositePropagator = /** @class */ (function () {
-    /**
-     * Construct a composite propagator from a list of propagators.
-     *
-     * @param [config] Configuration object for composite propagator
-     */
-    function CompositePropagator(config) {
-        if (config === void 0) { config = {}; }
-        var _a;
-        this._propagators = (_a = config.propagators) !== null && _a !== void 0 ? _a : [];
-        this._fields = Array.from(new Set(this._propagators
-            // older propagators may not have fields function, null check to be sure
-            .map(function (p) { return (typeof p.fields === 'function' ? p.fields() : []); })
-            .reduce(function (x, y) { return x.concat(y); }, [])));
-    }
-    /**
-     * Run each of the configured propagators with the given context and carrier.
-     * Propagators are run in the order they are configured, so if multiple
-     * propagators write the same carrier key, the propagator later in the list
-     * will "win".
-     *
-     * @param context Context to inject
-     * @param carrier Carrier into which context will be injected
-     */
-    CompositePropagator.prototype.inject = function (context, carrier, setter) {
-        var e_1, _a;
-        try {
-            for (var _b = __values$3(this._propagators), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var propagator = _c.value;
-                try {
-                    propagator.inject(context, carrier, setter);
-                }
-                catch (err) {
-                    diag.warn("Failed to inject with " + propagator.constructor.name + ". Err: " + err.message);
-                }
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-    };
-    /**
-     * Run each of the configured propagators with the given context and carrier.
-     * Propagators are run in the order they are configured, so if multiple
-     * propagators write the same context key, the propagator later in the list
-     * will "win".
-     *
-     * @param context Context to add values to
-     * @param carrier Carrier from which to extract context
-     */
-    CompositePropagator.prototype.extract = function (context, carrier, getter) {
-        return this._propagators.reduce(function (ctx, propagator) {
-            try {
-                return propagator.extract(ctx, carrier, getter);
-            }
-            catch (err) {
-                diag.warn("Failed to extract with " + propagator.constructor.name + ". Err: " + err.message);
-            }
-            return ctx;
-        }, context);
-    };
-    CompositePropagator.prototype.fields = function () {
-        // return a new array so our fields cannot be modified
-        return this._fields.slice();
-    };
-    return CompositePropagator;
-}());
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var VALID_KEY_CHAR_RANGE = '[_0-9a-z-*/]';
-var VALID_KEY = "[a-z]" + VALID_KEY_CHAR_RANGE + "{0,255}";
-var VALID_VENDOR_KEY = "[a-z0-9]" + VALID_KEY_CHAR_RANGE + "{0,240}@[a-z]" + VALID_KEY_CHAR_RANGE + "{0,13}";
-var VALID_KEY_REGEX = new RegExp("^(?:" + VALID_KEY + "|" + VALID_VENDOR_KEY + ")$");
-var VALID_VALUE_BASE_REGEX = /^[ -~]{0,255}[!-~]$/;
-var INVALID_VALUE_COMMA_EQUAL_REGEX = /,|=/;
-/**
- * Key is opaque string up to 256 characters printable. It MUST begin with a
- * lowercase letter, and can only contain lowercase letters a-z, digits 0-9,
- * underscores _, dashes -, asterisks *, and forward slashes /.
- * For multi-tenant vendor scenarios, an at sign (@) can be used to prefix the
- * vendor name. Vendors SHOULD set the tenant ID at the beginning of the key.
- * see https://www.w3.org/TR/trace-context/#key
- */
-function validateKey(key) {
-    return VALID_KEY_REGEX.test(key);
-}
-/**
- * Value is opaque string up to 256 characters printable ASCII RFC0020
- * characters (i.e., the range 0x20 to 0x7E) except comma , and =.
- */
-function validateValue(value) {
-    return (VALID_VALUE_BASE_REGEX.test(value) &&
-        !INVALID_VALUE_COMMA_EQUAL_REGEX.test(value));
-}
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var MAX_TRACE_STATE_ITEMS = 32;
-var MAX_TRACE_STATE_LEN = 512;
-var LIST_MEMBERS_SEPARATOR = ',';
-var LIST_MEMBER_KEY_VALUE_SPLITTER = '=';
-/**
- * TraceState must be a class and not a simple object type because of the spec
- * requirement (https://www.w3.org/TR/trace-context/#tracestate-field).
- *
- * Here is the list of allowed mutations:
- * - New key-value pair should be added into the beginning of the list
- * - The value of any key can be updated. Modified keys MUST be moved to the
- * beginning of the list.
- */
-var TraceState = /** @class */ (function () {
-    function TraceState(rawTraceState) {
-        this._internalState = new Map();
-        if (rawTraceState)
-            this._parse(rawTraceState);
-    }
-    TraceState.prototype.set = function (key, value) {
-        // TODO: Benchmark the different approaches(map vs list) and
-        // use the faster one.
-        var traceState = this._clone();
-        if (traceState._internalState.has(key)) {
-            traceState._internalState.delete(key);
-        }
-        traceState._internalState.set(key, value);
-        return traceState;
-    };
-    TraceState.prototype.unset = function (key) {
-        var traceState = this._clone();
-        traceState._internalState.delete(key);
-        return traceState;
-    };
-    TraceState.prototype.get = function (key) {
-        return this._internalState.get(key);
-    };
-    TraceState.prototype.serialize = function () {
-        var _this = this;
-        return this._keys()
-            .reduce(function (agg, key) {
-            agg.push(key + LIST_MEMBER_KEY_VALUE_SPLITTER + _this.get(key));
-            return agg;
-        }, [])
-            .join(LIST_MEMBERS_SEPARATOR);
-    };
-    TraceState.prototype._parse = function (rawTraceState) {
-        if (rawTraceState.length > MAX_TRACE_STATE_LEN)
-            return;
-        this._internalState = rawTraceState
-            .split(LIST_MEMBERS_SEPARATOR)
-            .reverse() // Store in reverse so new keys (.set(...)) will be placed at the beginning
-            .reduce(function (agg, part) {
-            var listMember = part.trim(); // Optional Whitespace (OWS) handling
-            var i = listMember.indexOf(LIST_MEMBER_KEY_VALUE_SPLITTER);
-            if (i !== -1) {
-                var key = listMember.slice(0, i);
-                var value = listMember.slice(i + 1, part.length);
-                if (validateKey(key) && validateValue(value)) {
-                    agg.set(key, value);
-                }
-            }
-            return agg;
-        }, new Map());
-        // Because of the reverse() requirement, trunc must be done after map is created
-        if (this._internalState.size > MAX_TRACE_STATE_ITEMS) {
-            this._internalState = new Map(Array.from(this._internalState.entries())
-                .reverse() // Use reverse same as original tracestate parse chain
-                .slice(0, MAX_TRACE_STATE_ITEMS));
-        }
-    };
-    TraceState.prototype._keys = function () {
-        return Array.from(this._internalState.keys()).reverse();
-    };
-    TraceState.prototype._clone = function () {
-        var traceState = new TraceState();
-        traceState._internalState = new Map(this._internalState);
-        return traceState;
-    };
-    return TraceState;
-}());
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var TRACE_PARENT_HEADER = 'traceparent';
-var TRACE_STATE_HEADER = 'tracestate';
-var VERSION = '00';
-var VERSION_PART = '(?!ff)[\\da-f]{2}';
-var TRACE_ID_PART = '(?![0]{32})[\\da-f]{32}';
-var PARENT_ID_PART = '(?![0]{16})[\\da-f]{16}';
-var FLAGS_PART = '[\\da-f]{2}';
-var TRACE_PARENT_REGEX = new RegExp("^\\s?(" + VERSION_PART + ")-(" + TRACE_ID_PART + ")-(" + PARENT_ID_PART + ")-(" + FLAGS_PART + ")(-.*)?\\s?$");
-/**
- * Parses information from the [traceparent] span tag and converts it into {@link SpanContext}
- * @param traceParent - A meta property that comes from server.
- *     It should be dynamically generated server side to have the server's request trace Id,
- *     a parent span Id that was set on the server's request span,
- *     and the trace flags to indicate the server's sampling decision
- *     (01 = sampled, 00 = not sampled).
- *     for example: '{version}-{traceId}-{spanId}-{sampleDecision}'
- *     For more information see {@link https://www.w3.org/TR/trace-context/}
- */
-function parseTraceParent(traceParent) {
-    var match = TRACE_PARENT_REGEX.exec(traceParent);
-    if (!match)
-        return null;
-    // According to the specification the implementation should be compatible
-    // with future versions. If there are more parts, we only reject it if it's using version 00
-    // See https://www.w3.org/TR/trace-context/#versioning-of-traceparent
-    if (match[1] === '00' && match[5])
-        return null;
+function toLogRecord(log, encoder) {
+    var _a, _b, _c;
     return {
-        traceId: match[2],
-        spanId: match[3],
-        traceFlags: parseInt(match[4], 16),
+        timeUnixNano: encoder.encodeHrTime(log.hrTime),
+        observedTimeUnixNano: encoder.encodeHrTime(log.hrTimeObserved),
+        severityNumber: toSeverityNumber(log.severityNumber),
+        severityText: log.severityText,
+        body: toAnyValue(log.body),
+        attributes: toLogAttributes(log.attributes),
+        droppedAttributesCount: log.droppedAttributesCount,
+        flags: (_a = log.spanContext) === null || _a === undefined ? undefined : _a.traceFlags,
+        traceId: encoder.encodeOptionalSpanContext((_b = log.spanContext) === null || _b === undefined ? undefined : _b.traceId),
+        spanId: encoder.encodeOptionalSpanContext((_c = log.spanContext) === null || _c === undefined ? undefined : _c.spanId),
     };
 }
-/**
- * Propagates {@link SpanContext} through Trace Context format propagation.
- *
- * Based on the Trace Context specification:
- * https://www.w3.org/TR/trace-context/
- */
-var W3CTraceContextPropagator = /** @class */ (function () {
-    function W3CTraceContextPropagator() {
-    }
-    W3CTraceContextPropagator.prototype.inject = function (context, carrier, setter) {
-        var spanContext = trace.getSpanContext(context);
-        if (!spanContext ||
-            isTracingSuppressed(context) ||
-            !isSpanContextValid(spanContext))
-            return;
-        var traceParent = VERSION + "-" + spanContext.traceId + "-" + spanContext.spanId + "-0" + Number(spanContext.traceFlags || TraceFlags.NONE).toString(16);
-        setter.set(carrier, TRACE_PARENT_HEADER, traceParent);
-        if (spanContext.traceState) {
-            setter.set(carrier, TRACE_STATE_HEADER, spanContext.traceState.serialize());
-        }
-    };
-    W3CTraceContextPropagator.prototype.extract = function (context, carrier, getter) {
-        var traceParentHeader = getter.get(carrier, TRACE_PARENT_HEADER);
-        if (!traceParentHeader)
-            return context;
-        var traceParent = Array.isArray(traceParentHeader)
-            ? traceParentHeader[0]
-            : traceParentHeader;
-        if (typeof traceParent !== 'string')
-            return context;
-        var spanContext = parseTraceParent(traceParent);
-        if (!spanContext)
-            return context;
-        spanContext.isRemote = true;
-        var traceStateHeader = getter.get(carrier, TRACE_STATE_HEADER);
-        if (traceStateHeader) {
-            // If more than one `tracestate` header is found, we merge them into a
-            // single header.
-            var state = Array.isArray(traceStateHeader)
-                ? traceStateHeader.join(',')
-                : traceStateHeader;
-            spanContext.traceState = new TraceState(typeof state === 'string' ? state : undefined);
-        }
-        return trace.setSpanContext(context, spanContext);
-    };
-    W3CTraceContextPropagator.prototype.fields = function () {
-        return [TRACE_PARENT_HEADER, TRACE_STATE_HEADER];
-    };
-    return W3CTraceContextPropagator;
-}());
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * based on lodash in order to support esm builds without esModuleInterop.
- * lodash is using MIT License.
- **/
-var objectTag = '[object Object]';
-var nullTag = '[object Null]';
-var undefinedTag = '[object Undefined]';
-var funcProto = Function.prototype;
-var funcToString = funcProto.toString;
-var objectCtorString = funcToString.call(Object);
-var getPrototype = overArg(Object.getPrototypeOf, Object);
-var objectProto = Object.prototype;
-var hasOwnProperty = objectProto.hasOwnProperty;
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-var nativeObjectToString = objectProto.toString;
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-    return function (arg) {
-        return func(transform(arg));
-    };
+function toSeverityNumber(severityNumber) {
+    return severityNumber;
 }
-/**
- * Checks if `value` is a plain object, that is, an object created by the
- * `Object` constructor or one with a `[[Prototype]]` of `null`.
- *
- * @static
- * @memberOf _
- * @since 0.8.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- * }
- *
- * _.isPlainObject(new Foo);
- * // => false
- *
- * _.isPlainObject([1, 2, 3]);
- * // => false
- *
- * _.isPlainObject({ 'x': 0, 'y': 0 });
- * // => true
- *
- * _.isPlainObject(Object.create(null));
- * // => true
- */
-function isPlainObject(value) {
-    if (!isObjectLike(value) || baseGetTag(value) !== objectTag) {
-        return false;
-    }
-    var proto = getPrototype(value);
-    if (proto === null) {
-        return true;
-    }
-    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-    return (typeof Ctor == 'function' &&
-        Ctor instanceof Ctor &&
-        funcToString.call(Ctor) === objectCtorString);
-}
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-    return value != null && typeof value == 'object';
-}
-/**
- * The base implementation of `getTag` without fallbacks for buggy environments.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-    if (value == null) {
-        return value === undefined ? undefinedTag : nullTag;
-    }
-    return symToStringTag && symToStringTag in Object(value)
-        ? getRawTag(value)
-        : objectToString(value);
-}
-/**
- * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the raw `toStringTag`.
- */
-function getRawTag(value) {
-    var isOwn = hasOwnProperty.call(value, symToStringTag), tag = value[symToStringTag];
-    var unmasked = false;
-    try {
-        value[symToStringTag] = undefined;
-        unmasked = true;
-    }
-    catch (e) {
-        // silence
-    }
-    var result = nativeObjectToString.call(value);
-    if (unmasked) {
-        if (isOwn) {
-            value[symToStringTag] = tag;
-        }
-        else {
-            delete value[symToStringTag];
-        }
-    }
-    return result;
-}
-/**
- * Converts `value` to a string using `Object.prototype.toString`.
- *
- * @private
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- */
-function objectToString(value) {
-    return nativeObjectToString.call(value);
+function toLogAttributes(attributes) {
+    return Object.keys(attributes).map(function (key) { return toKeyValue(key, attributes[key]); });
 }
 
 /*
@@ -83878,276 +81614,90 @@ function objectToString(value) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-var MAX_LEVEL = 20;
-/**
- * Merges objects together
- * @param args - objects / values to be merged
- */
-function merge() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    var result = args.shift();
-    var objects = new WeakMap();
-    while (args.length > 0) {
-        result = mergeTwoObjects(result, args.shift(), 0, objects);
-    }
-    return result;
-}
-function takeValue(value) {
-    if (isArray(value)) {
-        return value.slice();
-    }
-    return value;
-}
-/**
- * Merges two objects
- * @param one - first object
- * @param two - second object
- * @param level - current deep level
- * @param objects - objects holder that has been already referenced - to prevent
- * cyclic dependency
- */
-function mergeTwoObjects(one, two, level, objects) {
-    if (level === void 0) { level = 0; }
-    var result;
-    if (level > MAX_LEVEL) {
-        return undefined;
-    }
-    level++;
-    if (isPrimitive(one) || isPrimitive(two) || isFunction(two)) {
-        result = takeValue(two);
-    }
-    else if (isArray(one)) {
-        result = one.slice();
-        if (isArray(two)) {
-            for (var i = 0, j = two.length; i < j; i++) {
-                result.push(takeValue(two[i]));
-            }
-        }
-        else if (isObject(two)) {
-            var keys = Object.keys(two);
-            for (var i = 0, j = keys.length; i < j; i++) {
-                var key = keys[i];
-                result[key] = takeValue(two[key]);
-            }
-        }
-    }
-    else if (isObject(one)) {
-        if (isObject(two)) {
-            if (!shouldMerge(one, two)) {
-                return two;
-            }
-            result = Object.assign({}, one);
-            var keys = Object.keys(two);
-            for (var i = 0, j = keys.length; i < j; i++) {
-                var key = keys[i];
-                var twoValue = two[key];
-                if (isPrimitive(twoValue)) {
-                    if (typeof twoValue === 'undefined') {
-                        delete result[key];
-                    }
-                    else {
-                        // result[key] = takeValue(twoValue);
-                        result[key] = twoValue;
-                    }
-                }
-                else {
-                    var obj1 = result[key];
-                    var obj2 = twoValue;
-                    if (wasObjectReferenced(one, key, objects) ||
-                        wasObjectReferenced(two, key, objects)) {
-                        delete result[key];
-                    }
-                    else {
-                        if (isObject(obj1) && isObject(obj2)) {
-                            var arr1 = objects.get(obj1) || [];
-                            var arr2 = objects.get(obj2) || [];
-                            arr1.push({ obj: one, key: key });
-                            arr2.push({ obj: two, key: key });
-                            objects.set(obj1, arr1);
-                            objects.set(obj2, arr2);
-                        }
-                        result[key] = mergeTwoObjects(result[key], twoValue, level, objects);
-                    }
-                }
-            }
-        }
-        else {
-            result = two;
-        }
-    }
-    return result;
-}
-/**
- * Function to check if object has been already reference
- * @param obj
- * @param key
- * @param objects
- */
-function wasObjectReferenced(obj, key, objects) {
-    var arr = objects.get(obj[key]) || [];
-    for (var i = 0, j = arr.length; i < j; i++) {
-        var info = arr[i];
-        if (info.key === key && info.obj === obj) {
-            return true;
-        }
-    }
-    return false;
-}
-function isArray(value) {
-    return Array.isArray(value);
-}
-function isFunction(value) {
-    return typeof value === 'function';
-}
-function isObject(value) {
-    return (!isPrimitive(value) &&
-        !isArray(value) &&
-        !isFunction(value) &&
-        typeof value === 'object');
-}
-function isPrimitive(value) {
-    return (typeof value === 'string' ||
-        typeof value === 'number' ||
-        typeof value === 'boolean' ||
-        typeof value === 'undefined' ||
-        value instanceof Date ||
-        value instanceof RegExp ||
-        value === null);
-}
-function shouldMerge(one, two) {
-    if (!isPlainObject(one) || !isPlainObject(two)) {
-        return false;
-    }
-    return true;
-}
-
+var logsResponseType = rootExports.opentelemetry.proto.collector.logs.v1
+    .ExportLogsServiceResponse;
+var logsRequestType = rootExports.opentelemetry.proto.collector.logs.v1
+    .ExportLogsServiceRequest;
 /*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * @experimental this serializer may receive breaking changes in minor versions, pin this package's version when using this constant
  */
-var Deferred = /** @class */ (function () {
-    function Deferred() {
-        var _this = this;
-        this._promise = new Promise(function (resolve, reject) {
-            _this._resolve = resolve;
-            _this._reject = reject;
-        });
-    }
-    Object.defineProperty(Deferred.prototype, "promise", {
-        get: function () {
-            return this._promise;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Deferred.prototype.resolve = function (val) {
-        this._resolve(val);
-    };
-    Deferred.prototype.reject = function (err) {
-        this._reject(err);
-    };
-    return Deferred;
-}());
-
-/*
- * Copyright The OpenTelemetry Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var __read$3 = (undefined && undefined.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
+var ProtobufLogsSerializer = {
+    serializeRequest: function (arg) {
+        var request = createExportLogsServiceRequest(arg);
+        return logsRequestType.encode(request).finish();
+    },
+    deserializeResponse: function (arg) {
+        return logsResponseType.decode(arg);
+    },
 };
-var __spreadArray$2 = (undefined && undefined.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-/**
- * Bind the callback and only invoke the callback once regardless how many times `BindOnceFuture.call` is invoked.
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-var BindOnceFuture = /** @class */ (function () {
-    function BindOnceFuture(_callback, _that) {
-        this._callback = _callback;
-        this._that = _that;
-        this._isCalled = false;
-        this._deferred = new Deferred();
-    }
-    Object.defineProperty(BindOnceFuture.prototype, "isCalled", {
-        get: function () {
-            return this._isCalled;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(BindOnceFuture.prototype, "promise", {
-        get: function () {
-            return this._deferred.promise;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    BindOnceFuture.prototype.call = function () {
-        var _a;
-        var _this = this;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (!this._isCalled) {
-            this._isCalled = true;
-            try {
-                Promise.resolve((_a = this._callback).call.apply(_a, __spreadArray$2([this._that], __read$3(args), false))).then(function (val) { return _this._deferred.resolve(val); }, function (err) { return _this._deferred.reject(err); });
-            }
-            catch (err) {
-                this._deferred.reject(err);
-            }
-        }
-        return this._deferred.promise;
-    };
-    return BindOnceFuture;
-}());
+/**
+ * AggregationTemporality indicates the way additive quantities are expressed.
+ */
+var AggregationTemporality;
+(function (AggregationTemporality) {
+    AggregationTemporality[AggregationTemporality["DELTA"] = 0] = "DELTA";
+    AggregationTemporality[AggregationTemporality["CUMULATIVE"] = 1] = "CUMULATIVE";
+})(AggregationTemporality || (AggregationTemporality = {}));
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**
+ * The aggregated point data type.
+ */
+var DataPointType;
+(function (DataPointType) {
+    /**
+     * A histogram data point contains a histogram statistics of collected
+     * values with a list of explicit bucket boundaries and statistics such
+     * as min, max, count, and sum of all collected values.
+     */
+    DataPointType[DataPointType["HISTOGRAM"] = 0] = "HISTOGRAM";
+    /**
+     * An exponential histogram data point contains a histogram statistics of
+     * collected values where bucket boundaries are automatically calculated
+     * using an exponential function, and statistics such as min, max, count,
+     * and sum of all collected values.
+     */
+    DataPointType[DataPointType["EXPONENTIAL_HISTOGRAM"] = 1] = "EXPONENTIAL_HISTOGRAM";
+    /**
+     * A gauge metric data point has only a single numeric value.
+     */
+    DataPointType[DataPointType["GAUGE"] = 2] = "GAUGE";
+    /**
+     * A sum metric data point has a single numeric value and a
+     * monotonicity-indicator.
+     */
+    DataPointType[DataPointType["SUM"] = 3] = "SUM";
+})(DataPointType || (DataPointType = {}));
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -84227,10 +81777,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
             }
             op = body.call(thisArg, _);
         } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : undefined, done: true };
     }
 };
-var __read$2 = (undefined && undefined.__read) || function (o, n) {
+var __read$3 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -84262,8 +81812,8 @@ var Resource = /** @class */ (function () {
         var _a;
         this._attributes = attributes;
         this.asyncAttributesPending = asyncAttributesPromise != null;
-        this._syncAttributes = (_a = this._attributes) !== null && _a !== void 0 ? _a : {};
-        this._asyncAttributesPromise = asyncAttributesPromise === null || asyncAttributesPromise === void 0 ? void 0 : asyncAttributesPromise.then(function (asyncAttributes) {
+        this._syncAttributes = (_a = this._attributes) !== null && _a !== undefined ? _a : {};
+        this._asyncAttributesPromise = asyncAttributesPromise === null || asyncAttributesPromise === undefined ? undefined : asyncAttributesPromise.then(function (asyncAttributes) {
             _this._attributes = Object.assign({}, _this._attributes, asyncAttributes);
             _this.asyncAttributesPending = false;
             return asyncAttributes;
@@ -84297,7 +81847,7 @@ var Resource = /** @class */ (function () {
             if (this.asyncAttributesPending) {
                 diag.error('Accessing resource attributes before async attributes settled');
             }
-            return (_a = this._attributes) !== null && _a !== void 0 ? _a : {};
+            return (_a = this._attributes) !== null && _a !== undefined ? _a : {};
         },
         enumerable: false,
         configurable: true
@@ -84308,7 +81858,7 @@ var Resource = /** @class */ (function () {
      * has finished.
      */
     Resource.prototype.waitForAsyncAttributes = function () {
-        return __awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, undefined, undefined, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -84336,7 +81886,7 @@ var Resource = /** @class */ (function () {
         if (!other)
             return this;
         // SpanAttributes from other resource overwrite attributes from this resource.
-        var mergedSyncAttributes = __assign$1(__assign$1({}, this._syncAttributes), ((_a = other._syncAttributes) !== null && _a !== void 0 ? _a : other.attributes));
+        var mergedSyncAttributes = __assign$1(__assign$1({}, this._syncAttributes), ((_a = other._syncAttributes) !== null && _a !== undefined ? _a : other.attributes));
         if (!this._asyncAttributesPromise &&
             !other._asyncAttributesPromise) {
             return new Resource(mergedSyncAttributes);
@@ -84346,14 +81896,579 @@ var Resource = /** @class */ (function () {
             other._asyncAttributesPromise,
         ]).then(function (_a) {
             var _b;
-            var _c = __read$2(_a, 2), thisAsyncAttributes = _c[0], otherAsyncAttributes = _c[1];
-            return __assign$1(__assign$1(__assign$1(__assign$1({}, _this._syncAttributes), thisAsyncAttributes), ((_b = other._syncAttributes) !== null && _b !== void 0 ? _b : other.attributes)), otherAsyncAttributes);
+            var _c = __read$3(_a, 2), thisAsyncAttributes = _c[0], otherAsyncAttributes = _c[1];
+            return __assign$1(__assign$1(__assign$1(__assign$1({}, _this._syncAttributes), thisAsyncAttributes), ((_b = other._syncAttributes) !== null && _b !== undefined ? _b : other.attributes)), otherAsyncAttributes);
         });
         return new Resource(mergedSyncAttributes, mergedAttributesPromise);
     };
     Resource.EMPTY = new Resource({});
     return Resource;
 }());
+
+function toResourceMetrics(resourceMetrics, options) {
+    var encoder = getOtlpEncoder(options);
+    return {
+        resource: createResource(resourceMetrics.resource),
+        schemaUrl: undefined,
+        scopeMetrics: toScopeMetrics(resourceMetrics.scopeMetrics, encoder),
+    };
+}
+function toScopeMetrics(scopeMetrics, encoder) {
+    return Array.from(scopeMetrics.map(function (metrics) { return ({
+        scope: createInstrumentationScope(metrics.scope),
+        metrics: metrics.metrics.map(function (metricData) { return toMetric(metricData, encoder); }),
+        schemaUrl: metrics.scope.schemaUrl,
+    }); }));
+}
+function toMetric(metricData, encoder) {
+    var out = {
+        name: metricData.descriptor.name,
+        description: metricData.descriptor.description,
+        unit: metricData.descriptor.unit,
+    };
+    var aggregationTemporality = toAggregationTemporality(metricData.aggregationTemporality);
+    switch (metricData.dataPointType) {
+        case DataPointType.SUM:
+            out.sum = {
+                aggregationTemporality: aggregationTemporality,
+                isMonotonic: metricData.isMonotonic,
+                dataPoints: toSingularDataPoints(metricData, encoder),
+            };
+            break;
+        case DataPointType.GAUGE:
+            out.gauge = {
+                dataPoints: toSingularDataPoints(metricData, encoder),
+            };
+            break;
+        case DataPointType.HISTOGRAM:
+            out.histogram = {
+                aggregationTemporality: aggregationTemporality,
+                dataPoints: toHistogramDataPoints(metricData, encoder),
+            };
+            break;
+        case DataPointType.EXPONENTIAL_HISTOGRAM:
+            out.exponentialHistogram = {
+                aggregationTemporality: aggregationTemporality,
+                dataPoints: toExponentialHistogramDataPoints(metricData, encoder),
+            };
+            break;
+    }
+    return out;
+}
+function toSingularDataPoint(dataPoint, valueType, encoder) {
+    var out = {
+        attributes: toAttributes(dataPoint.attributes),
+        startTimeUnixNano: encoder.encodeHrTime(dataPoint.startTime),
+        timeUnixNano: encoder.encodeHrTime(dataPoint.endTime),
+    };
+    switch (valueType) {
+        case ValueType.INT:
+            out.asInt = dataPoint.value;
+            break;
+        case ValueType.DOUBLE:
+            out.asDouble = dataPoint.value;
+            break;
+    }
+    return out;
+}
+function toSingularDataPoints(metricData, encoder) {
+    return metricData.dataPoints.map(function (dataPoint) {
+        return toSingularDataPoint(dataPoint, metricData.descriptor.valueType, encoder);
+    });
+}
+function toHistogramDataPoints(metricData, encoder) {
+    return metricData.dataPoints.map(function (dataPoint) {
+        var histogram = dataPoint.value;
+        return {
+            attributes: toAttributes(dataPoint.attributes),
+            bucketCounts: histogram.buckets.counts,
+            explicitBounds: histogram.buckets.boundaries,
+            count: histogram.count,
+            sum: histogram.sum,
+            min: histogram.min,
+            max: histogram.max,
+            startTimeUnixNano: encoder.encodeHrTime(dataPoint.startTime),
+            timeUnixNano: encoder.encodeHrTime(dataPoint.endTime),
+        };
+    });
+}
+function toExponentialHistogramDataPoints(metricData, encoder) {
+    return metricData.dataPoints.map(function (dataPoint) {
+        var histogram = dataPoint.value;
+        return {
+            attributes: toAttributes(dataPoint.attributes),
+            count: histogram.count,
+            min: histogram.min,
+            max: histogram.max,
+            sum: histogram.sum,
+            positive: {
+                offset: histogram.positive.offset,
+                bucketCounts: histogram.positive.bucketCounts,
+            },
+            negative: {
+                offset: histogram.negative.offset,
+                bucketCounts: histogram.negative.bucketCounts,
+            },
+            scale: histogram.scale,
+            zeroCount: histogram.zeroCount,
+            startTimeUnixNano: encoder.encodeHrTime(dataPoint.startTime),
+            timeUnixNano: encoder.encodeHrTime(dataPoint.endTime),
+        };
+    });
+}
+function toAggregationTemporality(temporality) {
+    switch (temporality) {
+        case AggregationTemporality.DELTA:
+            return 1 /* AGGREGATION_TEMPORALITY_DELTA */;
+        case AggregationTemporality.CUMULATIVE:
+            return 2 /* AGGREGATION_TEMPORALITY_CUMULATIVE */;
+    }
+}
+function createExportMetricsServiceRequest(resourceMetrics, options) {
+    return {
+        resourceMetrics: resourceMetrics.map(function (metrics) {
+            return toResourceMetrics(metrics, options);
+        }),
+    };
+}
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var metricsResponseType = rootExports.opentelemetry.proto.collector.metrics.v1
+    .ExportMetricsServiceResponse;
+var metricsRequestType = rootExports.opentelemetry.proto.collector.metrics.v1
+    .ExportMetricsServiceRequest;
+var ProtobufMetricsSerializer = {
+    serializeRequest: function (arg) {
+        var request = createExportMetricsServiceRequest([arg]);
+        return metricsRequestType.encode(request).finish();
+    },
+    deserializeResponse: function (arg) {
+        return metricsResponseType.decode(arg);
+    },
+};
+
+var __values$3 = (undefined && undefined.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = undefined;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read$2 = (undefined && undefined.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+function sdkSpanToOtlpSpan(span, encoder) {
+    var _a;
+    var ctx = span.spanContext();
+    var status = span.status;
+    return {
+        traceId: encoder.encodeSpanContext(ctx.traceId),
+        spanId: encoder.encodeSpanContext(ctx.spanId),
+        parentSpanId: encoder.encodeOptionalSpanContext(span.parentSpanId),
+        traceState: (_a = ctx.traceState) === null || _a === undefined ? undefined : _a.serialize(),
+        name: span.name,
+        // Span kind is offset by 1 because the API does not define a value for unset
+        kind: span.kind == null ? 0 : span.kind + 1,
+        startTimeUnixNano: encoder.encodeHrTime(span.startTime),
+        endTimeUnixNano: encoder.encodeHrTime(span.endTime),
+        attributes: toAttributes(span.attributes),
+        droppedAttributesCount: span.droppedAttributesCount,
+        events: span.events.map(function (event) { return toOtlpSpanEvent(event, encoder); }),
+        droppedEventsCount: span.droppedEventsCount,
+        status: {
+            // API and proto enums share the same values
+            code: status.code,
+            message: status.message,
+        },
+        links: span.links.map(function (link) { return toOtlpLink(link, encoder); }),
+        droppedLinksCount: span.droppedLinksCount,
+    };
+}
+function toOtlpLink(link, encoder) {
+    var _a;
+    return {
+        attributes: link.attributes ? toAttributes(link.attributes) : [],
+        spanId: encoder.encodeSpanContext(link.context.spanId),
+        traceId: encoder.encodeSpanContext(link.context.traceId),
+        traceState: (_a = link.context.traceState) === null || _a === undefined ? undefined : _a.serialize(),
+        droppedAttributesCount: link.droppedAttributesCount || 0,
+    };
+}
+function toOtlpSpanEvent(timedEvent, encoder) {
+    return {
+        attributes: timedEvent.attributes
+            ? toAttributes(timedEvent.attributes)
+            : [],
+        name: timedEvent.name,
+        timeUnixNano: encoder.encodeHrTime(timedEvent.time),
+        droppedAttributesCount: timedEvent.droppedAttributesCount || 0,
+    };
+}
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function createExportTraceServiceRequest(spans, options) {
+    var encoder = getOtlpEncoder(options);
+    return {
+        resourceSpans: spanRecordsToResourceSpans(spans, encoder),
+    };
+}
+function createResourceMap(readableSpans) {
+    var e_1, _a;
+    var resourceMap = new Map();
+    try {
+        for (var readableSpans_1 = __values$3(readableSpans), readableSpans_1_1 = readableSpans_1.next(); !readableSpans_1_1.done; readableSpans_1_1 = readableSpans_1.next()) {
+            var record = readableSpans_1_1.value;
+            var ilmMap = resourceMap.get(record.resource);
+            if (!ilmMap) {
+                ilmMap = new Map();
+                resourceMap.set(record.resource, ilmMap);
+            }
+            // TODO this is duplicated in basic tracer. Consolidate on a common helper in core
+            var instrumentationLibraryKey = record.instrumentationLibrary.name + "@" + (record.instrumentationLibrary.version || '') + ":" + (record.instrumentationLibrary.schemaUrl || '');
+            var records = ilmMap.get(instrumentationLibraryKey);
+            if (!records) {
+                records = [];
+                ilmMap.set(instrumentationLibraryKey, records);
+            }
+            records.push(record);
+        }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (readableSpans_1_1 && !readableSpans_1_1.done && (_a = readableSpans_1.return)) _a.call(readableSpans_1);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    return resourceMap;
+}
+function spanRecordsToResourceSpans(readableSpans, encoder) {
+    var resourceMap = createResourceMap(readableSpans);
+    var out = [];
+    var entryIterator = resourceMap.entries();
+    var entry = entryIterator.next();
+    while (!entry.done) {
+        var _a = __read$2(entry.value, 2), resource = _a[0], ilmMap = _a[1];
+        var scopeResourceSpans = [];
+        var ilmIterator = ilmMap.values();
+        var ilmEntry = ilmIterator.next();
+        while (!ilmEntry.done) {
+            var scopeSpans = ilmEntry.value;
+            if (scopeSpans.length > 0) {
+                var spans = scopeSpans.map(function (readableSpan) {
+                    return sdkSpanToOtlpSpan(readableSpan, encoder);
+                });
+                scopeResourceSpans.push({
+                    scope: createInstrumentationScope(scopeSpans[0].instrumentationLibrary),
+                    spans: spans,
+                    schemaUrl: scopeSpans[0].instrumentationLibrary.schemaUrl,
+                });
+            }
+            ilmEntry = ilmIterator.next();
+        }
+        // TODO SDK types don't provide resource schema URL at this time
+        var transformedSpans = {
+            resource: createResource(resource),
+            scopeSpans: scopeResourceSpans,
+            schemaUrl: undefined,
+        };
+        out.push(transformedSpans);
+        entry = entryIterator.next();
+    }
+    return out;
+}
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var traceResponseType = rootExports.opentelemetry.proto.collector.trace.v1
+    .ExportTraceServiceResponse;
+var traceRequestType = rootExports.opentelemetry.proto.collector.trace.v1
+    .ExportTraceServiceRequest;
+var ProtobufTraceSerializer = {
+    serializeRequest: function (arg) {
+        var request = createExportTraceServiceRequest(arg);
+        return traceRequestType.encode(request).finish();
+    },
+    deserializeResponse: function (arg) {
+        return traceResponseType.decode(arg);
+    },
+};
+
+/*
+ * @experimental this serializer may receive breaking changes in minor versions, pin this package's version when using this constant
+ */
+var JsonLogsSerializer = {
+    serializeRequest: function (arg) {
+        var request = createExportLogsServiceRequest(arg, {
+            useHex: true,
+            useLongBits: false,
+        });
+        var encoder = new TextEncoder();
+        return encoder.encode(JSON.stringify(request));
+    },
+    deserializeResponse: function (arg) {
+        var decoder = new TextDecoder();
+        return JSON.parse(decoder.decode(arg));
+    },
+};
+
+var JsonMetricsSerializer = {
+    serializeRequest: function (arg) {
+        var request = createExportMetricsServiceRequest([arg], {
+            useLongBits: false,
+        });
+        var encoder = new TextEncoder();
+        return encoder.encode(JSON.stringify(request));
+    },
+    deserializeResponse: function (arg) {
+        var decoder = new TextDecoder();
+        return JSON.parse(decoder.decode(arg));
+    },
+};
+
+var JsonTraceSerializer = {
+    serializeRequest: function (arg) {
+        var request = createExportTraceServiceRequest(arg, {
+            useHex: true,
+            useLongBits: false,
+        });
+        var encoder = new TextEncoder();
+        return encoder.encode(JSON.stringify(request));
+    },
+    deserializeResponse: function (arg) {
+        var decoder = new TextDecoder();
+        return JSON.parse(decoder.decode(arg));
+    },
+};
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var esm = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	JsonLogsSerializer: JsonLogsSerializer,
+	JsonMetricsSerializer: JsonMetricsSerializer,
+	JsonTraceSerializer: JsonTraceSerializer,
+	ProtobufLogsSerializer: ProtobufLogsSerializer,
+	ProtobufMetricsSerializer: ProtobufMetricsSerializer,
+	ProtobufTraceSerializer: ProtobufTraceSerializer
+});
+
+var require$$1 = /*@__PURE__*/getAugmentedNamespace(esm);
+
+var hasRequiredOTLPTraceExporter;
+
+function requireOTLPTraceExporter () {
+	if (hasRequiredOTLPTraceExporter) return OTLPTraceExporter$1;
+	hasRequiredOTLPTraceExporter = 1;
+	/*
+	 * Copyright The OpenTelemetry Authors
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *      https://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+	Object.defineProperty(OTLPTraceExporter$1, "__esModule", { value: true });
+	OTLPTraceExporter$1.OTLPTraceExporter = undefined;
+	const otlp_grpc_exporter_base_1 = /*@__PURE__*/ requireSrc$1();
+	const otlp_transformer_1 = require$$1;
+	const otlp_exporter_base_1 = require$$2$1;
+	/**
+	 * OTLP Trace Exporter for Node
+	 */
+	class OTLPTraceExporter extends otlp_exporter_base_1.OTLPExporterBase {
+	    constructor(config = {}) {
+	        super((0, otlp_grpc_exporter_base_1.createOtlpGrpcExportDelegate)((0, otlp_grpc_exporter_base_1.convertLegacyOtlpGrpcOptions)(config, 'TRACES'), otlp_transformer_1.ProtobufTraceSerializer, 'TraceExportService', '/opentelemetry.proto.collector.trace.v1.TraceService/Export'));
+	    }
+	}
+	OTLPTraceExporter$1.OTLPTraceExporter = OTLPTraceExporter;
+	
+	return OTLPTraceExporter$1;
+}
+
+var hasRequiredSrc;
+
+function requireSrc () {
+	if (hasRequiredSrc) return src$1;
+	hasRequiredSrc = 1;
+	(function (exports) {
+		/*
+		 * Copyright The OpenTelemetry Authors
+		 *
+		 * Licensed under the Apache License, Version 2.0 (the "License");
+		 * you may not use this file except in compliance with the License.
+		 * You may obtain a copy of the License at
+		 *
+		 *      https://www.apache.org/licenses/LICENSE-2.0
+		 *
+		 * Unless required by applicable law or agreed to in writing, software
+		 * distributed under the License is distributed on an "AS IS" BASIS,
+		 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		 * See the License for the specific language governing permissions and
+		 * limitations under the License.
+		 */
+		var __createBinding = (src$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (src$1.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* eslint no-restricted-syntax: ["warn", "ExportAllDeclaration"] --
+		 * TODO: Replace wildcard export with named exports before next major version
+		 */
+		__exportStar(/*@__PURE__*/ requireOTLPTraceExporter(), exports);
+		
+	} (src$1));
+	return src$1;
+}
+
+var srcExports = /*@__PURE__*/ requireSrc();
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+// this is autogenerated file, see scripts/version-update.js
+var VERSION = '0.57.1';
+
+/*
+ * Copyright The OpenTelemetry Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var __extends$1 = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+/**
+ * Collector Trace Exporter for Node with protobuf
+ */
+var OTLPTraceExporter = /** @class */ (function (_super) {
+    __extends$1(OTLPTraceExporter, _super);
+    function OTLPTraceExporter(config) {
+        if (config === undefined) { config = {}; }
+        return _super.call(this, createOtlpHttpExportDelegate(convertLegacyHttpOptions(config, 'TRACES', 'v1/traces', {
+            'User-Agent': "OTel-OTLP-Exporter-JavaScript/" + VERSION,
+            'Content-Type': 'application/x-protobuf',
+        }), ProtobufTraceSerializer)) || this;
+    }
+    return OTLPTraceExporter;
+}(OTLPExporterBase));
 
 /*
  * Copyright The OpenTelemetry Authors
@@ -84404,7 +82519,7 @@ var __values$2 = (undefined && undefined.__values) || function(o) {
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
@@ -84446,7 +82561,7 @@ var Span = /** @class */ (function () {
      * */
     function Span(parentTracer, context, spanName, spanContext, kind, parentSpanId, links, startTime, _deprecatedClock, // keeping this argument even though it is unused to ensure backwards compatibility
     attributes) {
-        if (links === void 0) { links = []; }
+        if (links === undefined) { links = []; }
         this.attributes = {};
         this.links = [];
         this.events = [];
@@ -84469,7 +82584,7 @@ var Span = /** @class */ (function () {
         this._performanceOffset =
             now - (this._performanceStartTime + getTimeOrigin());
         this._startTimeProvided = startTime != null;
-        this.startTime = this._getTime(startTime !== null && startTime !== void 0 ? startTime : now);
+        this.startTime = this._getTime(startTime !== null && startTime !== undefined ? startTime : now);
         this.resource = parentTracer.resource;
         this.instrumentationLibrary = parentTracer.instrumentationLibrary;
         this._spanLimits = parentTracer.getSpanLimits();
@@ -84872,13 +82987,13 @@ var ParentBasedSampler = /** @class */ (function () {
             this._root = new AlwaysOnSampler();
         }
         this._remoteParentSampled =
-            (_a = config.remoteParentSampled) !== null && _a !== void 0 ? _a : new AlwaysOnSampler();
+            (_a = config.remoteParentSampled) !== null && _a !== undefined ? _a : new AlwaysOnSampler();
         this._remoteParentNotSampled =
-            (_b = config.remoteParentNotSampled) !== null && _b !== void 0 ? _b : new AlwaysOffSampler();
+            (_b = config.remoteParentNotSampled) !== null && _b !== undefined ? _b : new AlwaysOffSampler();
         this._localParentSampled =
-            (_c = config.localParentSampled) !== null && _c !== void 0 ? _c : new AlwaysOnSampler();
+            (_c = config.localParentSampled) !== null && _c !== undefined ? _c : new AlwaysOnSampler();
         this._localParentNotSampled =
-            (_d = config.localParentNotSampled) !== null && _d !== void 0 ? _d : new AlwaysOffSampler();
+            (_d = config.localParentNotSampled) !== null && _d !== undefined ? _d : new AlwaysOffSampler();
     }
     ParentBasedSampler.prototype.shouldSample = function (context, traceId, spanName, spanKind, attributes, links) {
         var parentContext = trace.getSpanContext(context);
@@ -84920,7 +83035,7 @@ var ParentBasedSampler = /** @class */ (function () {
 /** Sampler that samples a given fraction of traces based of trace id deterministically. */
 var TraceIdRatioBasedSampler = /** @class */ (function () {
     function TraceIdRatioBasedSampler(_ratio) {
-        if (_ratio === void 0) { _ratio = 0; }
+        if (_ratio === undefined) { _ratio = 0; }
         this._ratio = _ratio;
         this._ratio = this._normalize(_ratio);
         this._upperBound = Math.floor(this._ratio * 0xffffffff);
@@ -85002,7 +83117,7 @@ function loadDefaultConfig() {
  * @param environment optional, by default uses getEnv(), but allows passing a value to reuse parsed environment
  */
 function buildSamplerFromEnv(environment) {
-    if (environment === void 0) { environment = getEnv(); }
+    if (environment === undefined) { environment = getEnv(); }
     switch (environment.OTEL_TRACES_SAMPLER) {
         case TracesSamplerValues.AlwaysOn:
             return new AlwaysOnSampler();
@@ -85087,12 +83202,12 @@ function reconfigureLimits(userConfig) {
      * Reassign span attribute count limit to use first non null value defined by user or use default value
      */
     spanLimits.attributeCountLimit =
-        (_f = (_e = (_d = (_b = (_a = userConfig.spanLimits) === null || _a === void 0 ? void 0 : _a.attributeCountLimit) !== null && _b !== void 0 ? _b : (_c = userConfig.generalLimits) === null || _c === void 0 ? void 0 : _c.attributeCountLimit) !== null && _d !== void 0 ? _d : parsedEnvConfig.OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT) !== null && _e !== void 0 ? _e : parsedEnvConfig.OTEL_ATTRIBUTE_COUNT_LIMIT) !== null && _f !== void 0 ? _f : DEFAULT_ATTRIBUTE_COUNT_LIMIT;
+        (_f = (_e = (_d = (_b = (_a = userConfig.spanLimits) === null || _a === undefined ? undefined : _a.attributeCountLimit) !== null && _b !== undefined ? _b : (_c = userConfig.generalLimits) === null || _c === undefined ? undefined : _c.attributeCountLimit) !== null && _d !== undefined ? _d : parsedEnvConfig.OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT) !== null && _e !== undefined ? _e : parsedEnvConfig.OTEL_ATTRIBUTE_COUNT_LIMIT) !== null && _f !== undefined ? _f : DEFAULT_ATTRIBUTE_COUNT_LIMIT;
     /**
      * Reassign span attribute value length limit to use first non null value defined by user or use default value
      */
     spanLimits.attributeValueLengthLimit =
-        (_m = (_l = (_k = (_h = (_g = userConfig.spanLimits) === null || _g === void 0 ? void 0 : _g.attributeValueLengthLimit) !== null && _h !== void 0 ? _h : (_j = userConfig.generalLimits) === null || _j === void 0 ? void 0 : _j.attributeValueLengthLimit) !== null && _k !== void 0 ? _k : parsedEnvConfig.OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT) !== null && _l !== void 0 ? _l : parsedEnvConfig.OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT) !== null && _m !== void 0 ? _m : DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT;
+        (_m = (_l = (_k = (_h = (_g = userConfig.spanLimits) === null || _g === undefined ? undefined : _g.attributeValueLengthLimit) !== null && _h !== undefined ? _h : (_j = userConfig.generalLimits) === null || _j === undefined ? undefined : _j.attributeValueLengthLimit) !== null && _k !== undefined ? _k : parsedEnvConfig.OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT) !== null && _l !== undefined ? _l : parsedEnvConfig.OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT) !== null && _m !== undefined ? _m : DEFAULT_ATTRIBUTE_VALUE_LENGTH_LIMIT;
     return Object.assign({}, userConfig, { spanLimits: spanLimits });
 }
 
@@ -85123,19 +83238,19 @@ var BatchSpanProcessorBase = /** @class */ (function () {
         this._droppedSpansCount = 0;
         var env = getEnv();
         this._maxExportBatchSize =
-            typeof (config === null || config === void 0 ? void 0 : config.maxExportBatchSize) === 'number'
+            typeof (config === null || config === undefined ? undefined : config.maxExportBatchSize) === 'number'
                 ? config.maxExportBatchSize
                 : env.OTEL_BSP_MAX_EXPORT_BATCH_SIZE;
         this._maxQueueSize =
-            typeof (config === null || config === void 0 ? void 0 : config.maxQueueSize) === 'number'
+            typeof (config === null || config === undefined ? undefined : config.maxQueueSize) === 'number'
                 ? config.maxQueueSize
                 : env.OTEL_BSP_MAX_QUEUE_SIZE;
         this._scheduledDelayMillis =
-            typeof (config === null || config === void 0 ? void 0 : config.scheduledDelayMillis) === 'number'
+            typeof (config === null || config === undefined ? undefined : config.scheduledDelayMillis) === 'number'
                 ? config.scheduledDelayMillis
                 : env.OTEL_BSP_SCHEDULE_DELAY;
         this._exportTimeoutMillis =
-            typeof (config === null || config === void 0 ? void 0 : config.exportTimeoutMillis) === 'number'
+            typeof (config === null || config === undefined ? undefined : config.exportTimeoutMillis) === 'number'
                 ? config.exportTimeoutMillis
                 : env.OTEL_BSP_EXPORT_TIMEOUT;
         this._shutdownOnce = new BindOnceFuture(this._shutdown, this);
@@ -85248,7 +83363,7 @@ var BatchSpanProcessorBase = /** @class */ (function () {
                             resolve();
                         }
                         else {
-                            reject((_a = result.error) !== null && _a !== void 0 ? _a : new Error('BatchSpanProcessor: span export failed'));
+                            reject((_a = result.error) !== null && _a !== undefined ? _a : new Error('BatchSpanProcessor: span export failed'));
                         }
                     });
                 };
@@ -85257,7 +83372,7 @@ var BatchSpanProcessorBase = /** @class */ (function () {
                     var span = spans[i];
                     if (span.resource.asyncAttributesPending &&
                         span.resource.waitForAsyncAttributes) {
-                        pendingResources !== null && pendingResources !== void 0 ? pendingResources : (pendingResources = []);
+                        pendingResources !== null && pendingResources !== undefined ? pendingResources : (pendingResources = []);
                         pendingResources.push(span.resource.waitForAsyncAttributes());
                     }
                 }
@@ -85441,8 +83556,8 @@ var Tracer = /** @class */ (function () {
      */
     Tracer.prototype.startSpan = function (name, options, context$1) {
         var _a, _b, _c;
-        if (options === void 0) { options = {}; }
-        if (context$1 === void 0) { context$1 = context.active(); }
+        if (options === undefined) { options = {}; }
+        if (context$1 === undefined) { context$1 = context.active(); }
         // remove span from context in case a root span is requested via options
         if (options.root) {
             context$1 = trace.deleteSpan(context$1);
@@ -85453,7 +83568,7 @@ var Tracer = /** @class */ (function () {
             var nonRecordingSpan = trace.wrapSpanContext(INVALID_SPAN_CONTEXT);
             return nonRecordingSpan;
         }
-        var parentSpanContext = parentSpan === null || parentSpan === void 0 ? void 0 : parentSpan.spanContext();
+        var parentSpanContext = parentSpan === null || parentSpan === undefined ? undefined : parentSpan.spanContext();
         var spanId = this._idGenerator.generateSpanId();
         var traceId;
         var traceState;
@@ -85469,8 +83584,8 @@ var Tracer = /** @class */ (function () {
             traceState = parentSpanContext.traceState;
             parentSpanId = parentSpanContext.spanId;
         }
-        var spanKind = (_a = options.kind) !== null && _a !== void 0 ? _a : SpanKind.INTERNAL;
-        var links = ((_b = options.links) !== null && _b !== void 0 ? _b : []).map(function (link) {
+        var spanKind = (_a = options.kind) !== null && _a !== undefined ? _a : SpanKind.INTERNAL;
+        var links = ((_b = options.links) !== null && _b !== undefined ? _b : []).map(function (link) {
             return {
                 context: link.context,
                 attributes: sanitizeAttributes(link.attributes),
@@ -85479,7 +83594,7 @@ var Tracer = /** @class */ (function () {
         var attributes = sanitizeAttributes(options.attributes);
         // make sampling decision
         var samplingResult = this._sampler.shouldSample(context$1, traceId, name, spanKind, attributes, links);
-        traceState = (_c = samplingResult.traceState) !== null && _c !== void 0 ? _c : traceState;
+        traceState = (_c = samplingResult.traceState) !== null && _c !== undefined ? _c : traceState;
         var traceFlags = samplingResult.decision === SamplingDecision$1.RECORD_AND_SAMPLED
             ? TraceFlags.SAMPLED
             : TraceFlags.NONE;
@@ -85514,7 +83629,7 @@ var Tracer = /** @class */ (function () {
             ctx = arg3;
             fn = arg4;
         }
-        var parentContext = ctx !== null && ctx !== void 0 ? ctx : context.active();
+        var parentContext = ctx !== null && ctx !== undefined ? ctx : context.active();
         var span = this.startSpan(name, opts, parentContext);
         var contextWithSpanSet = trace.setSpan(parentContext, span);
         return context.with(contextWithSpanSet, fn, undefined, span);
@@ -85553,7 +83668,7 @@ var __values$1 = (undefined && undefined.__values) || function(o) {
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
@@ -85733,19 +83848,19 @@ var ForceFlushState;
  */
 var BasicTracerProvider = /** @class */ (function () {
     function BasicTracerProvider(config) {
-        if (config === void 0) { config = {}; }
+        if (config === undefined) { config = {}; }
         var _a, _b;
         this._registeredSpanProcessors = [];
         this._tracers = new Map();
         var mergedConfig = merge({}, loadDefaultConfig(), reconfigureLimits(config));
-        this.resource = (_a = mergedConfig.resource) !== null && _a !== void 0 ? _a : Resource.empty();
+        this.resource = (_a = mergedConfig.resource) !== null && _a !== undefined ? _a : Resource.empty();
         if (mergedConfig.mergeResourceWithDefaults) {
             this.resource = Resource.default().merge(this.resource);
         }
         this._config = Object.assign({}, mergedConfig, {
             resource: this.resource,
         });
-        if ((_b = config.spanProcessors) === null || _b === void 0 ? void 0 : _b.length) {
+        if ((_b = config.spanProcessors) === null || _b === undefined ? undefined : _b.length) {
             this._registeredSpanProcessors = __spreadArray([], __read(config.spanProcessors), false);
             this.activeSpanProcessor = new MultiSpanProcessor(this._registeredSpanProcessors);
         }
@@ -85761,9 +83876,9 @@ var BasicTracerProvider = /** @class */ (function () {
         }
     }
     BasicTracerProvider.prototype.getTracer = function (name, version, options) {
-        var key = name + "@" + (version || '') + ":" + ((options === null || options === void 0 ? void 0 : options.schemaUrl) || '');
+        var key = name + "@" + (version || '') + ":" + ((options === null || options === undefined ? undefined : options.schemaUrl) || '');
         if (!this._tracers.has(key)) {
-            this._tracers.set(key, new Tracer({ name: name, version: version, schemaUrl: options === null || options === void 0 ? void 0 : options.schemaUrl }, this._config, this));
+            this._tracers.set(key, new Tracer({ name: name, version: version, schemaUrl: options === null || options === undefined ? undefined : options.schemaUrl }, this._config, this));
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this._tracers.get(key);
@@ -85797,7 +83912,7 @@ var BasicTracerProvider = /** @class */ (function () {
      * @param config Configuration object for SDK registration
      */
     BasicTracerProvider.prototype.register = function (config) {
-        if (config === void 0) { config = {}; }
+        if (config === undefined) { config = {}; }
         trace.setGlobalTracerProvider(this);
         if (config.propagator === undefined) {
             config.propagator = this._buildPropagatorFromEnv();
@@ -85860,11 +83975,11 @@ var BasicTracerProvider = /** @class */ (function () {
      */
     BasicTracerProvider.prototype._getPropagator = function (name) {
         var _a;
-        return (_a = this.constructor._registeredPropagators.get(name)) === null || _a === void 0 ? void 0 : _a();
+        return (_a = this.constructor._registeredPropagators.get(name)) === null || _a === undefined ? undefined : _a();
     };
     BasicTracerProvider.prototype._getSpanExporter = function (name) {
         var _a;
-        return (_a = this.constructor._registeredExporters.get(name)) === null || _a === void 0 ? void 0 : _a();
+        return (_a = this.constructor._registeredExporters.get(name)) === null || _a === undefined ? undefined : _a();
     };
     BasicTracerProvider.prototype._buildPropagatorFromEnv = function () {
         var _this = this;
@@ -85933,7 +84048,7 @@ var __values = (undefined && undefined.__values) || function(o) {
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
         next: function () {
-            if (o && i >= o.length) o = void 0;
+            if (o && i >= o.length) o = undefined;
             return { value: o && o[i++], done: !o };
         }
     };
@@ -85983,7 +84098,7 @@ var ConsoleSpanExporter = /** @class */ (function () {
             instrumentationScope: span.instrumentationLibrary,
             traceId: span.spanContext().traceId,
             parentId: span.parentSpanId,
-            traceState: (_a = span.spanContext().traceState) === null || _a === void 0 ? void 0 : _a.serialize(),
+            traceState: (_a = span.spanContext().traceState) === null || _a === undefined ? undefined : _a.serialize(),
             name: span.name,
             id: span.spanContext().spanId,
             kind: span.kind,
