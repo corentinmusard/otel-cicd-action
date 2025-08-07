@@ -33928,7 +33928,7 @@ async function traceStep(step) {
         coreExports.info(`Step ${step.name} is not completed yet.`);
         return;
     }
-    if (step.conclusion === "cancelled" || step.conclusion === "skipped") {
+    if (step.conclusion === "skipped") {
         coreExports.info(`Step ${step.name} did not run.`);
         return;
     }

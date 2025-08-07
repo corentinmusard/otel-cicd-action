@@ -1,0 +1,2036 @@
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '991f2b235b36cb2c',
+  traceState: undefined,
+  name: 'Queued',
+  id: 'b6cb5d1a3093cd7c',
+  kind: 0,
+  timestamp: 1753871431000000,
+  duration: 9000000,
+  attributes: {},
+  status: { code: 0 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '664492c803762481',
+  kind: 0,
+  timestamp: 1753871441000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2025-07-30T10:30:41Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:42Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Pre Harden Runner',
+  id: '53f65cc5dd869993',
+  kind: 0,
+  timestamp: 1753871442000000,
+  duration: 7000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Pre Harden Runner',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2025-07-30T10:30:42Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:49Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Harden Runner',
+  id: '3be338eeb09a8294',
+  kind: 0,
+  timestamp: 1753871449000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Harden Runner',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2025-07-30T10:30:49Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:49Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '39fe919f122d52fc',
+  kind: 0,
+  timestamp: 1753871449000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2025-07-30T10:30:49Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:49Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Run action',
+  id: 'fe4443837212946c',
+  kind: 0,
+  timestamp: 1753871449000000,
+  duration: 5000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Run action',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2025-07-30T10:30:49Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:54Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: 'bd80124f69923ec3',
+  kind: 0,
+  timestamp: 1753871454000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 9,
+    'github.job.step.started_at': '2025-07-30T10:30:54Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:54Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Post Harden Runner',
+  id: 'd32c379c60a00c7f',
+  kind: 0,
+  timestamp: 1753871454000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Harden Runner',
+    'github.job.step.number': 10,
+    'github.job.step.started_at': '2025-07-30T10:30:54Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:55Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '6ec088f795976e9f',
+  traceState: undefined,
+  name: 'Complete job',
+  id: 'c889ebc1b96c92da',
+  kind: 0,
+  timestamp: 1753871455000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2025-07-30T10:30:55Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:55Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '991f2b235b36cb2c',
+  traceState: undefined,
+  name: 'pre_job',
+  id: '6ec088f795976e9f',
+  kind: 0,
+  timestamp: 1753871440000000,
+  duration: 16000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'pre_job',
+    'cicd.pipeline.task.run.id': 47022208955,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208955',
+    'github.job.id': 47022208955,
+    'github.job.name': 'pre_job',
+    'github.job.run_id': 16620109074,
+    'github.job.run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074',
+    'github.job.run_attempt': 1,
+    'github.job.node_id': 'CR_kwDOKtjdoc8AAAAK8r33uw',
+    'github.job.head_sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.job.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/jobs/47022208955',
+    'github.job.html_url': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208955',
+    'github.job.status': 'completed',
+    'github.job.runner_id': 1000149203,
+    'github.job.runner_group_id': 0,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 1000149203',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.created_at': '2025-07-30T10:30:31Z',
+    'github.job.started_at': '2025-07-30T10:30:40Z',
+    'github.job.completed_at': '2025-07-30T10:30:56Z',
+    'github.conclusion': 'success',
+    'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208955',
+    'github.job.workflow_name': 'Build & Test',
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '8431d771fbe19702',
+  kind: 0,
+  timestamp: 1753871439000000,
+  duration: 2000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2025-07-30T10:30:39Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:41Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Pre Harden Runner',
+  id: 'cdbfb26470aa9ef6',
+  kind: 0,
+  timestamp: 1753871441000000,
+  duration: 6000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Pre Harden Runner',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2025-07-30T10:30:41Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:47Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Harden Runner',
+  id: '07de851007ffa5c6',
+  kind: 0,
+  timestamp: 1753871447000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Harden Runner',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2025-07-30T10:30:47Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:47Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: '616a1645ccb8bf30',
+  kind: 0,
+  timestamp: 1753871447000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2025-07-30T10:30:47Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:48Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Run action',
+  id: '09db8c4d1f69de16',
+  kind: 0,
+  timestamp: 1753871448000000,
+  duration: 6000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Run action',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2025-07-30T10:30:48Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:54Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '1df552a1fa27b5cf',
+  kind: 0,
+  timestamp: 1753871454000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2025-07-30T10:30:54Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:54Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Post Harden Runner',
+  id: '68de91f473253d2e',
+  kind: 0,
+  timestamp: 1753871454000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Harden Runner',
+    'github.job.step.number': 12,
+    'github.job.step.started_at': '2025-07-30T10:30:54Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:55Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '76a45425d9782571',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '6852ec1078616648',
+  kind: 0,
+  timestamp: 1753871455000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 13,
+    'github.job.step.started_at': '2025-07-30T10:30:55Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:55Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '991f2b235b36cb2c',
+  traceState: undefined,
+  name: 'skip_individual_steps_job',
+  id: '76a45425d9782571',
+  kind: 0,
+  timestamp: 1753871439000000,
+  duration: 17000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'skip_individual_steps_job',
+    'cicd.pipeline.task.run.id': 47022208967,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208967',
+    'github.job.id': 47022208967,
+    'github.job.name': 'skip_individual_steps_job',
+    'github.job.run_id': 16620109074,
+    'github.job.run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074',
+    'github.job.run_attempt': 1,
+    'github.job.node_id': 'CR_kwDOKtjdoc8AAAAK8r33xw',
+    'github.job.head_sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.job.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/jobs/47022208967',
+    'github.job.html_url': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208967',
+    'github.job.status': 'completed',
+    'github.job.runner_id': 1000149204,
+    'github.job.runner_group_id': 0,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 1000149204',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.created_at': '2025-07-30T10:30:31Z',
+    'github.job.started_at': '2025-07-30T10:30:39Z',
+    'github.job.completed_at': '2025-07-30T10:30:56Z',
+    'github.conclusion': 'success',
+    'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208967',
+    'github.job.workflow_name': 'Build & Test',
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '6aa7a8fe964a0033',
+  kind: 0,
+  timestamp: 1753871437000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2025-07-30T10:30:37Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:38Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Pre Harden Runner',
+  id: '5f37629b7f61750d',
+  kind: 0,
+  timestamp: 1753871438000000,
+  duration: 7000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Pre Harden Runner',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2025-07-30T10:30:38Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:45Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Harden Runner',
+  id: 'b17d147dea33e970',
+  kind: 0,
+  timestamp: 1753871445000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Harden Runner',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2025-07-30T10:30:45Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:45Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: 'bcd0a918bb6027d3',
+  kind: 0,
+  timestamp: 1753871445000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2025-07-30T10:30:45Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:46Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Install dependencies',
+  id: '8e34b7eb1a04f9ff',
+  kind: 0,
+  timestamp: 1753871446000000,
+  duration: 8000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Install dependencies',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2025-07-30T10:30:46Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:54Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Build',
+  id: '207db52c25340b2a',
+  kind: 0,
+  timestamp: 1753871454000000,
+  duration: 10000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Build',
+    'github.job.step.number': 6,
+    'github.job.step.started_at': '2025-07-30T10:30:54Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:04Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '1379d22aef351407',
+  kind: 0,
+  timestamp: 1753871464000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2025-07-30T10:31:04Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:04Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Post Harden Runner',
+  id: 'f2ec97cedccad140',
+  kind: 0,
+  timestamp: 1753871464000000,
+  duration: 2000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Harden Runner',
+    'github.job.step.number': 12,
+    'github.job.step.started_at': '2025-07-30T10:31:04Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:06Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'a6fb7f2a3eb44adc',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '60d574f4c75f41b0',
+  kind: 0,
+  timestamp: 1753871466000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 13,
+    'github.job.step.started_at': '2025-07-30T10:31:06Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:06Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '991f2b235b36cb2c',
+  traceState: undefined,
+  name: 'build',
+  id: 'a6fb7f2a3eb44adc',
+  kind: 0,
+  timestamp: 1753871436000000,
+  duration: 31000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'build',
+    'cicd.pipeline.task.run.id': 47022208973,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208973',
+    'cicd.pipeline.task.type': 'build',
+    'github.job.id': 47022208973,
+    'github.job.name': 'build',
+    'github.job.run_id': 16620109074,
+    'github.job.run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074',
+    'github.job.run_attempt': 1,
+    'github.job.node_id': 'CR_kwDOKtjdoc8AAAAK8r33zQ',
+    'github.job.head_sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.job.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/jobs/47022208973',
+    'github.job.html_url': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208973',
+    'github.job.status': 'completed',
+    'github.job.runner_id': 1000149205,
+    'github.job.runner_group_id': 0,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 1000149205',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.created_at': '2025-07-30T10:30:31Z',
+    'github.job.started_at': '2025-07-30T10:30:36Z',
+    'github.job.completed_at': '2025-07-30T10:31:07Z',
+    'github.conclusion': 'success',
+    'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208973',
+    'github.job.workflow_name': 'Build & Test',
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Set up job',
+  id: '603ef8f30e823f02',
+  kind: 0,
+  timestamp: 1753871440000000,
+  duration: 2000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2025-07-30T10:30:40Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:42Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Pre Harden Runner',
+  id: '06f4c24c059c12ef',
+  kind: 0,
+  timestamp: 1753871442000000,
+  duration: 6000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Pre Harden Runner',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2025-07-30T10:30:42Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:48Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Harden Runner',
+  id: 'c7c59885be2b89f7',
+  kind: 0,
+  timestamp: 1753871448000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Harden Runner',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2025-07-30T10:30:48Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:48Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Checkout repository',
+  id: 'faf7d0c1ef7391fd',
+  kind: 0,
+  timestamp: 1753871448000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Checkout repository',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2025-07-30T10:30:48Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:49Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Run action',
+  id: '8c378cf03506c484',
+  kind: 0,
+  timestamp: 1753871449000000,
+  duration: 4000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Run action',
+    'github.job.step.number': 5,
+    'github.job.step.started_at': '2025-07-30T10:30:49Z',
+    'github.job.step.completed_at': '2025-07-30T10:30:53Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Simulate task',
+  id: 'ae0cad5525c51dbe',
+  kind: 0,
+  timestamp: 1753871453000000,
+  duration: 30000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Simulate task',
+    'github.job.step.number': 6,
+    'github.job.step.started_at': '2025-07-30T10:30:53Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:23Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Post Checkout repository',
+  id: '546af93b8890af76',
+  kind: 0,
+  timestamp: 1753871483000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Checkout repository',
+    'github.job.step.number': 11,
+    'github.job.step.started_at': '2025-07-30T10:31:23Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:24Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Post Harden Runner',
+  id: 'bb9b188ba79a9de2',
+  kind: 0,
+  timestamp: 1753871484000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Harden Runner',
+    'github.job.step.number': 12,
+    'github.job.step.started_at': '2025-07-30T10:31:24Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:25Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'cc0e5d1a7c34334b',
+  traceState: undefined,
+  name: 'Complete job',
+  id: 'ca39588130707da4',
+  kind: 0,
+  timestamp: 1753871485000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 13,
+    'github.job.step.started_at': '2025-07-30T10:31:25Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:25Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '991f2b235b36cb2c',
+  traceState: undefined,
+  name: 'private_action',
+  id: 'cc0e5d1a7c34334b',
+  kind: 0,
+  timestamp: 1753871439000000,
+  duration: 48000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'private_action',
+    'cicd.pipeline.task.run.id': 47022208986,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208986',
+    'github.job.id': 47022208986,
+    'github.job.name': 'private_action',
+    'github.job.run_id': 16620109074,
+    'github.job.run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074',
+    'github.job.run_attempt': 1,
+    'github.job.node_id': 'CR_kwDOKtjdoc8AAAAK8r332g',
+    'github.job.head_sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.job.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/jobs/47022208986',
+    'github.job.html_url': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022208986',
+    'github.job.status': 'completed',
+    'github.job.runner_id': 1000149206,
+    'github.job.runner_group_id': 0,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 1000149206',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.created_at': '2025-07-30T10:30:31Z',
+    'github.job.started_at': '2025-07-30T10:30:39Z',
+    'github.job.completed_at': '2025-07-30T10:31:27Z',
+    'github.conclusion': 'success',
+    'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208986',
+    'github.job.workflow_name': 'Build & Test',
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'ad015a378a776ab0',
+  traceState: undefined,
+  name: 'Set up job',
+  id: 'f560ed0ee3dba727',
+  kind: 0,
+  timestamp: 1753871463000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Set up job',
+    'github.job.step.number': 1,
+    'github.job.step.started_at': '2025-07-30T10:31:03Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:04Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'ad015a378a776ab0',
+  traceState: undefined,
+  name: 'Pre Harden Runner',
+  id: 'd29e0bdc6434b890',
+  kind: 0,
+  timestamp: 1753871464000000,
+  duration: 5000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Pre Harden Runner',
+    'github.job.step.number': 2,
+    'github.job.step.started_at': '2025-07-30T10:31:04Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:09Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'ad015a378a776ab0',
+  traceState: undefined,
+  name: 'Harden Runner',
+  id: '0da8f18621cd6147',
+  kind: 0,
+  timestamp: 1753871469000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Harden Runner',
+    'github.job.step.number': 3,
+    'github.job.step.started_at': '2025-07-30T10:31:09Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:09Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'ad015a378a776ab0',
+  traceState: undefined,
+  name: 'Simulate task',
+  id: '293c61f82325d2f4',
+  kind: 0,
+  timestamp: 1753871469000000,
+  duration: 30000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Simulate task',
+    'github.job.step.number': 4,
+    'github.job.step.started_at': '2025-07-30T10:31:09Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:39Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'ad015a378a776ab0',
+  traceState: undefined,
+  name: 'Post Harden Runner',
+  id: 'd3e959c6ebf49d14',
+  kind: 0,
+  timestamp: 1753871499000000,
+  duration: 1000000,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Post Harden Runner',
+    'github.job.step.number': 8,
+    'github.job.step.started_at': '2025-07-30T10:31:39Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:40Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: 'ad015a378a776ab0',
+  traceState: undefined,
+  name: 'Complete job',
+  id: '07725c294ab4805b',
+  kind: 0,
+  timestamp: 1753871500000000,
+  duration: 0,
+  attributes: {
+    'github.job.step.status': 'completed',
+    'github.job.step.conclusion': 'success',
+    'github.job.step.name': 'Complete job',
+    'github.job.step.number': 9,
+    'github.job.step.started_at': '2025-07-30T10:31:40Z',
+    'github.job.step.completed_at': '2025-07-30T10:31:40Z',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: '991f2b235b36cb2c',
+  traceState: undefined,
+  name: 'main_job',
+  id: 'ad015a378a776ab0',
+  kind: 0,
+  timestamp: 1753871462000000,
+  duration: 40000000,
+  attributes: {
+    'cicd.pipeline.task.name': 'main_job',
+    'cicd.pipeline.task.run.id': 47022240005,
+    'cicd.pipeline.task.run.url.full': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022240005',
+    'github.job.id': 47022240005,
+    'github.job.name': 'main_job',
+    'github.job.run_id': 16620109074,
+    'github.job.run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074',
+    'github.job.run_attempt': 1,
+    'github.job.node_id': 'CR_kwDOKtjdoc8AAAAK8r5xBQ',
+    'github.job.head_sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.job.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/jobs/47022240005',
+    'github.job.html_url': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074/job/47022240005',
+    'github.job.status': 'completed',
+    'github.job.runner_id': 1000149209,
+    'github.job.runner_group_id': 0,
+    'github.job.runner_group_name': 'GitHub Actions',
+    'github.job.runner_name': 'GitHub Actions 1000149209',
+    'github.job.conclusion': 'success',
+    'github.job.labels': 'ubuntu-latest',
+    'github.job.created_at': '2025-07-30T10:30:57Z',
+    'github.job.started_at': '2025-07-30T10:31:02Z',
+    'github.job.completed_at': '2025-07-30T10:31:42Z',
+    'github.conclusion': 'success',
+    'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022240005',
+    'github.job.workflow_name': 'Build & Test',
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    error: false
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}
+{
+  resource: {
+    attributes: {
+      'service.name': 'otel-cicd-action',
+      'telemetry.sdk.language': 'nodejs',
+      'telemetry.sdk.name': 'opentelemetry',
+      'telemetry.sdk.version': '1.30.1',
+      'service.instance.id': 'step-security/skip-duplicate-actions/76151565/16620109074/1',
+      'service.namespace': 'step-security/skip-duplicate-actions',
+      'service.version': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+      'extra.attribute': '1',
+      key2: 'value2'
+    }
+  },
+  instrumentationScope: {
+    name: 'otel-cicd-action',
+    version: undefined,
+    schemaUrl: undefined
+  },
+  traceId: '329e58aa53cec7a2beadd2fd0a85c388',
+  parentId: undefined,
+  traceState: undefined,
+  name: 'Build & Test',
+  id: '991f2b235b36cb2c',
+  kind: 0,
+  timestamp: 1753871431000000,
+  duration: 72000000,
+  attributes: {
+    'cicd.pipeline.name': 'Build & Test',
+    'cicd.pipeline.run.id': 16620109074,
+    'github.workflow_id': 76151565,
+    'github.run_id': 16620109074,
+    'github.run_number': 379,
+    'github.run_attempt': 1,
+    'github.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074',
+    'github.html_url': 'https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074',
+    'github.workflow_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/workflows/76151565',
+    'github.event': 'pull_request',
+    'github.status': 'completed',
+    'github.workflow': 'Build & Test',
+    'github.node_id': 'WFR_kwLOKtjdoc8AAAAD3qK9Eg',
+    'github.check_suite_id': 42609253529,
+    'github.check_suite_node_id': 'CS_kwDOKtjdoc8AAAAJ67WcmQ',
+    'github.conclusion': 'success',
+    'github.created_at': '2025-07-30T10:30:31Z',
+    'github.updated_at': '2025-07-30T10:31:43Z',
+    'github.run_started_at': '2025-07-30T10:30:31Z',
+    'github.jobs_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074/jobs',
+    'github.logs_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074/logs',
+    'github.check_suite_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-suites/42609253529',
+    'github.artifacts_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074/artifacts',
+    'github.cancel_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074/cancel',
+    'github.rerun_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/actions/runs/16620109074/rerun',
+    'github.head_commit.id': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.head_commit.tree_id': '8790bd00f5c35399a9f02671b49705bca870f02e',
+    'github.head_commit.author.name': 'dependabot[bot]',
+    'github.head_commit.author.email': '49699333+dependabot[bot]@users.noreply.github.com',
+    'github.head_commit.committer.name': 'GitHub',
+    'github.head_commit.committer.email': 'noreply@github.com',
+    'github.head_commit.message': 'chore(deps): Bump github/codeql-action from 3.28.8 to 3.29.5\n' +
+      '\n' +
+      'Bumps [github/codeql-action](https://github.com/github/codeql-action) from 3.28.8 to 3.29.5.\n' +
+      '- [Release notes](https://github.com/github/codeql-action/releases)\n' +
+      '- [Changelog](https://github.com/github/codeql-action/blob/main/CHANGELOG.md)\n' +
+      '- [Commits](https://github.com/github/codeql-action/compare/dd746615b3b9d728a6a37ca2045b68ca76d4841a...51f77329afa6477de8c49fc9c7046c15b9a4e79d)\n' +
+      '\n' +
+      '---\n' +
+      'updated-dependencies:\n' +
+      '- dependency-name: github/codeql-action\n' +
+      '  dependency-version: 3.29.5\n' +
+      '  dependency-type: direct:production\n' +
+      '  update-type: version-update:semver-minor\n' +
+      '...\n' +
+      '\n' +
+      'Signed-off-by: dependabot[bot] <support@github.com>',
+    'github.head_commit.timestamp': '2025-07-30T10:30:27Z',
+    'github.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    'github.head_sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.path': '.github/workflows/test.yml',
+    'github.display_title': 'chore(deps): Bump github/codeql-action from 3.28.8 to 3.29.5',
+    error: false,
+    'github.head_ref': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    'github.base_ref': 'main',
+    'github.base_sha': '4e5e8eaa7d15d4fdb0ffe1c24312ff6d79a6f294',
+    'github.pull_requests.0.id': 2706644617,
+    'github.pull_requests.0.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/pulls/305',
+    'github.pull_requests.0.number': 305,
+    'github.pull_requests.0.labels': [ 'dependencies', 'github_actions' ],
+    'github.pull_requests.0.head.sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
+    'github.pull_requests.0.head.ref': 'dependabot/github_actions/github/codeql-action-3.29.5',
+    'github.pull_requests.0.head.repo.id': 718855585,
+    'github.pull_requests.0.head.repo.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions',
+    'github.pull_requests.0.head.repo.name': 'skip-duplicate-actions',
+    'github.pull_requests.0.base.ref': 'main',
+    'github.pull_requests.0.base.sha': '4e5e8eaa7d15d4fdb0ffe1c24312ff6d79a6f294',
+    'github.pull_requests.0.base.repo.id': 718855585,
+    'github.pull_requests.0.base.repo.url': 'https://api.github.com/repos/step-security/skip-duplicate-actions',
+    'github.pull_requests.0.base.repo.name': 'skip-duplicate-actions'
+  },
+  status: { code: 1 },
+  events: [],
+  links: []
+}

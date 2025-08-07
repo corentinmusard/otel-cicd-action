@@ -93,6 +93,18 @@ describe("run", () => {
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
   }, 10000);
 
+  it("should run a cancelled workflow", async () => {
+    // https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074?pr=305
+    process.env["GITHUB_REPOSITORY"] = "step-security/skip-duplicate-actions";
+    runId = "16620109074";
+
+    await run();
+    await fs.writeFile("src/__assets__/output_cancelled.txt", output);
+
+    expect(core.setFailed).not.toHaveBeenCalled();
+    expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
+  }, 10000);
+
   it("should fail", async () => {
     // https://github.com/corentinmusard/otel-cicd-action/actions/runs/111
     process.env["GITHUB_REPOSITORY"] = "corentinmusard/otel-cicd-action";

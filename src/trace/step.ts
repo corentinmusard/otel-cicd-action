@@ -12,7 +12,7 @@ async function traceStep(step: Step) {
     return;
   }
 
-  if (step.conclusion === "cancelled" || step.conclusion === "skipped") {
+  if (step.conclusion === "skipped") {
     core.info(`Step ${step.name} did not run.`);
     return;
   }
