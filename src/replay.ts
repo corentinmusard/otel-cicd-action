@@ -1,4 +1,4 @@
-import { type FileHandle, appendFile, mkdir, open } from "node:fs/promises";
+import { appendFile, type FileHandle, mkdir, open } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import * as readline from "node:readline";
 import { getOctokit } from "@actions/github";
@@ -7,6 +7,10 @@ import { RequestError } from "@octokit/request-error";
 import { Octokit } from "@octokit/rest";
 import type { OctokitResponse, RequestMethod } from "@octokit/types";
 import callerCallsite from "caller-callsite";
+
+function isOctokitError(err: unknown): err is RequestError {
+  return !!err && typeof err === "object" && "status" in err;
+}
 
 async function recordOctokit(name: string, token: string) {
   const folder = join(dirname(callerCallsite()?.getFileName() ?? ""), "__assets__");
@@ -33,7 +37,7 @@ async function recordOctokit(name: string, token: string) {
 
       return response;
     } catch (error) {
-      if (error instanceof RequestError) {
+      if (isOctokitError(error)) {
         await writeReplay(file, {
           method: options.method,
           path: options.url,
@@ -89,8 +93,8 @@ async function replayOctokit(name: string, token: string) {
     if (options.url !== replay.path || options.method !== replay.method) {
       return Promise.reject(
         new Error(
-          `replay: request order changed: called with ${options.method} ${options.url} but replay has ${replay.method} ${replay.path}`,
-        ),
+          `replay: request order changed: called with ${options.method} ${options.url} but replay has ${replay.method} ${replay.path}`
+        )
       );
     }
 
@@ -131,7 +135,7 @@ async function readReplay(rl: readline.Interface): Promise<Replay> {
     method: lines[0] as RequestMethod,
     path: lines[1],
     url: lines[2],
-    status: Number.parseInt(lines[3]),
+    status: Number.parseInt(lines[3], 10),
     data: JSON.parse(Buffer.from(lines[4], "base64").toString()),
   };
 }

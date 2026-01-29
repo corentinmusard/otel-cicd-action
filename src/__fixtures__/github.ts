@@ -1,6 +1,5 @@
-import type * as github from "@actions/github";
-import { Context } from "@actions/github/lib/context";
+import * as github from "@actions/github";
 import { jest } from "@jest/globals";
 
-export const context = new Context();
+export const context = jest.mocked(github.context);
 export const getOctokit = jest.fn<typeof github.getOctokit>();

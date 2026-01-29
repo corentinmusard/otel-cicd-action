@@ -1,23 +1,23 @@
 import type { components } from "@octokit/openapi-types";
-import { type Attributes, SpanStatusCode, context, trace } from "@opentelemetry/api";
+import { type Attributes, context, SpanStatusCode, trace } from "@opentelemetry/api";
 import { ATTR_CICD_PIPELINE_NAME, ATTR_CICD_PIPELINE_RUN_ID } from "@opentelemetry/semantic-conventions/incubating";
 import { traceJob } from "./job";
 
-async function traceWorkflowRun(
+function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
   jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
-  prLabels: Record<number, string[]>,
+  prLabels: Record<number, string[]>
 ) {
   const tracer = trace.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
   const attributes = workflowRunToAttributes(workflowRun, prLabels);
 
-  return await tracer.startActiveSpan(
+  return tracer.startActiveSpan(
     workflowRun.name ?? workflowRun.display_title,
     { attributes, root: true, startTime },
-    async (rootSpan) => {
+    (rootSpan) => {
       const code = workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
       rootSpan.setStatus({ code });
 
@@ -29,18 +29,18 @@ async function traceWorkflowRun(
       }
 
       for (const job of jobs) {
-        await traceJob(job, jobAnnotations[job.id]);
+        traceJob(job, jobAnnotations[job.id]);
       }
 
       rootSpan.end(new Date(workflowRun.updated_at));
       return rootSpan.spanContext().traceId;
-    },
+    }
   );
 }
 
 function workflowRunToAttributes(
   workflowRun: components["schemas"]["workflow-run"],
-  prLabels: Record<number, string[]>,
+  prLabels: Record<number, string[]>
 ): Attributes {
   return {
     // OpenTelemetry semantic convention CICD Pipeline Attributes
@@ -112,7 +112,7 @@ function headCommitToAttributes(head_commit: components["schemas"]["nullable-sim
 
 function prsToAttributes(
   pullRequests: components["schemas"]["pull-request-minimal"][] | null,
-  prLabels: Record<number, string[]>,
+  prLabels: Record<number, string[]>
 ) {
   const attributes: Attributes = {
     "github.head_ref": pullRequests?.[0]?.head?.ref,

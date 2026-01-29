@@ -23,5 +23,11 @@
     "noEmit": true,
     "esModuleInterop": true
   },
-  "exclude": ["./dist", "./node_modules", "./__tests__", "./coverage", "jest.config.ts"]
+  "exclude": [
+    "./dist",
+    "./node_modules",
+    "./__tests__",
+    "./coverage",
+    "jest.config.ts"
+  ]
 }

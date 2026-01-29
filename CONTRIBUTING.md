@@ -10,8 +10,8 @@ cd otel-cicd-action
 Setup precommit hook, install dependencies:
 
 ```sh
-npm run prepare
 npm i
+npm run prepare
 ```
 
 Fill `.env.test` based on `.env.test.example`.

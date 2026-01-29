@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Updated dependencies
+
+### ⚠ BREAKING CHANGES
+
+- Upgraded OpenTelemetry JS SDK to [v2](https://github.com/open-telemetry/opentelemetry-js/blob/main/doc/upgrade-to-2.x.md)
+- The parentSpanId field on the Span and ReadableSpan interfaces was replaced by parentSpanContext, to adhere to the OTel spec: `span.parentSpanId` -> `span.parentSpanContext?.spanId`
+
 ## [2.2.4] - 2025-08-07
 
 ### Fixed

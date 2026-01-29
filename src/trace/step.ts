@@ -4,10 +4,10 @@ import { type Attributes, SpanStatusCode, trace } from "@opentelemetry/api";
 
 type Step = NonNullable<components["schemas"]["job"]["steps"]>[number];
 
-async function traceStep(step: Step) {
+function traceStep(step: Step) {
   const tracer = trace.getTracer("otel-cicd-action");
 
-  if (!step.completed_at || !step.started_at) {
+  if (!(step.completed_at && step.started_at)) {
     core.info(`Step ${step.name} is not completed yet.`);
     return;
   }
@@ -21,7 +21,7 @@ async function traceStep(step: Step) {
   const completedTime = new Date(step.completed_at);
   const attributes = stepToAttributes(step);
 
-  await tracer.startActiveSpan(step.name, { attributes, startTime }, async (span) => {
+  tracer.startActiveSpan(step.name, { attributes, startTime }, (span) => {
     const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
     span.setStatus({ code });
 

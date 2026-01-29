@@ -1,5 +1,5 @@
 Name: @actions/core
-Version: 1.11.1
+Version: 3.0.0
 License: MIT
 Private: false
 Description: Actions core lib
@@ -17,40 +17,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
----
-
-Name: @actions/http-client
-Version: 2.2.1
-License: MIT
-Private: false
-Description: Actions Http Client
-Repository: git+https://github.com/actions/toolkit.git
-Homepage: https://github.com/actions/toolkit/tree/main/packages/http-client
-License Copyright:
-===
-
-Actions Http Client for Node.js
-
-Copyright (c) GitHub, Inc.
-
-All rights reserved.
-
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
@@ -90,7 +56,7 @@ THE SOFTWARE.
 ---
 
 Name: undici
-Version: 5.28.5
+Version: 6.23.0
 License: MIT
 Private: false
 Description: An HTTP/1.1 client, written from scratch for Node.js
@@ -131,65 +97,42 @@ SOFTWARE.
 
 ---
 
-Name: @fastify/busboy
-Version: 2.1.1
+Name: @actions/http-client
+Version: 4.0.0
 License: MIT
 Private: false
-Description: A streaming parser for HTML form data for node.js
-Repository: git+https://github.com/fastify/busboy.git
-Author: Brian White <mscdex@mscdex.net>
-Contributors:
-  Igor Savin <kibertoad@gmail.com> (https://github.com/kibertoad)
-  Aras Abbasi <aras.abbasi@gmail.com> (https://github.com/uzlopak)
-License Copyright:
-===
-
-Copyright Brian White. All rights reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to
-deal in the Software without restriction, including without limitation the
-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.
-
----
-
-Name: @actions/exec
-Version: 1.1.1
-License: MIT
-Private: false
-Description: Actions exec lib
+Description: Actions Http Client
 Repository: git+https://github.com/actions/toolkit.git
-Homepage: https://github.com/actions/toolkit/tree/main/packages/exec
+Homepage: https://github.com/actions/toolkit/tree/main/packages/http-client
 License Copyright:
 ===
 
-The MIT License (MIT)
+Actions Http Client for Node.js
 
-Copyright 2019 GitHub
+Copyright (c) GitHub, Inc.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+All rights reserved.
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
 Name: @actions/io
-Version: 1.1.1
+Version: 3.0.2
 License: MIT
 Private: false
 Description: Actions io lib
@@ -210,8 +153,30 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ---
 
+Name: @actions/exec
+Version: 3.0.0
+License: MIT
+Private: false
+Description: Actions exec lib
+Repository: git+https://github.com/actions/toolkit.git
+Homepage: https://github.com/actions/toolkit/tree/main/packages/exec
+License Copyright:
+===
+
+The MIT License (MIT)
+
+Copyright 2019 GitHub
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
 Name: @actions/github
-Version: 6.0.0
+Version: 9.0.0
 License: MIT
 Private: false
 Description: Actions github lib
@@ -233,17 +198,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: universal-user-agent
-Version: 6.0.0
+Version: 7.0.3
 License: ISC
 Private: false
-Description: Get a user agent string in both browser and node
+Description: Get a user agent string across all JavaScript Runtime Environments
 Repository: undefined
+Author: Gregor Martynus (https://github.com/gr2m)
 License Copyright:
 ===
 
 # [ISC License](https://spdx.org/licenses/ISC)
 
-Copyright (c) 2018, Gregor Martynus (https://github.com/gr2m)
+Copyright (c) 2018-2021, Gregor Martynus (https://github.com/gr2m)
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
@@ -252,7 +218,7 @@ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH RE
 ---
 
 Name: before-after-hook
-Version: 2.2.2
+Version: 4.0.0
 License: Apache-2.0
 Private: false
 Description: asynchronous before/error/after hooks for internal functionality
@@ -466,7 +432,7 @@ License Copyright:
 ---
 
 Name: @octokit/endpoint
-Version: 9.0.5
+Version: 11.0.2
 License: MIT
 Private: false
 Description: Turns REST API endpoints into generic request options
@@ -499,19 +465,28 @@ THE SOFTWARE.
 
 ---
 
-Name: @octokit/request
-Version: 8.4.0
+Name: fast-content-type-parse
+Version: 3.0.0
 License: MIT
 Private: false
-Description: Send parameterized requests to GitHub's APIs with sensible defaults in browsers and Node
-Repository: undefined
-Author: Gregor Martynus (https://github.com/gr2m)
+Description: Parse HTTP Content-Type header according to RFC 7231
+Repository: git+https://github.com/fastify/fast-content-type-parse.git
+Homepage: https://github.com/fastify/fast-content-type-parse#readme
+Author: Aras Abbasi <aras.abbasi@gmail.com>
+Contributors:
+  Gürgün Dayıoğlu <hey@gurgun.day> (https://heyhey.to/G)
+  Manuel Spigolon <behemoth89@gmail.com>
+  James Sumners (https://james.sumners.info)
+  Frazer Smith <frazer.dev@icloud.com> (https://github.com/fdawgs)
 License Copyright:
 ===
 
-The MIT License
+MIT License
 
-Copyright (c) 2018 Octokit contributors
+Copyright (c) 2023 The Fastify Team
+
+The Fastify team members are listed at https://github.com/fastify/fastify#team
+and in the README file.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -520,105 +495,21 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
----
-
-Name: deprecation
-Version: 2.3.1
-License: ISC
-Private: false
-Description: Log a deprecation message with stack
-Repository: https://github.com/gr2m/deprecation.git
-License Copyright:
-===
-
-The ISC License
-
-Copyright (c) Gregor Martynus and contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
----
-
-Name: once
-Version: 1.4.0
-License: ISC
-Private: false
-Description: Run a function exactly one time
-Repository: git://github.com/isaacs/once
-Author: Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)
-License Copyright:
-===
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
----
-
-Name: wrappy
-Version: 1.0.2
-License: ISC
-Private: false
-Description: Callback wrapping utility
-Repository: https://github.com/npm/wrappy
-Homepage: https://github.com/npm/wrappy
-Author: Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)
-License Copyright:
-===
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
 Name: @octokit/request-error
-Version: 5.1.0
+Version: 7.1.0
 License: MIT
 Private: false
 Description: Error class for Octokit request errors
@@ -651,8 +542,42 @@ THE SOFTWARE.
 
 ---
 
+Name: @octokit/request
+Version: 10.0.7
+License: MIT
+Private: false
+Description: Send parameterized requests to GitHub's APIs with sensible defaults in browsers and Node
+Repository: undefined
+Author: Gregor Martynus (https://github.com/gr2m)
+License Copyright:
+===
+
+The MIT License
+
+Copyright (c) 2018 Octokit contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+---
+
 Name: @octokit/graphql
-Version: 7.1.0
+Version: 9.0.3
 License: MIT
 Private: false
 Description: GitHub GraphQL API client for browsers and Node
@@ -686,7 +611,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/auth-token
-Version: 4.0.0
+Version: 6.0.0
 License: MIT
 Private: false
 Description: GitHub API token authentication for browsers and Node.js
@@ -720,7 +645,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/core
-Version: 5.2.0
+Version: 7.0.6
 License: MIT
 Private: false
 Description: Extendable client for GitHub's REST & GraphQL APIs
@@ -754,7 +679,7 @@ THE SOFTWARE.
 ---
 
 Name: @octokit/plugin-rest-endpoint-methods
-Version: 10.4.1
+Version: 17.0.0
 License: MIT
 Private: false
 Description: Octokit plugin adding one method for all of api.github.com REST API endpoints
@@ -774,7 +699,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @octokit/plugin-paginate-rest
-Version: 9.2.1
+Version: 14.0.0
 License: MIT
 Private: false
 Description: Octokit plugin to paginate REST API endpoint responses
@@ -793,7 +718,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @opentelemetry/semantic-conventions
-Version: 1.28.0
+Version: 1.39.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry semantic conventions
@@ -1223,7 +1148,7 @@ License Copyright:
 ---
 
 Name: @grpc/grpc-js
-Version: 1.12.5
+Version: 1.14.3
 License: Apache-2.0
 Private: false
 Description: gRPC Library for Node - pure JS implementation
@@ -1475,7 +1400,7 @@ SOFTWARE.
 ---
 
 Name: @grpc/proto-loader
-Version: 0.7.13
+Version: 0.8.0
 License: Apache-2.0
 Private: false
 Description: gRPC utility library for loading .proto files
@@ -1757,7 +1682,7 @@ terms above.
 ---
 
 Name: protobufjs
-Version: 7.4.0
+Version: 7.5.4
 License: BSD-3-Clause
 Private: false
 Description: Protocol Buffers for JavaScript (& TypeScript).
@@ -2200,7 +2125,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
 
 Name: long
-Version: 5.2.4
+Version: 5.3.2
 License: Apache-2.0
 Private: false
 Description: A Long class for representing a 64-bit two's-complement integer value.
@@ -2415,10 +2340,10 @@ License Copyright:
 ---
 
 Name: @opentelemetry/context-async-hooks
-Version: 1.30.1
+Version: 2.5.0
 License: Apache-2.0
 Private: false
-Description: OpenTelemetry AsyncHooks-based Context Manager
+Description: OpenTelemetry AsyncLocalStorage-based Context Manager
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-context-async-hooks
 Author: OpenTelemetry Authors
@@ -2630,7 +2555,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/exporter-trace-otlp-grpc
-Version: 0.57.1
+Version: 0.211.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Collector Exporter allows user to send collected traces to the OpenTelemetry Collector
@@ -2845,7 +2770,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/otlp-grpc-exporter-base
-Version: 0.57.1
+Version: 0.211.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry OTLP-gRPC Exporter base (for internal use only)
@@ -3060,7 +2985,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/otlp-exporter-base
-Version: 0.57.1
+Version: 0.211.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry OTLP Exporter base (for internal use only)
@@ -3275,7 +3200,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/core
-Version: 1.30.1
+Version: 2.5.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Core provides constants and utilities shared by all OpenTelemetry SDK packages.
@@ -3490,7 +3415,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/otlp-transformer
-Version: 0.57.1
+Version: 0.211.0
 License: Apache-2.0
 Private: false
 Description: Transform OpenTelemetry SDK data into OTLP
@@ -3705,7 +3630,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/sdk-metrics
-Version: 1.30.1
+Version: 2.5.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry metrics SDK
@@ -3920,7 +3845,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/resources
-Version: 1.30.1
+Version: 2.5.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry SDK resources
@@ -4135,7 +4060,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/exporter-trace-otlp-proto
-Version: 0.57.1
+Version: 0.211.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Collector Exporter allows user to send collected traces to the OpenTelemetry Collector using protobuf over HTTP
@@ -4350,7 +4275,7 @@ License Copyright:
 ---
 
 Name: @opentelemetry/sdk-trace-base
-Version: 1.30.1
+Version: 2.5.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Tracing

@@ -1,9 +1,10 @@
-import * as grpc from "@grpc/grpc-js";
-import { context } from "@opentelemetry/api";
-import { AsyncHooksContextManager } from "@opentelemetry/context-async-hooks";
+/** biome-ignore-all lint/suspicious/noBitwiseOperators: needed for the number generator */
+import { credentials, Metadata } from "@grpc/grpc-js";
+import { type Attributes, context, trace } from "@opentelemetry/api";
+import { AsyncLocalStorageContextManager } from "@opentelemetry/context-async-hooks";
 import { OTLPTraceExporter as GrpcOTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
 import { OTLPTraceExporter as ProtoOTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
-import { Resource, type ResourceAttributes } from "@opentelemetry/resources";
+import { defaultResource, resourceFromAttributes } from "@opentelemetry/resources";
 import {
   BasicTracerProvider,
   BatchSpanProcessor,
@@ -13,13 +14,15 @@ import {
 } from "@opentelemetry/sdk-trace-base";
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
-const OTEL_ID_SEED = Number.parseInt(process.env["OTEL_ID_SEED"] ?? "0");
+const OTEL_ID_SEED = Number.parseInt(process.env["OTEL_ID_SEED"] ?? "0", 10);
+
+const assignmentRegex = /=(.*)/s;
 
 function stringToRecord(s: string) {
   const record: Record<string, string> = {};
 
   for (const pair of s.split(",")) {
-    const [key, value] = pair.split(/=(.*)/s);
+    const [key, value] = pair.split(assignmentRegex);
     if (key && value) {
       record[key.trim()] = value.trim();
     }
@@ -31,9 +34,9 @@ function isHttpEndpoint(endpoint: string) {
   return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
 
-function createTracerProvider(endpoint: string, headers: string, attributes: ResourceAttributes) {
+function createTracerProvider(endpoint: string, headers: string, attributes: Attributes) {
   // Register the context manager to enable context propagation
-  const contextManager = new AsyncHooksContextManager();
+  const contextManager = new AsyncLocalStorageContextManager();
   contextManager.enable();
   context.setGlobalContextManager(contextManager);
 
@@ -48,19 +51,22 @@ function createTracerProvider(endpoint: string, headers: string, attributes: Res
     } else {
       exporter = new GrpcOTLPTraceExporter({
         url: endpoint,
-        credentials: grpc.credentials.createSsl(),
-        metadata: grpc.Metadata.fromHttp2Headers(stringToRecord(headers)),
+        credentials: credentials.createSsl(),
+        metadata: Metadata.fromHttp2Headers(stringToRecord(headers)),
       });
     }
   }
 
   const provider = new BasicTracerProvider({
-    resource: new Resource(attributes),
+    resource: resourceFromAttributes({
+      ...defaultResource().attributes,
+      ...attributes,
+    }),
     spanProcessors: [new BatchSpanProcessor(exporter)],
     ...(OTEL_ID_SEED && { idGenerator: new DeterministicIdGenerator(OTEL_ID_SEED) }),
   });
 
-  provider.register();
+  trace.setGlobalTracerProvider(provider);
   return provider;
 }
 
@@ -68,12 +74,12 @@ function createTracerProvider(endpoint: string, headers: string, attributes: Res
 function createRandomWithSeed(seed: number) {
   let a = seed;
   return function getRandomInt(max: number) {
-    let t = Math.imul(a, 1597334677);
-    t = (t >>> 24) | ((t >>> 8) & 65280) | ((t << 8) & 16711680) | (t << 24); // reverse byte order
+    let t = Math.imul(a, 1_597_334_677);
+    t = (t >>> 24) | ((t >>> 8) & 65_280) | ((t << 8) & 16_711_680) | (t << 24); // reverse byte order
     a ^= a << 13;
     a ^= a >>> 17;
     a ^= a << 5;
-    const res = ((a + t) >>> 0) / 4294967296;
+    const res = ((a + t) >>> 0) / 4_294_967_296;
 
     return Math.floor(res * max);
   };
