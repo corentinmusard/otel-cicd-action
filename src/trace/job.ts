@@ -12,7 +12,7 @@ import {
 } from "@opentelemetry/semantic-conventions/incubating";
 import { traceStep } from "./step";
 
-async function traceJob(job: components["schemas"]["job"], annotations?: components["schemas"]["check-annotation"][]) {
+function traceJob(job: components["schemas"]["job"], annotations?: components["schemas"]["check-annotation"][]) {
   const tracer = trace.getTracer("otel-cicd-action");
 
   if (!job.completed_at) {
@@ -27,12 +27,12 @@ async function traceJob(job: components["schemas"]["job"], annotations?: compone
     ...annotationsToAttributes(annotations),
   };
 
-  await tracer.startActiveSpan(job.name, { attributes, startTime }, async (span) => {
+  tracer.startActiveSpan(job.name, { attributes, startTime }, (span) => {
     const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
     span.setStatus({ code });
 
     for (const step of job.steps ?? []) {
-      await traceStep(step);
+      traceStep(step);
     }
 
     // Some skipped and post jobs return completed_at dates that are older than started_at

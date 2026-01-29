@@ -1,7 +1,8 @@
-import type { Context } from "@actions/github/lib/context";
+import type { context } from "@actions/github";
 import type { GitHub } from "@actions/github/lib/utils";
 import type { components } from "@octokit/openapi-types";
 
+type Context = typeof context;
 type Octokit = InstanceType<typeof GitHub>;
 
 async function getWorkflowRun(context: Context, octokit: Octokit, runId: number) {
@@ -53,7 +54,7 @@ async function listLabelsOnIssue(context: Context, octokit: Octokit, prNumber: n
       ...context.repo,
       issue_number: prNumber,
     },
-    (response) => response.data.map((issue) => issue.name),
+    (response) => response.data.map((issue) => issue.name)
   );
 }
 

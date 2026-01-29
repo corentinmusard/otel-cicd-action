@@ -24,8 +24,6 @@ We provide sample code for popular platforms. If you feel one is missing, please
 | New Relic                   | [newrelic.yml](.github/workflows/newrelic.yml)   |
 | Honeycomb                   | [honeycomb.yml](.github/workflows/honeycomb.yml) |
 | Dash0                       | [dash0.yml](.github/workflows/dash0.yml)         |
-| Jaeger                      | WIP                                              |
-| Grafana                     | WIP                                              |
 
 ### On workflow_run event
 

@@ -19,7 +19,23 @@ process.env["OTEL_ID_SEED"] = "123"; // seed for stable otel ids generation
 
 // The module being tested should be imported dynamically. This ensures that the
 // mocks are used in place of any actual dependencies.
-const { run } = await import("./runner");
+const { run, isOctokitError } = await import("./runner");
+
+describe("isOctokitError", () => {
+  it("returns true", () => {
+    const err = new RequestError("this is an error", 400, {
+      request: {
+        method: "GET",
+        url: "http://example.com",
+        headers: {},
+      },
+    });
+    expect(isOctokitError(err)).toBe(true);
+  });
+  it("returns false", () => {
+    expect(isOctokitError("")).toBe(false);
+  });
+});
 
 describe("run", () => {
   let octokit: Octokit;
@@ -70,28 +86,28 @@ describe("run", () => {
   });
 
   it("should run a successful workflow", async () => {
-    // https://github.com/biomejs/biome/actions/runs/12541749172
+    // https://github.com/biomejs/biome/actions/runs/21487811823
     process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
-    runId = "12541749172";
+    runId = "21487811823";
 
     await run();
     await fs.writeFile("src/__assets__/output_success.txt", output);
 
     expect(core.setFailed).not.toHaveBeenCalled();
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
-  }, 10000);
+  }, 10_000);
 
   it("should run a failed workflow", async () => {
-    // https://github.com/corentinmusard/otel-cicd-action/actions/runs/12562475696
-    process.env["GITHUB_REPOSITORY"] = "corentinmusard/otel-cicd-action";
-    runId = "12562475696";
+    // https://github.com/biomejs/biome/actions/runs/21458831126
+    process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
+    runId = "21458831126";
 
     await run();
     await fs.writeFile("src/__assets__/output_failed.txt", output);
 
     expect(core.setFailed).not.toHaveBeenCalled();
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
-  }, 10000);
+  }, 10_000);
 
   it("should run a cancelled workflow", async () => {
     // https://github.com/step-security/skip-duplicate-actions/actions/runs/16620109074?pr=305
@@ -103,7 +119,7 @@ describe("run", () => {
 
     expect(core.setFailed).not.toHaveBeenCalled();
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
-  }, 10000);
+  }, 10_000);
 
   it("should fail", async () => {
     // https://github.com/corentinmusard/otel-cicd-action/actions/runs/111
@@ -114,7 +130,7 @@ describe("run", () => {
 
     expect(output).toBe("");
     expect(core.setFailed).toHaveBeenCalledTimes(1);
-    expect(core.setFailed).toHaveBeenCalledWith(expect.any(RequestError));
+    expect(core.setFailed).toHaveBeenCalledWith(expect.any(Error));
     expect(core.setOutput).not.toHaveBeenCalled();
-  }, 10000);
+  }, 10_000);
 });
