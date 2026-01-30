@@ -205,7 +205,10 @@
   attributes: {
     'cicd.pipeline.task.name': 'Validate PR title',
     'cicd.pipeline.task.run.id': 61901817921,
+    'cicd.pipeline.task.run.result': 'success',
     'cicd.pipeline.task.run.url.full': 'https://github.com/biomejs/biome/actions/runs/21487811823/job/61901817921',
+    'cicd.worker.id': 160521,
+    'cicd.worker.name': 'depot-ptc3146psq',
     'github.job.id': 61901817921,
     'github.job.name': 'Validate PR title',
     'github.job.run_id': 21487811823,
@@ -263,8 +266,12 @@
   timestamp: 1769706975000000,
   duration: 36000000,
   attributes: {
+    'cicd.pipeline.action.name': 'RUN',
     'cicd.pipeline.name': 'Lint Pull Request Titles',
+    'cicd.pipeline.result': 'success',
     'cicd.pipeline.run.id': 21487811823,
+    'cicd.pipeline.run.url.full': 'https://github.com/biomejs/biome/actions/runs/21487811823',
+    'cicd.pipeline.run.state': 'finalizing',
     'github.workflow_id': 94297729,
     'github.run_id': 21487811823,
     'github.run_number': 16194,

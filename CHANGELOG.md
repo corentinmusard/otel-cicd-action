@@ -7,14 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-
-- Updated dependencies
+## [3.0.0] - 2026-01-30
 
 ### ⚠ BREAKING CHANGES
 
 - Upgraded OpenTelemetry JS SDK to [v2](https://github.com/open-telemetry/opentelemetry-js/blob/main/doc/upgrade-to-2.x.md)
 - The parentSpanId field on the Span and ReadableSpan interfaces was replaced by parentSpanContext, to adhere to the OTel spec: `span.parentSpanId` -> `span.parentSpanContext?.spanId`
+
+### Added
+
+Added missing [semconv attributes](https://opentelemetry.io/docs/specs/semconv/registry/attributes/cicd/):
+
+- `cicd.pipeline.action.name`
+- `cicd.pipeline.task.run.url.full`
+- `cicd.pipeline.result`
+- `cicd.pipeline.run.state`
+- `cicd.pipeline.task.run.result`
+- `cicd.worker.id`
+- `cicd.worker.name`
+
+### Fixed
+
+- Updated dependencies
 
 ## [2.2.4] - 2025-08-07
 
@@ -189,7 +203,8 @@ permissions:
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.4...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.4...v3.0.0
 [2.2.4]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.3...v2.2.4
 [2.2.3]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.2...v2.2.3
 [2.2.2]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.1...v2.2.2

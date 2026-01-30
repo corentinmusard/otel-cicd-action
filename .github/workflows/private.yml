@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Export workflow
-        uses: corentinmusard/otel-cicd-action@v2
+        uses: corentinmusard/otel-cicd-action@v3
         with:
           otlpEndpoint: "CHANGE_ME"
           otlpHeaders: "CHANGE_ME"

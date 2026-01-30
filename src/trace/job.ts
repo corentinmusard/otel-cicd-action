@@ -4,8 +4,16 @@ import { type Attributes, SpanStatusCode, trace } from "@opentelemetry/api";
 import {
   ATTR_CICD_PIPELINE_TASK_NAME,
   ATTR_CICD_PIPELINE_TASK_RUN_ID,
+  ATTR_CICD_PIPELINE_TASK_RUN_RESULT,
   ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL,
   ATTR_CICD_PIPELINE_TASK_TYPE,
+  ATTR_CICD_WORKER_ID,
+  ATTR_CICD_WORKER_NAME,
+  CICD_PIPELINE_TASK_RUN_RESULT_VALUE_CANCELLATION,
+  CICD_PIPELINE_TASK_RUN_RESULT_VALUE_FAILURE,
+  CICD_PIPELINE_TASK_RUN_RESULT_VALUE_SKIP,
+  CICD_PIPELINE_TASK_RUN_RESULT_VALUE_SUCCESS,
+  CICD_PIPELINE_TASK_RUN_RESULT_VALUE_TIMEOUT,
   CICD_PIPELINE_TASK_TYPE_VALUE_BUILD,
   CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY,
   CICD_PIPELINE_TASK_TYPE_VALUE_TEST,
@@ -56,8 +64,11 @@ function jobToAttributes(job: components["schemas"]["job"]): Attributes {
     // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
     [ATTR_CICD_PIPELINE_TASK_NAME]: job.name,
     [ATTR_CICD_PIPELINE_TASK_RUN_ID]: job.id,
+    [ATTR_CICD_PIPELINE_TASK_RUN_RESULT]: toTaskResult(job.conclusion),
     [ATTR_CICD_PIPELINE_TASK_RUN_URL_FULL]: job.html_url ?? undefined,
     [ATTR_CICD_PIPELINE_TASK_TYPE]: taskType,
+    [ATTR_CICD_WORKER_ID]: job.runner_id ?? undefined,
+    [ATTR_CICD_WORKER_NAME]: job.runner_name ?? undefined,
     "github.job.id": job.id,
     "github.job.name": job.name,
     "github.job.run_id": job.run_id,
@@ -77,12 +88,32 @@ function jobToAttributes(job: components["schemas"]["job"]): Attributes {
     "github.job.created_at": job.created_at,
     "github.job.started_at": job.started_at,
     "github.job.completed_at": job.completed_at ?? undefined,
-    "github.conclusion": job.conclusion ?? undefined, // FIXME: it overrides the workflow conclusion
+    "github.conclusion": job.conclusion ?? undefined,
     "github.job.check_run_url": job.check_run_url,
     "github.job.workflow_name": job.workflow_name ?? undefined,
     "github.job.head_branch": job.head_branch ?? undefined,
     error: job.conclusion === "failure",
   };
+}
+
+function toTaskResult(conclusion: components["schemas"]["job"]["conclusion"]) {
+  //unmapped value: CICD_PIPELINE_TASK_RUN_RESULT_VALUE_ERROR
+  switch (conclusion) {
+    case "failure":
+    case "action_required":
+      return CICD_PIPELINE_TASK_RUN_RESULT_VALUE_FAILURE;
+    case "success":
+    case "neutral":
+      return CICD_PIPELINE_TASK_RUN_RESULT_VALUE_SUCCESS;
+    case "cancelled":
+      return CICD_PIPELINE_TASK_RUN_RESULT_VALUE_CANCELLATION;
+    case "skipped":
+      return CICD_PIPELINE_TASK_RUN_RESULT_VALUE_SKIP;
+    case "timed_out":
+      return CICD_PIPELINE_TASK_RUN_RESULT_VALUE_TIMEOUT;
+    default:
+      return undefined;
+  }
 }
 
 function annotationsToAttributes(annotations: components["schemas"]["check-annotation"][] | undefined) {

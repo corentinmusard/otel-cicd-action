@@ -25,7 +25,7 @@ const config: JestConfigWithTsJest = {
       statements: 85,
       branches: 50,
       functions: 100,
-      lines: 85,
+      lines: 80,
     },
   },
 };

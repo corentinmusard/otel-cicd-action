@@ -9,7 +9,7 @@
     // Strict Checks
     "strict": true,
     "noPropertyAccessFromIndexSignature": true,
-    //"noUncheckedIndexedAccess": true, // FIXME: uncomment that line
+    //"noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "noStrictGenericChecks": false,
     // Linter Checks
