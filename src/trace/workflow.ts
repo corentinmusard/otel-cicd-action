@@ -1,6 +1,23 @@
 import type { components } from "@octokit/openapi-types";
 import { type Attributes, context, SpanStatusCode, trace } from "@opentelemetry/api";
-import { ATTR_CICD_PIPELINE_NAME, ATTR_CICD_PIPELINE_RUN_ID } from "@opentelemetry/semantic-conventions/incubating";
+import {
+  ATTR_CICD_PIPELINE_ACTION_NAME,
+  ATTR_CICD_PIPELINE_NAME,
+  ATTR_CICD_PIPELINE_RESULT,
+  ATTR_CICD_PIPELINE_RUN_ID,
+  ATTR_CICD_PIPELINE_RUN_STATE,
+  ATTR_CICD_PIPELINE_RUN_URL_FULL,
+  CICD_PIPELINE_ACTION_NAME_VALUE_RUN,
+  CICD_PIPELINE_RESULT_VALUE_CANCELLATION,
+  CICD_PIPELINE_RESULT_VALUE_ERROR,
+  CICD_PIPELINE_RESULT_VALUE_FAILURE,
+  CICD_PIPELINE_RESULT_VALUE_SKIP,
+  CICD_PIPELINE_RESULT_VALUE_SUCCESS,
+  CICD_PIPELINE_RESULT_VALUE_TIMEOUT,
+  CICD_PIPELINE_RUN_STATE_VALUE_EXECUTING,
+  CICD_PIPELINE_RUN_STATE_VALUE_FINALIZING,
+  CICD_PIPELINE_RUN_STATE_VALUE_PENDING,
+} from "@opentelemetry/semantic-conventions/incubating";
 import { traceJob } from "./job";
 
 function traceWorkflowRun(
@@ -45,8 +62,12 @@ function workflowRunToAttributes(
   return {
     // OpenTelemetry semantic convention CICD Pipeline Attributes
     // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
+    [ATTR_CICD_PIPELINE_ACTION_NAME]: CICD_PIPELINE_ACTION_NAME_VALUE_RUN,
     [ATTR_CICD_PIPELINE_NAME]: workflowRun.name ?? undefined,
+    [ATTR_CICD_PIPELINE_RESULT]: toPipelineResult(workflowRun.status, workflowRun.conclusion),
     [ATTR_CICD_PIPELINE_RUN_ID]: workflowRun.id,
+    [ATTR_CICD_PIPELINE_RUN_URL_FULL]: workflowRun.html_url,
+    [ATTR_CICD_PIPELINE_RUN_STATE]: toPipelineState(workflowRun.status),
     "github.workflow_id": workflowRun.workflow_id,
     "github.run_id": workflowRun.id,
     "github.run_number": workflowRun.run_number,
@@ -80,6 +101,56 @@ function workflowRunToAttributes(
     error: workflowRun.conclusion === "failure",
     ...prsToAttributes(workflowRun.pull_requests, prLabels),
   };
+}
+
+function toPipelineResult(
+  status: components["schemas"]["workflow-run"]["status"],
+  conclusion: components["schemas"]["workflow-run"]["conclusion"]
+) {
+  // https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#check-statuses-and-conclusions
+
+  if (status === "failure" || status === "startup_failure") {
+    return CICD_PIPELINE_RESULT_VALUE_ERROR;
+  }
+
+  switch (conclusion) {
+    case "failure":
+    case "action_required":
+    case "stale":
+      return CICD_PIPELINE_RESULT_VALUE_FAILURE;
+    case "success":
+    case "neutral":
+      return CICD_PIPELINE_RESULT_VALUE_SUCCESS;
+    case "cancelled":
+      return CICD_PIPELINE_RESULT_VALUE_CANCELLATION;
+    case "skipped":
+      return CICD_PIPELINE_RESULT_VALUE_SKIP;
+    case "timed_out":
+      return CICD_PIPELINE_RESULT_VALUE_TIMEOUT;
+    default:
+      return undefined;
+  }
+}
+
+function toPipelineState(status: components["schemas"]["workflow-run"]["status"]) {
+  // https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#check-statuses-and-conclusions
+
+  switch (status) {
+    case "requested":
+    case "queued":
+    case "pending":
+    case "waiting":
+      return CICD_PIPELINE_RUN_STATE_VALUE_PENDING;
+    case "in_progress":
+    case "expected":
+      return CICD_PIPELINE_RUN_STATE_VALUE_EXECUTING;
+    case "completed":
+    case "failure":
+    case "startup_failure":
+      return CICD_PIPELINE_RUN_STATE_VALUE_FINALIZING;
+    default:
+      return undefined;
+  }
 }
 
 function referencedWorkflowsToAttributes(refs: components["schemas"]["referenced-workflow"][] | null | undefined) {
