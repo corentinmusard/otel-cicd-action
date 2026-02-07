@@ -211,7 +211,8 @@ permissions:
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v3.0.0...HEAD
+[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.4...v3.0.0
 [2.2.4]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.3...v2.2.4
 [2.2.3]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.2...v2.2.3
