@@ -11,9 +11,9 @@ jobs:
   otel-export-honeycomb:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Export workflow to Honeycomb
-        uses: corentinmusard/otel-cicd-action@v3
+        uses: corentinmusard/otel-cicd-action@v4
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           # Example value for HONEYCOMB_OTLP_HEADERS:

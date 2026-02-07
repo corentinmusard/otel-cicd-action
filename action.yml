@@ -3,7 +3,7 @@ description: Export CI/CD workflows to any endpoint compatible with OpenTelemetr
 author: Corentin Musard
 
 runs:
-  using: node20
+  using: node24
   main: dist/index.js
 
 inputs:
