@@ -41,7 +41,7 @@ jobs:
   otel-cicd-actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: corentinmusard/otel-cicd-action@v3
+      - uses: corentinmusard/otel-cicd-action@v4
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
@@ -62,7 +62,7 @@ jobs:
     needs: [build] # must run when all jobs are completed
     steps:
       - name: Export workflow
-        uses: corentinmusard/otel-cicd-action@v3
+        uses: corentinmusard/otel-cicd-action@v4
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
@@ -100,7 +100,7 @@ Attributes are splitted on `,` and then each key/value are splitted on the first
 
 ```yaml
 - name: Export workflow
-  uses: corentinmusard/otel-cicd-action@v3
+  uses: corentinmusard/otel-cicd-action@v4
   with:
     otlpEndpoint: "CHANGE ME"
     otlpHeaders: "CHANGE ME"

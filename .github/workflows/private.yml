@@ -17,9 +17,9 @@ jobs:
       pull-requests: read # Optional. To read PR labels
       checks: read # Optional. To read run annotations
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Export workflow
-        uses: corentinmusard/otel-cicd-action@v3
+        uses: corentinmusard/otel-cicd-action@v4
         with:
           otlpEndpoint: "CHANGE_ME"
           otlpHeaders: "CHANGE_ME"

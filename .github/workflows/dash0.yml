@@ -11,9 +11,9 @@ jobs:
   otel-export-dash0:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Export workflow to Dash0
-        uses: corentinmusard/otel-cicd-action@v3
+        uses: corentinmusard/otel-cicd-action@v4
         with:
           otlpEndpoint: grpc://ingress.eu-west-1.aws.dash0.com:4317
           # See https://www.dash0.com/documentation/dash0/get-started/sending-data-to-dash0

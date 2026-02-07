@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-02-07
+
+### ⚠ BREAKING CHANGES
+
+Upgraded action from node20 to node24.
+
+> Make sure your runner is on version v2.327.1 or later to ensure compatibility with this release. [See Release Notes](https://github.com/actions/runner/releases/tag/v2.327.1)
+
 ## [3.0.0] - 2026-01-30
 
 ### ⚠ BREAKING CHANGES

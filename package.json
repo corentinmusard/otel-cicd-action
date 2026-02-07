@@ -2,7 +2,7 @@
   "private": true,
   "name": "otel-cicd-action",
   "type": "module",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Github Action that export CI/CD workflows to any endpoint compatible with OpenTelemetry",
   "scripts": {
     "prepare": "husky",
@@ -63,6 +63,6 @@
     ]
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=24.0.0"
   }
 }
