@@ -24,12 +24,13 @@ function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
   jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
-  prLabels: Record<number, string[]>
+  prLabels: Record<number, string[]>,
+  prDetails: components["schemas"]["pull-request"] | null
 ) {
   const tracer = trace.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
-  const attributes = workflowRunToAttributes(workflowRun, prLabels);
+  const attributes = workflowRunToAttributes(workflowRun, prLabels, prDetails);
 
   return tracer.startActiveSpan(
     workflowRun.name ?? workflowRun.display_title,
@@ -57,9 +58,10 @@ function traceWorkflowRun(
 
 function workflowRunToAttributes(
   workflowRun: components["schemas"]["workflow-run"],
-  prLabels: Record<number, string[]>
+  prLabels: Record<number, string[]>,
+  prDetails: components["schemas"]["pull-request"] | null
 ): Attributes {
-  return {
+  const attributes: Attributes = {
     // OpenTelemetry semantic convention CICD Pipeline Attributes
     // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
     [ATTR_CICD_PIPELINE_ACTION_NAME]: CICD_PIPELINE_ACTION_NAME_VALUE_RUN,
@@ -101,6 +103,15 @@ function workflowRunToAttributes(
     error: workflowRun.conclusion === "failure",
     ...prsToAttributes(workflowRun.pull_requests, prLabels),
   };
+
+  if (prDetails?.created_at) {
+    const prCreatedAt = new Date(prDetails.created_at).getTime();
+    const workflowEndAt = new Date(workflowRun.updated_at).getTime();
+    const leadTimeMs = workflowEndAt - prCreatedAt;
+    attributes["github.lead_time_ms"] = leadTimeMs;
+  }
+
+  return attributes;
 }
 
 function toPipelineResult(

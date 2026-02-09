@@ -58,4 +58,12 @@ async function listLabelsOnIssue(context: Context, octokit: Octokit, prNumber: n
   );
 }
 
-export { getWorkflowRun, listJobsForWorkflowRun, getJobsAnnotations, getPRsLabels, type Octokit };
+async function getPullRequest(context: Context, octokit: Octokit, prNumber: number) {
+  const res = await octokit.rest.pulls.get({
+    ...context.repo,
+    pull_number: prNumber,
+  });
+  return res.data;
+}
+
+export { getWorkflowRun, listJobsForWorkflowRun, getJobsAnnotations, getPRsLabels, getPullRequest, type Octokit };

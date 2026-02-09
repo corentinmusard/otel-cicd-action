@@ -1,10 +1,11 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
+import type { components } from "@octokit/openapi-types";
 import type { RequestError } from "@octokit/request-error";
 import type { Attributes } from "@opentelemetry/api";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
-import { getJobsAnnotations, getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
+import { getJobsAnnotations, getPRsLabels, getPullRequest, getWorkflowRun, listJobsForWorkflowRun } from "./github";
 import { traceWorkflowRun } from "./trace/workflow";
 import { createTracerProvider, stringToRecord } from "./tracer";
 
@@ -47,7 +48,21 @@ async function fetchGithub(token: string, runId: number) {
     }
   }
 
-  return { workflowRun, jobs, jobAnnotations, prLabels };
+  core.info("Get PR details");
+  let prDetails: components["schemas"]["pull-request"] | null = null;
+  if (prNumbers.length > 0) {
+    try {
+      prDetails = await getPullRequest(context, octokit, prNumbers[0]);
+    } catch (error) {
+      if (isOctokitError(error)) {
+        core.info(`Failed to get PR details: ${error.message}}`);
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  return { workflowRun, jobs, jobAnnotations, prLabels, prDetails };
 }
 
 async function run() {
@@ -60,7 +75,7 @@ async function run() {
     const ghToken = core.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
 
     core.info("Use Github API to fetch workflow data");
-    const { workflowRun, jobs, jobAnnotations, prLabels } = await fetchGithub(ghToken, runId);
+    const { workflowRun, jobs, jobAnnotations, prLabels, prDetails } = await fetchGithub(ghToken, runId);
 
     core.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes: Attributes = {
@@ -78,7 +93,7 @@ async function run() {
     const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
 
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
+    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels, prDetails);
 
     core.setOutput("traceId", traceId);
     core.info(`traceId: ${traceId}`);
