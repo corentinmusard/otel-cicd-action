@@ -355,8 +355,8 @@
         'pull_request.number': 9011,
         'workflow.event': 'pull_request_target'
       },
-      startTime: [ 1770739184, 360000000 ],
-      endTime: [ 1770739184, 361000000 ],
+      startTime: [ 1770740862, 317000000 ],
+      endTime: [ 1770740862, 318000000 ],
       value: 563000
     }
   ]
@@ -378,8 +378,8 @@
         'pull_request.number': 9011,
         'workflow.event': 'pull_request_target'
       },
-      startTime: [ 1770739184, 360000000 ],
-      endTime: [ 1770739184, 362000000 ],
+      startTime: [ 1770740862, 317000000 ],
+      endTime: [ 1770740862, 318000000 ],
       value: 563000
     }
   ]
