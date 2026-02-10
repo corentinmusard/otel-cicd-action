@@ -129,7 +129,7 @@ Attributes are splitted on `,` and then each key/value are splitted on the first
 
 In addition to distributed traces, this action exports the following OpenTelemetry metrics:
 
-### `github.lead_time`
+### `github.pull_request.lead_time`
 
 - **Type:** Gauge
 - **Unit:** Milliseconds (ms)
