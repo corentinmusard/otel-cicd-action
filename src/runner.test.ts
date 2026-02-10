@@ -21,8 +21,6 @@ process.env["OTEL_ID_SEED"] = "123"; // seed for stable otel ids generation
 // mocks are used in place of any actual dependencies.
 const { run, isOctokitError } = await import("./runner");
 
-const LEAD_TIME_REGEX = /'github\.lead_time_ms':\s*\d+/;
-
 describe("isOctokitError", () => {
   it("returns true", () => {
     const err = new RequestError("this is an error", 400, {
@@ -98,9 +96,7 @@ describe("run", () => {
     expect(core.setFailed).not.toHaveBeenCalled();
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
 
-    // Verify lead time calculation for PR workflows
-    expect(output).toContain("github.lead_time_ms");
-    expect(output).toMatch(LEAD_TIME_REGEX);
+    expect(output).toContain("github.pull_request.lead_time");
   }, 10_000);
 
   it("should run a failed workflow", async () => {

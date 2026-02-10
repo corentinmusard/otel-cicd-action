@@ -18,6 +18,7 @@ import {
   CICD_PIPELINE_RUN_STATE_VALUE_FINALIZING,
   CICD_PIPELINE_RUN_STATE_VALUE_PENDING,
 } from "@opentelemetry/semantic-conventions/incubating";
+import { getMeter } from "../meter";
 import { traceJob } from "./job";
 
 function traceWorkflowRun(
@@ -108,7 +109,18 @@ function workflowRunToAttributes(
     const prCreatedAt = new Date(prDetails.created_at).getTime();
     const workflowEndAt = new Date(workflowRun.updated_at).getTime();
     const leadTimeMs = workflowEndAt - prCreatedAt;
-    attributes["github.lead_time_ms"] = leadTimeMs;
+
+    const meter = getMeter();
+    const leadTimeGauge = meter.createGauge("github.pull_request.lead_time", {
+      unit: "ms",
+      description: "PR lead time from creation to workflow completion",
+    });
+
+    leadTimeGauge.record(leadTimeMs, {
+      "repository.name": workflowRun.repository.full_name,
+      "pull_request.number": prDetails.number,
+      "workflow.event": workflowRun.event,
+    });
   }
 
   return attributes;

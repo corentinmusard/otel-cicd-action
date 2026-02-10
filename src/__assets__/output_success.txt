@@ -332,10 +332,55 @@
     'github.pull_requests.0.base.sha': '0a147f1875ff19b96b5c0bc0a7e61ecf183be006',
     'github.pull_requests.0.base.repo.id': 671654508,
     'github.pull_requests.0.base.repo.url': 'https://api.github.com/repos/biomejs/biome',
-    'github.pull_requests.0.base.repo.name': 'biome',
-    'github.lead_time_ms': 563000
+    'github.pull_requests.0.base.repo.name': 'biome'
   },
   status: { code: 1 },
   events: [],
   links: []
+}
+{
+  descriptor: {
+    name: 'github.pull_request.lead_time',
+    type: 'GAUGE',
+    description: 'PR lead time from creation to workflow completion',
+    unit: 'ms',
+    valueType: 1,
+    advice: {}
+  },
+  dataPointType: 2,
+  dataPoints: [
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 9011,
+        'workflow.event': 'pull_request_target'
+      },
+      startTime: [ 1770734182, 581000000 ],
+      endTime: [ 1770734182, 584000000 ],
+      value: 563000
+    }
+  ]
+}
+{
+  descriptor: {
+    name: 'github.pull_request.lead_time',
+    type: 'GAUGE',
+    description: 'PR lead time from creation to workflow completion',
+    unit: 'ms',
+    valueType: 1,
+    advice: {}
+  },
+  dataPointType: 2,
+  dataPoints: [
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 9011,
+        'workflow.event': 'pull_request_target'
+      },
+      startTime: [ 1770734182, 581000000 ],
+      endTime: [ 1770734182, 585000000 ],
+      value: 563000
+    }
+  ]
 }

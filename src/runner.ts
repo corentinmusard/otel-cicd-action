@@ -6,6 +6,7 @@ import type { Attributes } from "@opentelemetry/api";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 import { getJobsAnnotations, getPRsLabels, getPullRequest, getWorkflowRun, listJobsForWorkflowRun } from "./github";
+import { createMeterProvider } from "./meter";
 import { traceWorkflowRun } from "./trace/workflow";
 import { createTracerProvider, stringToRecord } from "./tracer";
 
@@ -90,7 +91,8 @@ async function run() {
       [ATTR_SERVICE_VERSION]: workflowRun.head_sha,
       ...extraAttributes,
     };
-    const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
+    const tracerProvider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
+    const meterProvider = createMeterProvider(otlpEndpoint, otlpHeaders, attributes);
 
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
     const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels, prDetails);
@@ -98,10 +100,12 @@ async function run() {
     core.setOutput("traceId", traceId);
     core.info(`traceId: ${traceId}`);
 
-    core.info("Flush and shutdown tracer provider");
-    await provider.forceFlush();
-    await provider.shutdown();
-    core.info("Provider shutdown");
+    core.info("Flush and shutdown providers");
+    await tracerProvider.forceFlush();
+    await meterProvider.forceFlush();
+    await tracerProvider.shutdown();
+    await meterProvider.shutdown();
+    core.info("Providers shutdown");
   } catch (error) {
     const message = error instanceof Error ? error : JSON.stringify(error);
     core.setFailed(message);
