@@ -18,20 +18,18 @@ import {
   CICD_PIPELINE_RUN_STATE_VALUE_FINALIZING,
   CICD_PIPELINE_RUN_STATE_VALUE_PENDING,
 } from "@opentelemetry/semantic-conventions/incubating";
-import { getMeter } from "../meter";
 import { traceJob } from "./job";
 
 function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
   jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
-  prLabels: Record<number, string[]>,
-  prDetails: components["schemas"]["pull-request"] | null
+  prLabels: Record<number, string[]>
 ) {
   const tracer = trace.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
-  const attributes = workflowRunToAttributes(workflowRun, prLabels, prDetails);
+  const attributes = workflowRunToAttributes(workflowRun, prLabels);
 
   return tracer.startActiveSpan(
     workflowRun.name ?? workflowRun.display_title,
@@ -59,10 +57,9 @@ function traceWorkflowRun(
 
 function workflowRunToAttributes(
   workflowRun: components["schemas"]["workflow-run"],
-  prLabels: Record<number, string[]>,
-  prDetails: components["schemas"]["pull-request"] | null
+  prLabels: Record<number, string[]>
 ): Attributes {
-  const attributes: Attributes = {
+  return {
     // OpenTelemetry semantic convention CICD Pipeline Attributes
     // https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/
     [ATTR_CICD_PIPELINE_ACTION_NAME]: CICD_PIPELINE_ACTION_NAME_VALUE_RUN,
@@ -104,26 +101,6 @@ function workflowRunToAttributes(
     error: workflowRun.conclusion === "failure",
     ...prsToAttributes(workflowRun.pull_requests, prLabels),
   };
-
-  if (prDetails?.created_at) {
-    const prCreatedAt = new Date(prDetails.created_at).getTime();
-    const workflowEndAt = new Date(workflowRun.updated_at).getTime();
-    const leadTimeMs = workflowEndAt - prCreatedAt;
-
-    const meter = getMeter();
-    const leadTimeGauge = meter.createGauge("github.pull_request.lead_time", {
-      unit: "ms",
-      description: "PR lead time from creation to workflow completion",
-    });
-
-    leadTimeGauge.record(leadTimeMs, {
-      "repository.name": workflowRun.repository.full_name,
-      "pull_request.number": prDetails.number,
-      "workflow.event": workflowRun.event,
-    });
-  }
-
-  return attributes;
 }
 
 function toPipelineResult(

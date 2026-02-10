@@ -7,6 +7,7 @@ import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 import { getJobsAnnotations, getPRsLabels, getPullRequest, getWorkflowRun, listJobsForWorkflowRun } from "./github";
 import { createMeterProvider } from "./meter";
+import { recordWorkflowMetrics } from "./metrics/workflow";
 import { traceWorkflowRun } from "./trace/workflow";
 import { createTracerProvider, stringToRecord } from "./tracer";
 
@@ -95,10 +96,13 @@ async function run() {
     const meterProvider = createMeterProvider(otlpEndpoint, otlpHeaders, attributes);
 
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels, prDetails);
+    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
 
     core.setOutput("traceId", traceId);
     core.info(`traceId: ${traceId}`);
+
+    core.info("Record workflow metrics");
+    recordWorkflowMetrics(workflowRun, prDetails);
 
     core.info("Flush and shutdown providers");
     await tracerProvider.forceFlush();
