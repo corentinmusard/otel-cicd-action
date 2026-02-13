@@ -218,38 +218,19 @@ function prsToAttributes(
       continue;
     }
 
-    const prCreatedAt = prDetails.created_at;
-    const readyForReviewAt = prs[i]?.readyForReviewAt;
-    const approvedAt = prs[i]?.firstApprovedAt;
-    const mergedAt = prDetails.merged_at;
-
-    const prCreatedMs = diffMs(prs[i]?.firstCommitAuthorDate, prCreatedAt);
-    const prReadyForReviewMs = diffMs(prCreatedAt, readyForReviewAt);
-    const prApprovedMs = diffMs(readyForReviewAt ?? prCreatedAt, approvedAt);
-    const prMergedMs = diffMs(approvedAt ?? readyForReviewAt ?? prCreatedAt, mergedAt);
-    const workflowFinishedMs = diffMs(mergedAt, workflowFinishedAt);
-    const totalLeadTimeMs = diffMs(prs[i]?.firstCommitAuthorDate, workflowFinishedAt);
     const leadTimeMetricEmitted =
       workflowConclusion === "success" && !!prDetails.merged_at && !!prs[i]?.firstCommitAuthorDate;
 
-    attributes[`${prefix}.lead_time.pr_created_ms`] = prCreatedMs;
-    attributes[`${prefix}.lead_time.pr_ready_for_review_ms`] = prReadyForReviewMs;
-    attributes[`${prefix}.lead_time.pr_approved_ms`] = prApprovedMs;
-    attributes[`${prefix}.lead_time.pr_merged_ms`] = prMergedMs;
-    attributes[`${prefix}.lead_time.workflow_finished_ms`] = workflowFinishedMs;
-    attributes[`${prefix}.lead_time.total_ms`] = totalLeadTimeMs;
+    attributes[`${prefix}.lead_time.first_commit_at`] = prs[i]?.firstCommitAuthorDate ?? undefined;
+    attributes[`${prefix}.lead_time.pr_created_at`] = prDetails.created_at;
+    attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = prs[i]?.readyForReviewAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_approved_at`] = prs[i]?.firstApprovedAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_merged_at`] = prDetails.merged_at ?? undefined;
+    attributes[`${prefix}.lead_time.workflow_finished_at`] = workflowFinishedAt;
     attributes[`${prefix}.lead_time.metric_emitted`] = leadTimeMetricEmitted;
   }
 
   return attributes;
-}
-
-function diffMs(start: string | null | undefined, end: string | null | undefined): number {
-  if (!(start && end)) {
-    return 0;
-  }
-
-  return new Date(end).getTime() - new Date(start).getTime();
 }
 
 export { traceWorkflowRun };

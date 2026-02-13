@@ -245,7 +245,7 @@ describe("traceWorkflowRun branches", () => {
     expect(Object.keys(attributes).some((key) => key.includes("lead_time"))).toBe(false);
   });
 
-  it("emits zero lead times for missing timestamps", async () => {
+  it("omits missing lead time timestamps", async () => {
     const { traceWorkflowRun, tracer } = await loadTraceWorkflow();
     let attributes: Record<string, unknown> = {};
 
@@ -313,10 +313,11 @@ describe("traceWorkflowRun branches", () => {
       ]
     );
 
-    expect(attributes["github.pull_requests.0.lead_time.pr_ready_for_review_ms"]).toBe(0);
-    expect(attributes["github.pull_requests.0.lead_time.pr_approved_ms"]).toBe(0);
-    expect(attributes["github.pull_requests.0.lead_time.pr_merged_ms"]).toBe(0);
-    expect(attributes["github.pull_requests.0.lead_time.workflow_finished_ms"]).toBe(0);
+    expect(attributes["github.pull_requests.0.lead_time.first_commit_at"]).toBeUndefined();
+    expect(attributes["github.pull_requests.0.lead_time.pr_ready_for_review_at"]).toBeUndefined();
+    expect(attributes["github.pull_requests.0.lead_time.pr_approved_at"]).toBeUndefined();
+    expect(attributes["github.pull_requests.0.lead_time.pr_merged_at"]).toBeUndefined();
+    expect(attributes["github.pull_requests.0.lead_time.workflow_finished_at"]).toBe("2026-02-01T00:00:10Z");
     expect(attributes["github.pull_requests.0.lead_time.metric_emitted"]).toBe(false);
   });
 });

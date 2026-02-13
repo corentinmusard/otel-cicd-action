@@ -101,12 +101,11 @@ describe("run", () => {
     expect(core.setFailed).not.toHaveBeenCalled();
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
     expect(output).toContain("github.pull_request.lead_time");
-    expect(output).toContain("lead_time.pr_created_ms");
-    expect(output).toContain("lead_time.pr_ready_for_review_ms");
-    expect(output).toContain("lead_time.pr_approved_ms");
-    expect(output).toContain("lead_time.pr_merged_ms");
-    expect(output).toContain("lead_time.workflow_finished_ms");
-    expect(output).toContain("lead_time.total_ms");
+    expect(output).toContain("lead_time.first_commit_at");
+    expect(output).toContain("lead_time.pr_created_at");
+    expect(output).toContain("lead_time.pr_merged_at");
+    expect(output).toContain("lead_time.workflow_finished_at");
+    expect(output).toContain("lead_time.metric_emitted");
   }, 10_000);
 
   it("should run a failed workflow", async () => {
