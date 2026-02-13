@@ -100,7 +100,7 @@ function workflowRunToAttributes(
     "github.path": workflowRun.path,
     "github.display_title": workflowRun.display_title,
     error: workflowRun.conclusion === "failure",
-    ...prsToAttributes(workflowRun.pull_requests, prs, workflowRun.updated_at),
+    ...prsToAttributes(workflowRun.pull_requests, prs, workflowRun.updated_at, workflowRun.conclusion),
   };
 }
 
@@ -185,7 +185,8 @@ function headCommitToAttributes(head_commit: components["schemas"]["nullable-sim
 function prsToAttributes(
   pullRequests: components["schemas"]["pull-request-minimal"][] | null,
   prs: PullRequestData[],
-  workflowFinishedAt: string
+  workflowFinishedAt: string,
+  workflowConclusion: components["schemas"]["workflow-run"]["conclusion"]
 ) {
   const attributes: Attributes = {
     "github.head_ref": pullRequests?.[0]?.head?.ref,
@@ -228,6 +229,8 @@ function prsToAttributes(
     const prMergedMs = diffMs(approvedAt ?? readyForReviewAt ?? prCreatedAt, mergedAt);
     const workflowFinishedMs = diffMs(mergedAt, workflowFinishedAt);
     const totalLeadTimeMs = diffMs(prs[i]?.firstCommitAuthorDate, workflowFinishedAt);
+    const leadTimeMetricEmitted =
+      workflowConclusion === "success" && !!prDetails.merged_at && !!prs[i]?.firstCommitAuthorDate;
 
     attributes[`${prefix}.lead_time.pr_created_ms`] = prCreatedMs;
     attributes[`${prefix}.lead_time.pr_ready_for_review_ms`] = prReadyForReviewMs;
@@ -235,6 +238,7 @@ function prsToAttributes(
     attributes[`${prefix}.lead_time.pr_merged_ms`] = prMergedMs;
     attributes[`${prefix}.lead_time.workflow_finished_ms`] = workflowFinishedMs;
     attributes[`${prefix}.lead_time.total_ms`] = totalLeadTimeMs;
+    attributes[`${prefix}.lead_time.metric_emitted`] = leadTimeMetricEmitted;
   }
 
   return attributes;

@@ -317,5 +317,6 @@ describe("traceWorkflowRun branches", () => {
     expect(attributes["github.pull_requests.0.lead_time.pr_approved_ms"]).toBe(0);
     expect(attributes["github.pull_requests.0.lead_time.pr_merged_ms"]).toBe(0);
     expect(attributes["github.pull_requests.0.lead_time.workflow_finished_ms"]).toBe(0);
+    expect(attributes["github.pull_requests.0.lead_time.metric_emitted"]).toBe(false);
   });
 });

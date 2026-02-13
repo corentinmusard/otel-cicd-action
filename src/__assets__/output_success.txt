@@ -339,6 +339,7 @@
     'github.pull_requests.0.lead_time.pr_merged_ms': 875462000,
     'github.pull_requests.0.lead_time.workflow_finished_ms': 78410578000,
     'github.pull_requests.0.lead_time.total_ms': 79471647000,
+    'github.pull_requests.0.lead_time.metric_emitted': true,
     'github.pull_requests.1.id': 1660224577,
     'github.pull_requests.1.url': 'https://api.github.com/repos/CodeWithShreyans/biome/pulls/15',
     'github.pull_requests.1.number': 15,
@@ -358,7 +359,8 @@
     'github.pull_requests.1.lead_time.pr_approved_ms': 0,
     'github.pull_requests.1.lead_time.pr_merged_ms': 5000,
     'github.pull_requests.1.lead_time.workflow_finished_ms': 78617374000,
-    'github.pull_requests.1.lead_time.total_ms': 78621700000
+    'github.pull_requests.1.lead_time.total_ms': 78621700000,
+    'github.pull_requests.1.lead_time.metric_emitted': true
   },
   status: { code: 1 },
   events: [],
@@ -381,8 +383,8 @@
         'pull_request.number': 1,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770999340, 697000000 ],
-      endTime: [ 1770999340, 699000000 ],
+      startTime: [ 1771000484, 153000000 ],
+      endTime: [ 1771000484, 155000000 ],
       value: 79471647000
     },
     {
@@ -391,8 +393,8 @@
         'pull_request.number': 15,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770999340, 697000000 ],
-      endTime: [ 1770999340, 699000000 ],
+      startTime: [ 1771000484, 153000000 ],
+      endTime: [ 1771000484, 155000000 ],
       value: 78621700000
     }
   ]
@@ -414,8 +416,8 @@
         'pull_request.number': 1,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770999340, 697000000 ],
-      endTime: [ 1770999340, 700000000 ],
+      startTime: [ 1771000484, 153000000 ],
+      endTime: [ 1771000484, 156000000 ],
       value: 79471647000
     },
     {
@@ -424,8 +426,8 @@
         'pull_request.number': 15,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770999340, 697000000 ],
-      endTime: [ 1770999340, 700000000 ],
+      startTime: [ 1771000484, 153000000 ],
+      endTime: [ 1771000484, 156000000 ],
       value: 78621700000
     }
   ]
