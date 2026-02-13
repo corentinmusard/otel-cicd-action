@@ -17,12 +17,13 @@ const token = process.env["GH_TOKEN"] ?? "";
 process.env["OTEL_CONSOLE_ONLY"] = "true";
 process.env["OTEL_ID_SEED"] = "123"; // seed for stable otel ids generation
 
-// The module being tested should be imported dynamically. This ensures that the
-// mocks are used in place of any actual dependencies.
-const { run, isOctokitError } = await import("./runner");
+async function loadRunner() {
+  return await import("./runner");
+}
 
 describe("isOctokitError", () => {
-  it("returns true", () => {
+  it("returns true", async () => {
+    const { isOctokitError } = await import("./runner");
     const err = new RequestError("this is an error", 400, {
       request: {
         method: "GET",
@@ -32,7 +33,8 @@ describe("isOctokitError", () => {
     });
     expect(isOctokitError(err)).toBe(true);
   });
-  it("returns false", () => {
+  it("returns false", async () => {
+    const { isOctokitError } = await import("./runner");
     expect(isOctokitError("")).toBe(false);
   });
 });
@@ -42,6 +44,7 @@ describe("run", () => {
   let runId: string;
   // redirect trace output to a file
   let output = "";
+  let run: typeof import("./runner").run;
 
   beforeAll(async () => {
     octokit = await replayOctokit("run", token);
@@ -72,6 +75,8 @@ describe("run", () => {
     jest.spyOn(console, "dir").mockImplementation((item: unknown, options?: InspectOptions) => {
       output += `${util.inspect(item, options)}\n`;
     });
+
+    ({ run } = await loadRunner());
   });
 
   afterAll(() => {
@@ -140,4 +145,163 @@ describe("run", () => {
     expect(core.setFailed).toHaveBeenCalledWith(expect.any(Error));
     expect(core.setOutput).not.toHaveBeenCalled();
   }, 10_000);
+});
+
+describe("run branches", () => {
+  const workflowRunBase = {
+    id: 1,
+    workflow_id: 2,
+    run_attempt: 1,
+    repository: { full_name: "acme/repo" },
+    head_sha: "deadbeef",
+    name: "test",
+  };
+
+  function setInputs() {
+    core.getInput.mockImplementation((name: string) => {
+      switch (name) {
+        case "otlpEndpoint":
+        case "otlpHeaders":
+          return "";
+        case "otelServiceName":
+          return "otel-cicd-action";
+        case "runId":
+          return "1";
+        case "githubToken":
+          return "";
+        case "extraAttributes":
+          return "";
+        default:
+          return "";
+      }
+    });
+  }
+
+  async function setupRunner(overrides: Record<string, unknown> = {}) {
+    jest.resetModules();
+    jest.unstable_mockModule("@actions/core", () => core);
+    jest.unstable_mockModule("@actions/github", () => github);
+
+    const traceWorkflowRun = jest.fn(() => "trace-id");
+    const recordWorkflowMetrics = jest.fn();
+    const tracerProvider = { forceFlush: jest.fn(), shutdown: jest.fn() };
+    const meterProvider = { forceFlush: jest.fn(), shutdown: jest.fn() };
+
+    const githubApi: Record<string, unknown> = {
+      getWorkflowRun: jest.fn(async () => ({ ...workflowRunBase, pull_requests: [] })),
+      listJobsForWorkflowRun: jest.fn(async () => []),
+      getJobsAnnotations: jest.fn(async () => ({})),
+      getPRsLabels: jest.fn(async () => ({})),
+      getPullRequest: jest.fn(async () => ({ created_at: "2026-02-01T00:00:00Z" })),
+      listPullRequestCommits: jest.fn(async () => []),
+      listPullRequestReviews: jest.fn(async () => []),
+      listPullRequestEvents: jest.fn(async () => []),
+      ...overrides,
+    };
+
+    jest.unstable_mockModule("./github", () => githubApi);
+    jest.unstable_mockModule("./trace/workflow", () => ({ traceWorkflowRun }));
+    jest.unstable_mockModule("./metrics/workflow", () => ({ recordWorkflowMetrics }));
+    jest.unstable_mockModule("./tracer", () => ({
+      createTracerProvider: jest.fn(() => tracerProvider),
+      stringToRecord: jest.fn(() => ({})),
+    }));
+    jest.unstable_mockModule("./meter", () => ({
+      createMeterProvider: jest.fn(() => meterProvider),
+    }));
+
+    const { run } = await import("./runner");
+    return { run, githubApi, traceWorkflowRun, recordWorkflowMetrics };
+  }
+
+  afterEach(() => {
+    core.getInput.mockReset();
+    core.info.mockReset();
+    core.setOutput.mockReset();
+    core.setFailed.mockReset();
+    github.getOctokit.mockReset();
+  });
+
+  it("skips labels lookup when no PRs", async () => {
+    setInputs();
+    github.getOctokit.mockReturnValue({} as Octokit);
+
+    const { run, githubApi, recordWorkflowMetrics } = await setupRunner({
+      getWorkflowRun: jest.fn(async () => ({ ...workflowRunBase, pull_requests: [] })),
+    });
+
+    await run();
+
+    expect(githubApi["getPRsLabels"] as jest.Mock).not.toHaveBeenCalled();
+    expect(recordWorkflowMetrics).not.toHaveBeenCalled();
+  });
+
+  it("logs and continues when PR labels fail", async () => {
+    setInputs();
+    github.getOctokit.mockReturnValue({} as Octokit);
+
+    const err = new RequestError("labels failed", 403, { request: { method: "GET", url: "", headers: {} } });
+    const { run } = await setupRunner({
+      getWorkflowRun: jest.fn(async () => ({
+        ...workflowRunBase,
+        pull_requests: [{ number: 1 }],
+      })),
+      getPRsLabels: jest.fn(() => Promise.reject(err)),
+    });
+
+    await run();
+
+    expect(core.info).toHaveBeenCalledWith(expect.stringContaining("Failed to get PR labels"));
+  });
+
+  it("returns null PR data when PR fetch fails", async () => {
+    setInputs();
+    github.getOctokit.mockReturnValue({} as Octokit);
+
+    const err = new RequestError("pr failed", 404, { request: { method: "GET", url: "", headers: {} } });
+    const { run, recordWorkflowMetrics } = await setupRunner({
+      getWorkflowRun: jest.fn(async () => ({
+        ...workflowRunBase,
+        pull_requests: [{ number: 2 }],
+      })),
+      getPullRequest: jest.fn(() => Promise.reject(err)),
+    });
+
+    await run();
+
+    expect(recordWorkflowMetrics).toHaveBeenCalledWith(expect.any(Object), null, null);
+  });
+
+  it("captures earliest approval and ready_for_review", async () => {
+    setInputs();
+    github.getOctokit.mockReturnValue({} as Octokit);
+
+    const { run, traceWorkflowRun } = await setupRunner({
+      getWorkflowRun: jest.fn(async () => ({
+        ...workflowRunBase,
+        pull_requests: [{ number: 3 }],
+      })),
+      listPullRequestReviews: jest.fn(async () => [
+        { state: "COMMENTED", submitted_at: "2026-02-01T00:00:00Z" },
+        { state: "APPROVED", submitted_at: null },
+        { state: "APPROVED", submitted_at: "2026-02-02T00:00:00Z" },
+        { state: "APPROVED", submitted_at: "2026-01-30T00:00:00Z" },
+      ]),
+      listPullRequestEvents: jest.fn(async () => [
+        { event: "labeled", created_at: "2026-01-01T00:00:00Z" },
+        { event: "ready_for_review", created_at: null },
+        { event: "ready_for_review", created_at: "2026-02-01T00:00:00Z" },
+        { event: "ready_for_review", created_at: "2026-01-31T00:00:00Z" },
+      ]),
+    });
+
+    await run();
+
+    const prs = (traceWorkflowRun as jest.Mock).mock.calls[0]?.[3] as
+      | Array<{ firstApprovedAt?: string | null; readyForReviewAt?: string | null }>
+      | undefined;
+    expect(prs).toBeDefined();
+    expect(prs?.[0]?.firstApprovedAt).toBe("2026-01-30T00:00:00Z");
+    expect(prs?.[0]?.readyForReviewAt).toBe("2026-01-31T00:00:00Z");
+  });
 });

@@ -381,8 +381,8 @@
         'pull_request.number': 1,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770997930, 559000000 ],
-      endTime: [ 1770997930, 561000000 ],
+      startTime: [ 1770999340, 697000000 ],
+      endTime: [ 1770999340, 699000000 ],
       value: 79471647000
     },
     {
@@ -391,8 +391,8 @@
         'pull_request.number': 15,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770997930, 559000000 ],
-      endTime: [ 1770997930, 561000000 ],
+      startTime: [ 1770999340, 697000000 ],
+      endTime: [ 1770999340, 699000000 ],
       value: 78621700000
     }
   ]
@@ -414,8 +414,8 @@
         'pull_request.number': 1,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770997930, 559000000 ],
-      endTime: [ 1770997930, 561000000 ],
+      startTime: [ 1770999340, 697000000 ],
+      endTime: [ 1770999340, 700000000 ],
       value: 79471647000
     },
     {
@@ -424,8 +424,8 @@
         'pull_request.number': 15,
         'workflow.event': 'issues'
       },
-      startTime: [ 1770997930, 559000000 ],
-      endTime: [ 1770997930, 561000000 ],
+      startTime: [ 1770999340, 697000000 ],
+      endTime: [ 1770999340, 700000000 ],
       value: 78621700000
     }
   ]
