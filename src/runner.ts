@@ -5,7 +5,14 @@ import type { RequestError } from "@octokit/request-error";
 import type { Attributes } from "@opentelemetry/api";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
-import { getJobsAnnotations, getPRsLabels, getPullRequest, getWorkflowRun, listJobsForWorkflowRun } from "./github";
+import {
+  getJobsAnnotations,
+  getPRsLabels,
+  getPullRequest,
+  getWorkflowRun,
+  listJobsForWorkflowRun,
+  listPullRequestCommits,
+} from "./github";
 import { createMeterProvider } from "./meter";
 import { recordWorkflowMetrics } from "./metrics/workflow";
 import { traceWorkflowRun } from "./trace/workflow";
@@ -13,6 +20,38 @@ import { createTracerProvider, stringToRecord } from "./tracer";
 
 function isOctokitError(err: unknown): err is RequestError {
   return !!err && typeof err === "object" && "status" in err;
+}
+
+async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumber: number) {
+  const prDetails = await getPullRequest(context, octokit, prNumber);
+  const commits = await listPullRequestCommits(context, octokit, prNumber);
+  let firstCommitAuthorDate: string | null = null;
+
+  for (const commit of commits) {
+    const authorDate = commit.commit?.author?.date ?? null;
+    if (!authorDate) {
+      continue;
+    }
+
+    if (!firstCommitAuthorDate || new Date(authorDate).getTime() < new Date(firstCommitAuthorDate).getTime()) {
+      firstCommitAuthorDate = authorDate;
+    }
+  }
+
+  return { prDetails, firstCommitAuthorDate };
+}
+
+async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumber: number) {
+  try {
+    const { prDetails, firstCommitAuthorDate } = await getPullRequestData(octokit, prNumber);
+    return { prDetails, firstCommitAuthorDate };
+  } catch (error) {
+    if (isOctokitError(error)) {
+      core.info(`Failed to get PR data: ${error.message}}`);
+      return { prDetails: null, firstCommitAuthorDate: null };
+    }
+    throw error;
+  }
 }
 
 async function fetchGithub(token: string, runId: number) {
@@ -50,21 +89,14 @@ async function fetchGithub(token: string, runId: number) {
     }
   }
 
-  core.info("Get PR details");
   let prDetails: components["schemas"]["pull-request"] | null = null;
+  let firstCommitAuthorDate: string | null = null;
   if (prNumbers.length > 0) {
-    try {
-      prDetails = await getPullRequest(context, octokit, prNumbers[0]);
-    } catch (error) {
-      if (isOctokitError(error)) {
-        core.info(`Failed to get PR details: ${error.message}}`);
-      } else {
-        throw error;
-      }
-    }
+    core.info("Get PR details");
+    ({ prDetails, firstCommitAuthorDate } = await safeGetPullRequestData(octokit, prNumbers[0]));
   }
 
-  return { workflowRun, jobs, jobAnnotations, prLabels, prDetails };
+  return { workflowRun, jobs, jobAnnotations, prLabels, prDetails, firstCommitAuthorDate };
 }
 
 async function run() {
@@ -77,7 +109,10 @@ async function run() {
     const ghToken = core.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
 
     core.info("Use Github API to fetch workflow data");
-    const { workflowRun, jobs, jobAnnotations, prLabels, prDetails } = await fetchGithub(ghToken, runId);
+    const { workflowRun, jobs, jobAnnotations, prLabels, prDetails, firstCommitAuthorDate } = await fetchGithub(
+      ghToken,
+      runId
+    );
 
     core.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes: Attributes = {
@@ -102,7 +137,7 @@ async function run() {
     core.info(`traceId: ${traceId}`);
 
     core.info("Record workflow metrics");
-    recordWorkflowMetrics(workflowRun, prDetails);
+    recordWorkflowMetrics(workflowRun, prDetails, firstCommitAuthorDate);
 
     core.info("Flush and shutdown providers");
     await tracerProvider.forceFlush();

@@ -66,4 +66,20 @@ async function getPullRequest(context: Context, octokit: Octokit, prNumber: numb
   return res.data;
 }
 
-export { getWorkflowRun, listJobsForWorkflowRun, getJobsAnnotations, getPRsLabels, getPullRequest, type Octokit };
+async function listPullRequestCommits(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.pulls.listCommits, {
+    ...context.repo,
+    pull_number: prNumber,
+    per_page: 100,
+  });
+}
+
+export {
+  getWorkflowRun,
+  listJobsForWorkflowRun,
+  getJobsAnnotations,
+  getPRsLabels,
+  getPullRequest,
+  listPullRequestCommits,
+  type Octokit,
+};
