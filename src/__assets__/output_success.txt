@@ -342,7 +342,7 @@
   descriptor: {
     name: 'github.pull_request.lead_time',
     type: 'GAUGE',
-    description: 'PR lead time from creation to workflow completion',
+    description: 'Lead time from first commit to workflow completion',
     unit: 'ms',
     valueType: 1,
     advice: {}
@@ -355,9 +355,9 @@
         'pull_request.number': 9011,
         'workflow.event': 'pull_request_target'
       },
-      startTime: [ 1770740862, 317000000 ],
-      endTime: [ 1770740862, 318000000 ],
-      value: 563000
+      startTime: [ 1770980205, 67000000 ],
+      endTime: [ 1770980205, 68000000 ],
+      value: 1087000
     }
   ]
 }
@@ -365,7 +365,7 @@
   descriptor: {
     name: 'github.pull_request.lead_time',
     type: 'GAUGE',
-    description: 'PR lead time from creation to workflow completion',
+    description: 'Lead time from first commit to workflow completion',
     unit: 'ms',
     valueType: 1,
     advice: {}
@@ -378,9 +378,9 @@
         'pull_request.number': 9011,
         'workflow.event': 'pull_request_target'
       },
-      startTime: [ 1770740862, 317000000 ],
-      endTime: [ 1770740862, 318000000 ],
-      value: 563000
+      startTime: [ 1770980205, 67000000 ],
+      endTime: [ 1770980205, 68000000 ],
+      value: 1087000
     }
   ]
 }

@@ -96,7 +96,16 @@ async function fetchGithub(token: string, runId: number) {
     ({ prDetails, firstCommitAuthorDate } = await safeGetPullRequestData(octokit, prNumbers[0]));
   }
 
-  return { workflowRun, jobs, jobAnnotations, prLabels, prDetails, firstCommitAuthorDate };
+  return {
+    workflowRun,
+    jobs,
+    jobAnnotations,
+    pr: {
+      labels: prLabels,
+      details: prDetails,
+      firstCommitAuthorDate,
+    },
+  };
 }
 
 async function run() {
@@ -109,10 +118,7 @@ async function run() {
     const ghToken = core.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
 
     core.info("Use Github API to fetch workflow data");
-    const { workflowRun, jobs, jobAnnotations, prLabels, prDetails, firstCommitAuthorDate } = await fetchGithub(
-      ghToken,
-      runId
-    );
+    const { workflowRun, jobs, jobAnnotations, pr } = await fetchGithub(ghToken, runId);
 
     core.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes: Attributes = {
@@ -131,13 +137,13 @@ async function run() {
     const meterProvider = createMeterProvider(otlpEndpoint, otlpHeaders, attributes);
 
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
+    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, pr.labels);
 
     core.setOutput("traceId", traceId);
     core.info(`traceId: ${traceId}`);
 
     core.info("Record workflow metrics");
-    recordWorkflowMetrics(workflowRun, prDetails, firstCommitAuthorDate);
+    recordWorkflowMetrics(workflowRun, pr.details, pr.firstCommitAuthorDate);
 
     core.info("Flush and shutdown providers");
     await tracerProvider.forceFlush();
