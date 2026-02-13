@@ -1,10 +1,10 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import type { components } from "@octokit/openapi-types";
 import type { RequestError } from "@octokit/request-error";
 import type { Attributes } from "@opentelemetry/api";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
+import type { PullRequestData } from "./github";
 import {
   getJobsAnnotations,
   getPRsLabels,
@@ -23,7 +23,10 @@ function isOctokitError(err: unknown): err is RequestError {
 }
 
 async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumber: number) {
+  core.info(`Get details for PR #${prNumber}`);
   const prDetails = await getPullRequest(context, octokit, prNumber);
+
+  core.info(`Get commits for PR #${prNumber}`);
   const commits = await listPullRequestCommits(context, octokit, prNumber);
   let firstCommitAuthorDate: string | null = null;
 
@@ -38,20 +41,51 @@ async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumb
     }
   }
 
-  return { prDetails, firstCommitAuthorDate };
+  return { details: prDetails, firstCommitAuthorDate };
 }
 
-async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumber: number) {
+async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumbers: number[]) {
+  const prs: PullRequestData[] = [];
+  let prLabels: Record<number, string[]> = {};
+
+  if (prNumbers.length === 0) {
+    return prs;
+  }
+
+  core.info("Get PR labels");
   try {
-    const { prDetails, firstCommitAuthorDate } = await getPullRequestData(octokit, prNumber);
-    return { prDetails, firstCommitAuthorDate };
+    prLabels = await getPRsLabels(context, octokit, prNumbers);
   } catch (error) {
     if (isOctokitError(error)) {
-      core.info(`Failed to get PR data: ${error.message}}`);
-      return { prDetails: null, firstCommitAuthorDate: null };
+      core.info(`Failed to get PR labels: ${error.message}}`);
+    } else {
+      throw error;
     }
-    throw error;
   }
+
+  for (const prNumber of prNumbers) {
+    try {
+      const { details, firstCommitAuthorDate } = await getPullRequestData(octokit, prNumber);
+      prs.push({
+        labels: prLabels[prNumber] ?? [],
+        details,
+        firstCommitAuthorDate,
+      });
+    } catch (error) {
+      if (isOctokitError(error)) {
+        core.info(`Failed to get PR data for ${prNumber}: ${error.message}}`);
+        prs.push({
+          labels: prLabels[prNumber] ?? [],
+          details: null,
+          firstCommitAuthorDate: null,
+        });
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  return prs;
 }
 
 async function fetchGithub(token: string, runId: number) {
@@ -76,36 +110,10 @@ async function fetchGithub(token: string, runId: number) {
     }
   }
 
-  core.info("Get PRs labels");
   const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
-  let prLabels = {};
-  try {
-    prLabels = await getPRsLabels(context, octokit, prNumbers);
-  } catch (error) {
-    if (isOctokitError(error)) {
-      core.info(`Failed to get PRs labels: ${error.message}}`);
-    } else {
-      throw error;
-    }
-  }
+  const prs = await safeGetPullRequestData(octokit, prNumbers);
 
-  let prDetails: components["schemas"]["pull-request"] | null = null;
-  let firstCommitAuthorDate: string | null = null;
-  if (prNumbers.length > 0) {
-    core.info("Get PR details");
-    ({ prDetails, firstCommitAuthorDate } = await safeGetPullRequestData(octokit, prNumbers[0]));
-  }
-
-  return {
-    workflowRun,
-    jobs,
-    jobAnnotations,
-    pr: {
-      labels: prLabels,
-      details: prDetails,
-      firstCommitAuthorDate,
-    },
-  };
+  return { workflowRun, jobs, jobAnnotations, prs };
 }
 
 async function run() {
@@ -118,7 +126,7 @@ async function run() {
     const ghToken = core.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
 
     core.info("Use Github API to fetch workflow data");
-    const { workflowRun, jobs, jobAnnotations, pr } = await fetchGithub(ghToken, runId);
+    const { workflowRun, jobs, jobAnnotations, prs } = await fetchGithub(ghToken, runId);
 
     core.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes: Attributes = {
@@ -137,13 +145,15 @@ async function run() {
     const meterProvider = createMeterProvider(otlpEndpoint, otlpHeaders, attributes);
 
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, pr.labels);
+    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prs);
 
     core.setOutput("traceId", traceId);
     core.info(`traceId: ${traceId}`);
 
     core.info("Record workflow metrics");
-    recordWorkflowMetrics(workflowRun, pr.details, pr.firstCommitAuthorDate);
+    for (const prData of prs) {
+      recordWorkflowMetrics(workflowRun, prData.details, prData.firstCommitAuthorDate);
+    }
 
     core.info("Flush and shutdown providers");
     await tracerProvider.forceFlush();

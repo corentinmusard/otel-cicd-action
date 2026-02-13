@@ -5,6 +5,12 @@ import type { components } from "@octokit/openapi-types";
 type Context = typeof context;
 type Octokit = InstanceType<typeof GitHub>;
 
+interface PullRequestData {
+  labels: string[];
+  details: components["schemas"]["pull-request"] | null;
+  firstCommitAuthorDate: string | null;
+}
+
 async function getWorkflowRun(context: Context, octokit: Octokit, runId: number) {
   const res = await octokit.rest.actions.getWorkflowRun({
     ...context.repo,
@@ -81,5 +87,6 @@ export {
   getPRsLabels,
   getPullRequest,
   listPullRequestCommits,
+  type PullRequestData,
   type Octokit,
 };

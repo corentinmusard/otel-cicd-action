@@ -86,16 +86,15 @@ describe("run", () => {
   });
 
   it("should run a successful workflow", async () => {
-    // https://github.com/biomejs/biome/actions/runs/21832799585
+    // https://github.com/biomejs/biome/actions/runs/21983564823
     process.env["GITHUB_REPOSITORY"] = "biomejs/biome";
-    runId = "21832799585";
+    runId = "21983564823";
 
     await run();
     await fs.writeFile("src/__assets__/output_success.txt", output);
 
     expect(core.setFailed).not.toHaveBeenCalled();
     expect(core.setOutput).toHaveBeenCalledWith("traceId", "329e58aa53cec7a2beadd2fd0a85c388");
-
     expect(output).toContain("github.pull_request.lead_time");
   }, 10_000);
 

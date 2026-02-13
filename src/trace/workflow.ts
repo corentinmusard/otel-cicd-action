@@ -18,18 +18,19 @@ import {
   CICD_PIPELINE_RUN_STATE_VALUE_FINALIZING,
   CICD_PIPELINE_RUN_STATE_VALUE_PENDING,
 } from "@opentelemetry/semantic-conventions/incubating";
+import type { PullRequestData } from "../github";
 import { traceJob } from "./job";
 
 function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
   jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
-  prLabels: Record<number, string[]>
+  prs: PullRequestData[]
 ) {
   const tracer = trace.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
-  const attributes = workflowRunToAttributes(workflowRun, prLabels);
+  const attributes = workflowRunToAttributes(workflowRun, prs);
 
   return tracer.startActiveSpan(
     workflowRun.name ?? workflowRun.display_title,
@@ -57,7 +58,7 @@ function traceWorkflowRun(
 
 function workflowRunToAttributes(
   workflowRun: components["schemas"]["workflow-run"],
-  prLabels: Record<number, string[]>
+  prs: PullRequestData[]
 ): Attributes {
   return {
     // OpenTelemetry semantic convention CICD Pipeline Attributes
@@ -99,7 +100,7 @@ function workflowRunToAttributes(
     "github.path": workflowRun.path,
     "github.display_title": workflowRun.display_title,
     error: workflowRun.conclusion === "failure",
-    ...prsToAttributes(workflowRun.pull_requests, prLabels),
+    ...prsToAttributes(workflowRun.pull_requests, prs),
   };
 }
 
@@ -181,10 +182,7 @@ function headCommitToAttributes(head_commit: components["schemas"]["nullable-sim
   };
 }
 
-function prsToAttributes(
-  pullRequests: components["schemas"]["pull-request-minimal"][] | null,
-  prLabels: Record<number, string[]>
-) {
+function prsToAttributes(pullRequests: components["schemas"]["pull-request-minimal"][] | null, prs: PullRequestData[]) {
   const attributes: Attributes = {
     "github.head_ref": pullRequests?.[0]?.head?.ref,
     "github.base_ref": pullRequests?.[0]?.base?.ref,
@@ -198,7 +196,7 @@ function prsToAttributes(
     attributes[`${prefix}.id`] = pr.id;
     attributes[`${prefix}.url`] = pr.url;
     attributes[`${prefix}.number`] = pr.number;
-    attributes[`${prefix}.labels`] = prLabels[pr.number];
+    attributes[`${prefix}.labels`] = prs[i]?.labels ?? [];
     attributes[`${prefix}.head.sha`] = pr.head.sha;
     attributes[`${prefix}.head.ref`] = pr.head.ref;
     attributes[`${prefix}.head.repo.id`] = pr.head.repo.id;
