@@ -12,6 +12,8 @@ import {
   getWorkflowRun,
   listJobsForWorkflowRun,
   listPullRequestCommits,
+  listPullRequestEvents,
+  listPullRequestReviews,
 } from "./github";
 import { createMeterProvider } from "./meter";
 import { recordWorkflowMetrics } from "./metrics/workflow";
@@ -30,6 +32,14 @@ async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumb
   const commits = await listPullRequestCommits(context, octokit, prNumber);
   let firstCommitAuthorDate: string | null = null;
 
+  core.info(`Get reviews for PR #${prNumber}`);
+  const reviews = await listPullRequestReviews(context, octokit, prNumber);
+  const firstApprovedAt = getFirstApprovedAt(reviews);
+
+  core.info(`Get events for PR #${prNumber}`);
+  const events = await listPullRequestEvents(context, octokit, prNumber);
+  const readyForReviewAt = getReadyForReviewAt(events);
+
   for (const commit of commits) {
     const authorDate = commit.commit?.author?.date ?? null;
     if (!authorDate) {
@@ -41,7 +51,49 @@ async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumb
     }
   }
 
-  return { details: prDetails, firstCommitAuthorDate };
+  return { details: prDetails, firstCommitAuthorDate, firstApprovedAt, readyForReviewAt };
+}
+
+function getFirstApprovedAt(reviews: Awaited<ReturnType<typeof listPullRequestReviews>>): string | null {
+  let firstApprovedAt: string | null = null;
+
+  for (const review of reviews) {
+    if (review.state !== "APPROVED") {
+      continue;
+    }
+
+    const approvedAt = review.submitted_at ?? null;
+    if (!approvedAt) {
+      continue;
+    }
+
+    if (!firstApprovedAt || new Date(approvedAt).getTime() < new Date(firstApprovedAt).getTime()) {
+      firstApprovedAt = approvedAt;
+    }
+  }
+
+  return firstApprovedAt;
+}
+
+function getReadyForReviewAt(events: Awaited<ReturnType<typeof listPullRequestEvents>>): string | null {
+  let readyForReviewAt: string | null = null;
+
+  for (const event of events) {
+    if (event.event !== "ready_for_review") {
+      continue;
+    }
+
+    const readyAt = event.created_at ?? null;
+    if (!readyAt) {
+      continue;
+    }
+
+    if (!readyForReviewAt || new Date(readyAt).getTime() < new Date(readyForReviewAt).getTime()) {
+      readyForReviewAt = readyAt;
+    }
+  }
+
+  return readyForReviewAt;
 }
 
 async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumbers: number[]) {
@@ -65,11 +117,16 @@ async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, pr
 
   for (const prNumber of prNumbers) {
     try {
-      const { details, firstCommitAuthorDate } = await getPullRequestData(octokit, prNumber);
+      const { details, firstCommitAuthorDate, firstApprovedAt, readyForReviewAt } = await getPullRequestData(
+        octokit,
+        prNumber
+      );
       prs.push({
         labels: prLabels[prNumber] ?? [],
         details,
         firstCommitAuthorDate,
+        firstApprovedAt,
+        readyForReviewAt,
       });
     } catch (error) {
       if (isOctokitError(error)) {
@@ -78,6 +135,8 @@ async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, pr
           labels: prLabels[prNumber] ?? [],
           details: null,
           firstCommitAuthorDate: null,
+          firstApprovedAt: null,
+          readyForReviewAt: null,
         });
       } else {
         throw error;

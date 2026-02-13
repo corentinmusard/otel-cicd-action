@@ -100,7 +100,7 @@ function workflowRunToAttributes(
     "github.path": workflowRun.path,
     "github.display_title": workflowRun.display_title,
     error: workflowRun.conclusion === "failure",
-    ...prsToAttributes(workflowRun.pull_requests, prs),
+    ...prsToAttributes(workflowRun.pull_requests, prs, workflowRun.updated_at),
   };
 }
 
@@ -182,7 +182,11 @@ function headCommitToAttributes(head_commit: components["schemas"]["nullable-sim
   };
 }
 
-function prsToAttributes(pullRequests: components["schemas"]["pull-request-minimal"][] | null, prs: PullRequestData[]) {
+function prsToAttributes(
+  pullRequests: components["schemas"]["pull-request-minimal"][] | null,
+  prs: PullRequestData[],
+  workflowFinishedAt: string
+) {
   const attributes: Attributes = {
     "github.head_ref": pullRequests?.[0]?.head?.ref,
     "github.base_ref": pullRequests?.[0]?.base?.ref,
@@ -207,9 +211,41 @@ function prsToAttributes(pullRequests: components["schemas"]["pull-request-minim
     attributes[`${prefix}.base.repo.id`] = pr.base.repo.id;
     attributes[`${prefix}.base.repo.url`] = pr.base.repo.url;
     attributes[`${prefix}.base.repo.name`] = pr.base.repo.name;
+
+    const prDetails = prs[i]?.details ?? null;
+    if (!prDetails) {
+      continue;
+    }
+
+    const prCreatedAt = prDetails.created_at;
+    const readyForReviewAt = prs[i]?.readyForReviewAt;
+    const approvedAt = prs[i]?.firstApprovedAt;
+    const mergedAt = prDetails.merged_at;
+
+    const prCreatedMs = diffMs(prs[i]?.firstCommitAuthorDate, prCreatedAt);
+    const prReadyForReviewMs = diffMs(prCreatedAt, readyForReviewAt);
+    const prApprovedMs = diffMs(readyForReviewAt ?? prCreatedAt, approvedAt);
+    const prMergedMs = diffMs(approvedAt ?? readyForReviewAt ?? prCreatedAt, mergedAt);
+    const workflowFinishedMs = diffMs(mergedAt, workflowFinishedAt);
+    const totalLeadTimeMs = diffMs(prs[i]?.firstCommitAuthorDate, workflowFinishedAt);
+
+    attributes[`${prefix}.lead_time.pr_created_ms`] = prCreatedMs;
+    attributes[`${prefix}.lead_time.pr_ready_for_review_ms`] = prReadyForReviewMs;
+    attributes[`${prefix}.lead_time.pr_approved_ms`] = prApprovedMs;
+    attributes[`${prefix}.lead_time.pr_merged_ms`] = prMergedMs;
+    attributes[`${prefix}.lead_time.workflow_finished_ms`] = workflowFinishedMs;
+    attributes[`${prefix}.lead_time.total_ms`] = totalLeadTimeMs;
   }
 
   return attributes;
+}
+
+function diffMs(start: string | null | undefined, end: string | null | undefined): number {
+  if (!(start && end)) {
+    return 0;
+  }
+
+  return new Date(end).getTime() - new Date(start).getTime();
 }
 
 export { traceWorkflowRun };

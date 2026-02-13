@@ -9,6 +9,8 @@ interface PullRequestData {
   labels: string[];
   details: components["schemas"]["pull-request"] | null;
   firstCommitAuthorDate: string | null;
+  firstApprovedAt: string | null;
+  readyForReviewAt: string | null;
 }
 
 async function getWorkflowRun(context: Context, octokit: Octokit, runId: number) {
@@ -80,6 +82,22 @@ async function listPullRequestCommits(context: Context, octokit: Octokit, prNumb
   });
 }
 
+async function listPullRequestReviews(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.pulls.listReviews, {
+    ...context.repo,
+    pull_number: prNumber,
+    per_page: 100,
+  });
+}
+
+async function listPullRequestEvents(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.issues.listEvents, {
+    ...context.repo,
+    issue_number: prNumber,
+    per_page: 100,
+  });
+}
+
 export {
   getWorkflowRun,
   listJobsForWorkflowRun,
@@ -87,6 +105,8 @@ export {
   getPRsLabels,
   getPullRequest,
   listPullRequestCommits,
+  listPullRequestReviews,
+  listPullRequestEvents,
   type PullRequestData,
   type Octokit,
 };
