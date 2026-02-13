@@ -320,4 +320,81 @@ describe("traceWorkflowRun branches", () => {
     expect(attributes["github.pull_requests.0.lead_time.workflow_finished_at"]).toBe("2026-02-01T00:00:10Z");
     expect(attributes["github.pull_requests.0.lead_time.metric_emitted"]).toBe(false);
   });
+
+  it("marks metric emitted when lead time data is complete", async () => {
+    const { traceWorkflowRun, tracer } = await loadTraceWorkflow();
+    let attributes: Record<string, unknown> = {};
+
+    (tracer.startActiveSpan as jest.Mock).mockImplementation((...args: unknown[]) => {
+      const spanOptions = args[1] as { attributes?: Record<string, unknown> };
+      const callback = args[2] as (span: {
+        setStatus: jest.Mock;
+        end: jest.Mock;
+        spanContext: () => { traceId: string };
+      }) => string;
+      attributes = spanOptions.attributes ?? {};
+      return callback({
+        setStatus: jest.fn(),
+        end: jest.fn(),
+        spanContext: () => ({ traceId: "trace-id" }),
+      });
+    });
+
+    traceWorkflowRun(
+      {
+        id: 1,
+        workflow_id: 2,
+        run_attempt: 1,
+        name: "test",
+        display_title: "test",
+        created_at: "2026-02-01T00:00:00Z",
+        updated_at: "2026-02-01T00:00:10Z",
+        status: "completed",
+        conclusion: "success",
+        html_url: "https://example.com",
+        url: "https://api.example.com",
+        workflow_url: "https://api.example.com/workflow",
+        jobs_url: "https://api.example.com/jobs",
+        logs_url: "https://api.example.com/logs",
+        check_suite_url: "https://api.example.com/check-suite",
+        artifacts_url: "https://api.example.com/artifacts",
+        cancel_url: "https://api.example.com/cancel",
+        rerun_url: "https://api.example.com/rerun",
+        head_sha: "deadbeef",
+        path: ".github/workflows/test.yml",
+        repository: { full_name: "acme/repo" },
+        check_suite_id: 1,
+        check_suite_node_id: "node",
+        event: "push",
+        pull_requests: [
+          {
+            id: 1,
+            number: 1,
+            url: "https://api.example.com/pr/1",
+            head: { sha: "sha", ref: "ref", repo: { id: 1, url: "https://api.example.com/repo", name: "repo" } },
+            base: { sha: "sha", ref: "ref", repo: { id: 1, url: "https://api.example.com/repo", name: "repo" } },
+          },
+        ],
+      } as never,
+      [],
+      {},
+      [
+        {
+          labels: [],
+          details: { created_at: "2026-02-01T00:00:00Z", merged_at: "2026-02-01T00:00:05Z" } as never,
+          firstCommitAuthorDate: "2026-01-31T00:00:00Z",
+          firstApprovedAt: "2026-02-01T00:00:03Z",
+          readyForReviewAt: "2026-02-01T00:00:02Z",
+        },
+      ]
+    );
+
+    expect(attributes["github.pull_requests.0.lead_time.first_commit_at"]).toBe("2026-01-31T00:00:00Z");
+    expect(attributes["github.pull_requests.0.lead_time.pr_created_at"]).toBe("2026-02-01T00:00:00Z");
+    expect(attributes["github.pull_requests.0.lead_time.pr_ready_for_review_at"]).toBe("2026-02-01T00:00:02Z");
+    expect(attributes["github.pull_requests.0.lead_time.pr_approved_at"]).toBe("2026-02-01T00:00:03Z");
+    expect(attributes["github.pull_requests.0.lead_time.pr_merged_at"]).toBe("2026-02-01T00:00:05Z");
+    expect(attributes["github.pull_requests.0.lead_time.workflow_finished_at"]).toBe("2026-02-01T00:00:10Z");
+    expect(attributes["github.pull_requests.0.lead_time.metric_emitted"]).toBe(true);
+  });
 });
