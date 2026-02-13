@@ -18,18 +18,19 @@ import {
   CICD_PIPELINE_RUN_STATE_VALUE_FINALIZING,
   CICD_PIPELINE_RUN_STATE_VALUE_PENDING,
 } from "@opentelemetry/semantic-conventions/incubating";
+import type { PullRequestData } from "../github";
 import { traceJob } from "./job";
 
 function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
   jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
-  prLabels: Record<number, string[]>
+  prs: PullRequestData[]
 ) {
   const tracer = trace.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
-  const attributes = workflowRunToAttributes(workflowRun, prLabels);
+  const attributes = workflowRunToAttributes(workflowRun, prs);
 
   return tracer.startActiveSpan(
     workflowRun.name ?? workflowRun.display_title,
@@ -57,7 +58,7 @@ function traceWorkflowRun(
 
 function workflowRunToAttributes(
   workflowRun: components["schemas"]["workflow-run"],
-  prLabels: Record<number, string[]>
+  prs: PullRequestData[]
 ): Attributes {
   return {
     // OpenTelemetry semantic convention CICD Pipeline Attributes
@@ -99,7 +100,7 @@ function workflowRunToAttributes(
     "github.path": workflowRun.path,
     "github.display_title": workflowRun.display_title,
     error: workflowRun.conclusion === "failure",
-    ...prsToAttributes(workflowRun.pull_requests, prLabels),
+    ...prsToAttributes(workflowRun.pull_requests, prs, workflowRun.updated_at, workflowRun.conclusion),
   };
 }
 
@@ -183,7 +184,9 @@ function headCommitToAttributes(head_commit: components["schemas"]["nullable-sim
 
 function prsToAttributes(
   pullRequests: components["schemas"]["pull-request-minimal"][] | null,
-  prLabels: Record<number, string[]>
+  prs: PullRequestData[],
+  workflowFinishedAt: string,
+  workflowConclusion: components["schemas"]["workflow-run"]["conclusion"]
 ) {
   const attributes: Attributes = {
     "github.head_ref": pullRequests?.[0]?.head?.ref,
@@ -198,7 +201,7 @@ function prsToAttributes(
     attributes[`${prefix}.id`] = pr.id;
     attributes[`${prefix}.url`] = pr.url;
     attributes[`${prefix}.number`] = pr.number;
-    attributes[`${prefix}.labels`] = prLabels[pr.number];
+    attributes[`${prefix}.labels`] = prs[i]?.labels ?? [];
     attributes[`${prefix}.head.sha`] = pr.head.sha;
     attributes[`${prefix}.head.ref`] = pr.head.ref;
     attributes[`${prefix}.head.repo.id`] = pr.head.repo.id;
@@ -209,6 +212,22 @@ function prsToAttributes(
     attributes[`${prefix}.base.repo.id`] = pr.base.repo.id;
     attributes[`${prefix}.base.repo.url`] = pr.base.repo.url;
     attributes[`${prefix}.base.repo.name`] = pr.base.repo.name;
+
+    const prDetails = prs[i]?.details ?? null;
+    if (!prDetails) {
+      continue;
+    }
+
+    const leadTimeMetricEmitted =
+      workflowConclusion === "success" && !!prDetails.merged_at && !!prs[i]?.firstCommitAuthorDate;
+
+    attributes[`${prefix}.lead_time.first_commit_at`] = prs[i]?.firstCommitAuthorDate ?? undefined;
+    attributes[`${prefix}.lead_time.pr_created_at`] = prDetails.created_at;
+    attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = prs[i]?.readyForReviewAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_approved_at`] = prs[i]?.firstApprovedAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_merged_at`] = prDetails.merged_at ?? undefined;
+    attributes[`${prefix}.lead_time.workflow_finished_at`] = workflowFinishedAt;
+    attributes[`${prefix}.lead_time.metric_emitted`] = leadTimeMetricEmitted;
   }
 
   return attributes;

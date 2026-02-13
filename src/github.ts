@@ -5,6 +5,14 @@ import type { components } from "@octokit/openapi-types";
 type Context = typeof context;
 type Octokit = InstanceType<typeof GitHub>;
 
+interface PullRequestData {
+  labels: string[];
+  details: components["schemas"]["pull-request"] | null;
+  firstCommitAuthorDate: string | null;
+  firstApprovedAt: string | null;
+  readyForReviewAt: string | null;
+}
+
 async function getWorkflowRun(context: Context, octokit: Octokit, runId: number) {
   const res = await octokit.rest.actions.getWorkflowRun({
     ...context.repo,
@@ -58,4 +66,47 @@ async function listLabelsOnIssue(context: Context, octokit: Octokit, prNumber: n
   );
 }
 
-export { getWorkflowRun, listJobsForWorkflowRun, getJobsAnnotations, getPRsLabels, type Octokit };
+async function getPullRequest(context: Context, octokit: Octokit, prNumber: number) {
+  const res = await octokit.rest.pulls.get({
+    ...context.repo,
+    pull_number: prNumber,
+  });
+  return res.data;
+}
+
+async function listPullRequestCommits(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.pulls.listCommits, {
+    ...context.repo,
+    pull_number: prNumber,
+    per_page: 100,
+  });
+}
+
+async function listPullRequestReviews(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.pulls.listReviews, {
+    ...context.repo,
+    pull_number: prNumber,
+    per_page: 100,
+  });
+}
+
+async function listPullRequestEvents(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.issues.listEvents, {
+    ...context.repo,
+    issue_number: prNumber,
+    per_page: 100,
+  });
+}
+
+export {
+  getWorkflowRun,
+  listJobsForWorkflowRun,
+  getJobsAnnotations,
+  getPRsLabels,
+  getPullRequest,
+  listPullRequestCommits,
+  listPullRequestReviews,
+  listPullRequestEvents,
+  type PullRequestData,
+  type Octokit,
+};

@@ -4,12 +4,147 @@ import type { RequestError } from "@octokit/request-error";
 import type { Attributes } from "@opentelemetry/api";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
-import { getJobsAnnotations, getPRsLabels, getWorkflowRun, listJobsForWorkflowRun } from "./github";
+import type { PullRequestData } from "./github";
+import {
+  getJobsAnnotations,
+  getPRsLabels,
+  getPullRequest,
+  getWorkflowRun,
+  listJobsForWorkflowRun,
+  listPullRequestCommits,
+  listPullRequestEvents,
+  listPullRequestReviews,
+} from "./github";
+import { createMeterProvider } from "./meter";
+import { recordWorkflowMetrics } from "./metrics/workflow";
 import { traceWorkflowRun } from "./trace/workflow";
 import { createTracerProvider, stringToRecord } from "./tracer";
 
 function isOctokitError(err: unknown): err is RequestError {
   return !!err && typeof err === "object" && "status" in err;
+}
+
+async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumber: number) {
+  core.info(`Get details for PR #${prNumber}`);
+  const prDetails = await getPullRequest(context, octokit, prNumber);
+
+  core.info(`Get commits for PR #${prNumber}`);
+  const commits = await listPullRequestCommits(context, octokit, prNumber);
+  let firstCommitAuthorDate: string | null = null;
+
+  core.info(`Get reviews for PR #${prNumber}`);
+  const reviews = await listPullRequestReviews(context, octokit, prNumber);
+  const firstApprovedAt = getFirstApprovedAt(reviews);
+
+  core.info(`Get events for PR #${prNumber}`);
+  const events = await listPullRequestEvents(context, octokit, prNumber);
+  const readyForReviewAt = getReadyForReviewAt(events);
+
+  for (const commit of commits) {
+    const authorDate = commit.commit?.author?.date ?? null;
+    if (!authorDate) {
+      continue;
+    }
+
+    if (!firstCommitAuthorDate || new Date(authorDate).getTime() < new Date(firstCommitAuthorDate).getTime()) {
+      firstCommitAuthorDate = authorDate;
+    }
+  }
+
+  return { details: prDetails, firstCommitAuthorDate, firstApprovedAt, readyForReviewAt };
+}
+
+function getFirstApprovedAt(reviews: Awaited<ReturnType<typeof listPullRequestReviews>>): string | null {
+  let firstApprovedAt: string | null = null;
+
+  for (const review of reviews) {
+    if (review.state !== "APPROVED") {
+      continue;
+    }
+
+    const approvedAt = review.submitted_at ?? null;
+    if (!approvedAt) {
+      continue;
+    }
+
+    if (!firstApprovedAt || new Date(approvedAt).getTime() < new Date(firstApprovedAt).getTime()) {
+      firstApprovedAt = approvedAt;
+    }
+  }
+
+  return firstApprovedAt;
+}
+
+function getReadyForReviewAt(events: Awaited<ReturnType<typeof listPullRequestEvents>>): string | null {
+  let readyForReviewAt: string | null = null;
+
+  for (const event of events) {
+    if (event.event !== "ready_for_review") {
+      continue;
+    }
+
+    const readyAt = event.created_at ?? null;
+    if (!readyAt) {
+      continue;
+    }
+
+    if (!readyForReviewAt || new Date(readyAt).getTime() < new Date(readyForReviewAt).getTime()) {
+      readyForReviewAt = readyAt;
+    }
+  }
+
+  return readyForReviewAt;
+}
+
+async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumbers: number[]) {
+  const prs: PullRequestData[] = [];
+  let prLabels: Record<number, string[]> = {};
+
+  if (prNumbers.length === 0) {
+    return prs;
+  }
+
+  core.info("Get PR labels");
+  try {
+    prLabels = await getPRsLabels(context, octokit, prNumbers);
+  } catch (error) {
+    if (isOctokitError(error)) {
+      core.info(`Failed to get PR labels: ${error.message}}`);
+    } else {
+      throw error;
+    }
+  }
+
+  for (const prNumber of prNumbers) {
+    try {
+      const { details, firstCommitAuthorDate, firstApprovedAt, readyForReviewAt } = await getPullRequestData(
+        octokit,
+        prNumber
+      );
+      prs.push({
+        labels: prLabels[prNumber] ?? [],
+        details,
+        firstCommitAuthorDate,
+        firstApprovedAt,
+        readyForReviewAt,
+      });
+    } catch (error) {
+      if (isOctokitError(error)) {
+        core.info(`Failed to get PR data for ${prNumber}: ${error.message}}`);
+        prs.push({
+          labels: prLabels[prNumber] ?? [],
+          details: null,
+          firstCommitAuthorDate: null,
+          firstApprovedAt: null,
+          readyForReviewAt: null,
+        });
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  return prs;
 }
 
 async function fetchGithub(token: string, runId: number) {
@@ -34,20 +169,10 @@ async function fetchGithub(token: string, runId: number) {
     }
   }
 
-  core.info("Get PRs labels");
   const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
-  let prLabels = {};
-  try {
-    prLabels = await getPRsLabels(context, octokit, prNumbers);
-  } catch (error) {
-    if (isOctokitError(error)) {
-      core.info(`Failed to get PRs labels: ${error.message}}`);
-    } else {
-      throw error;
-    }
-  }
+  const prs = await safeGetPullRequestData(octokit, prNumbers);
 
-  return { workflowRun, jobs, jobAnnotations, prLabels };
+  return { workflowRun, jobs, jobAnnotations, prs };
 }
 
 async function run() {
@@ -60,7 +185,7 @@ async function run() {
     const ghToken = core.getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
 
     core.info("Use Github API to fetch workflow data");
-    const { workflowRun, jobs, jobAnnotations, prLabels } = await fetchGithub(ghToken, runId);
+    const { workflowRun, jobs, jobAnnotations, prs } = await fetchGithub(ghToken, runId);
 
     core.info(`Create tracer provider for ${otlpEndpoint}`);
     const attributes: Attributes = {
@@ -75,18 +200,26 @@ async function run() {
       [ATTR_SERVICE_VERSION]: workflowRun.head_sha,
       ...extraAttributes,
     };
-    const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
+    const tracerProvider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
+    const meterProvider = createMeterProvider(otlpEndpoint, otlpHeaders, attributes);
 
     core.info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
-    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
+    const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prs);
 
     core.setOutput("traceId", traceId);
     core.info(`traceId: ${traceId}`);
 
-    core.info("Flush and shutdown tracer provider");
-    await provider.forceFlush();
-    await provider.shutdown();
-    core.info("Provider shutdown");
+    core.info("Record workflow metrics");
+    for (const prData of prs) {
+      recordWorkflowMetrics(workflowRun, prData.details, prData.firstCommitAuthorDate);
+    }
+
+    core.info("Flush and shutdown providers");
+    await tracerProvider.forceFlush();
+    await meterProvider.forceFlush();
+    await tracerProvider.shutdown();
+    await meterProvider.shutdown();
+    core.info("Providers shutdown");
   } catch (error) {
     const message = error instanceof Error ? error : JSON.stringify(error);
     core.setFailed(message);
