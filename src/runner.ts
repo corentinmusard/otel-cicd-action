@@ -26,19 +26,21 @@ function isOctokitError(err: unknown): err is RequestError {
 }
 
 async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumber: number) {
-  core.info(`Get details for PR #${prNumber}`);
   const prDetails = await getPullRequest(context, octokit, prNumber);
+  core.info(
+    `Got PR details: number=${prDetails.number}, state=${prDetails.state}, merged_at=${prDetails.merged_at ?? "null"}`
+  );
 
-  core.info(`Get commits for PR #${prNumber}`);
   const commits = await listPullRequestCommits(context, octokit, prNumber);
+  core.info(`Got ${commits.length} commit(s) for PR #${prNumber}`);
   let firstCommitAuthorDate: string | null = null;
 
-  core.info(`Get reviews for PR #${prNumber}`);
   const reviews = await listPullRequestReviews(context, octokit, prNumber);
+  core.info(`Got ${reviews.length} review(s) for PR #${prNumber}`);
   const firstApprovedAt = getFirstApprovedAt(reviews);
 
-  core.info(`Get events for PR #${prNumber}`);
   const events = await listPullRequestEvents(context, octokit, prNumber);
+  core.info(`Got ${events.length} event(s) for PR #${prNumber}`);
   const readyForReviewAt = getReadyForReviewAt(events);
 
   for (const commit of commits) {
@@ -51,6 +53,8 @@ async function getPullRequestData(octokit: ReturnType<typeof getOctokit>, prNumb
       firstCommitAuthorDate = authorDate;
     }
   }
+
+  core.info(`First commit author date for PR #${prNumber}: ${firstCommitAuthorDate ?? "null"}`);
 
   return { details: prDetails, firstCommitAuthorDate, firstApprovedAt, readyForReviewAt };
 }
@@ -144,6 +148,8 @@ async function safeGetPullRequestData(octokit: ReturnType<typeof getOctokit>, pr
       }
     }
   }
+
+  core.info(`Fetched data for ${prs.length} PR(s), ${prs.filter((p) => p.details).length} with details`);
 
   return prs;
 }
