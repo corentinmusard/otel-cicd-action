@@ -122170,7 +122170,7 @@ function workflowRunToAttributes(workflowRun, prs) {
         "github.path": workflowRun.path,
         "github.display_title": workflowRun.display_title,
         error: workflowRun.conclusion === "failure",
-        ...prsToAttributes(workflowRun.pull_requests, prs, workflowRun.updated_at, workflowRun.conclusion),
+        ...prsToAttributes(prs, workflowRun.updated_at, workflowRun.conclusion),
     };
 }
 function toPipelineResult(status, conclusion) {
@@ -122238,38 +122238,38 @@ function headCommitToAttributes(head_commit) {
         "github.head_commit.timestamp": head_commit?.timestamp,
     };
 }
-function prsToAttributes(pullRequests, prs, workflowFinishedAt, workflowConclusion) {
+function prsToAttributes(prs, workflowFinishedAt, workflowConclusion) {
     const attributes = {
-        "github.head_ref": pullRequests?.[0]?.head?.ref,
-        "github.base_ref": pullRequests?.[0]?.base?.ref,
-        "github.base_sha": pullRequests?.[0]?.base?.sha,
+        "github.head_ref": prs[0]?.details?.head?.ref,
+        "github.base_ref": prs[0]?.details?.base?.ref,
+        "github.base_sha": prs[0]?.details?.base?.sha,
     };
-    for (let i = 0; pullRequests && i < pullRequests.length; i++) {
-        const pr = pullRequests[i];
-        const prefix = `github.pull_requests.${i}`;
-        attributes[`${prefix}.id`] = pr.id;
-        attributes[`${prefix}.url`] = pr.url;
-        attributes[`${prefix}.number`] = pr.number;
-        attributes[`${prefix}.labels`] = prs[i]?.labels ?? [];
-        attributes[`${prefix}.head.sha`] = pr.head.sha;
-        attributes[`${prefix}.head.ref`] = pr.head.ref;
-        attributes[`${prefix}.head.repo.id`] = pr.head.repo.id;
-        attributes[`${prefix}.head.repo.url`] = pr.head.repo.url;
-        attributes[`${prefix}.head.repo.name`] = pr.head.repo.name;
-        attributes[`${prefix}.base.ref`] = pr.base.ref;
-        attributes[`${prefix}.base.sha`] = pr.base.sha;
-        attributes[`${prefix}.base.repo.id`] = pr.base.repo.id;
-        attributes[`${prefix}.base.repo.url`] = pr.base.repo.url;
-        attributes[`${prefix}.base.repo.name`] = pr.base.repo.name;
-        const prDetails = prs[i]?.details ?? null;
+    for (let i = 0; i < prs.length; i++) {
+        const prData = prs[i];
+        const prDetails = prData?.details ?? null;
         if (!prDetails) {
             continue;
         }
-        const leadTimeMetricEmitted = workflowConclusion === "success" && !!prDetails.merged_at && !!prs[i]?.firstCommitAuthorDate;
-        attributes[`${prefix}.lead_time.first_commit_at`] = prs[i]?.firstCommitAuthorDate ?? undefined;
+        const prefix = `github.pull_requests.${i}`;
+        attributes[`${prefix}.id`] = prDetails.id;
+        attributes[`${prefix}.url`] = prDetails.url;
+        attributes[`${prefix}.number`] = prDetails.number;
+        attributes[`${prefix}.labels`] = prData.labels ?? [];
+        attributes[`${prefix}.head.sha`] = prDetails.head?.sha;
+        attributes[`${prefix}.head.ref`] = prDetails.head?.ref;
+        attributes[`${prefix}.head.repo.id`] = prDetails.head?.repo?.id;
+        attributes[`${prefix}.head.repo.url`] = prDetails.head?.repo?.url;
+        attributes[`${prefix}.head.repo.name`] = prDetails.head?.repo?.name;
+        attributes[`${prefix}.base.ref`] = prDetails.base?.ref;
+        attributes[`${prefix}.base.sha`] = prDetails.base?.sha;
+        attributes[`${prefix}.base.repo.id`] = prDetails.base?.repo?.id;
+        attributes[`${prefix}.base.repo.url`] = prDetails.base?.repo?.url;
+        attributes[`${prefix}.base.repo.name`] = prDetails.base?.repo?.name;
+        const leadTimeMetricEmitted = workflowConclusion === "success" && !!prDetails.merged_at && !!prData?.firstCommitAuthorDate;
+        attributes[`${prefix}.lead_time.first_commit_at`] = prData?.firstCommitAuthorDate ?? undefined;
         attributes[`${prefix}.lead_time.pr_created_at`] = prDetails.created_at;
-        attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = prs[i]?.readyForReviewAt ?? undefined;
-        attributes[`${prefix}.lead_time.pr_approved_at`] = prs[i]?.firstApprovedAt ?? undefined;
+        attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = prData?.readyForReviewAt ?? undefined;
+        attributes[`${prefix}.lead_time.pr_approved_at`] = prData?.firstApprovedAt ?? undefined;
         attributes[`${prefix}.lead_time.pr_merged_at`] = prDetails.merged_at ?? undefined;
         attributes[`${prefix}.lead_time.workflow_finished_at`] = workflowFinishedAt;
         attributes[`${prefix}.lead_time.metric_emitted`] = leadTimeMetricEmitted;
