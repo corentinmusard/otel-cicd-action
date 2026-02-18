@@ -269,7 +269,15 @@ describe("run branches", () => {
 
     await run();
 
-    expect(recordWorkflowMetrics).toHaveBeenCalledWith(expect.any(Object), null, null);
+    expect(recordWorkflowMetrics).toHaveBeenCalledWith(
+      expect.any(Object),
+      expect.objectContaining({
+        details: null,
+        firstCommitAuthorDate: null,
+        firstApprovedAt: null,
+        readyForReviewAt: null,
+      })
+    );
   });
 
   it("captures earliest approval and ready_for_review", async () => {

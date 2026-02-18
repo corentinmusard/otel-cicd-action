@@ -2,6 +2,7 @@ import type { Gauge } from "@opentelemetry/api";
 import { getMeter } from "../meter";
 
 let leadTimeGauge: Gauge | undefined;
+let leadTimePhaseGauge: Gauge | undefined;
 
 function getLeadTimeGauge(): Gauge {
   if (!leadTimeGauge) {
@@ -14,4 +15,15 @@ function getLeadTimeGauge(): Gauge {
   return leadTimeGauge;
 }
 
-export { getLeadTimeGauge };
+function getLeadTimePhaseGauge(): Gauge {
+  if (!leadTimePhaseGauge) {
+    const meter = getMeter();
+    leadTimePhaseGauge = meter.createGauge("github.pull_request.lead_time.phase_duration", {
+      unit: "ms",
+      description: "Lead time phase duration for pull requests",
+    });
+  }
+  return leadTimePhaseGauge;
+}
+
+export { getLeadTimeGauge, getLeadTimePhaseGauge };

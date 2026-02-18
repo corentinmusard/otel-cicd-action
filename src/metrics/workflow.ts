@@ -1,35 +1,47 @@
 import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
-import { getLeadTimeGauge } from "./meters";
+import type { Attributes } from "@opentelemetry/api";
+import type { PullRequestData } from "../github";
+import { calculateLeadTimeDurations, getLeadTimePhaseDurations } from "./lead-time";
+import { getLeadTimeGauge, getLeadTimePhaseGauge } from "./meters";
 
-function recordWorkflowMetrics(
-  workflowRun: components["schemas"]["workflow-run"],
-  prDetails: components["schemas"]["pull-request"] | null,
-  firstCommitAuthorDate: string | null
-): void {
-  // Record lead time metric (DORA: Lead Time for Changes)
-  if (!prDetails?.merged_at) {
-    core.info(
-      `Skipping lead time metric: PR not merged (prDetails=${prDetails ? "present" : "null"}, merged_at=${prDetails?.merged_at ?? "null"})`
-    );
+function recordWorkflowMetrics(workflowRun: components["schemas"]["workflow-run"], pr: PullRequestData): void {
+  if (!pr.details?.merged_at) {
+    const prDetailsState = pr.details ? "present" : "null";
+    const mergedAt = pr.details?.merged_at ?? "null";
+    core.info(`Skipping lead time metric: PR not merged (prDetails=${prDetailsState}, merged_at=${mergedAt})`);
     return;
   }
 
-  if (!firstCommitAuthorDate) {
+  if (!pr.firstCommitAuthorDate) {
     core.info("Skipping lead time metric: no first commit author date");
     return;
   }
 
-  const firstCommitAt = new Date(firstCommitAuthorDate).getTime();
-  const workflowEndAt = new Date(workflowRun.updated_at).getTime();
-  const leadTimeMs = workflowEndAt - firstCommitAt;
+  core.info(`Recording lead time metrics for PR #${pr.details.number}`);
 
-  core.info(`Recording lead time metric: ${leadTimeMs}ms for PR #${prDetails.number}`);
-  getLeadTimeGauge().record(leadTimeMs, {
-    "repository.name": workflowRun.repository.full_name,
-    "pull_request.number": prDetails.number,
-    "workflow.event": workflowRun.event,
+  const durations = calculateLeadTimeDurations({
+    firstCommitAt: pr.firstCommitAuthorDate,
+    prCreatedAt: pr.details.created_at,
+    readyForReviewAt: pr.readyForReviewAt,
+    firstApprovedAt: pr.firstApprovedAt,
+    mergedAt: pr.details.merged_at,
+    deployedAt: workflowRun.updated_at,
   });
+  const metricAttributes: Attributes = {
+    "repository.name": workflowRun.repository.full_name,
+    "pull_request.number": pr.details.number,
+    "workflow.event": workflowRun.event,
+  };
+
+  getLeadTimeGauge().record(durations.leadTimeMs, metricAttributes);
+
+  for (const { phase, value } of getLeadTimePhaseDurations(durations)) {
+    getLeadTimePhaseGauge().record(value, {
+      ...metricAttributes,
+      "lead_time.phase": phase,
+    });
+  }
 }
 
 export { recordWorkflowMetrics };

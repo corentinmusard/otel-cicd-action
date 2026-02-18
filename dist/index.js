@@ -121940,7 +121940,56 @@ function getMeter() {
     return metrics.getMeter("otel-cicd-action");
 }
 
+const LEAD_TIME_PHASES = [
+    "first_commit_to_pr_created",
+    "pr_created_to_ready_for_review",
+    "ready_for_review_to_approved",
+    "approved_to_merged",
+    "merged_to_deployed",
+];
+function calculateLeadTimeDurations(dates) {
+    const readyForReviewAt = dates.readyForReviewAt ?? dates.prCreatedAt;
+    // Phase attribution assumptions:
+    // - Additivity is required: phase durations must sum to the overall lead time metric.
+    // - Missing draft state collapses pr_created_to_ready_for_review to 0.
+    // - Missing approval collapses ready_for_review_to_approved to 0.
+    // - Remaining pre-merge time is attributed to approved_to_merged to preserve additivity.
+    const preMergeMs = durationMs(dates.firstCommitAt, dates.mergedAt);
+    const firstCommitToCreatedRawMs = durationMs(dates.firstCommitAt, dates.prCreatedAt);
+    const createdToReadyForReviewRawMs = dates.readyForReviewAt
+        ? durationMs(dates.prCreatedAt, dates.readyForReviewAt)
+        : 0;
+    const readyForReviewToApprovedRawMs = dates.firstApprovedAt ? durationMs(readyForReviewAt, dates.firstApprovedAt) : 0;
+    let remainingPreMergeMs = preMergeMs;
+    const firstCommitToCreatedMs = Math.min(firstCommitToCreatedRawMs, remainingPreMergeMs);
+    remainingPreMergeMs -= firstCommitToCreatedMs;
+    const createdToReadyForReviewMs = Math.min(createdToReadyForReviewRawMs, remainingPreMergeMs);
+    remainingPreMergeMs -= createdToReadyForReviewMs;
+    const readyForReviewToApprovedMs = Math.min(readyForReviewToApprovedRawMs, remainingPreMergeMs);
+    remainingPreMergeMs -= readyForReviewToApprovedMs;
+    return {
+        leadTimeMs: durationMs(dates.firstCommitAt, dates.deployedAt),
+        phaseDurations: {
+            first_commit_to_pr_created: firstCommitToCreatedMs,
+            pr_created_to_ready_for_review: createdToReadyForReviewMs,
+            ready_for_review_to_approved: readyForReviewToApprovedMs,
+            approved_to_merged: remainingPreMergeMs,
+            merged_to_deployed: durationMs(dates.mergedAt, dates.deployedAt),
+        },
+    };
+}
+function getLeadTimePhaseDurations(durations) {
+    return LEAD_TIME_PHASES.map((phase) => ({
+        phase,
+        value: durations.phaseDurations[phase],
+    }));
+}
+function durationMs(startAt, endAt) {
+    return Math.max(0, new Date(endAt).getTime() - new Date(startAt).getTime());
+}
+
 let leadTimeGauge;
+let leadTimePhaseGauge;
 function getLeadTimeGauge() {
     if (!leadTimeGauge) {
         const meter = getMeter();
@@ -121951,26 +122000,49 @@ function getLeadTimeGauge() {
     }
     return leadTimeGauge;
 }
+function getLeadTimePhaseGauge() {
+    if (!leadTimePhaseGauge) {
+        const meter = getMeter();
+        leadTimePhaseGauge = meter.createGauge("github.pull_request.lead_time.phase_duration", {
+            unit: "ms",
+            description: "Lead time phase duration for pull requests",
+        });
+    }
+    return leadTimePhaseGauge;
+}
 
-function recordWorkflowMetrics(workflowRun, prDetails, firstCommitAuthorDate) {
-    // Record lead time metric (DORA: Lead Time for Changes)
-    if (!prDetails?.merged_at) {
-        info(`Skipping lead time metric: PR not merged (prDetails=${prDetails ? "present" : "null"}, merged_at=${prDetails?.merged_at ?? "null"})`);
+function recordWorkflowMetrics(workflowRun, pr) {
+    if (!pr.details?.merged_at) {
+        const prDetailsState = pr.details ? "present" : "null";
+        const mergedAt = pr.details?.merged_at ?? "null";
+        info(`Skipping lead time metric: PR not merged (prDetails=${prDetailsState}, merged_at=${mergedAt})`);
         return;
     }
-    if (!firstCommitAuthorDate) {
+    if (!pr.firstCommitAuthorDate) {
         info("Skipping lead time metric: no first commit author date");
         return;
     }
-    const firstCommitAt = new Date(firstCommitAuthorDate).getTime();
-    const workflowEndAt = new Date(workflowRun.updated_at).getTime();
-    const leadTimeMs = workflowEndAt - firstCommitAt;
-    info(`Recording lead time metric: ${leadTimeMs}ms for PR #${prDetails.number}`);
-    getLeadTimeGauge().record(leadTimeMs, {
-        "repository.name": workflowRun.repository.full_name,
-        "pull_request.number": prDetails.number,
-        "workflow.event": workflowRun.event,
+    info(`Recording lead time metrics for PR #${pr.details.number}`);
+    const durations = calculateLeadTimeDurations({
+        firstCommitAt: pr.firstCommitAuthorDate,
+        prCreatedAt: pr.details.created_at,
+        readyForReviewAt: pr.readyForReviewAt,
+        firstApprovedAt: pr.firstApprovedAt,
+        mergedAt: pr.details.merged_at,
+        deployedAt: workflowRun.updated_at,
     });
+    const metricAttributes = {
+        "repository.name": workflowRun.repository.full_name,
+        "pull_request.number": pr.details.number,
+        "workflow.event": workflowRun.event,
+    };
+    getLeadTimeGauge().record(durations.leadTimeMs, metricAttributes);
+    for (const { phase, value } of getLeadTimePhaseDurations(durations)) {
+        getLeadTimePhaseGauge().record(value, {
+            ...metricAttributes,
+            "lead_time.phase": phase,
+        });
+    }
 }
 
 function traceStep(step) {
@@ -122443,7 +122515,7 @@ async function run() {
         info(`traceId: ${traceId}`);
         info("Record workflow metrics");
         for (const prData of prs) {
-            recordWorkflowMetrics(workflowRun, prData.details, prData.firstCommitAuthorDate);
+            recordWorkflowMetrics(workflowRun, prData);
         }
         info("Flush and shutdown providers");
         await tracerProvider.forceFlush();

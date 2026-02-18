@@ -376,8 +376,8 @@
         'pull_request.number': 1,
         'workflow.event': 'issues'
       },
-      startTime: [ 1771410919, 25000000 ],
-      endTime: [ 1771410919, 29000000 ],
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
       value: 79471647000
     },
     {
@@ -386,9 +386,132 @@
         'pull_request.number': 15,
         'workflow.event': 'issues'
       },
-      startTime: [ 1771410919, 26000000 ],
-      endTime: [ 1771410919, 29000000 ],
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
       value: 78621700000
+    }
+  ]
+}
+{
+  descriptor: {
+    name: 'github.pull_request.lead_time.phase_duration',
+    type: 'GAUGE',
+    description: 'Lead time phase duration for pull requests',
+    unit: 'ms',
+    valueType: 1,
+    advice: {}
+  },
+  dataPointType: 2,
+  dataPoints: [
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'first_commit_to_pr_created'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 185607000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'pr_created_to_ready_for_review'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'ready_for_review_to_approved'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'approved_to_merged'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 875462000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'merged_to_deployed'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 78410578000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'first_commit_to_pr_created'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 4321000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'pr_created_to_ready_for_review'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'ready_for_review_to_approved'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'approved_to_merged'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 5000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'merged_to_deployed'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 559000000 ],
+      value: 78617374000
     }
   ]
 }
@@ -409,8 +532,8 @@
         'pull_request.number': 1,
         'workflow.event': 'issues'
       },
-      startTime: [ 1771410919, 25000000 ],
-      endTime: [ 1771410919, 30000000 ],
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
       value: 79471647000
     },
     {
@@ -419,9 +542,132 @@
         'pull_request.number': 15,
         'workflow.event': 'issues'
       },
-      startTime: [ 1771410919, 26000000 ],
-      endTime: [ 1771410919, 30000000 ],
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
       value: 78621700000
+    }
+  ]
+}
+{
+  descriptor: {
+    name: 'github.pull_request.lead_time.phase_duration',
+    type: 'GAUGE',
+    description: 'Lead time phase duration for pull requests',
+    unit: 'ms',
+    valueType: 1,
+    advice: {}
+  },
+  dataPointType: 2,
+  dataPoints: [
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'first_commit_to_pr_created'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 185607000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'pr_created_to_ready_for_review'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'ready_for_review_to_approved'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'approved_to_merged'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 875462000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 1,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'merged_to_deployed'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 78410578000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'first_commit_to_pr_created'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 4321000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'pr_created_to_ready_for_review'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'ready_for_review_to_approved'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 0
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'approved_to_merged'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 5000
+    },
+    {
+      attributes: {
+        'repository.name': 'biomejs/biome',
+        'pull_request.number': 15,
+        'workflow.event': 'issues',
+        'lead_time.phase': 'merged_to_deployed'
+      },
+      startTime: [ 1771434201, 556000000 ],
+      endTime: [ 1771434201, 561000000 ],
+      value: 78617374000
     }
   ]
 }

@@ -133,13 +133,31 @@ In addition to distributed traces, this action exports the following OpenTelemet
 
 - **Type:** Gauge
 - **Unit:** Milliseconds (ms)
-- **Description:** Time from PR creation to workflow completion
+- **Description:** Lead time from first commit to workflow completion
 - **Availability:** Only recorded for workflows triggered by pull requests with PR details available
 - **PR Auto-detection:** For `push` events, PR numbers are automatically extracted from default merge commit messages to enable lead time calculation
 - **Attributes:**
   - `repository.name` - Repository full name (e.g., `owner/repo`)
   - `pull_request.number` - Pull request number
   - `workflow.event` - Event that triggered the workflow
+
+### `github.pull_request.lead_time.phase_duration`
+
+- **Type:** Gauge
+- **Unit:** Milliseconds (ms)
+- **Description:** Lead time phase duration for pull requests
+- **Availability:** Only recorded for workflows triggered by pull requests with PR details available
+- **PR Auto-detection:** For `push` events, PR numbers are automatically extracted from default merge commit messages to enable lead time calculation
+- **Attributes:**
+  - `repository.name` - Repository full name (e.g., `owner/repo`)
+  - `pull_request.number` - Pull request number
+  - `workflow.event` - Event that triggered the workflow
+  - `lead_time.phase` - Lead time phase name:
+    - `first_commit_to_pr_created`
+    - `pr_created_to_ready_for_review`
+    - `ready_for_review_to_approved`
+    - `approved_to_merged`
+    - `merged_to_deployed`
 
 [ci-img]: https://github.com/corentinmusard/otel-cicd-action/actions/workflows/build.yml/badge.svg?branch=main
 [ci]: https://github.com/corentinmusard/otel-cicd-action/actions/workflows/build.yml?query=branch%3Amain

@@ -230,7 +230,7 @@ async function run() {
 
     core.info("Record workflow metrics");
     for (const prData of prs) {
-      recordWorkflowMetrics(workflowRun, prData.details, prData.firstCommitAuthorDate);
+      recordWorkflowMetrics(workflowRun, prData);
     }
 
     core.info("Flush and shutdown providers");
