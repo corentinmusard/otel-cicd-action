@@ -121954,10 +121954,6 @@ function getLeadTimeGauge() {
 
 function recordWorkflowMetrics(workflowRun, prDetails, firstCommitAuthorDate) {
     // Record lead time metric (DORA: Lead Time for Changes)
-    if (workflowRun.conclusion !== "success") {
-        info(`Skipping lead time metric: workflow conclusion is ${workflowRun.conclusion}, not success`);
-        return;
-    }
     if (!prDetails?.merged_at) {
         info(`Skipping lead time metric: PR not merged (prDetails=${prDetails ? "present" : "null"}, merged_at=${prDetails?.merged_at ?? "null"})`);
         return;
@@ -122170,7 +122166,7 @@ function workflowRunToAttributes(workflowRun, prs) {
         "github.path": workflowRun.path,
         "github.display_title": workflowRun.display_title,
         error: workflowRun.conclusion === "failure",
-        ...prsToAttributes(prs, workflowRun.updated_at, workflowRun.conclusion),
+        ...prsToAttributes(prs, workflowRun.updated_at),
     };
 }
 function toPipelineResult(status, conclusion) {
@@ -122238,7 +122234,7 @@ function headCommitToAttributes(head_commit) {
         "github.head_commit.timestamp": head_commit?.timestamp,
     };
 }
-function prsToAttributes(prs, workflowFinishedAt, workflowConclusion) {
+function prsToAttributes(prs, workflowFinishedAt) {
     const attributes = {
         "github.head_ref": prs[0]?.details?.head?.ref,
         "github.base_ref": prs[0]?.details?.base?.ref,
@@ -122265,7 +122261,7 @@ function prsToAttributes(prs, workflowFinishedAt, workflowConclusion) {
         attributes[`${prefix}.base.repo.id`] = prDetails.base?.repo?.id;
         attributes[`${prefix}.base.repo.url`] = prDetails.base?.repo?.url;
         attributes[`${prefix}.base.repo.name`] = prDetails.base?.repo?.name;
-        const leadTimeMetricEmitted = workflowConclusion === "success" && !!prDetails.merged_at && !!prData?.firstCommitAuthorDate;
+        const leadTimeMetricEmitted = !!prDetails.merged_at && !!prData?.firstCommitAuthorDate;
         attributes[`${prefix}.lead_time.first_commit_at`] = prData?.firstCommitAuthorDate ?? undefined;
         attributes[`${prefix}.lead_time.pr_created_at`] = prDetails.created_at;
         attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = prData?.readyForReviewAt ?? undefined;

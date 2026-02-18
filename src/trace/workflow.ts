@@ -100,7 +100,7 @@ function workflowRunToAttributes(
     "github.path": workflowRun.path,
     "github.display_title": workflowRun.display_title,
     error: workflowRun.conclusion === "failure",
-    ...prsToAttributes(prs, workflowRun.updated_at, workflowRun.conclusion),
+    ...prsToAttributes(prs, workflowRun.updated_at),
   };
 }
 
@@ -182,11 +182,7 @@ function headCommitToAttributes(head_commit: components["schemas"]["nullable-sim
   };
 }
 
-function prsToAttributes(
-  prs: PullRequestData[],
-  workflowFinishedAt: string,
-  workflowConclusion: components["schemas"]["workflow-run"]["conclusion"]
-) {
+function prsToAttributes(prs: PullRequestData[], workflowFinishedAt: string) {
   const attributes: Attributes = {
     "github.head_ref": prs[0]?.details?.head?.ref,
     "github.base_ref": prs[0]?.details?.base?.ref,
@@ -217,8 +213,7 @@ function prsToAttributes(
     attributes[`${prefix}.base.repo.url`] = prDetails.base?.repo?.url;
     attributes[`${prefix}.base.repo.name`] = prDetails.base?.repo?.name;
 
-    const leadTimeMetricEmitted =
-      workflowConclusion === "success" && !!prDetails.merged_at && !!prData?.firstCommitAuthorDate;
+    const leadTimeMetricEmitted = !!prDetails.merged_at && !!prData?.firstCommitAuthorDate;
 
     attributes[`${prefix}.lead_time.first_commit_at`] = prData?.firstCommitAuthorDate ?? undefined;
     attributes[`${prefix}.lead_time.pr_created_at`] = prDetails.created_at;

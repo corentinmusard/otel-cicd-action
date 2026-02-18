@@ -8,11 +8,6 @@ function recordWorkflowMetrics(
   firstCommitAuthorDate: string | null
 ): void {
   // Record lead time metric (DORA: Lead Time for Changes)
-  if (workflowRun.conclusion !== "success") {
-    core.info(`Skipping lead time metric: workflow conclusion is ${workflowRun.conclusion}, not success`);
-    return;
-  }
-
   if (!prDetails?.merged_at) {
     core.info(
       `Skipping lead time metric: PR not merged (prDetails=${prDetails ? "present" : "null"}, merged_at=${prDetails?.merged_at ?? "null"})`
