@@ -98,6 +98,29 @@ async function listPullRequestEvents(context: Context, octokit: Octokit, prNumbe
   });
 }
 
+const SQUASH_MERGE_PATTERN = /\(#(\d+)\)$/m;
+const MERGE_COMMIT_PATTERN = /^Merge pull request #(\d+)/m;
+
+function extractPRNumberFromCommitMessage(message: string | null | undefined): number | null {
+  if (!message) {
+    return null;
+  }
+
+  // Pattern 1: Squash merge format: "Title (#123)"
+  const squashMatch = message.match(SQUASH_MERGE_PATTERN);
+  if (squashMatch) {
+    return Number.parseInt(squashMatch[1], 10);
+  }
+
+  // Pattern 2: Merge commit format: "Merge pull request #123 from..."
+  const mergeMatch = message.match(MERGE_COMMIT_PATTERN);
+  if (mergeMatch) {
+    return Number.parseInt(mergeMatch[1], 10);
+  }
+
+  return null;
+}
+
 export {
   getWorkflowRun,
   listJobsForWorkflowRun,
@@ -107,6 +130,7 @@ export {
   listPullRequestCommits,
   listPullRequestReviews,
   listPullRequestEvents,
+  extractPRNumberFromCommitMessage,
   type PullRequestData,
   type Octokit,
 };

@@ -135,6 +135,7 @@ In addition to distributed traces, this action exports the following OpenTelemet
 - **Unit:** Milliseconds (ms)
 - **Description:** Time from PR creation to workflow completion
 - **Availability:** Only recorded for workflows triggered by pull requests with PR details available
+- **PR Auto-detection:** For `push` events, PR numbers are automatically extracted from default merge commit messages to enable lead time calculation
 - **Attributes:**
   - `repository.name` - Repository full name (e.g., `owner/repo`)
   - `pull_request.number` - Pull request number

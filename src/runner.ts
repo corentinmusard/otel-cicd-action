@@ -6,6 +6,7 @@ import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic
 import { ATTR_SERVICE_INSTANCE_ID, ATTR_SERVICE_NAMESPACE } from "@opentelemetry/semantic-conventions/incubating";
 import type { PullRequestData } from "./github";
 import {
+  extractPRNumberFromCommitMessage,
   getJobsAnnotations,
   getPRsLabels,
   getPullRequest,
@@ -169,7 +170,19 @@ async function fetchGithub(token: string, runId: number) {
     }
   }
 
-  const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
+  let prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
+
+  // Fallback: extract from commit message for push events when no PR data from API
+  if (prNumbers.length === 0 && workflowRun.event === "push") {
+    const extractedPR = extractPRNumberFromCommitMessage(workflowRun.head_commit?.message);
+    if (extractedPR !== null) {
+      core.info(
+        `Extracted PR #${extractedPR} from commit message: "${workflowRun.head_commit?.message?.split("\n")[0]}"`
+      );
+      prNumbers = [extractedPR];
+    }
+  }
+
   const prs = await safeGetPullRequestData(octokit, prNumbers);
 
   return { workflowRun, jobs, jobAnnotations, prs };

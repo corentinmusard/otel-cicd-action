@@ -60575,6 +60575,24 @@ async function listPullRequestEvents(context, octokit, prNumber) {
         per_page: 100,
     });
 }
+const SQUASH_MERGE_PATTERN = /\(#(\d+)\)$/m;
+const MERGE_COMMIT_PATTERN = /^Merge pull request #(\d+)/m;
+function extractPRNumberFromCommitMessage(message) {
+    if (!message) {
+        return null;
+    }
+    // Pattern 1: Squash merge format: "Title (#123)"
+    const squashMatch = message.match(SQUASH_MERGE_PATTERN);
+    if (squashMatch) {
+        return Number.parseInt(squashMatch[1], 10);
+    }
+    // Pattern 2: Merge commit format: "Merge pull request #123 from..."
+    const mergeMatch = message.match(MERGE_COMMIT_PATTERN);
+    if (mergeMatch) {
+        return Number.parseInt(mergeMatch[1], 10);
+    }
+    return null;
+}
 
 var src$6 = {};
 
@@ -122380,7 +122398,15 @@ async function fetchGithub(token, runId) {
             throw error;
         }
     }
-    const prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
+    let prNumbers = (workflowRun.pull_requests ?? []).map((pr) => pr.number);
+    // Fallback: extract from commit message for push events when no PR data from API
+    if (prNumbers.length === 0 && workflowRun.event === "push") {
+        const extractedPR = extractPRNumberFromCommitMessage(workflowRun.head_commit?.message);
+        if (extractedPR !== null) {
+            info(`Extracted PR #${extractedPR} from commit message: "${workflowRun.head_commit?.message?.split("\n")[0]}"`);
+            prNumbers = [extractedPR];
+        }
+    }
     const prs = await safeGetPullRequestData(octokit, prNumbers);
     return { workflowRun, jobs, jobAnnotations, prs };
 }

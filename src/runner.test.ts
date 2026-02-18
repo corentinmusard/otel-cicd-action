@@ -195,6 +195,7 @@ describe("run branches", () => {
       listPullRequestCommits: jest.fn(async () => []),
       listPullRequestReviews: jest.fn(async () => []),
       listPullRequestEvents: jest.fn(async () => []),
+      extractPRNumberFromCommitMessage: jest.fn(() => null),
       ...overrides,
     };
 
@@ -302,5 +303,74 @@ describe("run branches", () => {
     expect(prs).toBeDefined();
     expect(prs?.[0]?.firstApprovedAt).toBe("2026-01-30T00:00:00Z");
     expect(prs?.[0]?.readyForReviewAt).toBe("2026-01-31T00:00:00Z");
+  });
+
+  it("extracts PR number from commit message on push events", async () => {
+    setInputs();
+    github.getOctokit.mockReturnValue({} as Octokit);
+
+    const { run, githubApi } = await setupRunner({
+      getWorkflowRun: jest.fn(async () => ({
+        ...workflowRunBase,
+        event: "push",
+        pull_requests: [],
+        head_commit: {
+          message: "Add new feature (#456)",
+        },
+      })),
+      extractPRNumberFromCommitMessage: jest.fn(() => 456),
+    });
+
+    await run();
+
+    expect(githubApi["getPullRequest"] as jest.Mock).toHaveBeenCalledWith(expect.anything(), expect.anything(), 456);
+    expect(core.info).toHaveBeenCalledWith(expect.stringContaining("Extracted PR #456"));
+  });
+
+  it("does not extract PR on non-push events", async () => {
+    setInputs();
+    github.getOctokit.mockReturnValue({} as Octokit);
+
+    const { run, githubApi } = await setupRunner({
+      getWorkflowRun: jest.fn(async () => ({
+        ...workflowRunBase,
+        event: "pull_request",
+        pull_requests: [],
+        head_commit: {
+          message: "Add new feature (#456)",
+        },
+      })),
+    });
+
+    await run();
+
+    expect(githubApi["getPullRequest"] as jest.Mock).not.toHaveBeenCalled();
+    expect(core.info).not.toHaveBeenCalledWith(expect.stringContaining("Extracted PR"));
+  });
+
+  it("does not extract PR when API provides PR data", async () => {
+    setInputs();
+    github.getOctokit.mockReturnValue({} as Octokit);
+
+    const { run, githubApi } = await setupRunner({
+      getWorkflowRun: jest.fn(async () => ({
+        ...workflowRunBase,
+        event: "push",
+        pull_requests: [{ number: 123 }],
+        head_commit: {
+          message: "Add new feature (#456)",
+        },
+      })),
+    });
+
+    await run();
+
+    expect(githubApi["getPullRequest"] as jest.Mock).toHaveBeenCalledWith(expect.anything(), expect.anything(), 123);
+    expect(githubApi["getPullRequest"] as jest.Mock).not.toHaveBeenCalledWith(
+      expect.anything(),
+      expect.anything(),
+      456
+    );
+    expect(core.info).not.toHaveBeenCalledWith(expect.stringContaining("Extracted PR"));
   });
 });
