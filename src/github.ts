@@ -5,6 +5,14 @@ import type { components } from "@octokit/openapi-types";
 type Context = typeof context;
 type Octokit = InstanceType<typeof GitHub>;
 
+interface PullRequestData {
+  labels: string[];
+  details: components["schemas"]["pull-request"] | null;
+  firstCommitAuthorDate: string | null;
+  firstApprovedAt: string | null;
+  readyForReviewAt: string | null;
+}
+
 async function getWorkflowRun(context: Context, octokit: Octokit, runId: number) {
   const res = await octokit.rest.actions.getWorkflowRun({
     ...context.repo,
@@ -58,4 +66,71 @@ async function listLabelsOnIssue(context: Context, octokit: Octokit, prNumber: n
   );
 }
 
-export { getWorkflowRun, listJobsForWorkflowRun, getJobsAnnotations, getPRsLabels, type Octokit };
+async function getPullRequest(context: Context, octokit: Octokit, prNumber: number) {
+  const res = await octokit.rest.pulls.get({
+    ...context.repo,
+    pull_number: prNumber,
+  });
+  return res.data;
+}
+
+async function listPullRequestCommits(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.pulls.listCommits, {
+    ...context.repo,
+    pull_number: prNumber,
+    per_page: 100,
+  });
+}
+
+async function listPullRequestReviews(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.pulls.listReviews, {
+    ...context.repo,
+    pull_number: prNumber,
+    per_page: 100,
+  });
+}
+
+async function listPullRequestEvents(context: Context, octokit: Octokit, prNumber: number) {
+  return await octokit.paginate(octokit.rest.issues.listEvents, {
+    ...context.repo,
+    issue_number: prNumber,
+    per_page: 100,
+  });
+}
+
+const SQUASH_MERGE_PATTERN = /\(#(\d+)\)$/m;
+const MERGE_COMMIT_PATTERN = /^Merge pull request #(\d+)/m;
+
+function extractPRNumberFromCommitMessage(message: string | null | undefined): number | null {
+  if (!message) {
+    return null;
+  }
+
+  // Pattern 1: Squash merge format: "Title (#123)"
+  const squashMatch = message.match(SQUASH_MERGE_PATTERN);
+  if (squashMatch) {
+    return Number.parseInt(squashMatch[1], 10);
+  }
+
+  // Pattern 2: Merge commit format: "Merge pull request #123 from..."
+  const mergeMatch = message.match(MERGE_COMMIT_PATTERN);
+  if (mergeMatch) {
+    return Number.parseInt(mergeMatch[1], 10);
+  }
+
+  return null;
+}
+
+export {
+  getWorkflowRun,
+  listJobsForWorkflowRun,
+  getJobsAnnotations,
+  getPRsLabels,
+  getPullRequest,
+  listPullRequestCommits,
+  listPullRequestReviews,
+  listPullRequestEvents,
+  extractPRNumberFromCommitMessage,
+  type PullRequestData,
+  type Octokit,
+};

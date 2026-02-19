@@ -1,3 +1,4 @@
+import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
 import { type Attributes, context, SpanStatusCode, trace } from "@opentelemetry/api";
 import {
@@ -18,18 +19,19 @@ import {
   CICD_PIPELINE_RUN_STATE_VALUE_FINALIZING,
   CICD_PIPELINE_RUN_STATE_VALUE_PENDING,
 } from "@opentelemetry/semantic-conventions/incubating";
+import type { PullRequestData } from "../github";
 import { traceJob } from "./job";
 
 function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
   jobs: components["schemas"]["job"][],
   jobAnnotations: Record<number, components["schemas"]["check-annotation"][]>,
-  prLabels: Record<number, string[]>
+  prs: PullRequestData[]
 ) {
   const tracer = trace.getTracer("otel-cicd-action");
 
   const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
-  const attributes = workflowRunToAttributes(workflowRun, prLabels);
+  const attributes = workflowRunToAttributes(workflowRun, prs);
 
   return tracer.startActiveSpan(
     workflowRun.name ?? workflowRun.display_title,
@@ -57,7 +59,7 @@ function traceWorkflowRun(
 
 function workflowRunToAttributes(
   workflowRun: components["schemas"]["workflow-run"],
-  prLabels: Record<number, string[]>
+  prs: PullRequestData[]
 ): Attributes {
   return {
     // OpenTelemetry semantic convention CICD Pipeline Attributes
@@ -99,7 +101,7 @@ function workflowRunToAttributes(
     "github.path": workflowRun.path,
     "github.display_title": workflowRun.display_title,
     error: workflowRun.conclusion === "failure",
-    ...prsToAttributes(workflowRun.pull_requests, prLabels),
+    ...prsToAttributes(prs, workflowRun.updated_at),
   };
 }
 
@@ -181,34 +183,43 @@ function headCommitToAttributes(head_commit: components["schemas"]["nullable-sim
   };
 }
 
-function prsToAttributes(
-  pullRequests: components["schemas"]["pull-request-minimal"][] | null,
-  prLabels: Record<number, string[]>
-) {
+function prsToAttributes(prs: PullRequestData[], workflowFinishedAt: string) {
   const attributes: Attributes = {
-    "github.head_ref": pullRequests?.[0]?.head?.ref,
-    "github.base_ref": pullRequests?.[0]?.base?.ref,
-    "github.base_sha": pullRequests?.[0]?.base?.sha,
+    "github.head_ref": prs[0]?.details?.head?.ref,
+    "github.base_ref": prs[0]?.details?.base?.ref,
+    "github.base_sha": prs[0]?.details?.base?.sha,
   };
 
-  for (let i = 0; pullRequests && i < pullRequests.length; i++) {
-    const pr = pullRequests[i];
+  for (let i = 0; i < prs.length; i++) {
+    const pr = prs[i];
+    if (!pr?.details) {
+      core.info(`Skipping PR attributes for index ${i}: missing PR details`);
+      continue;
+    }
+
     const prefix = `github.pull_requests.${i}`;
 
-    attributes[`${prefix}.id`] = pr.id;
-    attributes[`${prefix}.url`] = pr.url;
-    attributes[`${prefix}.number`] = pr.number;
-    attributes[`${prefix}.labels`] = prLabels[pr.number];
-    attributes[`${prefix}.head.sha`] = pr.head.sha;
-    attributes[`${prefix}.head.ref`] = pr.head.ref;
-    attributes[`${prefix}.head.repo.id`] = pr.head.repo.id;
-    attributes[`${prefix}.head.repo.url`] = pr.head.repo.url;
-    attributes[`${prefix}.head.repo.name`] = pr.head.repo.name;
-    attributes[`${prefix}.base.ref`] = pr.base.ref;
-    attributes[`${prefix}.base.sha`] = pr.base.sha;
-    attributes[`${prefix}.base.repo.id`] = pr.base.repo.id;
-    attributes[`${prefix}.base.repo.url`] = pr.base.repo.url;
-    attributes[`${prefix}.base.repo.name`] = pr.base.repo.name;
+    attributes[`${prefix}.id`] = pr.details.id;
+    attributes[`${prefix}.url`] = pr.details.url;
+    attributes[`${prefix}.number`] = pr.details.number;
+    attributes[`${prefix}.labels`] = pr.labels ?? [];
+    attributes[`${prefix}.head.sha`] = pr.details.head?.sha;
+    attributes[`${prefix}.head.ref`] = pr.details.head?.ref;
+    attributes[`${prefix}.head.repo.id`] = pr.details.head?.repo?.id;
+    attributes[`${prefix}.head.repo.url`] = pr.details.head?.repo?.url;
+    attributes[`${prefix}.head.repo.name`] = pr.details.head?.repo?.name;
+    attributes[`${prefix}.base.ref`] = pr.details.base?.ref;
+    attributes[`${prefix}.base.sha`] = pr.details.base?.sha;
+    attributes[`${prefix}.base.repo.id`] = pr.details.base?.repo?.id;
+    attributes[`${prefix}.base.repo.url`] = pr.details.base?.repo?.url;
+    attributes[`${prefix}.base.repo.name`] = pr.details.base?.repo?.name;
+    attributes[`${prefix}.lead_time.first_commit_at`] = pr.firstCommitAuthorDate ?? undefined;
+    attributes[`${prefix}.lead_time.pr_created_at`] = pr.details.created_at;
+    attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = pr.readyForReviewAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_approved_at`] = pr.firstApprovedAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_merged_at`] = pr.details.merged_at ?? undefined;
+    attributes[`${prefix}.lead_time.workflow_finished_at`] = workflowFinishedAt;
+    attributes[`${prefix}.lead_time.metric_emitted`] = !!pr.details.merged_at && !!pr.firstCommitAuthorDate;
   }
 
   return attributes;

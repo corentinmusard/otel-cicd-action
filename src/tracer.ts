@@ -114,4 +114,4 @@ class DeterministicIdGenerator implements IdGenerator {
   }
 }
 
-export { stringToRecord, createTracerProvider };
+export { stringToRecord, isHttpEndpoint, createTracerProvider };
