@@ -1,3 +1,4 @@
+import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
 import { type Attributes, context, SpanStatusCode, trace } from "@opentelemetry/api";
 import {
@@ -190,36 +191,36 @@ function prsToAttributes(prs: PullRequestData[], workflowFinishedAt: string) {
   };
 
   for (let i = 0; i < prs.length; i++) {
-    const prData = prs[i];
-    const prDetails = prData?.details ?? null;
-    if (!prDetails) {
+    const pr = prs[i];
+    if (!pr?.details) {
+      core.info(`Skipping PR attributes for index ${i}: missing PR details`);
       continue;
     }
 
     const prefix = `github.pull_requests.${i}`;
 
-    attributes[`${prefix}.id`] = prDetails.id;
-    attributes[`${prefix}.url`] = prDetails.url;
-    attributes[`${prefix}.number`] = prDetails.number;
-    attributes[`${prefix}.labels`] = prData.labels ?? [];
-    attributes[`${prefix}.head.sha`] = prDetails.head?.sha;
-    attributes[`${prefix}.head.ref`] = prDetails.head?.ref;
-    attributes[`${prefix}.head.repo.id`] = prDetails.head?.repo?.id;
-    attributes[`${prefix}.head.repo.url`] = prDetails.head?.repo?.url;
-    attributes[`${prefix}.head.repo.name`] = prDetails.head?.repo?.name;
-    attributes[`${prefix}.base.ref`] = prDetails.base?.ref;
-    attributes[`${prefix}.base.sha`] = prDetails.base?.sha;
-    attributes[`${prefix}.base.repo.id`] = prDetails.base?.repo?.id;
-    attributes[`${prefix}.base.repo.url`] = prDetails.base?.repo?.url;
-    attributes[`${prefix}.base.repo.name`] = prDetails.base?.repo?.name;
+    attributes[`${prefix}.id`] = pr.details.id;
+    attributes[`${prefix}.url`] = pr.details.url;
+    attributes[`${prefix}.number`] = pr.details.number;
+    attributes[`${prefix}.labels`] = pr.labels ?? [];
+    attributes[`${prefix}.head.sha`] = pr.details.head?.sha;
+    attributes[`${prefix}.head.ref`] = pr.details.head?.ref;
+    attributes[`${prefix}.head.repo.id`] = pr.details.head?.repo?.id;
+    attributes[`${prefix}.head.repo.url`] = pr.details.head?.repo?.url;
+    attributes[`${prefix}.head.repo.name`] = pr.details.head?.repo?.name;
+    attributes[`${prefix}.base.ref`] = pr.details.base?.ref;
+    attributes[`${prefix}.base.sha`] = pr.details.base?.sha;
+    attributes[`${prefix}.base.repo.id`] = pr.details.base?.repo?.id;
+    attributes[`${prefix}.base.repo.url`] = pr.details.base?.repo?.url;
+    attributes[`${prefix}.base.repo.name`] = pr.details.base?.repo?.name;
 
-    const leadTimeMetricEmitted = !!prDetails.merged_at && !!prData?.firstCommitAuthorDate;
+    const leadTimeMetricEmitted = !!pr.details.merged_at && !!pr.firstCommitAuthorDate;
 
-    attributes[`${prefix}.lead_time.first_commit_at`] = prData?.firstCommitAuthorDate ?? undefined;
-    attributes[`${prefix}.lead_time.pr_created_at`] = prDetails.created_at;
-    attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = prData?.readyForReviewAt ?? undefined;
-    attributes[`${prefix}.lead_time.pr_approved_at`] = prData?.firstApprovedAt ?? undefined;
-    attributes[`${prefix}.lead_time.pr_merged_at`] = prDetails.merged_at ?? undefined;
+    attributes[`${prefix}.lead_time.first_commit_at`] = pr.firstCommitAuthorDate ?? undefined;
+    attributes[`${prefix}.lead_time.pr_created_at`] = pr.details.created_at;
+    attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = pr.readyForReviewAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_approved_at`] = pr.firstApprovedAt ?? undefined;
+    attributes[`${prefix}.lead_time.pr_merged_at`] = pr.details.merged_at ?? undefined;
     attributes[`${prefix}.lead_time.workflow_finished_at`] = workflowFinishedAt;
     attributes[`${prefix}.lead_time.metric_emitted`] = leadTimeMetricEmitted;
   }
