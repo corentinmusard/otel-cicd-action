@@ -17,10 +17,6 @@ const token = process.env["GH_TOKEN"] ?? "";
 process.env["OTEL_CONSOLE_ONLY"] = "true";
 process.env["OTEL_ID_SEED"] = "123"; // seed for stable otel ids generation
 
-async function loadRunner() {
-  return await import("./runner");
-}
-
 describe("isOctokitError", () => {
   it("returns true", async () => {
     const { isOctokitError } = await import("./runner");
@@ -76,7 +72,7 @@ describe("run", () => {
       output += `${util.inspect(item, options)}\n`;
     });
 
-    ({ run } = await loadRunner());
+    ({ run } = await import("./runner"));
   });
 
   afterAll(() => {
