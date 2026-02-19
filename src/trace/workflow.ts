@@ -213,16 +213,13 @@ function prsToAttributes(prs: PullRequestData[], workflowFinishedAt: string) {
     attributes[`${prefix}.base.repo.id`] = pr.details.base?.repo?.id;
     attributes[`${prefix}.base.repo.url`] = pr.details.base?.repo?.url;
     attributes[`${prefix}.base.repo.name`] = pr.details.base?.repo?.name;
-
-    const leadTimeMetricEmitted = !!pr.details.merged_at && !!pr.firstCommitAuthorDate;
-
     attributes[`${prefix}.lead_time.first_commit_at`] = pr.firstCommitAuthorDate ?? undefined;
     attributes[`${prefix}.lead_time.pr_created_at`] = pr.details.created_at;
     attributes[`${prefix}.lead_time.pr_ready_for_review_at`] = pr.readyForReviewAt ?? undefined;
     attributes[`${prefix}.lead_time.pr_approved_at`] = pr.firstApprovedAt ?? undefined;
     attributes[`${prefix}.lead_time.pr_merged_at`] = pr.details.merged_at ?? undefined;
     attributes[`${prefix}.lead_time.workflow_finished_at`] = workflowFinishedAt;
-    attributes[`${prefix}.lead_time.metric_emitted`] = leadTimeMetricEmitted;
+    attributes[`${prefix}.lead_time.metric_emitted`] = !!pr.details.merged_at && !!pr.firstCommitAuthorDate;
   }
 
   return attributes;
