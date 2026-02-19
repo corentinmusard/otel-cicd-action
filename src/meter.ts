@@ -6,23 +6,18 @@ import { defaultResource, resourceFromAttributes } from "@opentelemetry/resource
 import {
   ConsoleMetricExporter,
   MeterProvider,
-  type MetricReader,
   PeriodicExportingMetricReader,
+  type PushMetricExporter,
 } from "@opentelemetry/sdk-metrics";
 import { isHttpEndpoint, stringToRecord } from "./tracer";
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 
 function createMeterProvider(endpoint: string, headers: string, attributes: Attributes) {
-  let reader: MetricReader;
+  let exporter: PushMetricExporter = new ConsoleMetricExporter();
 
-  if (OTEL_CONSOLE_ONLY) {
-    reader = new PeriodicExportingMetricReader({
-      exporter: new ConsoleMetricExporter(),
-      exportIntervalMillis: 60_000,
-    });
-  } else {
-    const exporter = isHttpEndpoint(endpoint)
+  if (!OTEL_CONSOLE_ONLY) {
+    exporter = isHttpEndpoint(endpoint)
       ? new ProtoOTLPMetricExporter({
           url: endpoint,
           headers: stringToRecord(headers),
@@ -32,12 +27,12 @@ function createMeterProvider(endpoint: string, headers: string, attributes: Attr
           credentials: credentials.createSsl(),
           metadata: Metadata.fromHttp2Headers(stringToRecord(headers)),
         });
-
-    reader = new PeriodicExportingMetricReader({
-      exporter,
-      exportIntervalMillis: 60_000,
-    });
   }
+
+  const reader = new PeriodicExportingMetricReader({
+    exporter,
+    exportIntervalMillis: 60_000,
+  });
 
   const provider = new MeterProvider({
     resource: resourceFromAttributes({

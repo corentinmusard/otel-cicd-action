@@ -121903,15 +121903,9 @@ class DeterministicIdGenerator {
 
 const OTEL_CONSOLE_ONLY = process.env["OTEL_CONSOLE_ONLY"] === "true";
 function createMeterProvider(endpoint, headers, attributes) {
-    let reader;
-    if (OTEL_CONSOLE_ONLY) {
-        reader = new PeriodicExportingMetricReader({
-            exporter: new ConsoleMetricExporter(),
-            exportIntervalMillis: 60_000,
-        });
-    }
-    else {
-        const exporter = isHttpEndpoint(endpoint)
+    let exporter = new ConsoleMetricExporter();
+    if (!OTEL_CONSOLE_ONLY) {
+        exporter = isHttpEndpoint(endpoint)
             ? new OTLPMetricExporter({
                 url: endpoint,
                 headers: stringToRecord(headers),
@@ -121921,11 +121915,11 @@ function createMeterProvider(endpoint, headers, attributes) {
                 credentials: srcExports$3.credentials.createSsl(),
                 metadata: srcExports$3.Metadata.fromHttp2Headers(stringToRecord(headers)),
             });
-        reader = new PeriodicExportingMetricReader({
-            exporter,
-            exportIntervalMillis: 60_000,
-        });
     }
+    const reader = new PeriodicExportingMetricReader({
+        exporter,
+        exportIntervalMillis: 60_000,
+    });
     const provider = new MeterProvider({
         resource: resourceFromAttributes({
             ...defaultResource().attributes,
