@@ -5,7 +5,7 @@ Private: false
 Description: Actions core lib
 Repository: git+https://github.com/actions/toolkit.git
 Homepage: https://github.com/actions/toolkit/tree/main/packages/core
-License Copyright:
+License Text:
 ===
 
 The MIT License (MIT)
@@ -28,7 +28,7 @@ Description: Node HTTP/HTTPS Agents for tunneling proxies
 Repository: https://github.com/koichik/node-tunnel.git
 Homepage: https://github.com/koichik/node-tunnel/
 Author: Koichi Kobayashi <koichik@improvement.jp>
-License Copyright:
+License Text:
 ===
 
 The MIT License (MIT)
@@ -56,7 +56,7 @@ THE SOFTWARE.
 ---
 
 Name: undici
-Version: 6.23.0
+Version: 6.24.1
 License: MIT
 Private: false
 Description: An HTTP/1.1 client, written from scratch for Node.js
@@ -70,7 +70,7 @@ Contributors:
   Robert Nagy (https://github.com/ronag)
   Szymon Marczak (https://github.com/szmarczak)
   Tomas Della Vedova (https://github.com/delvedor)
-License Copyright:
+License Text:
 ===
 
 MIT License
@@ -104,7 +104,7 @@ Private: false
 Description: Actions Http Client
 Repository: git+https://github.com/actions/toolkit.git
 Homepage: https://github.com/actions/toolkit/tree/main/packages/http-client
-License Copyright:
+License Text:
 ===
 
 Actions Http Client for Node.js
@@ -138,7 +138,7 @@ Private: false
 Description: Actions io lib
 Repository: git+https://github.com/actions/toolkit.git
 Homepage: https://github.com/actions/toolkit/tree/main/packages/io
-License Copyright:
+License Text:
 ===
 
 The MIT License (MIT)
@@ -160,7 +160,7 @@ Private: false
 Description: Actions exec lib
 Repository: git+https://github.com/actions/toolkit.git
 Homepage: https://github.com/actions/toolkit/tree/main/packages/exec
-License Copyright:
+License Text:
 ===
 
 The MIT License (MIT)
@@ -182,7 +182,7 @@ Private: false
 Description: Actions github lib
 Repository: git+https://github.com/actions/toolkit.git
 Homepage: https://github.com/actions/toolkit/tree/main/packages/github
-License Copyright:
+License Text:
 ===
 
 The MIT License (MIT)
@@ -204,7 +204,7 @@ Private: false
 Description: Get a user agent string across all JavaScript Runtime Environments
 Repository: undefined
 Author: Gregor Martynus (https://github.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 # [ISC License](https://spdx.org/licenses/ISC)
@@ -224,7 +224,7 @@ Private: false
 Description: asynchronous before/error/after hooks for internal functionality
 Repository: undefined
 Author: Gregor Martynus
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -438,7 +438,7 @@ Private: false
 Description: Turns REST API endpoints into generic request options
 Repository: undefined
 Author: Gregor Martynus (https://github.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 The MIT License
@@ -478,7 +478,7 @@ Contributors:
   Manuel Spigolon <behemoth89@gmail.com>
   James Sumners (https://james.sumners.info)
   Frazer Smith <frazer.dev@icloud.com> (https://github.com/fdawgs)
-License Copyright:
+License Text:
 ===
 
 MIT License
@@ -515,7 +515,7 @@ Private: false
 Description: Error class for Octokit request errors
 Repository: undefined
 Author: Gregor Martynus (https://github.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 The MIT License
@@ -549,7 +549,7 @@ Private: false
 Description: Send parameterized requests to GitHub's APIs with sensible defaults in browsers and Node
 Repository: undefined
 Author: Gregor Martynus (https://github.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 The MIT License
@@ -583,7 +583,7 @@ Private: false
 Description: GitHub GraphQL API client for browsers and Node
 Repository: undefined
 Author: Gregor Martynus (https://github.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 The MIT License
@@ -617,7 +617,7 @@ Private: false
 Description: GitHub API token authentication for browsers and Node.js
 Repository: undefined
 Author: Gregor Martynus (https://github.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 The MIT License
@@ -651,7 +651,7 @@ Private: false
 Description: Extendable client for GitHub's REST & GraphQL APIs
 Repository: undefined
 Author: Gregor Martynus (https://github.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 The MIT License
@@ -685,7 +685,7 @@ Private: false
 Description: Octokit plugin adding one method for all of api.github.com REST API endpoints
 Repository: undefined
 Author: Gregor Martynus (https://twitter.com/gr2m)
-License Copyright:
+License Text:
 ===
 
 MIT License Copyright (c) 2019 Octokit contributors
@@ -704,7 +704,7 @@ License: MIT
 Private: false
 Description: Octokit plugin to paginate REST API endpoint responses
 Repository: undefined
-License Copyright:
+License Text:
 ===
 
 MIT License Copyright (c) 2019 Octokit contributors
@@ -718,14 +718,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 Name: @opentelemetry/semantic-conventions
-Version: 1.39.0
+Version: 1.40.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry semantic conventions
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/semantic-conventions
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -940,7 +940,7 @@ Description: Public API for OpenTelemetry
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/api
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -1157,7 +1157,7 @@ Homepage: https://grpc.io/
 Author: Google Inc.
 Contributors:
   Google Inc.
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -1372,7 +1372,7 @@ Description: javascript standard data structure library which benchmark against 
 Repository: https://github.com/js-sdsl/js-sdsl.git
 Homepage: https://js-sdsl.org
 Author: ZLY201 <951711127@qq.com> (https://github.com/js-sdsl/js-sdsl)
-License Copyright:
+License Text:
 ===
 
 MIT License
@@ -1409,7 +1409,7 @@ Homepage: https://grpc.io/
 Author: Google Inc.
 Contributors:
   Michael Lumish <mlumish@google.com>
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -1628,7 +1628,7 @@ Contributors:
   John-David Dalton <john.david.dalton@gmail.com> (http://allyoucanleet.com/)
   Blaine Bublitz <blaine.bublitz@gmail.com> (https://github.com/phated)
   Mathias Bynens <mathias@qiwi.be> (https://mathiasbynens.be/)
-License Copyright:
+License Text:
 ===
 
 Copyright jQuery Foundation and other contributors <https://jquery.org/>
@@ -1689,7 +1689,7 @@ Description: Protocol Buffers for JavaScript (& TypeScript).
 Repository: undefined
 Homepage: https://protobufjs.github.io/protobuf.js/
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 This license applies to all parts of protobuf.js except those files
@@ -1741,7 +1741,7 @@ Private: false
 Description: Returns a promise from a node-style callback function.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -1780,7 +1780,7 @@ Private: false
 Description: A minimal base64 implementation for number arrays.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -1819,7 +1819,7 @@ Private: false
 Description: A minimal event emitter.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -1858,7 +1858,7 @@ Private: false
 Description: Reads / writes floats / doubles from / to buffers in both modern and ancient browsers.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -1897,7 +1897,7 @@ Private: false
 Description: Requires a module only if available and hides the require call from bundlers.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -1936,7 +1936,7 @@ Private: false
 Description: A minimal UTF8 implementation for number arrays.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -1975,7 +1975,7 @@ Private: false
 Description: A general purpose buffer pool.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -2014,7 +2014,7 @@ Private: false
 Description: A minimalistic code generation utility.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -2053,7 +2053,7 @@ Private: false
 Description: Fetches the contents of a file accross node and browsers.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -2092,7 +2092,7 @@ Private: false
 Description: A minimal path module to resolve Unix, Windows and URL paths alike.
 Repository: https://github.com/dcodeIO/protobuf.js.git
 Author: Daniel Wirtz <dcode+protobufjs@dcode.io>
-License Copyright:
+License Text:
 ===
 
 Copyright (c) 2016, Daniel Wirtz  All rights reserved.
@@ -2131,7 +2131,7 @@ Private: false
 Description: A Long class for representing a 64-bit two's-complement integer value.
 Repository: https://github.com/dcodeIO/long.js.git
 Author: Daniel Wirtz <dcode@dcode.io>
-License Copyright:
+License Text:
 ===
 
 
@@ -2340,14 +2340,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/context-async-hooks
-Version: 2.5.0
+Version: 2.6.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry AsyncLocalStorage-based Context Manager
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-context-async-hooks
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -2555,14 +2555,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/exporter-trace-otlp-grpc
-Version: 0.211.0
+Version: 0.213.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Collector Exporter allows user to send collected traces to the OpenTelemetry Collector
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/exporter-trace-otlp-grpc
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -2770,14 +2770,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/otlp-grpc-exporter-base
-Version: 0.211.0
+Version: 0.213.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry OTLP-gRPC Exporter base (for internal use only)
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/otlp-grpc-exporter-base
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -2985,14 +2985,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/otlp-exporter-base
-Version: 0.211.0
+Version: 0.213.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry OTLP Exporter base (for internal use only)
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/otlp-exporter-base
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -3200,14 +3200,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/core
-Version: 2.5.0
+Version: 2.6.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Core provides constants and utilities shared by all OpenTelemetry SDK packages.
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-core
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -3415,14 +3415,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/otlp-transformer
-Version: 0.211.0
+Version: 0.213.0
 License: Apache-2.0
 Private: false
 Description: Transform OpenTelemetry SDK data into OTLP
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/otlp-transformer
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -3630,14 +3630,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/sdk-metrics
-Version: 2.5.0
+Version: 2.6.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry metrics SDK
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/sdk-metrics
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -3845,14 +3845,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/resources
-Version: 2.5.0
+Version: 2.6.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry SDK resources
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-resources
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -4060,14 +4060,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/exporter-trace-otlp-proto
-Version: 0.211.0
+Version: 0.213.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Collector Exporter allows user to send collected traces to the OpenTelemetry Collector using protobuf over HTTP
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/exporter-trace-otlp-proto
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License
@@ -4275,14 +4275,14 @@ License Copyright:
 ---
 
 Name: @opentelemetry/sdk-trace-base
-Version: 2.5.0
+Version: 2.6.0
 License: Apache-2.0
 Private: false
 Description: OpenTelemetry Tracing
 Repository: undefined
 Homepage: https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-sdk-trace-base
 Author: OpenTelemetry Authors
-License Copyright:
+License Text:
 ===
 
                                  Apache License

@@ -54,11 +54,11 @@ async function recordOctokit(name: string, token: string) {
 }
 
 interface Replay {
+  data: unknown;
   method: RequestMethod;
   path: string;
-  url: string;
   status: number;
-  data: unknown;
+  url: string;
 }
 
 async function writeReplay(path: FileHandle, replay: Replay) {
