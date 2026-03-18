@@ -58,4 +58,4 @@ async function listLabelsOnIssue(context: Context, octokit: Octokit, prNumber: n
   );
 }
 
-export { getWorkflowRun, listJobsForWorkflowRun, getJobsAnnotations, getPRsLabels, type Octokit };
+export { getJobsAnnotations, getPRsLabels, getWorkflowRun, listJobsForWorkflowRun, type Octokit };

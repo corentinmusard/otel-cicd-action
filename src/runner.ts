@@ -93,4 +93,4 @@ async function run() {
   }
 }
 
-export { run, isOctokitError };
+export { isOctokitError, run };
