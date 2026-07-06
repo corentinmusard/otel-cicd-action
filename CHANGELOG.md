@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Span status now follows the OpenTelemetry
+  [recording-errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/)
+  conventions: it is set to `Error` (with the standard `error.type` attribute) for the
+  `failure`, `timed_out`, and `startup_failure` conclusions, and left unset otherwise
+  (previously it was set to `Ok` on success and `Error` only for `failure`).
+- **Removed** the non-standard boolean `error` attribute from workflow, job, and step spans.
+  Use the span status or the `error.type` attribute instead.
+
 - The repository was transferred from `corentinmusard/otel-cicd-action` to
   [`dash0hq/otel-cicd-action`](https://github.com/dash0hq/otel-cicd-action) and is now maintained
   by [Dash0](https://www.dash0.com). Existing `uses: corentinmusard/otel-cicd-action@v4` references

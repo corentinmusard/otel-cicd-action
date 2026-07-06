@@ -35919,6 +35919,19 @@ var esm$4 = /*#__PURE__*/Object.freeze({
     trace: trace
 });
 
+const errorConclusions = new Set(["failure", "timed_out", "startup_failure"]);
+/**
+ * Record the span status according to the OpenTelemetry recording-errors conventions:
+ * status is set to Error (with error.type) when the run failed, and left unset otherwise.
+ * https://opentelemetry.io/docs/specs/semconv/general/recording-errors/
+ */
+function recordConclusion(span, conclusion) {
+    if (conclusion && errorConclusions.has(conclusion)) {
+        span.setStatus({ code: SpanStatusCode.ERROR });
+        span.setAttribute(ATTR_ERROR_TYPE, conclusion);
+    }
+}
+
 function traceStep(step) {
     const tracer = trace.getTracer("otel-cicd-action");
     if (!(step.completed_at && step.started_at)) {
@@ -35933,8 +35946,7 @@ function traceStep(step) {
     const completedTime = new Date(step.completed_at);
     const attributes = stepToAttributes(step);
     tracer.startActiveSpan(step.name, { attributes, startTime }, (span) => {
-        const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-        span.setStatus({ code });
+        recordConclusion(span, step.conclusion);
         // Some skipped and post jobs return completed_at dates that are older than started_at
         span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
     });
@@ -35947,7 +35959,6 @@ function stepToAttributes(step) {
         "github.job.step.number": step.number,
         "github.job.step.started_at": step.started_at ?? undefined,
         "github.job.step.completed_at": step.completed_at ?? undefined,
-        error: step.conclusion === "failure",
     };
 }
 
@@ -35964,8 +35975,7 @@ function traceJob(job, annotations) {
         ...annotationsToAttributes(annotations),
     };
     tracer.startActiveSpan(job.name, { attributes, startTime }, (span) => {
-        const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-        span.setStatus({ code });
+        recordConclusion(span, job.conclusion);
         for (const step of job.steps ?? []) {
             traceStep(step);
         }
@@ -36018,7 +36028,6 @@ function jobToAttributes(job) {
         "github.job.check_run_url": job.check_run_url,
         "github.job.workflow_name": job.workflow_name ?? undefined,
         "github.job.head_branch": job.head_branch ?? undefined,
-        error: job.conclusion === "failure",
     };
 }
 function toTaskResult(conclusion) {
@@ -36056,8 +36065,7 @@ function traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels) {
     const startTime = new Date(workflowRun.run_started_at ?? workflowRun.created_at);
     const attributes = workflowRunToAttributes(workflowRun, prLabels);
     return tracer.startActiveSpan(workflowRun.name ?? workflowRun.display_title, { attributes, root: true, startTime }, (rootSpan) => {
-        const code = workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-        rootSpan.setStatus({ code });
+        recordConclusion(rootSpan, workflowRun.conclusion);
         // "Queued" span represent the time between the workflow has been started_at and
         // the first job has been picked up by a runner. Jobs are not guaranteed to be
         // ordered by start time, so take the earliest one.
@@ -36113,7 +36121,6 @@ function workflowRunToAttributes(workflowRun, prLabels) {
         "github.head_sha": workflowRun.head_sha,
         "github.path": workflowRun.path,
         "github.display_title": workflowRun.display_title,
-        error: workflowRun.conclusion === "failure",
         ...prsToAttributes(workflowRun.pull_requests, prLabels),
     };
 }

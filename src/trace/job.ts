@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
-import { type Attributes, SpanStatusCode, trace } from "@opentelemetry/api";
+import { type Attributes, trace } from "@opentelemetry/api";
 import {
   ATTR_CICD_PIPELINE_TASK_NAME,
   ATTR_CICD_PIPELINE_TASK_RUN_ID,
@@ -18,6 +18,7 @@ import {
   CICD_PIPELINE_TASK_TYPE_VALUE_DEPLOY,
   CICD_PIPELINE_TASK_TYPE_VALUE_TEST,
 } from "@opentelemetry/semantic-conventions/incubating";
+import { recordConclusion } from "./status";
 import { traceStep } from "./step";
 
 function traceJob(job: components["schemas"]["job"], annotations?: components["schemas"]["check-annotation"][]) {
@@ -36,8 +37,7 @@ function traceJob(job: components["schemas"]["job"], annotations?: components["s
   };
 
   tracer.startActiveSpan(job.name, { attributes, startTime }, (span) => {
-    const code = job.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-    span.setStatus({ code });
+    recordConclusion(span, job.conclusion);
 
     for (const step of job.steps ?? []) {
       traceStep(step);
@@ -92,7 +92,6 @@ function jobToAttributes(job: components["schemas"]["job"]): Attributes {
     "github.job.check_run_url": job.check_run_url,
     "github.job.workflow_name": job.workflow_name ?? undefined,
     "github.job.head_branch": job.head_branch ?? undefined,
-    error: job.conclusion === "failure",
   };
 }
 
