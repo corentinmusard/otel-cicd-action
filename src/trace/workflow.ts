@@ -38,11 +38,14 @@ function traceWorkflowRun(
       const code = workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
       rootSpan.setStatus({ code });
 
-      if (jobs.length > 0) {
-        // "Queued" span represent the time between the workflow has been started_at and
-        // the first job has been picked up by a runner
+      // "Queued" span represent the time between the workflow has been started_at and
+      // the first job has been picked up by a runner. Jobs are not guaranteed to be
+      // ordered by start time, so take the earliest one.
+      const jobStartTimes = jobs.map((job) => new Date(job.started_at).getTime()).filter(Number.isFinite);
+
+      if (jobStartTimes.length > 0) {
         const queuedSpan = tracer.startSpan("Queued", { startTime }, context.active());
-        queuedSpan.end(new Date(jobs[0].started_at));
+        queuedSpan.end(new Date(Math.max(startTime.getTime(), Math.min(...jobStartTimes))));
       }
 
       for (const job of jobs) {
