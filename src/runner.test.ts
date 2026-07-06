@@ -122,8 +122,8 @@ describe("run", () => {
   }, 10_000);
 
   it("should fail", async () => {
-    // https://github.com/corentinmusard/otel-cicd-action/actions/runs/111
-    process.env["GITHUB_REPOSITORY"] = "corentinmusard/otel-cicd-action";
+    // https://github.com/dash0hq/otel-cicd-action/actions/runs/111
+    process.env["GITHUB_REPOSITORY"] = "dash0hq/otel-cicd-action";
     runId = "111"; // does not exist
 
     await run();

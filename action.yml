@@ -1,6 +1,6 @@
 name: Open Telemetry CI/CD Action
 description: Export CI/CD workflows to any endpoint compatible with OpenTelemetry
-author: Corentin Musard
+author: Dash0
 
 runs:
   using: node24

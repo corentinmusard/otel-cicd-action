@@ -18,7 +18,7 @@
     ".": "./dist/index.js"
   },
   "keywords": [],
-  "author": "Corentin Musard <corentin.musard+dev@gmail.com>",
+  "author": "Dash0 (https://www.dash0.com)",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^3.0.0",

@@ -3,7 +3,7 @@
 ## Getting Started
 
 ```sh
-git clone git@github.com:corentinmusard/otel-cicd-action.git
+git clone git@github.com:dash0hq/otel-cicd-action.git
 cd otel-cicd-action
 ```
 

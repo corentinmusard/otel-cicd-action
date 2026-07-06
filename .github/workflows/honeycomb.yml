@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Export workflow to Honeycomb
-        uses: corentinmusard/otel-cicd-action@v4
+        uses: dash0hq/otel-cicd-action@v4
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           # Example value for HONEYCOMB_OTLP_HEADERS:

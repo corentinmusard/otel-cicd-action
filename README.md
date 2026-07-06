@@ -1,3 +1,8 @@
+> **📢 This repository has moved.**
+> Please update your workflows to use `dash0hq/otel-cicd-action@v4` instead of
+> `corentinmusard/otel-cicd-action@v4`. Existing references continue to work via
+> redirect, but updating is recommended. See the pinned Discussion for details.
+
 # Open Telemetry CI/CD Action
 
 [![Unit Tests][ci-img]][ci]
@@ -6,6 +11,7 @@
 This action exports Github CI/CD workflows to any endpoint compatible with OpenTelemetry.
 
 This is a fork of [otel-export-trace-action](https://github.com/inception-health/otel-export-trace-action) with more features and better support.
+Originally created and maintained by [Corentin Musard](https://github.com/corentinmusard), now maintained by [Dash0](https://www.dash0.com).
 
 Compliant with OpenTelemetry [CICD semconv](https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/).
 Look at [Sample OpenTelemetry Output](./src/__assets__/output_success.txt) for the list of attributes and their values.
@@ -41,7 +47,7 @@ jobs:
   otel-cicd-actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: corentinmusard/otel-cicd-action@v4
+      - uses: dash0hq/otel-cicd-action@v4
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
@@ -62,7 +68,7 @@ jobs:
     needs: [build] # must run when all jobs are completed
     steps:
       - name: Export workflow
-        uses: corentinmusard/otel-cicd-action@v4
+        uses: dash0hq/otel-cicd-action@v4
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
@@ -100,7 +106,7 @@ Attributes are splitted on `,` and then each key/value are splitted on the first
 
 ```yaml
 - name: Export workflow
-  uses: corentinmusard/otel-cicd-action@v4
+  uses: dash0hq/otel-cicd-action@v4
   with:
     otlpEndpoint: "CHANGE ME"
     otlpHeaders: "CHANGE ME"
@@ -125,6 +131,6 @@ Attributes are splitted on `,` and then each key/value are splitted on the first
 | ------- | ------------------------------------------- |
 | traceId | The OpenTelemetry Trace ID of the root span |
 
-[ci-img]: https://github.com/corentinmusard/otel-cicd-action/actions/workflows/build.yml/badge.svg?branch=main
-[ci]: https://github.com/corentinmusard/otel-cicd-action/actions/workflows/build.yml?query=branch%3Amain
-[license-img]: https://img.shields.io/github/license/corentinmusard/otel-cicd-action
+[ci-img]: https://github.com/dash0hq/otel-cicd-action/actions/workflows/build.yml/badge.svg?branch=main
+[ci]: https://github.com/dash0hq/otel-cicd-action/actions/workflows/build.yml?query=branch%3Amain
+[license-img]: https://img.shields.io/github/license/dash0hq/otel-cicd-action
