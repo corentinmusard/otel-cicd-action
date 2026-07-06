@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The repository was transferred from `corentinmusard/otel-cicd-action` to
+  [`dash0hq/otel-cicd-action`](https://github.com/dash0hq/otel-cicd-action) and is now maintained
+  by [Dash0](https://www.dash0.com). Existing `uses: corentinmusard/otel-cicd-action@v4` references
+  keep working via GitHub's redirect, but updating to `dash0hq/otel-cicd-action@v4` is recommended.
+
 ## [4.0.1] - 2026-03-18
 
 ### Fixed
@@ -217,25 +224,25 @@ permissions:
 - Support for `https` endpoints (proto over http).
 - Update to node 20.x
 
-[unreleased]: https://github.com/corentinmusard/otel-cicd-action/compare/v4.0.1...HEAD
-[4.0.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v4.0.0...v4.0.1
-[4.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v3.0.0...v4.0.0
-[3.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.4...v3.0.0
-[2.2.4]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.3...v2.2.4
-[2.2.3]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.2...v2.2.3
-[2.2.2]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.1...v2.2.2
-[2.2.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.2.0...v2.2.1
-[2.2.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.2...v2.0.0
-[1.13.2]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.1...v1.13.2
-[1.13.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.13.0...v1.13.1
-[1.13.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.12.1...v1.13.0
-[1.12.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.12.0...v1.12.1
-[1.12.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.11.0...v1.12.0
-[1.11.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.10.0...v1.11.0
-[1.10.0]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.9.1...v1.10.0
-[1.9.1]: https://github.com/corentinmusard/otel-cicd-action/compare/v1.9.0...v1.9.1
-[1.9.0]: https://github.com/corentinmusard/otel-cicd-action/releases/tag/v1.9.0
+[unreleased]: https://github.com/dash0hq/otel-cicd-action/compare/v4.0.1...HEAD
+[4.0.1]: https://github.com/dash0hq/otel-cicd-action/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/dash0hq/otel-cicd-action/compare/v3.0.0...v4.0.0
+[3.0.0]: https://github.com/dash0hq/otel-cicd-action/compare/v2.2.4...v3.0.0
+[2.2.4]: https://github.com/dash0hq/otel-cicd-action/compare/v2.2.3...v2.2.4
+[2.2.3]: https://github.com/dash0hq/otel-cicd-action/compare/v2.2.2...v2.2.3
+[2.2.2]: https://github.com/dash0hq/otel-cicd-action/compare/v2.2.1...v2.2.2
+[2.2.1]: https://github.com/dash0hq/otel-cicd-action/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/dash0hq/otel-cicd-action/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/dash0hq/otel-cicd-action/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/dash0hq/otel-cicd-action/compare/v1.13.2...v2.0.0
+[1.13.2]: https://github.com/dash0hq/otel-cicd-action/compare/v1.13.1...v1.13.2
+[1.13.1]: https://github.com/dash0hq/otel-cicd-action/compare/v1.13.0...v1.13.1
+[1.13.0]: https://github.com/dash0hq/otel-cicd-action/compare/v1.12.1...v1.13.0
+[1.12.1]: https://github.com/dash0hq/otel-cicd-action/compare/v1.12.0...v1.12.1
+[1.12.0]: https://github.com/dash0hq/otel-cicd-action/compare/v1.11.0...v1.12.0
+[1.11.0]: https://github.com/dash0hq/otel-cicd-action/compare/v1.10.0...v1.11.0
+[1.10.0]: https://github.com/dash0hq/otel-cicd-action/compare/v1.9.1...v1.10.0
+[1.9.1]: https://github.com/dash0hq/otel-cicd-action/compare/v1.9.0...v1.9.1
+[1.9.0]: https://github.com/dash0hq/otel-cicd-action/releases/tag/v1.9.0
 
 Versions previous to 1.9.0 were developed in another repository. To see previous changelog entries see the [CHANGELOG.md](https://github.com/inception-health/otel-export-trace-action/blob/v1.8.0/CHANGELOG.md).

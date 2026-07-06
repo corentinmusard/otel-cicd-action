@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Export workflow to Axiom
-        uses: corentinmusard/otel-cicd-action@v4
+        uses: dash0hq/otel-cicd-action@v4
         with:
           otlpEndpoint: https://api.axiom.co/v1/traces
           # Example value for AXIOM_OTLP_HEADERS:

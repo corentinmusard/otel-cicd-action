@@ -70,6 +70,6 @@ https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/470
 W10=
 GET
 /repos/{owner}/{repo}/actions/runs/{run_id}
-https://api.github.com/repos/corentinmusard/otel-cicd-action/actions/runs/111
+https://api.github.com/repos/dash0hq/otel-cicd-action/actions/runs/111
 404
 eyJtZXNzYWdlIjoiTm90IEZvdW5kIiwiZG9jdW1lbnRhdGlvbl91cmwiOiJodHRwczovL2RvY3MuZ2l0aHViLmNvbS9yZXN0L2FjdGlvbnMvd29ya2Zsb3ctcnVucyNnZXQtYS13b3JrZmxvdy1ydW4iLCJzdGF0dXMiOiI0MDQifQ==
