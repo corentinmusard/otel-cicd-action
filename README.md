@@ -131,6 +131,24 @@ Attributes are splitted on `,` and then each key/value are splitted on the first
 | ------- | ------------------------------------------- |
 | traceId | The OpenTelemetry Trace ID of the root span |
 
+## What data is exported
+
+The action exports the workflow run metadata returned by the GitHub API as span attributes,
+without redaction. There is currently no way to opt out of individual attributes, so make sure
+your telemetry backend is an acceptable place for this data. In particular, be aware that:
+
+- **Commit metadata** is included: the full commit message, plus author and committer
+  names and email addresses (`github.head_commit.*`).
+- **Job annotations and PR metadata** are included when the token has the optional
+  `checks: read` and `pull-requests: read` permissions: annotation messages, PR numbers,
+  branch names, and labels.
+- **`service.instance.id` is unique per run attempt** (`<repo>/<workflow id>/<run id>/<attempt>`),
+  so each workflow run appears as its own service instance. Backends that bill or aggregate
+  by service instance will see one instance per run.
+
+See the [Sample OpenTelemetry Output](./src/__assets__/output_success.txt) for the full list
+of exported attributes and example values.
+
 [ci-img]: https://github.com/dash0hq/otel-cicd-action/actions/workflows/build.yml/badge.svg?branch=main
 [ci]: https://github.com/dash0hq/otel-cicd-action/actions/workflows/build.yml?query=branch%3Amain
 [license-img]: https://img.shields.io/github/license/dash0hq/otel-cicd-action
