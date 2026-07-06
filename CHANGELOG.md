@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (previously it was set to `Ok` on success and `Error` only for `failure`).
 - **Removed** the non-standard boolean `error` attribute from workflow, job, and step spans.
   Use the span status or the `error.type` attribute instead.
+- The `github.job.labels` attribute is now exported as an array of strings instead of a
+  comma-separated string, consistent with the PR label attributes.
 
 - The repository was transferred from `corentinmusard/otel-cicd-action` to
   [`dash0hq/otel-cicd-action`](https://github.com/dash0hq/otel-cicd-action) and is now maintained

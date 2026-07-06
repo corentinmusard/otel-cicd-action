@@ -221,7 +221,7 @@
     'github.job.runner_group_name': 'default',
     'github.job.runner_name': 'depot-ptc3146psq',
     'github.job.conclusion': 'success',
-    'github.job.labels': 'depot-ubuntu-24.04-arm-small',
+    'github.job.labels': [ 'depot-ubuntu-24.04-arm-small' ],
     'github.job.created_at': '2026-01-29T17:16:16Z',
     'github.job.started_at': '2026-01-29T17:16:17Z',
     'github.job.completed_at': '2026-01-29T17:16:51Z',
