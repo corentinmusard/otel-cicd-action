@@ -96,10 +96,9 @@
     'github.conclusion': 'success',
     'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208955',
     'github.job.workflow_name': 'Build & Test',
-    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
-    error: false
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }
@@ -164,10 +163,9 @@
     'github.conclusion': 'success',
     'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208967',
     'github.job.workflow_name': 'Build & Test',
-    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
-    error: false
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }
@@ -233,10 +231,9 @@
     'github.conclusion': 'success',
     'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208973',
     'github.job.workflow_name': 'Build & Test',
-    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
-    error: false
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }
@@ -301,10 +298,9 @@
     'github.conclusion': 'success',
     'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022208986',
     'github.job.workflow_name': 'Build & Test',
-    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
-    error: false
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }
@@ -369,10 +365,9 @@
     'github.conclusion': 'success',
     'github.job.check_run_url': 'https://api.github.com/repos/step-security/skip-duplicate-actions/check-runs/47022240005',
     'github.job.workflow_name': 'Build & Test',
-    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
-    error: false
+    'github.job.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }
@@ -459,10 +454,9 @@
     'github.head_branch': 'dependabot/github_actions/github/codeql-action-3.29.5',
     'github.head_sha': '6f96b263f472444725e0d2122722ce7140cf3bdb',
     'github.path': '.github/workflows/test.yml',
-    'github.display_title': 'chore(deps): Bump github/codeql-action from 3.28.8 to 3.29.5',
-    error: false
+    'github.display_title': 'chore(deps): Bump github/codeql-action from 3.28.8 to 3.29.5'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }

@@ -1,6 +1,7 @@
 import * as core from "@actions/core";
 import type { components } from "@octokit/openapi-types";
-import { type Attributes, SpanStatusCode, trace } from "@opentelemetry/api";
+import { type Attributes, trace } from "@opentelemetry/api";
+import { recordConclusion } from "./status";
 
 type Step = NonNullable<components["schemas"]["job"]["steps"]>[number];
 
@@ -22,8 +23,7 @@ function traceStep(step: Step) {
   const attributes = stepToAttributes(step);
 
   tracer.startActiveSpan(step.name, { attributes, startTime }, (span) => {
-    const code = step.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-    span.setStatus({ code });
+    recordConclusion(span, step.conclusion);
 
     // Some skipped and post jobs return completed_at dates that are older than started_at
     span.end(new Date(Math.max(startTime.getTime(), completedTime.getTime())));
@@ -38,7 +38,6 @@ function stepToAttributes(step: Step): Attributes {
     "github.job.step.number": step.number,
     "github.job.step.started_at": step.started_at ?? undefined,
     "github.job.step.completed_at": step.completed_at ?? undefined,
-    error: step.conclusion === "failure",
   };
 }
 

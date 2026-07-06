@@ -73,10 +73,9 @@
     'github.job.step.name': 'Set up job',
     'github.job.step.number': 1,
     'github.job.step.started_at': '2026-01-28T23:05:21Z',
-    'github.job.step.completed_at': '2026-01-28T23:05:23Z',
-    error: false
+    'github.job.step.completed_at': '2026-01-28T23:05:23Z'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }
@@ -119,7 +118,7 @@
     'github.job.step.number': 2,
     'github.job.step.started_at': '2026-01-28T23:05:23Z',
     'github.job.step.completed_at': '2026-01-28T23:05:28Z',
-    error: true
+    'error.type': 'failure'
   },
   status: { code: 2 },
   events: [],
@@ -163,10 +162,9 @@
     'github.job.step.name': 'Complete job',
     'github.job.step.number': 3,
     'github.job.step.started_at': '2026-01-28T23:05:28Z',
-    'github.job.step.completed_at': '2026-01-28T23:05:28Z',
-    error: false
+    'github.job.step.completed_at': '2026-01-28T23:05:28Z'
   },
-  status: { code: 1 },
+  status: { code: 0 },
   events: [],
   links: []
 }
@@ -232,7 +230,6 @@
     'github.job.check_run_url': 'https://api.github.com/repos/biomejs/biome/check-runs/61806350920',
     'github.job.workflow_name': 'Lint Pull Request Titles',
     'github.job.head_branch': 'fixes/use-exhaustive-dependencies-regressions',
-    error: true,
     'github.job.annotations.0.level': 'failure',
     'github.job.annotations.0.message': 'No release type found in pull request title "fix(linter) `useExhaustiveDependencies` regressions, fixes #8802, fixes #8883, fixes #8885". Add a prefix to indicate what kind of release this pull request corresponds to. For reference, see https://www.conventionalcommits.org/\n' +
       '\n' +
@@ -247,7 +244,8 @@
       ' - refactor\n' +
       ' - release\n' +
       ' - revert\n' +
-      ' - test'
+      ' - test',
+    'error.type': 'failure'
   },
   status: { code: 2 },
   events: [],
@@ -322,7 +320,7 @@
     'github.head_sha': 'e2666f5864e5f11de8a071856f0804e6bab0fd8f',
     'github.path': '.github/workflows/pull_request_title_lint.yaml',
     'github.display_title': 'fix(linter): `useExhaustiveDependencies` regressions, fixes #8802, fixes #8883, fixes #8885',
-    error: true
+    'error.type': 'failure'
   },
   status: { code: 2 },
   events: [],

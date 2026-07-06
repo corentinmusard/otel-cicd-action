@@ -1,5 +1,5 @@
 import type { components } from "@octokit/openapi-types";
-import { type Attributes, context, SpanStatusCode, trace } from "@opentelemetry/api";
+import { type Attributes, context, trace } from "@opentelemetry/api";
 import {
   ATTR_CICD_PIPELINE_ACTION_NAME,
   ATTR_CICD_PIPELINE_NAME,
@@ -19,6 +19,7 @@ import {
   CICD_PIPELINE_RUN_STATE_VALUE_PENDING,
 } from "@opentelemetry/semantic-conventions/incubating";
 import { traceJob } from "./job";
+import { recordConclusion } from "./status";
 
 function traceWorkflowRun(
   workflowRun: components["schemas"]["workflow-run"],
@@ -35,8 +36,7 @@ function traceWorkflowRun(
     workflowRun.name ?? workflowRun.display_title,
     { attributes, root: true, startTime },
     (rootSpan) => {
-      const code = workflowRun.conclusion === "failure" ? SpanStatusCode.ERROR : SpanStatusCode.OK;
-      rootSpan.setStatus({ code });
+      recordConclusion(rootSpan, workflowRun.conclusion);
 
       // "Queued" span represent the time between the workflow has been started_at and
       // the first job has been picked up by a runner. Jobs are not guaranteed to be
@@ -101,7 +101,6 @@ function workflowRunToAttributes(
     "github.head_sha": workflowRun.head_sha,
     "github.path": workflowRun.path,
     "github.display_title": workflowRun.display_title,
-    error: workflowRun.conclusion === "failure",
     ...prsToAttributes(workflowRun.pull_requests, prLabels),
   };
 }
