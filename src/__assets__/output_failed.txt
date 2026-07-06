@@ -222,7 +222,7 @@
     'github.job.runner_group_name': 'default',
     'github.job.runner_name': 'depot-6ltm0thcf4',
     'github.job.conclusion': 'failure',
-    'github.job.labels': 'depot-ubuntu-24.04-arm-small',
+    'github.job.labels': [ 'depot-ubuntu-24.04-arm-small' ],
     'github.job.created_at': '2026-01-28T23:04:51Z',
     'github.job.started_at': '2026-01-28T23:04:52Z',
     'github.job.completed_at': '2026-01-28T23:05:29Z',

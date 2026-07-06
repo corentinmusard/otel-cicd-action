@@ -36020,7 +36020,7 @@ function jobToAttributes(job) {
         "github.job.runner_group_name": job.runner_group_name ?? undefined,
         "github.job.runner_name": job.runner_name ?? undefined,
         "github.job.conclusion": job.conclusion ?? undefined,
-        "github.job.labels": job.labels.join(", "),
+        "github.job.labels": job.labels,
         "github.job.created_at": job.created_at,
         "github.job.started_at": job.started_at,
         "github.job.completed_at": job.completed_at ?? undefined,
@@ -77060,7 +77060,7 @@ async function fetchGithub(token, runId) {
     }
     catch (error) {
         if (isOctokitError(error)) {
-            info(`Failed to get job annotations: ${error.message}}`);
+            info(`Failed to get job annotations: ${error.message}`);
         }
         else {
             throw error;
@@ -77074,7 +77074,7 @@ async function fetchGithub(token, runId) {
     }
     catch (error) {
         if (isOctokitError(error)) {
-            info(`Failed to get PRs labels: ${error.message}}`);
+            info(`Failed to get PRs labels: ${error.message}`);
         }
         else {
             throw error;
