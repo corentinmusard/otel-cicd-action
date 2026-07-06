@@ -33511,6 +33511,20 @@ const ATTR_CICD_WORKER_ID = 'cicd.worker.id';
  */
 const ATTR_CICD_WORKER_NAME = 'cicd.worker.name';
 
+// Modest cap to stay clear of GitHub's secondary rate limits on concurrent requests
+const MAX_CONCURRENT_REQUESTS = 8;
+async function mapWithConcurrency(items, fn) {
+    const results = new Array(items.length);
+    let nextIndex = 0;
+    async function worker() {
+        while (nextIndex < items.length) {
+            const i = nextIndex++;
+            results[i] = await fn(items[i]);
+        }
+    }
+    await Promise.all(Array.from({ length: Math.min(MAX_CONCURRENT_REQUESTS, items.length) }, worker));
+    return results;
+}
 async function getWorkflowRun(context, octokit, runId) {
     const res = await octokit.rest.actions.getWorkflowRun({
         ...context.repo,
@@ -33528,8 +33542,9 @@ async function listJobsForWorkflowRun(context, octokit, runId) {
 }
 async function getJobsAnnotations(context, octokit, jobIds) {
     const annotations = {};
-    for (const jobId of jobIds) {
-        annotations[jobId] = await listAnnotations(context, octokit, jobId);
+    const results = await mapWithConcurrency(jobIds, (jobId) => listAnnotations(context, octokit, jobId));
+    for (const [i, jobId] of jobIds.entries()) {
+        annotations[jobId] = results[i];
     }
     return annotations;
 }
@@ -33541,8 +33556,9 @@ async function listAnnotations(context, octokit, checkRunId) {
 }
 async function getPRsLabels(context, octokit, prNumbers) {
     const labels = {};
-    for (const prNumber of prNumbers) {
-        labels[prNumber] = await listLabelsOnIssue(context, octokit, prNumber);
+    const results = await mapWithConcurrency(prNumbers, (prNumber) => listLabelsOnIssue(context, octokit, prNumber));
+    for (const [i, prNumber] of prNumbers.entries()) {
+        labels[prNumber] = results[i];
     }
     return labels;
 }
