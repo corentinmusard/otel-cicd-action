@@ -1,0 +1,88 @@
+# Transformations applied to README.md before copying to the Dash0 documentation repository
+# (see .github/workflows/sync-docs-to-website.yaml).
+#
+# This file is the source of truth for how the CI/CD Action documentation is adapted into the docs pages.
+# Edit this file whenever the required modifications change.
+#
+# README.md is transformed into a single documentation page:
+# - manage-cicd-observability-as-code.md (complete README content)
+#
+# Structure of this file:
+#
+# - common   A list of transformations applied to every synced file, in order, before the file-specific ones.
+# - files    A list of file entries. Each entry has:
+#              source           Path of the source file, relative to the repository root.
+#              target           Path of the output file, relative to the target directory in the docs repository.
+#              title            The `title` rendered into the page's frontmatter.
+#              description      The `description` rendered into the page's frontmatter.
+#              transformations  Optional list of transformations applied to this file only, after the common ones.
+#
+# A frontmatter block is generated from each entry's `title`/`description` (plus a `lastUpdated` timestamp) and
+# prepended to the transformed file.
+#
+# The supported transformation types are:
+#
+# - prepend          Insert `content` at the very beginning of the document.
+# - replace-regex    Replace matches of the Python regular expression `find` with `replace`.
+#                    Optional `flags` is a list drawn from: multiline (^/$ match line boundaries),
+#                    dotall (. matches newlines), ignorecase.
+# - remove-line      Remove the whole line containing the literal marker `line`. If this leaves multiple
+#                    consecutive empty lines behind, they are normalized to a single empty line.
+#
+# By default, every `replace-regex`/`remove-line` transformation must match at least once; if it does not, the
+# workflow fails. This guards against the docs drifting away from this file and a modification silently becoming a
+# no-op. Set `required: false` on an individual transformation to allow zero matches.
+#
+# The inserted/replacement text (the `content` of prepend and the `replace` of replace-regex) may contain
+# placeholders, which are expanded when the transformations are applied. Currently the only supported placeholder is:
+#
+# - $timestamp   The current UTC date/time. A single value is computed per run, so all occurrences render identically.
+
+common:
+  - description: remove the deprecation notice blockquote
+    type: replace-regex
+    find: '(?s)^>\s*\*\*📢.*?redirect.*?\n\n'
+    replace: ""
+    flags:
+      - multiline
+      - dotall
+    required: false
+
+  - description: remove the leading top-level heading (the frontmatter title replaces it)
+    type: replace-regex
+    find: '^\#\s+[^\n]*\n'
+    replace: ""
+    flags:
+      - multiline
+
+files:
+  - source: README.md
+    target: dash0/miscellaneous/manage-as-code/manage-cicd-observability-as-code.md
+    title: Manage CI/CD Observability as Code
+    description: Add OpenTelemetry observability to your CI/CD pipelines with the Dash0 GitHub Action.
+    transformations:
+      - description: add auto-generated warning comment
+        type: prepend
+        content: |
+          <!-- AUTO-GENERATED from dash0hq/otel-cicd-action/README.md - Do not edit directly -->
+
+
+      - description: add introduction and context
+        type: prepend
+        content: |
+          This GitHub Action automatically instruments your CI/CD pipelines with OpenTelemetry, sending traces and metrics to Dash0.
+
+          For other "as code" approaches, see the [Manage as Code overview](/docs/dash0/miscellaneous/manage-as-code/about-managing-as-code).
+
+
+      - description: rewrite relative GitHub links to absolute
+        type: replace-regex
+        find: '\[([^\]]+)\]\((?!https?://|/)([^)]+)\)'
+        replace: '[\1](https://github.com/dash0hq/otel-cicd-action/blob/main/\2)'
+        required: false
+
+      - description: update GitHub issue references
+        type: replace-regex
+        find: 'https://github\.com/dash0hq/otel-cicd-action/issues'
+        replace: 'https://github.com/dash0hq/otel-cicd-action/issues (or [contact support](https://www.dash0.com/support))'
+        required: false

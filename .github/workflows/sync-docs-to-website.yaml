@@ -1,0 +1,128 @@
+# SPDX-FileCopyrightText: Copyright 2026 Dash0 Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Synchronize CI/CD Action docs to dash0.com/docs
+
+# Copies README.md from the otel-cicd-action repository into the documentation on https://www.dash0.com/docs,
+# applying the modifications declared in sync-docs/transformations.yaml, and opens a pull request against
+# the target repository.
+#
+# README.md is transformed into a single documentation page:
+# - manage-cicd-observability-as-code.md (complete README content)
+#
+# This workflow can be run manually (workflow_dispatch) and will also be invoked automatically when README.md
+# or the sync infrastructure changes.
+#
+# The target repository and directory are configured via repository secrets:
+# - SYNC_DOCUMENTATION_TARGET_REPOSITORY (owner/repo format)
+# - SYNC_DOCUMENTATION_TARGET_DIRECTORY (path within target repo)
+#
+# Authentication to the (private) target repository uses DASH0_DOCS_REPO_GITHUB_PAT, which must be a
+# fine-grained personal access token scoped to the target repository with:
+# - Contents: Read and write (to push the branch)
+# - Pull requests: Read and write (to open the PR)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "README.md"
+      - "action.yml"
+      - ".github/workflows/sync-docs/**"
+      - ".github/workflows/sync-docs-to-website.yaml"
+  workflow_call:
+    secrets:
+      DASH0_DOCS_REPO_GITHUB_PAT:
+        description: Fine-grained PAT with contents + pull-requests write access for the documentation repository.
+        required: true
+      SYNC_DOCUMENTATION_TARGET_REPOSITORY:
+        description: The owner/name of the documentation repository to sync the docs into.
+        required: true
+      SYNC_DOCUMENTATION_TARGET_DIRECTORY:
+        description: The path of the directory holding the documentation pages within the target repository.
+        required: true
+
+env:
+  PR_BRANCH: sync-otel-cicd-action-docs
+
+jobs:
+  sync-docs:
+    name: Synchronize CI/CD Action docs with dash0.com/docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout otel-cicd-action
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          path: otel-cicd-action
+
+      - name: set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.x"
+
+      - name: install dependencies
+        run: pip install -r otel-cicd-action/.github/workflows/sync-docs/requirements.txt
+
+      - name: apply doc transformations
+        run: |
+          python otel-cicd-action/.github/workflows/sync-docs/apply-transformations.py \
+            otel-cicd-action \
+            otel-cicd-action/.github/workflows/sync-docs/transformations.yaml \
+            "${RUNNER_TEMP}/transformed-docs"
+
+      - name: checkout target repo
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          repository: ${{ secrets.SYNC_DOCUMENTATION_TARGET_REPOSITORY }}
+          token: ${{ secrets.DASH0_DOCS_REPO_GITHUB_PAT }}
+          path: target-repository
+
+      - name: copy transformed docs
+        env:
+          TARGET_DIRECTORY: ${{ secrets.SYNC_DOCUMENTATION_TARGET_DIRECTORY }}
+        run: |
+          target_path="target-repository/${TARGET_DIRECTORY}"
+          mkdir -p "$target_path"
+          # Copy the transformed files into the target directory
+          cp -R "${RUNNER_TEMP}/transformed-docs/." "$target_path/"
+
+      - name: create pull request in target repository
+        working-directory: target-repository
+        env:
+          GH_TOKEN: ${{ secrets.DASH0_DOCS_REPO_GITHUB_PAT }}
+          TARGET_DIRECTORY: ${{ secrets.SYNC_DOCUMENTATION_TARGET_DIRECTORY }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Stage all changes within the target directory so they are visible to the diff check below
+          git add --all -- "${TARGET_DIRECTORY}"
+
+          # git diff --cached --quiet exits with 1 if there are staged differences, 0 means the docs are
+          # already up to date. The lastUpdated timestamp changes on every run, so it is ignored (via -I)
+          # when determining whether the docs are up to date.
+          if git diff --cached --quiet -I '^lastUpdated: ' -- "${TARGET_DIRECTORY}"; then
+            echo "The documentation page is already up to date, nothing to do."
+            exit 0
+          fi
+
+          echo "The documentation page has changed, creating/updating a pull request."
+          git checkout -B "${PR_BRANCH}"
+          git commit --message "docs: synchronize CI/CD Action documentation"
+          git push --force origin "${PR_BRANCH}"
+
+          # Only open a new PR if there is no open one for this branch yet (otherwise the force-push
+          # above already updated the existing PR).
+          if [ -z "$(gh pr list --head "${PR_BRANCH}" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --base main \
+              --head "${PR_BRANCH}" \
+              --title "docs: synchronize CI/CD Action documentation" \
+              --body "This PR synchronizes CI/CD Action documentation from [dash0hq/otel-cicd-action](https://github.com/dash0hq/otel-cicd-action) to the Manage as Code section."
+          else
+            echo "An open pull request for branch ${PR_BRANCH} already exists, it was updated by the force-push above."
+          fi
