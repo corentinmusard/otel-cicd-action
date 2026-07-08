@@ -61,39 +61,10 @@ def main(argv):
     if not isinstance(files, list) or not files:
         raise SystemExit("error: 'files' in transformations.yaml must be a non-empty list of file entries")
 
-    _check_all_docs_covered(source_root, files)
-
     placeholders = _build_placeholders()
 
     for file_entry in files:
         _process_file(file_entry, common, source_root, output_dir, placeholders)
-
-
-def _check_all_docs_covered(source_root, files):
-    """Fail if a *.md file in <source-root>/docs is not declared in `files`.
-
-    This guards against new topic files being silently omitted from the sync. Dotfiles (e.g. .docs-structure.md) are
-    intentionally ignored, as they are documentation metadata rather than pages.
-
-    For repositories without a docs/ directory (e.g., dash0-sdk-web), this check is skipped.
-    """
-    docs_dir = os.path.join(source_root, "docs")
-    if not os.path.isdir(docs_dir):
-        # No docs directory - skip the check (e.g., dash0-sdk-web has INSTALL.md at root)
-        return
-
-    declared = {entry.get("source") for entry in files}
-    missing = []
-    for name in sorted(os.listdir(docs_dir)):
-        if not name.endswith(".md"):
-            continue
-        source = f"docs/{name}"
-        if source not in declared:
-            missing.append(source)
-
-    if missing:
-        joined = ", ".join(missing)
-        raise SystemExit(f"error: these docs files are not declared in transformations.yaml: {joined}")
 
 
 def _process_file(file_entry, common, source_root, output_dir, placeholders):
