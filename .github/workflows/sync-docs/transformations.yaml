@@ -86,3 +86,9 @@ files:
         find: 'https://github\.com/dash0hq/otel-cicd-action/issues'
         replace: 'https://github.com/dash0hq/otel-cicd-action/issues (or [contact support](https://www.dash0.com/support))'
         required: false
+
+      - description: rewrite image references to local paths with dimensions
+        type: replace-regex
+        find: '!\[Example\]\(https://github\.com/dash0hq/otel-cicd-action/blob/main/\./docs/honeycomb-example\.png\)'
+        replace: '![Example trace in Honeycomb showing CI/CD workflow execution](/images/documentation/miscellaneous/manage-as-code/cicd-action-honeycomb-example.png?w=1204&h=639)'
+        required: false
