@@ -3,7 +3,7 @@
 > `corentinmusard/otel-cicd-action@v4`. Existing references continue to work via
 > redirect, but updating is recommended. See the pinned Discussion for details.
 
-# Open Telemetry CI/CD Action
+# OpenTelemetry CI/CD Action
 
 [![Unit Tests][ci-img]][ci]
 ![GitHub License][license-img]
