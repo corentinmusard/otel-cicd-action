@@ -80,6 +80,28 @@ jobs:
         with:
           node-version-file: .sync-docs-action/.nvmrc
 
+      # The transformation engine imports third-party packages (yaml, etc.), so its dependencies must be installed
+      # before it can run. The composite action does this itself during the real sync; the dry run drives the engine
+      # directly, so it has to mirror the action's own pnpm install.
+      - name: read the pnpm version required by sync-docs-action
+        id: pnpm-version
+        if: ${{ env.DRY_RUN == 'true' }}
+        run: |
+          version=$(node -p "require('./.sync-docs-action/package.json').packageManager.replace('pnpm@', '')")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: set up pnpm for the dry run
+        if: ${{ env.DRY_RUN == 'true' }}
+        uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6.0.5
+        with:
+          version: ${{ steps.pnpm-version.outputs.version }}
+          run_install: false
+
+      - name: install sync-docs-action dependencies for the dry run
+        if: ${{ env.DRY_RUN == 'true' }}
+        working-directory: .sync-docs-action
+        run: pnpm install --frozen-lockfile
+
       - name: apply doc transformations (dry run)
         if: ${{ env.DRY_RUN == 'true' }}
         run: |
