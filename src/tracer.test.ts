@@ -18,6 +18,7 @@ describe("createTracerProvider", () => {
   };
 
   afterEach(() => {
+    jest.restoreAllMocks();
     return provider.shutdown();
   });
 
