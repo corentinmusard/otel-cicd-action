@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: dash0hq/otel-cicd-action@v4
         with:
-          otlpEndpoint: grpc://api.honeycomb.io:443/
+          otlpEndpoint: grpc://ingress.eu-west-1.aws.dash0.com:4317
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           runId: ${{ github.event.workflow_run.id }}
@@ -70,7 +70,7 @@ jobs:
       - name: Export workflow
         uses: dash0hq/otel-cicd-action@v4
         with:
-          otlpEndpoint: grpc://api.honeycomb.io:443/
+          otlpEndpoint: grpc://ingress.eu-west-1.aws.dash0.com:4317
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -134,15 +134,15 @@ man-in-the-middle attacks. Only use it with a trusted internal endpoint.
 
 ### Action Inputs
 
-| name                   | description                                                                                                              | required | default                               | example                                                          |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------------- | ---------------------------------------------------------------- |
-| otlpEndpoint           | The destination endpoint to export OpenTelemetry traces to. It supports `https://`, `http://` and `grpc://` endpoints.   | true     |                                       | `https://api.axiom.co/v1/traces`                                 |
-| otlpHeaders            | Headers to add to the OpenTelemetry exporter.                                                                            | true     |                                       | `x-honeycomb-team=YOUR_API_KEY,x-honeycomb-dataset=YOUR_DATASET` |
-| otelServiceName        | OpenTelemetry service name                                                                                               | false    | `<The name of the exported workflow>` | `Build CI`                                                       |
-| githubToken            | The repository token with Workflow permissions. Required for private repos                                               | false    |                                       | `${{ secrets.GITHUB_TOKEN }}`                                    |
-| runId                  | Workflow Run ID to Export                                                                                                | false    | env.GITHUB_RUN_ID                     | `${{ github.event.workflow_run.id }}`                            |
-| extraAttributes        | Extra resource attributes to add to each span                                                                            | false    |                                       | `extra.attribute=1,key2=value2`                                  |
-| otlpInsecureSkipVerify | Disable TLS certificate verification for the OTLP exporter. Only use this with trusted endpoints.                        | false    | `false`                               | `true`                                                           |
+| name                   | description                                                                                                              | required | default                               | example                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------------- | ----------------------------------------------------------------- |
+| otlpEndpoint           | The destination endpoint to export OpenTelemetry traces to. It supports `https://`, `http://` and `grpc://` endpoints.   | true     |                                       | `https://ingress.eu-west-1.aws.dash0.com/v1/traces`               |
+| otlpHeaders            | Headers to add to the OpenTelemetry exporter.                                                                            | true     |                                       | `Authorization=Bearer YOUR_AUTH_TOKEN,Dash0-Dataset=YOUR_DATASET` |
+| otelServiceName        | OpenTelemetry service name                                                                                               | false    | `<The name of the exported workflow>` | `Build CI`                                                        |
+| githubToken            | The repository token with Workflow permissions. Required for private repos                                               | false    |                                       | `${{ secrets.GITHUB_TOKEN }}`                                     |
+| runId                  | Workflow Run ID to Export                                                                                                | false    | env.GITHUB_RUN_ID                     | `${{ github.event.workflow_run.id }}`                             |
+| extraAttributes        | Extra resource attributes to add to each span                                                                            | false    |                                       | `extra.attribute=1,key2=value2`                                   |
+| otlpInsecureSkipVerify | Disable TLS certificate verification for the OTLP exporter. Only use this with trusted endpoints.                        | false    | `false`                               | `true`                                                            |
 
 ### Action Outputs
 
