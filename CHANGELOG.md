@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added the `otlpInsecureSkipVerify` input for exporting to trusted internal OTLP endpoints whose
   TLS certificates cannot be verified.
+  Thanks @OneCyrus!
 
 ### Changed
 
