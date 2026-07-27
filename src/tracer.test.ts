@@ -1,3 +1,4 @@
+import type { Agent } from "node:https";
 import { credentials } from "@grpc/grpc-js";
 import { jest } from "@jest/globals";
 import type { Attributes } from "@opentelemetry/api";
@@ -39,6 +40,29 @@ describe("createTracerProvider", () => {
 
   it("supports http", () => {
     provider = createTracerProvider("http://localhost", "test=foo", attributes);
+  });
+
+  it("can disable TLS certificate verification for HTTP", async () => {
+    provider = createTracerProvider("https://localhost", "test=foo", attributes, true);
+
+    // The httpAgentOptions are only applied when the exporter lazily creates its agent,
+    // so pull the agent factory out of the exporter and invoke it.
+    const exporterInternals = (
+      provider as unknown as {
+        _activeSpanProcessor: {
+          _spanProcessors: {
+            _exporter: {
+              _delegate: {
+                _transport: { _transport: { _parameters: { agentFactory: (protocol: string) => Promise<Agent> } } };
+              };
+            };
+          }[];
+        };
+      }
+    )._activeSpanProcessor._spanProcessors[0]._exporter._delegate;
+    const agent = await exporterInternals._transport._transport._parameters.agentFactory("https:");
+
+    expect(agent.options.rejectUnauthorized).toBe(false);
   });
 
   it("can disable TLS certificate verification for gRPC", () => {
