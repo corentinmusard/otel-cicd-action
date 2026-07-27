@@ -26,6 +26,10 @@ inputs:
   extraAttributes:
     description: Extra resource attributes to add to each span
     required: false
+  otlpInsecureSkipVerify:
+    description: Disable TLS certificate verification for the OTLP exporter. This is insecure and should only be used with trusted endpoints.
+    required: false
+    default: "false"
 outputs:
   traceId:
     description: The OpenTelemetry Trace ID of the root span
