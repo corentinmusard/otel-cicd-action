@@ -16,7 +16,7 @@ Originally created and maintained by [Corentin Musard](https://github.com/corent
 Compliant with OpenTelemetry [CICD semconv](https://opentelemetry.io/docs/specs/semconv/attributes-registry/cicd/).
 Look at [Sample OpenTelemetry Output](./src/__assets__/output_success.txt) for the list of attributes and their values.
 
-![Example](./docs/honeycomb-example.png)
+![Example](./docs/dash0-example.png)
 
 ## Usage
 

@@ -112,6 +112,5 @@ files:
 
       - description: rewrite image references to local paths with dimensions
         type: replace-regex
-        find: '!\[Example\]\(https://github\.com/dash0hq/otel-cicd-action/blob/main/\./docs/honeycomb-example\.png\)'
-        replace: '![Example trace in Honeycomb showing CI/CD workflow execution](/images/documentation/miscellaneous/manage-as-code/cicd-action-honeycomb-example.png?w=1204&h=639)'
-        required: false
+        find: '!\[Example\]\(https://github\.com/dash0hq/otel-cicd-action/blob/main/\./docs/dash0-example\.png\)'
+        replace: '![Example trace in Dash0 showing CI/CD workflow execution](/images/documentation/miscellaneous/manage-as-code/cicd-action-dash0-example.png?w=1917&h=810)'
