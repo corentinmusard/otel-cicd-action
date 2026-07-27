@@ -1,0 +1,87 @@
+name: Prepare release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Version bump type (ignored if an explicit version is given)"
+        type: choice
+        options: [patch, minor, major]
+        default: minor
+      version:
+        description: "Explicit version to release (e.g. 4.1.0), overrides the bump type"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare-release:
+    if: github.repository == 'dash0hq/otel-cicd-action'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          # An optional fine-grained PAT (contents + pull-requests: write). When
+          # set, the release PR triggers the regular CI checks; PRs created with
+          # the default GITHUB_TOKEN do not (a GitHub Actions limitation).
+          token: ${{ secrets.RELEASE_PAT || github.token }}
+      - name: Determine next version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+          EXPLICIT_VERSION: ${{ inputs.version }}
+        run: |
+          if [[ -n "$EXPLICIT_VERSION" ]]; then
+            VERSION="v${EXPLICIT_VERSION#v}"
+            if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "Invalid version: $EXPLICIT_VERSION (expected X.Y.Z)" >&2
+              exit 1
+            fi
+          else
+            LATEST=$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+            echo "Latest release: $LATEST"
+            IFS=. read -r MAJOR MINOR PATCH <<< "${LATEST#v}"
+            case "$BUMP" in
+              major) VERSION="v$((MAJOR + 1)).0.0" ;;
+              minor) VERSION="v${MAJOR}.$((MINOR + 1)).0" ;;
+              patch) VERSION="v${MAJOR}.${MINOR}.$((PATCH + 1))" ;;
+            esac
+          fi
+          if git rev-parse --verify --quiet "refs/tags/$VERSION" > /dev/null; then
+            echo "Tag $VERSION already exists." >&2
+            exit 1
+          fi
+          echo "Next release: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Update package.json and CHANGELOG.md
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          npm version "${VERSION#v}" --no-git-tag-version
+          ./.github/scripts/bump-changelog.sh "$VERSION"
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT || github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          BRANCH="release/$VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git commit -am "chore: prepare release $VERSION"
+          git push --set-upstream origin "$BRANCH"
+          gh pr create \
+            --title "chore: prepare release $VERSION" \
+            --body "$(cat <<EOF
+          Prepares the $VERSION release: bumps the version in \`package.json\` and rolls the
+          \`[Unreleased]\` section of \`CHANGELOG.md\` into the $VERSION section.
+
+          Merging this PR (squash merge, keeping the PR title as the commit title) creates
+          the \`$VERSION\` tag, moves the \`${VERSION%%.*}\` major tag, and publishes the
+          GitHub release automatically. See \`RELEASING.md\` for details.
+          EOF
+          )"
