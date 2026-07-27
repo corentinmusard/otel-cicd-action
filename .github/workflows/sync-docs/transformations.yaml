@@ -78,6 +78,26 @@ files:
           For other "as code" approaches, see the [Manage as Code overview](/docs/dash0/miscellaneous/manage-as-code/about-managing-as-code).
 
 
+      - description: remove the build status badge (docs pages should not show repository CI status)
+        type: remove-line
+        line: "[![Unit Tests][ci-img]][ci]"
+
+      - description: remove the license badge
+        type: remove-line
+        line: "![GitHub License][license-img]"
+
+      - description: remove the now-unused badge link definitions
+        type: remove-line
+        line: "[ci-img]: "
+
+      - description: remove the now-unused badge link definitions
+        type: remove-line
+        line: "[ci]: "
+
+      - description: remove the now-unused badge link definitions
+        type: remove-line
+        line: "[license-img]: "
+
       - description: rewrite relative GitHub links to absolute
         type: replace-regex
         find: '\[([^\]]+)\]\((?!https?://|/)([^)]+)\)'
