@@ -98,6 +98,18 @@ files:
         type: remove-line
         line: "[license-img]: "
 
+      - description: remove the Axiom sample workflow row (no competitor links on dash0.com)
+        type: remove-line
+        line: "[axiom.yml]"
+
+      - description: remove the New Relic sample workflow row (no competitor links on dash0.com)
+        type: remove-line
+        line: "[newrelic.yml]"
+
+      - description: remove the Honeycomb sample workflow row (no competitor links on dash0.com)
+        type: remove-line
+        line: "[honeycomb.yml]"
+
       - description: rewrite relative GitHub links to absolute
         type: replace-regex
         find: '\[([^\]]+)\]\((?!https?://|/)([^)]+)\)'
