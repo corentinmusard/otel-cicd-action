@@ -114,16 +114,35 @@ Attributes are splitted on `,` and then each key/value are splitted on the first
     extraAttributes: "extra.attribute=1,key2=value2"
 ```
 
+### Using a self-signed certificate
+
+When an internal OTLP endpoint uses a self-signed certificate and its certificate authority cannot
+be added to the runner's trust store, set `otlpInsecureSkipVerify` to `true`:
+
+```yaml
+- name: Export workflow
+  uses: dash0hq/otel-cicd-action@v4
+  with:
+    otlpEndpoint: grpc://otlp.example.com:4317
+    otlpHeaders: "CHANGE ME"
+    githubToken: ${{ secrets.GITHUB_TOKEN }}
+    otlpInsecureSkipVerify: true
+```
+
+This disables certificate verification for the OTLP exporter connection and makes it vulnerable to
+man-in-the-middle attacks. Only use it with a trusted internal endpoint.
+
 ### Action Inputs
 
-| name            | description                                                                                                 | required | default                               | example                                                          |
-| --------------- | ----------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------- | ---------------------------------------------------------------- |
-| otlpEndpoint    | The destination endpoint to export OpenTelemetry traces to. It supports `https://`, `http://` and `grpc://` endpoints. | true     |                                       | `https://api.axiom.co/v1/traces`                                 |
-| otlpHeaders     | Headers to add to the OpenTelemetry exporter .                                                              | true     |                                       | `x-honeycomb-team=YOUR_API_KEY,x-honeycomb-dataset=YOUR_DATASET` |
-| otelServiceName | OpenTelemetry service name                                                                                  | false    | `<The name of the exported workflow>` | `Build CI`                                                       |
-| githubToken     | The repository token with Workflow permissions. Required for private repos                                  | false    |                                       | `${{ secrets.GITHUB_TOKEN }}`                                    |
-| runId           | Workflow Run ID to Export                                                                                   | false    | env.GITHUB_RUN_ID                     | `${{ github.event.workflow_run.id }}`                            |
-| extraAttributes | Extra resource attributes to add to each span | false |  | extra.attribute=1,key2=value2 |
+| name                   | description                                                                                                              | required | default                               | example                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------------- | ---------------------------------------------------------------- |
+| otlpEndpoint           | The destination endpoint to export OpenTelemetry traces to. It supports `https://`, `http://` and `grpc://` endpoints.   | true     |                                       | `https://api.axiom.co/v1/traces`                                 |
+| otlpHeaders            | Headers to add to the OpenTelemetry exporter.                                                                            | true     |                                       | `x-honeycomb-team=YOUR_API_KEY,x-honeycomb-dataset=YOUR_DATASET` |
+| otelServiceName        | OpenTelemetry service name                                                                                               | false    | `<The name of the exported workflow>` | `Build CI`                                                       |
+| githubToken            | The repository token with Workflow permissions. Required for private repos                                               | false    |                                       | `${{ secrets.GITHUB_TOKEN }}`                                    |
+| runId                  | Workflow Run ID to Export                                                                                                | false    | env.GITHUB_RUN_ID                     | `${{ github.event.workflow_run.id }}`                            |
+| extraAttributes        | Extra resource attributes to add to each span                                                                            | false    |                                       | `extra.attribute=1,key2=value2`                                  |
+| otlpInsecureSkipVerify | Disable TLS certificate verification for the OTLP exporter. Only use this with trusted endpoints.                        | false    | `false`                               | `true`                                                           |
 
 ### Action Outputs
 

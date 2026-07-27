@@ -47,6 +47,7 @@ describe("run", () => {
     octokit = await replayOctokit("run", token);
 
     github.getOctokit.mockReturnValue(octokit);
+    core.getBooleanInput.mockReturnValue(false);
 
     core.getInput.mockImplementation((name: string) => {
       switch (name) {

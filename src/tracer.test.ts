@@ -1,3 +1,5 @@
+import { credentials } from "@grpc/grpc-js";
+import { jest } from "@jest/globals";
 import type { Attributes } from "@opentelemetry/api";
 import type { BasicTracerProvider, ReadableSpan } from "@opentelemetry/sdk-trace-base";
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions";
@@ -37,6 +39,16 @@ describe("createTracerProvider", () => {
 
   it("supports http", () => {
     provider = createTracerProvider("http://localhost", "test=foo", attributes);
+  });
+
+  it("can disable TLS certificate verification for gRPC", () => {
+    const createSsl = jest.spyOn(credentials, "createSsl");
+
+    provider = createTracerProvider("grpc://localhost", "test=foo", attributes, true);
+
+    expect(createSsl).toHaveBeenCalledWith(undefined, undefined, undefined, {
+      rejectUnauthorized: false,
+    });
   });
 });
 

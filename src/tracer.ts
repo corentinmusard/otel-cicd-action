@@ -34,7 +34,7 @@ function isHttpEndpoint(endpoint: string) {
   return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
 
-function createTracerProvider(endpoint: string, headers: string, attributes: Attributes) {
+function createTracerProvider(endpoint: string, headers: string, attributes: Attributes, insecureSkipVerify = false) {
   // Register the context manager to enable context propagation
   const contextManager = new AsyncLocalStorageContextManager();
   contextManager.enable();
@@ -47,11 +47,14 @@ function createTracerProvider(endpoint: string, headers: string, attributes: Att
       exporter = new ProtoOTLPTraceExporter({
         url: endpoint,
         headers: stringToRecord(headers),
+        ...(insecureSkipVerify && { httpAgentOptions: { rejectUnauthorized: false } }),
       });
     } else {
       exporter = new GrpcOTLPTraceExporter({
         url: endpoint,
-        credentials: credentials.createSsl(),
+        credentials: credentials.createSsl(undefined, undefined, undefined, {
+          rejectUnauthorized: !insecureSkipVerify,
+        }),
         metadata: Metadata.fromHttp2Headers(stringToRecord(headers)),
       });
     }

@@ -28286,6 +28286,27 @@ function getInput(name, options) {
     return val.trim();
 }
 /**
+ * Gets the input value of the boolean type in the YAML 1.2 "core schema" specification.
+ * Support boolean input list: `true | True | TRUE | false | False | FALSE` .
+ * The return value is also in boolean type.
+ * ref: https://yaml.org/spec/1.2/spec.html#id2804923
+ *
+ * @param     name     name of the input to get
+ * @param     options  optional. See InputOptions.
+ * @returns   boolean
+ */
+function getBooleanInput(name, options) {
+    const trueValue = ['true', 'True', 'TRUE'];
+    const falseValue = ['false', 'False', 'FALSE'];
+    const val = getInput(name);
+    if (trueValue.includes(val))
+        return true;
+    if (falseValue.includes(val))
+        return false;
+    throw new TypeError(`Input does not meet YAML 1.2 "Core Schema" specification: ${name}\n` +
+        `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
+}
+/**
  * Sets the value of an output.
  *
  * @param     name     name of the output to set
@@ -28319,6 +28340,14 @@ function setFailed(message) {
  */
 function error$1(message, properties = {}) {
     issueCommand('error', toCommandProperties(properties), message instanceof Error ? message.toString() : message);
+}
+/**
+ * Adds a warning issue
+ * @param message warning issue message. Errors will be converted to string via toString()
+ * @param properties optional properties to add to the annotation.
+ */
+function warning(message, properties = {}) {
+    issueCommand('warning', toCommandProperties(properties), message instanceof Error ? message.toString() : message);
 }
 /**
  * Writes info to log with console.log.
@@ -76974,7 +77003,7 @@ function stringToRecord(s) {
 function isHttpEndpoint(endpoint) {
     return endpoint.startsWith("https://") || endpoint.startsWith("http://");
 }
-function createTracerProvider(endpoint, headers, attributes) {
+function createTracerProvider(endpoint, headers, attributes, insecureSkipVerify = false) {
     // Register the context manager to enable context propagation
     const contextManager = new srcExports$1.AsyncLocalStorageContextManager();
     contextManager.enable();
@@ -76985,12 +77014,15 @@ function createTracerProvider(endpoint, headers, attributes) {
             exporter = new OTLPTraceExporter({
                 url: endpoint,
                 headers: stringToRecord(headers),
+                ...(insecureSkipVerify && { httpAgentOptions: { rejectUnauthorized: false } }),
             });
         }
         else {
             exporter = new srcExports.OTLPTraceExporter({
                 url: endpoint,
-                credentials: srcExports$2.credentials.createSsl(),
+                credentials: srcExports$2.credentials.createSsl(undefined, undefined, undefined, {
+                    rejectUnauthorized: !insecureSkipVerify,
+                }),
                 metadata: srcExports$2.Metadata.fromHttp2Headers(stringToRecord(headers)),
             });
         }
@@ -77090,6 +77122,10 @@ async function run() {
         const runId = Number.parseInt(getInput("runId") || `${context$1.runId}`, 10);
         const extraAttributes = stringToRecord(getInput("extraAttributes"));
         const ghToken = getInput("githubToken") || process.env["GITHUB_TOKEN"] || "";
+        const otlpInsecureSkipVerify = getBooleanInput("otlpInsecureSkipVerify");
+        if (otlpInsecureSkipVerify) {
+            warning("TLS certificate verification is disabled for the OTLP exporter.");
+        }
         info("Use Github API to fetch workflow data");
         const { workflowRun, jobs, jobAnnotations, prLabels } = await fetchGithub(ghToken, runId);
         info(`Create tracer provider for ${otlpEndpoint}`);
@@ -77105,7 +77141,7 @@ async function run() {
             [ATTR_SERVICE_VERSION]: workflowRun.head_sha,
             ...extraAttributes,
         };
-        const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes);
+        const provider = createTracerProvider(otlpEndpoint, otlpHeaders, attributes, otlpInsecureSkipVerify);
         info(`Trace workflow run for ${runId} and export to ${otlpEndpoint}`);
         const traceId = traceWorkflowRun(workflowRun, jobs, jobAnnotations, prLabels);
         setOutput("traceId", traceId);
