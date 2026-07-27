@@ -1,0 +1,127 @@
+# SPDX-FileCopyrightText: Copyright 2026 Dash0 Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Synchronize CI/CD Action docs to dash0.com/docs
+
+# Copies README.md from the otel-cicd-action repository into the documentation on https://www.dash0.com/docs,
+# applying the modifications declared in sync-docs/transformations.yaml, and opens a pull request against the
+# target repository.
+#
+# The transformation logic and the PR flow live in the shared dash0hq/sync-docs-action composite action; this
+# workflow only supplies the source-specific inputs (transformations file, PR metadata) and the token.
+#
+# README.md is transformed into a single documentation page under the Manage as Code section:
+# dash0/miscellaneous/manage-as-code/manage-cicd-observability-as-code.md
+#
+# This workflow runs automatically when README.md, action.yml, or the sync infrastructure changes:
+# - On pull requests touching those paths it runs in dry-run mode, which only verifies that the transformations
+#   still apply cleanly, so drift between README.md and transformations.yaml is caught before merge.
+# - On pushes to main it runs the real sync, opening (or updating) a pull request in the target repository.
+# It can also be run manually (workflow_dispatch), where dry-run defaults to false.
+#
+# The sync targets the default documentation repository (dash0hq/dash0-website) and directory configured in
+# sync-docs-action; there is nothing source-specific about them, so they are not overridden here.
+#
+# Authentication to the target repository is done via the DASH0_DOCS_REPO_GITHUB_PAT secret. This must be a
+# fine-grained personal access token scoped to the target repository with the following repository permissions:
+# - Contents: Read and write (to push the branch)
+# - Pull requests: Read and write (to open the PR)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Only verify that the doc transformations still apply cleanly, do not create a pull request in the target repository.
+        type: boolean
+        default: false
+  push:
+    branches:
+      - main
+    paths:
+      - "README.md"
+      - "action.yml"
+      - ".github/workflows/sync-docs/**"
+      - ".github/workflows/sync-docs-to-website.yaml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "action.yml"
+      - ".github/workflows/sync-docs/**"
+      - ".github/workflows/sync-docs-to-website.yaml"
+
+jobs:
+  sync-docs:
+    name: Synchronize CI/CD Action docs with dash0.com/docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # Pull requests only verify the transformations apply cleanly (dry run); pushes to main run the real sync.
+    # workflow_dispatch honours the dry-run input.
+    env:
+      DRY_RUN: ${{ github.event_name == 'pull_request' || inputs.dry-run == true }}
+
+    steps:
+      - name: checkout otel-cicd-action
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+
+      # Dry run: verify the transformations still apply cleanly without touching the target repository. The composite
+      # action always opens a PR, so the dry run checks the action out and invokes its transformation engine directly.
+      - name: check out sync-docs-action for the dry run
+        if: ${{ env.DRY_RUN == 'true' }}
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          repository: dash0hq/sync-docs-action
+          ref: v0.2.0
+          path: .sync-docs-action
+
+      - name: set up Node.js for the dry run
+        if: ${{ env.DRY_RUN == 'true' }}
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version-file: .sync-docs-action/.nvmrc
+
+      # The transformation engine imports third-party packages (yaml, etc.), so its dependencies must be installed
+      # before it can run. The composite action does this itself during the real sync; the dry run drives the engine
+      # directly, so it has to mirror the action's own pnpm install.
+      - name: read the pnpm version required by sync-docs-action
+        id: pnpm-version
+        if: ${{ env.DRY_RUN == 'true' }}
+        run: |
+          version=$(node -p "require('./.sync-docs-action/package.json').packageManager.replace('pnpm@', '')")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: set up pnpm for the dry run
+        if: ${{ env.DRY_RUN == 'true' }}
+        uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6.0.5
+        with:
+          version: ${{ steps.pnpm-version.outputs.version }}
+          run_install: false
+
+      - name: install sync-docs-action dependencies for the dry run
+        if: ${{ env.DRY_RUN == 'true' }}
+        working-directory: .sync-docs-action
+        run: pnpm install --frozen-lockfile
+
+      - name: apply doc transformations (dry run)
+        if: ${{ env.DRY_RUN == 'true' }}
+        run: |
+          node .sync-docs-action/packages/transformation-engine/src/apply-transformations.ts \
+            . \
+            .github/workflows/sync-docs/transformations.yaml \
+            "${RUNNER_TEMP}/transformed-docs"
+          echo "This is a dry run: the doc transformations applied successfully, no pull request is created."
+
+      # Real sync: delegate the transform + checkout + copy + PR flow to the shared composite action.
+      - name: synchronize docs to the website
+        if: ${{ env.DRY_RUN != 'true' }}
+        uses: dash0hq/sync-docs-action@9c3d55819e9b8143e695f8f7d4b6e00189ba40a3 # v0.2.0
+        with:
+          transformations-file: .github/workflows/sync-docs/transformations.yaml
+          target-github-token: ${{ secrets.DASH0_DOCS_REPO_GITHUB_PAT }}
+          pr-branch: sync-otel-cicd-action-docs
+          pr-title: "docs: synchronize CI/CD Action documentation"
+          pr-body: >-
+            This PR synchronizes the CI/CD Action documentation from
+            [dash0hq/otel-cicd-action](https://github.com/dash0hq/otel-cicd-action) into the Manage as Code section of
+            the documentation on https://www.dash0.com/docs.
+          commit-message: "docs: synchronize CI/CD Action documentation"
