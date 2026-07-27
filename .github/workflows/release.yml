@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    # Runs on every push to main, but only acts when the head commit is the
+    # squash-merged "chore: prepare release vX.Y.Z" commit created by the
+    # "Prepare release" workflow.
+    if: "github.repository == 'dash0hq/otel-cicd-action' && startsWith(github.event.head_commit.message, 'chore: prepare release v')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Extract version from commit message
+        id: version
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          if [[ "$COMMIT_MSG" =~ ^chore:\ prepare\ release\ (v[0-9]+\.[0-9]+\.[0-9]+) ]]; then
+            echo "version=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "The head commit does not look like a release commit: $COMMIT_MSG" >&2
+            exit 1
+          fi
+      - name: Create release tag and move major tag
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          MAJOR="${VERSION%%.*}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "$VERSION"
+          git tag --force "$MAJOR"
+          git push origin "$VERSION"
+          git push --force origin "$MAJOR"
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          ./.github/scripts/extract-release-notes.sh "$VERSION" > release-notes.md
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes-file release-notes.md
