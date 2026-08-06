@@ -22,7 +22,10 @@ jobs:
         run: npm run build
       - name: Validate dist
         run: |
-          git diff
+          git status --porcelain
+          # Diff everything except the sourcemap: dist/index.js.map is a 15 MB
+          # single-line file, and streaming its diff to the log takes minutes.
+          git diff -- . ':(exclude)*.map'
           exit $(git status --porcelain | wc -l)
   tests:
     strategy:
