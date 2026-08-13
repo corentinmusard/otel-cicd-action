@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- CICD: skip the sourcemap when diffing dist. Streaming its diff to the job log dominated
+  the Validate dist step, pushing the build job to nearly ten minutes on a stale-bundle failure.
+- Build: rebuild dist for undici 6.28.0. Dependabot only updates package-lock.json,
+  but undici is a runtime dependency that rollup inlines into the committed bundle.
+- Editorial: Use Dash0 endpoints in README examples.
+
 ## [4.1.0] - 2026-07-27
 
 ### Added
